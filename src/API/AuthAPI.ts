@@ -1,7 +1,7 @@
 import BaseUrl from "./api";
 import axios from "axios";
 import { FormValue } from "../component/Auth/Join/SellerJoin";
-
+import { LoginData } from "../component/Auth/Login/SellerLogin/SellerLogin";
 export const SellerJoin = async (formData: FormValue) => {
   try {
     // const { id, password, password2, name, CRNumber, Phone, StoreName } =
@@ -58,6 +58,29 @@ export const CheckId = async (id: string) => {
       `${BaseUrl}/accounts/signup/valid/username/`,
       {
         username: id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const Login = async (data: LoginData) => {
+  console.log("로그인");
+  try {
+    const res = await axios.post(
+      `${BaseUrl}/accounts/login/`,
+      {
+        username: data.id,
+        password: data.password,
+        login_type: "SELLER",
       },
       {
         headers: {

@@ -74,9 +74,10 @@ export const VaildBtn = styled(Button)`
   margin-top: auto;
 `;
 export const InputWrap = styled.div`
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
 `;
 export const EmailWrap = styled(InputWrap)`
+  position: relative;
   display: flex;
   gap: 0.75rem;
   & button {
@@ -122,4 +123,11 @@ export const CRNumber = styled.div`
   & button {
     margin-top: auto;
   }
+`;
+export const StyledError = styled.small`
+  font-size: 12px;
+  color: red;
+  position: absolute;
+  bottom: -18px;
+  left: 5px;
 `;

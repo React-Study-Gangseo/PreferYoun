@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import styled from "@emotion/styled";
 import SellerJoin from "component/Auth/Join/SellerJoin";
 import BuyerJoin from "../../Auth/Join/BuyerJoin";
-import { JoinBtn } from "component/Auth/Join/Join.Style";
+import { ButtonStyle } from "../Button/Button";
 import Logo from "../../../assets/images/Logo-hodu.png";
 import Close from "../../../assets/images/close-r.svg";
 import {
@@ -12,13 +12,13 @@ import {
   LogoImg,
   ButtonGroup,
 } from "../../Auth/Join/Join.Style";
+
 interface ModalProps {
   closeModal: () => void;
 }
 const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
   const modalRoot = document.getElementById("modal");
   const [userType, setUserType] = useState("seller");
-
   const handleUserType = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.id === "buyer"
       ? setUserType("buyer")
@@ -88,7 +88,9 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
               <br />
               동의합니다.
             </Terms>
-            <JoinBtn>가입하기</JoinBtn>
+            <JoinBtn width="l" bgColor="active">
+              가입하기
+            </JoinBtn>
           </CheckJoinForm>
         </ModalBody>
         <CloseBtn onClick={closeModal}>
@@ -149,4 +151,8 @@ const CloseBtn = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
+`;
+
+const JoinBtn = styled(ButtonStyle)`
+  margin: 34px auto;
 `;

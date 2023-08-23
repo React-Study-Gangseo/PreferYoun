@@ -183,8 +183,6 @@ const customStyles = css`
     }
   }
   #root {
-    width: 80rem;
-    margin: 0 auto;
     min-height: 100vh;
     height: 100%;
     background-color: #fff;

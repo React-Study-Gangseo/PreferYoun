@@ -20,7 +20,7 @@ const Join: React.FC = () => {
           <label>아이디</label>
           <EmailWrap>
             <Input type="email" />
-            <Button
+            {/* <Button
               width="ms"
               bgColor="active"
               // onClick={(event) => {
@@ -28,7 +28,7 @@ const Join: React.FC = () => {
               // }}
             >
               중복체크
-            </Button>
+            </Button> */}
           </EmailWrap>
           <InputWrap>
             <label>비밀번호</label>
