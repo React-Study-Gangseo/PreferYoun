@@ -10,3 +10,8 @@ export interface FormValue {
   firstNumber: string;
   secondNumber: string;
 }
+
+export interface LoginData {
+  id: string;
+  password: string;
+}

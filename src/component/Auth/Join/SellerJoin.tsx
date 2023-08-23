@@ -10,9 +10,11 @@ import {
   CheckPw,
   NameWrap,
   CRNumber,
+  StyledError,
 } from "./Join.Style";
 import Button from "../../common/Button/Button";
 import { CheckCRN, CheckId, SellerJoin } from "API/AuthAPI";
+import { AxiosError } from "axios";
 
 export interface FormValue {
   id: string;
@@ -63,7 +65,7 @@ const Join: React.FC = () => {
       }
       console.log("res", response);
     } catch (error) {
-      console.log("아이디 체크 실패", error);
+      console.log("사업자 등록번호 체크 실패", error);
     }
   };
   const IdVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,14 +77,22 @@ const Join: React.FC = () => {
 
       if (response?.data.Success === "멋진 아이디네요 :)") {
         alert("Success: '멋진 아이디네요 :)");
-      } else {
-        alert("중복된 아이디입니다. 다른 아이디를 입력하세요.");
       }
-      console.log("res", response);
     } catch (error) {
-      console.log("아이디 체크 실패", error);
+      // error is the exception thrown from CheckId function
+      const axiosError = error as AxiosError; // 타입 단언
+      const responseData = axiosError?.response?.data as any;
+      console.log("아이디 체크 실패", responseData.FAIL_Message);
+      if (responseData.FAIL_Message === "이미 사용 중인 아이디입니다.") {
+        setError("id", {
+          type: "manual",
+          message: "* 이미 가입된 아이디 입니다.",
+        });
+      }
+      // 이미 가입된 아이디인 경우 에러 처리...
     }
   };
+
   return (
     <>
       <JoinSection>
@@ -95,6 +105,11 @@ const Join: React.FC = () => {
               autoComplete="off"
               {...register("id", {
                 required: "아이디는 필수 입력입니다.",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]{1,20}$/i,
+                  message:
+                    "ID는 20자 이내의 영어 소문자, 대문자, 숫자만 가능합니다.",
+                },
               })}
             />
             <Button
@@ -106,6 +121,9 @@ const Join: React.FC = () => {
             >
               중복체크
             </Button>
+            {errors.id && (
+              <StyledError role="alert">{errors.id.message}</StyledError>
+            )}
           </EmailWrap>
           <InputWrap>
             <label>비밀번호</label>
@@ -149,6 +167,9 @@ const Join: React.FC = () => {
                 required: "이름은 필수 입력값 입니다.",
               })}
             />
+            {errors.id && (
+              <StyledError role="alert">{errors.id.message}</StyledError>
+            )}
           </NameWrap>
           <label>휴대폰번호</label>
           <PhoneWrap>

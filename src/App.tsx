@@ -8,6 +8,12 @@ import DetailPage from "component/DetailPage/DetailPage";
 import KeepPage from "component/KeepPage/KeepPage";
 import Order from "component/OrderPage/OrderPage";
 import { useState } from "react";
+import SellerCenterPage from "component/SellerCenter/SellerCenterPage";
+
+import React from "react";
+import { styled } from "@mui/system";
+import UploadProduct from "component/UploadProduct/UploadProduct";
+import BasicButton from "component/common/Button/Button";
 
 function App() {
   const [modalShow, setModalShow] = useState(false);
@@ -21,16 +27,19 @@ function App() {
   return (
     <>
       <GlobalStyles />
+      {/* <SellerCenterPage /> */}
       <Header handleLogin={handleLogin} />
+      {/* <UploadProduct /> */}
       {/* <Order /> */}
       <Main />
       <Footer />
       {modalShow && <JoinModal closeModal={closeModal} />}
       {/* <SellerLogin /> */}
-      {/* <LoginModal /> */}
+      {/* {modalShow && <LoginModal closeModal={closeModal} />} */}
       {/* <DetailPage /> */}
       {/* <KeepPage /> */}
       {/* <JoinModal /> */}
+      {/* <Order /> */}
     </>
   );
 }
