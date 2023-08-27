@@ -17,13 +17,23 @@ import BasicButton from "component/common/Button/Button";
 
 function App() {
   const [modalShow, setModalShow] = useState(false);
+  const [signUp, setSignUp] = useState(false);
+  const [login, setLogin] = useState(false);
   const handleLogin = () => {
     setModalShow(true);
+    setLogin(true);
   };
 
   const closeModal = () => {
     setModalShow(false);
+    setSignUp(false);
+    setLogin(false);
   };
+  const handleSignUp = () => {
+    setSignUp(true);
+    setLogin(false);
+  };
+
   return (
     <>
       <GlobalStyles />
@@ -33,9 +43,11 @@ function App() {
       {/* <Order /> */}
       <Main />
       <Footer />
-      {modalShow && <JoinModal closeModal={closeModal} />}
+      {modalShow && signUp && <JoinModal closeModal={closeModal} />}
       {/* <SellerLogin /> */}
-      {/* {modalShow && <LoginModal closeModal={closeModal} />} */}
+      {modalShow && login && (
+        <LoginModal closeModal={closeModal} openSignUp={handleSignUp} />
+      )}
       {/* <DetailPage /> */}
       {/* <KeepPage /> */}
       {/* <JoinModal /> */}
