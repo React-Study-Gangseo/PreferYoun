@@ -1,15 +1,11 @@
 import React from "react";
-import {
-  LoginSection,
-  JoinBtn,
-  Form,
-  Input,
-  LinkGroup,
-  SignUp,
-  FindPw,
-} from "../SellerLogin.Style";
-import { useForm } from "react-hook-form";
+import { LoginSection, JoinBtn, Form } from "../Login.Style";
+import { useForm, Controller } from "react-hook-form";
+import { TextField, IconButton, InputAdornment } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Login } from "API/AuthAPI";
+import { InputWrap } from "component/Auth/Join/Join.Style";
 export interface LoginData {
   id: string;
   password: string;
@@ -17,10 +13,20 @@ export interface LoginData {
 }
 const SellerLogin: React.FC = () => {
   const {
-    register,
     handleSubmit,
+    control,
     formState: { errors, isValid },
   } = useForm<LoginData>({ mode: "onChange" });
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   const onSubmit = async (data: LoginData) => {
     try {
@@ -38,36 +44,67 @@ const SellerLogin: React.FC = () => {
     <>
       <LoginSection>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label className="a11y-hidden">이메일 입력</label>
-            <Input
-              type="id"
-              id="id"
-              autoComplete="off"
-              {...register("id", {
-                required: "아이디는 필수 입력입니다.",
-              })}
+          <InputWrap>
+            <Controller
+              control={control}
+              name="id"
+              defaultValue=""
+              rules={{
+                required: true,
+                pattern: /^[A-Za-z0-9]{1,20}$/,
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type="text"
+                  fullWidth
+                  label="아이디"
+                  error={error !== undefined}
+                />
+              )}
             />
-          </div>
-          <div>
-            <label className="a11y-hidden">비밀번호 입력</label>
-            <Input
-              type="password"
-              placeholder="비밀번호를 입력하세요"
-              id="password"
-              autoComplete="off"
-              {...register("password", {
-                required: "비밀번호는 필수 입력입니다.",
-              })}
+          </InputWrap>
+          <InputWrap>
+            <Controller
+              control={control}
+              name="password"
+              defaultValue=""
+              rules={{
+                required: true,
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*\d).{8,}$/,
+                  message: "비밀번호 형식이 올바르지 않습니다",
+                },
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type={showPassword ? "text" : "password"}
+                  fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="비밀번호 확인 아이콘"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  label="비밀번호"
+                  error={error !== undefined}
+                  helperText={error ? error.message : null}
+                />
+              )}
             />
-          </div>
+          </InputWrap>
           <JoinBtn type="submit">로그인</JoinBtn>
         </Form>
       </LoginSection>
-      <LinkGroup>
-        <SignUp>회원가입</SignUp>
-        <FindPw>비밀번호찾기</FindPw>
-      </LinkGroup>
     </>
   );
 };

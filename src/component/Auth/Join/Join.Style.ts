@@ -121,7 +121,7 @@ export const CRNumber = styled.div`
   gap: 12px;
   margin-bottom: 1rem;
   & button {
-    margin-top: auto;
+    margin-bottom: auto;
   }
 `;
 export const StyledError = styled.small`

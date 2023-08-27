@@ -7,23 +7,27 @@ import {
   BuyerBtn,
   SellerBtn,
   LogoImg,
-} from "../../Auth/Login/SellerLogin.Style";
+  LinkGroup,
+  SignUp,
+  FindPw,
+} from "../../Auth/Login/Login.Style";
 import Logo from "../../../assets/images/Logo-hodu.png";
 import BuyerLogin from "component/Auth/Login/BuyerLogin/BuyerLogin";
 import Close from "../../../assets/images/close-r.svg";
 
 interface ModalProps {
   closeModal: () => void;
+  openSignUp: () => void;
 }
 
-const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
+const LoginModal: React.FC<ModalProps> = ({ closeModal, openSignUp }) => {
   const modalRoot = document.getElementById("modal");
-  const [userType, setUserType] = useState("seller");
+  const [userType, setUserType] = useState("SELLER");
 
   const handleUserType = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.id === "buyer"
-      ? setUserType("buyer")
-      : setUserType("seller");
+    e.currentTarget.id === "BUYER"
+      ? setUserType("BUYER")
+      : setUserType("SELLER");
   };
 
   useEffect(() => {
@@ -45,6 +49,8 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
   if (!modalRoot) {
     return null;
   }
+
+  // const handleSignUp = (e: React.MouseEvent<HTMLButtonElement>) => {};
   return createPortal(
     <ModalWrapper>
       <StyledModalContainer>
@@ -52,34 +58,38 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
           <LogoImg src={Logo} alt="Hodu 로고" />
           <BtnGroup>
             <BuyerBtn
-              id="buyer"
+              id="BUYER"
               onClick={(e) => {
                 handleUserType(e);
               }}
               style={{
-                backgroundColor: userType === "buyer" ? "#fff" : "#F2F2F2",
+                backgroundColor: userType === "BUYER" ? "#fff" : "#F2F2F2",
                 borderBottom:
-                  userType === "buyer" ? "none" : "1px solid #767676",
+                  userType === "BUYER" ? "none" : "1px solid #767676",
               }}
             >
               구매자로그인
             </BuyerBtn>
             <SellerBtn
-              id="seller"
+              id="SELLER"
               onClick={(e) => {
                 handleUserType(e);
               }}
               style={{
-                backgroundColor: userType === "seller" ? "#fff" : "#F2F2F2",
+                backgroundColor: userType === "SELLER" ? "#fff" : "#F2F2F2",
                 borderBottom:
-                  userType === "seller" ? "none" : "1px solid #767676",
+                  userType === "SELLER" ? "none" : "1px solid #767676",
               }}
             >
               판매자로그인
             </SellerBtn>
           </BtnGroup>
-          {userType === "seller" ? <SellerLogin /> : <BuyerLogin />}
+          {userType === "SELLER" ? <SellerLogin /> : <BuyerLogin />}
         </ModalBody>
+        <LinkGroup>
+          <SignUp onClick={openSignUp}>회원가입</SignUp>
+          <FindPw>비밀번호찾기</FindPw>
+        </LinkGroup>
         <CloseBtn onClick={closeModal}>
           <img src={Close} alt="모달닫힘버튼" aria-label="모달닫힘버튼" />
         </CloseBtn>

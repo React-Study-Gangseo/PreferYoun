@@ -33,7 +33,6 @@ export const SellerJoin = async (formData: FormValue) => {
 };
 
 export const CheckCRN = async (CRN: string) => {
-  console.log("CRN", CRN);
   try {
     const res = await axios.post(
       `${BaseUrl}/accounts/signup/valid/company_registration_number/`,
@@ -48,11 +47,10 @@ export const CheckCRN = async (CRN: string) => {
     );
     return res;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 export const CheckId = async (id: string) => {
-  console.log("id", id);
   try {
     const res = await axios.post(
       `${BaseUrl}/accounts/signup/valid/username/`,
@@ -66,8 +64,8 @@ export const CheckId = async (id: string) => {
       }
     );
     return res;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    console.error(err.response || err.message);
     throw err;
   }
 };

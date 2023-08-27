@@ -46,7 +46,7 @@ export const SellerBtn = styled(Button)`
 `;
 
 export const Form = styled.form`
-  padding: 14px 35px 36px 35px;
+  padding: 34px 35px 36px 35px;
 `;
 export const Input = styled.input`
   width: 100%;
@@ -65,13 +65,17 @@ export const JoinBtn = styled(Button)`
 export const LinkGroup = styled.div`
   width: 100%;
   text-align: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 3rem;
+  & button {
+    font-size: 1rem;
+    font-weight: 400;
+  }
 `;
-export const SignUp = styled.a`
+export const SignUp = styled.button`
   &::after {
     content: "";
     border-right: 1px solid #c4c4c4;
     margin: 0 0.875rem;
   }
 `;
-export const FindPw = styled.a``;
+export const FindPw = styled.button``;
