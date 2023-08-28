@@ -1,17 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { LoginSection, JoinBtn, Form } from "../Login.Style";
 import { useForm, Controller } from "react-hook-form";
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Login } from "API/AuthAPI";
 import { InputWrap } from "component/Auth/Join/Join.Style";
-export interface LoginData {
-  id: string;
-  password: string;
-  user_type: string;
-}
-const SellerLogin: React.FC = () => {
+import { LoginData } from "../../../../types/type";
+
+const SellerLogin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const {
     handleSubmit,
     control,
@@ -19,25 +15,11 @@ const SellerLogin: React.FC = () => {
   } = useForm<LoginData>({ mode: "onChange" });
 
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-  };
-
-  const onSubmit = async (data: LoginData) => {
-    try {
-      const response = await Login(data);
-      console.log(response);
-      if (response && response.status === 201) {
-        console.log("로그인성공", response);
-      }
-    } catch (error) {
-      console.log("로그인실패", error);
-    }
   };
 
   return (

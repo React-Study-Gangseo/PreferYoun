@@ -14,6 +14,11 @@ import {
 import Logo from "../../../assets/images/Logo-hodu.png";
 import BuyerLogin from "component/Auth/Login/BuyerLogin/BuyerLogin";
 import Close from "../../../assets/images/close-r.svg";
+import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { LoginData } from "types/type";
+import { Login } from "API/AuthAPI";
 
 interface ModalProps {
   closeModal: () => void;
@@ -23,6 +28,16 @@ interface ModalProps {
 const LoginModal: React.FC<ModalProps> = ({ closeModal, openSignUp }) => {
   const modalRoot = document.getElementById("modal");
   const [userType, setUserType] = useState("SELLER");
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loginSuccess) {
+      console.log(loginSuccess);
+      closeModal();
+      navigate("/seller");
+    }
+  }, [loginSuccess, navigate]);
 
   const handleUserType = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.id === "BUYER"
@@ -49,8 +64,34 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal, openSignUp }) => {
   if (!modalRoot) {
     return null;
   }
+  const handleFormSubmit = async (data: LoginData) => {
+    try {
+      const response = await Login(data);
+      console.log(response);
+      if (response && response.status === 200) {
+        console.log("로그인성공", response.data);
+        setLoginSuccess(true);
+        localStorage.setItem("UserInfo", JSON.stringify(response.data));
+        console.log(loginSuccess);
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError; // 타입 단언
+      const responseData = axiosError?.response?.data as any;
+      if (responseData) {
+        Swal.fire({
+          title: "로그인 실패!",
+          text: "아이디와 비밀번호를 확인해 주세요",
+          icon: "warning",
+          confirmButtonColor: "#21bf48",
+          confirmButtonAriaLabel: "확인버튼",
+          customClass: {
+            icon: "my-icon",
+          },
+        });
+      }
+    }
+  };
 
-  // const handleSignUp = (e: React.MouseEvent<HTMLButtonElement>) => {};
   return createPortal(
     <ModalWrapper>
       <StyledModalContainer>
@@ -84,7 +125,11 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal, openSignUp }) => {
               판매자로그인
             </SellerBtn>
           </BtnGroup>
-          {userType === "SELLER" ? <SellerLogin /> : <BuyerLogin />}
+          {userType === "SELLER" ? (
+            <SellerLogin onSubmit={handleFormSubmit} />
+          ) : (
+            <BuyerLogin />
+          )}
         </ModalBody>
         <LinkGroup>
           <SignUp onClick={openSignUp}>회원가입</SignUp>

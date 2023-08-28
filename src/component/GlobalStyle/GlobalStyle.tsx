@@ -183,9 +183,12 @@ const customStyles = css`
     }
   }
   #root {
-    min-height: 100vh;
+    width: 90vw;
+    min-height: 100%;
     height: 100%;
+    margin: 0 auto;
     background-color: #fff;
+    /* position: relative; */
   }
   .a11y-hidden {
     clip: rect(1px, 1px, 1px, 1px);
@@ -196,6 +199,9 @@ const customStyles = css`
     overflow: hidden;
     padding: 0;
     position: absolute;
+  }
+  .my-icon {
+    margin: 20px auto 0;
   }
 `;
 

@@ -8,19 +8,19 @@ import {
   ProductName,
   ProductInfoContainer,
 } from "./ProductItem.styles";
-import dummyImage from "../../assets/images/dummy.jpg";
+import { Products } from "types/type";
 type ProductItemProps = {
-  // 필요한 props 타입 정의.
+  product: Products;
 };
-const ProductItem: React.FC<ProductItemProps> = () => {
+const ProductItem: React.FC<ProductItemProps> = (product) => {
   return (
     <ProductItemWrapper>
-      <ProductImage src={dummyImage} alt="상품 더미 이미지" />
+      <ProductImage src={product.product.image} alt="상품 이미지" />
       <ProductInfoContainer>
-        <ProductInfo>우당탕탕 라이캣의 실험실</ProductInfo>
-        <ProductName>Hack Your Life 개발자 노트북 파우치</ProductName>
+        <ProductInfo>{product.product.store_name}</ProductInfo>
+        <ProductName>{product.product.product_name}</ProductName>
         <ProductPriceUnit>
-          <ProductPrice>29,000</ProductPrice>원
+          <ProductPrice>{product.product.price}</ProductPrice>원
         </ProductPriceUnit>
       </ProductInfoContainer>
     </ProductItemWrapper>

@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
 import {
   JoinSection,
   InputWrap,
@@ -13,8 +12,12 @@ import {
   StyledError,
 } from "./Join.Style";
 import Button from "../../common/Button/Button";
+import { TextField, IconButton, InputAdornment } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { CheckCRN, CheckId, SellerJoin } from "API/AuthAPI";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 export interface FormValue {
   id: string;
@@ -35,16 +38,17 @@ const Join: React.FC = () => {
     handleSubmit,
     setError,
     getValues,
+    clearErrors,
     control,
     formState: { errors },
   } = useForm<FormValue>({ mode: "onChange" });
+  const navigate = useNavigate();
   const passwordValue = watch("password", "");
   const onSubmit = async (data: FormValue) => {
     try {
       const response = await SellerJoin(data);
       if (response && response.status === 201) {
         console.log("회원가입 성공");
-        // 회원가입 성공 시 다른 작업들을 수행
       }
     } catch (error) {
       console.log("회원가입 실패", error);
@@ -59,6 +63,7 @@ const Join: React.FC = () => {
 
       if (response?.data.Success === "사용 가능한 사업자등록번호입니다.") {
         alert("사용 가능한 사업자등록번호입니다.");
+        clearErrors();
       }
     } catch (error) {
       console.log("check");
@@ -96,6 +101,16 @@ const Join: React.FC = () => {
       }
       // 이미 가입된 아이디인 경우 에러 처리...
     }
+  };
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
   };
 
   return (
@@ -149,9 +164,23 @@ const Join: React.FC = () => {
               render={({ field, fieldState: { error } }) => (
                 <TextField
                   {...field}
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   fullWidth
                   label="비밀번호"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="비밀번호 확인 아이콘"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   error={error !== undefined}
                   helperText={error ? error.message : null}
                 />
@@ -171,8 +200,22 @@ const Join: React.FC = () => {
               render={({ field, fieldState: { error } }) => (
                 <TextField
                   {...field}
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="비밀번호 확인 아이콘"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   label="비밀번호 중복 확인"
                   error={error !== undefined}
                 />
@@ -214,7 +257,8 @@ const Join: React.FC = () => {
               render={({ field, fieldState: { error } }) => (
                 <TextField
                   {...field}
-                  label="Phone Number"
+                  label="전화번호"
+                  fullWidth
                   error={!!error}
                   helperText={error ? error.message : null}
                 />

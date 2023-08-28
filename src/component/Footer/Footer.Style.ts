@@ -8,10 +8,12 @@ export const FooterSection = styled.footer`
   padding: 3.75rem 0;
   position: relative;
   left: 50%;
+  bottom: 0px;
   transform: translateX(-50%);
+  margin-top: 50px;
 `;
 export const FooterTop = styled.section`
-  width: 80rem;
+  width: 85vw;
   margin: 0 auto;
 `;
 export const InfoList = styled.ul`
@@ -38,6 +40,6 @@ export const Address = styled.address`
   display: flex;
   gap: 0.75rem;
   flex-direction: column;
-  width: 80rem;
+  width: 85vw;
   margin: 3.8125rem auto 0;
 `;

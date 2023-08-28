@@ -4,14 +4,14 @@ export const JoinSection = styled.section`
   background: white;
   max-width: 34.5rem;
   height: auto;
-  margin: 0 auto 2.125rem;
+  margin: 0 auto 1.5rem;
   border: 1px solid #767676;
   border-top: none;
   border-radius: 0 0 0.625rem 0.625rem;
 `;
 export const LogoImg = styled.img`
   display: block;
-  margin: 1.25rem auto 4.375rem auto;
+  margin: 1.25rem auto 2.5rem auto;
 `;
 export const ButtonGroup = styled.div`
   max-width: 34.5rem;
@@ -87,7 +87,7 @@ export const EmailWrap = styled(InputWrap)`
   /* margin-top: 0.75rem; */
 `;
 export const CheckPw = styled(InputWrap)`
-  margin-bottom: 3.125rem;
+  margin-bottom: 0.75rem;
 `;
 export const NameWrap = styled(InputWrap)`
   margin-bottom: 1rem;
@@ -97,7 +97,7 @@ export const PhoneWrap = styled(InputWrap)`
   gap: 0.75rem;
   width: 100%;
   flex: 1;
-  margin: 0.75rem 0 3.125rem 0;
+  margin: 0.75rem 0 0.75rem 0;
 
   & > select,
   & > input {
@@ -119,7 +119,7 @@ export const CRNumber = styled.div`
   width: 100%;
   display: flex;
   gap: 12px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   & button {
     margin-bottom: auto;
   }
