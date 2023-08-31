@@ -128,13 +128,13 @@ export const ClacPrice = styled.ul`
     font-size: 16px;
     font-weight: 400;
   }
-  & li:first-child,
-  & li:nth-child(2) {
+  & li:first-of-type,
+  & li:nth-of-type(2) {
     position: relative;
   }
 
-  & li:first-child::after,
-  & li:nth-child(2)::after {
+  & li:first-of-type::after,
+  & li:nth-of-type(2)::after {
     content: "";
     display: block;
     width: 2.125rem;

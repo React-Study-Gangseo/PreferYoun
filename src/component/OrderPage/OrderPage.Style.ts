@@ -23,23 +23,23 @@ export const OrderList = styled.table`
     background: #f2f2f2;
     height: 3.75rem;
   }
-  & th:nth-child(1) {
+  & th:nth-of-type(1) {
     width: calc(100% * 3 / 6);
     vertical-align: middle;
   }
-  & th:not(:nth-child(1)) {
+  & th:not(:nth-of-type(1)) {
     width: calc(100% * 1 / 6);
     vertical-align: middle;
   }
   & tr:not(tfoot tr) {
     border-bottom: 1px solid #c4c4c4;
   }
-  & td:nth-child(1) {
+  & td:nth-of-type(1) {
     display: flex;
     gap: 2.25rem;
     padding: 0.5rem 0 1.125rem 0.5rem;
   }
-  & td:not(:nth-child(1)) {
+  & td:not(:nth-of-type(1)) {
     text-align: center;
     line-height: 100%;
     vertical-align: middle;
@@ -49,10 +49,10 @@ export const OrderList = styled.table`
     height: 104px;
     border-radius: 10px;
   }
-  & td:not(:nth-child(1)):not(:nth-child(4)) {
+  & td:not(:nth-of-type(1)):not(:nth-of-type(4)) {
     color: #767676;
   }
-  & td:last-child {
+  & td:last-of-type {
     font-size: 18px;
     font-weight: 700;
   }
@@ -134,7 +134,7 @@ export const Phone = styled.div`
   & input {
     width: 6.25rem;
   }
-  & input:first-child {
+  & input:first-of-type {
     width: 5rem;
   }
 `;
@@ -146,7 +146,7 @@ export const Address = styled.div`
   & input {
     width: 100%;
   }
-  & input:first-child {
+  & input:first-of-type {
     width: 10.625rem;
   }
 `;
@@ -208,7 +208,7 @@ export const FinallyPayWrapper = styled.article`
     line-height: 20.03px;
     margin-bottom: 0.9375rem;
   }
-  & li:nth-child(3) {
+  & li:nth-of-type(3) {
     border-bottom: 1px solid #c4c4c4;
     padding-bottom: 19px;
   }

@@ -202,6 +202,7 @@ const customStyles = css`
   }
   .my-icon {
     margin: 20px auto 0;
+    border: 0.25rem solid;
   }
 `;
 

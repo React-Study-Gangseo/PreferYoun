@@ -79,10 +79,19 @@ export const HeaderNav = styled.nav`
   gap: 26px;
 `;
 export const CartBtn = styled.button`
+  margin-top: auto;
   display: flex;
   flex-direction: column;
+  & img {
+    display: block;
+    margin: 0 auto;
+  }
 `;
 export const UserBtn = styled.button`
   display: flex;
   flex-direction: column;
+  & img {
+    display: block;
+    margin: 0 auto;
+  }
 `;

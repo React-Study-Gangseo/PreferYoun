@@ -19,9 +19,13 @@ export const Banner = styled.article`
   justify-content: space-between;
 `;
 export const ProductList = styled.ul`
+  width: 80rem;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4.875rem 4.375rem;
+  align-items: center;
+  justify-items: center;
 `;
 export const ProductSection = styled.section`
   height: 100%;

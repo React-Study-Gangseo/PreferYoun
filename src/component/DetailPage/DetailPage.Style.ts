@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-
+import Button from "component/common/Button/Button";
 export const DetailPageWrapper = styled.section`
   width: 100%;
   height: 100%;
@@ -44,8 +44,7 @@ export const CountWrap = styled.div`
   width: 9.375rem;
   height: 3.125rem;
   border-radius: 5px;
-  border-top: 1px solid #c4c4c4;
-  border-bottom: 1px solid #c4c4c4;
+  border: 1px solid #c4c4c4;
   margin: 1.875rem 0;
   & > div,
   & > button {
@@ -73,7 +72,7 @@ export const TotalPriceWrap = styled.div`
   align-items: flex-end;
   margin-bottom: 1.375rem;
 
-  & > p:first-child {
+  & > p:first-of-type {
     font-size: 18px;
     font-weight: bold;
     margin: 0 20rem 0 0;
@@ -98,25 +97,14 @@ export const TotalPriceWrap = styled.div`
   }
 `;
 
-export const BuyButton = styled.button`
-  height: 3.75rem;
-  border-radius: 5px;
+export const BuyButton = styled(Button)`
   font-size: 1.125rem;
   font-weight: 700;
-  color: white;
-  width: 26rem;
-  background: #21bf48;
 `;
 
-export const KeepButton = styled.button`
-  margin-left: 14px;
-  width: 12.5rem;
-  background: #767676;
-  height: 3.75rem;
-  border-radius: 5px;
+export const KeepButton = styled(Button)`
   font-size: 1.125rem;
   font-weight: 700;
-  color: white;
 `;
 
 export const MoreInfo = styled.div`
@@ -137,4 +125,9 @@ export const MoreInfo = styled.div`
     width: 100%;
     height: 100%;
   }
+`;
+
+export const BtnGroup = styled.div`
+  display: flex;
+  gap: 14px;
 `;

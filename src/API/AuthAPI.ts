@@ -70,15 +70,14 @@ export const CheckId = async (id: string) => {
   }
 };
 
-export const Login = async (data: LoginData) => {
-  console.log("로그인");
+export const Login = async (data: LoginData, userType: string) => {
   try {
     const res = await axios.post(
       `${BaseUrl}/accounts/login/`,
       {
         username: data.id,
         password: data.password,
-        login_type: "SELLER",
+        login_type: userType,
       },
       {
         headers: {

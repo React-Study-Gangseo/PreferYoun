@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dummy from "../../assets/images/dummy.jpg";
 import {
   Wrapper,
@@ -19,7 +19,23 @@ import {
   OrderBtnS,
 } from "./KeepPage.Style";
 import Header from "component/Header/Header";
+import { KeepProductList } from "API/KeepAPI";
+import { isAwaitKeyword } from "typescript";
 const KeepPage: React.FC = () => {
+  const FetchKeepList = async () => {
+    try {
+      const storedData = localStorage.getItem("UserInfo");
+      const userInfo = storedData ? JSON.parse(storedData) : null;
+      const token = userInfo ? userInfo.token : null;
+      const keepList = KeepProductList(token);
+      console.log(keepList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    FetchKeepList();
+  }, []);
   return (
     <Wrapper>
       {/* <Header /> */}
