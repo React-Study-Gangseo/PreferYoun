@@ -32,17 +32,24 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal, openSignUp }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loginSuccess) {
+    if (loginSuccess && userType === "SELLER") {
       console.log(loginSuccess);
       closeModal();
       navigate("/seller");
+    } else if (loginSuccess && userType === "BUYER") {
+      console.log(loginSuccess);
+      closeModal();
+      navigate("/buyer");
     }
   }, [loginSuccess, navigate]);
 
   const handleUserType = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.id === "BUYER"
-      ? setUserType("BUYER")
-      : setUserType("SELLER");
+    const clickedButtonId = e.currentTarget.id;
+    if (clickedButtonId === "BUYER") {
+      setUserType("BUYER");
+    } else if (clickedButtonId === "SELLER") {
+      setUserType("SELLER");
+    }
   };
 
   useEffect(() => {
@@ -64,9 +71,10 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal, openSignUp }) => {
   if (!modalRoot) {
     return null;
   }
-  const handleFormSubmit = async (data: LoginData) => {
+  const handleFormSubmit = async (loginData: LoginData, userType: string) => {
     try {
-      const response = await Login(data);
+      console.log(userType, loginData);
+      const response = await Login(loginData, userType);
       console.log(response);
       if (response && response.status === 200) {
         console.log("로그인성공", response.data);
@@ -126,9 +134,13 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal, openSignUp }) => {
             </SellerBtn>
           </BtnGroup>
           {userType === "SELLER" ? (
-            <SellerLogin onSubmit={handleFormSubmit} />
+            <SellerLogin
+              onSubmit={(data: LoginData) => handleFormSubmit(data, userType)}
+            />
           ) : (
-            <BuyerLogin />
+            <BuyerLogin
+              onSubmit={(data: LoginData) => handleFormSubmit(data, userType)}
+            />
           )}
         </ModalBody>
         <LinkGroup>

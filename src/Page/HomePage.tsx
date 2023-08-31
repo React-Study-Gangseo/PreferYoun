@@ -2,36 +2,27 @@ import React, { useState } from "react";
 import Header from "component/Header/Header";
 import Main from "../component/Main/Main";
 import Footer from "component/Footer/Footer";
-import JoinModal from "component/common/Modal/JoinModal";
-import LoginModal from "component/common/Modal/LoginModal";
-type Props = {};
 
-export default function HomePage({}: Props) {
-  const [modalShow, setModalShow] = useState(false);
-  const [signUp, setSignUp] = useState(false);
-  const [login, setLogin] = useState(false);
-  const handleLogin = () => {
-    setModalShow(true);
-    setLogin(true);
-  };
+import { useLocation } from "react-router-dom";
 
-  const closeModal = () => {
-    setModalShow(false);
-    setSignUp(false);
-    setLogin(false);
-  };
-  const handleSignUp = () => {
-    setSignUp(true);
-    setLogin(false);
-  };
+export default function HomePage() {
+  const location = useLocation();
+
+  let type: "home" | "seller" | "buyer";
+  switch (location.pathname) {
+    case "/seller":
+      type = "seller";
+      break;
+    case "/buyer":
+      type = "buyer";
+      break;
+    default:
+      type = "home";
+  }
   return (
     <>
-      <Header handleLogin={handleLogin} />
+      <Header type={type} />
       <Main />
-      {modalShow && login && (
-        <LoginModal closeModal={closeModal} openSignUp={handleSignUp} />
-      )}
-      {modalShow && signUp && <JoinModal closeModal={closeModal} />}
       <Footer />
     </>
   );

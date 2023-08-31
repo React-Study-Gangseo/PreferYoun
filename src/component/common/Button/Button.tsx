@@ -19,7 +19,7 @@ export const ButtonStyle = styled.button<ButtonProps>`
     props.width === "s"
       ? "5rem"
       : props.width === "ms"
-      ? "7.625rem"
+      ? "10.375rem"
       : props.width === "m"
       ? "30rem"
       : props.width === "tab"
@@ -29,16 +29,16 @@ export const ButtonStyle = styled.button<ButtonProps>`
       : "30rem"};
   padding: ${(props) =>
     props.width === "s"
-      ? "10px 25px"
+      ? "0px 25px"
       : props.width === "ms"
-      ? "10px 30px"
+      ? "10px 20px"
       : props.width === "m"
       ? "19px 223px"
       : props.width === "tab"
       ? "16px 142px"
       : props.width === "tabMenu"
       ? "15px 15px 15px 20px"
-      : "19px 206px"};
+      : "11px 206px"};
   background-color: ${(props) =>
     props.bgColor === "active"
       ? "#21BF48"
@@ -81,6 +81,8 @@ export const ButtonStyle = styled.button<ButtonProps>`
   }
   font-size: 1rem;
   height: 3.375rem;
+  /* text-align: center; */
+  line-height: 2.1875rem;
 `;
 
 const Button: FC<ButtonProps> = ({

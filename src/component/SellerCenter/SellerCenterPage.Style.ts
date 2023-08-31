@@ -92,11 +92,11 @@ export const OrderList = styled.table`
   & thead {
     height: 3.75rem;
   }
-  & th:nth-child(1) {
+  & th:nth-of-type(1) {
     width: calc(100% * 3 / 6);
     vertical-align: middle;
   }
-  & th:not(:nth-child(1)) {
+  & th:not(:nth-of-type(1)) {
     width: calc(100% * 1 / 6);
     vertical-align: middle;
   }
@@ -106,7 +106,7 @@ export const OrderList = styled.table`
   & tbody td {
     height: 6.4375rem;
   }
-  & td:not(:nth-child(1)) {
+  & td:not(:nth-of-type(1)) {
     text-align: center;
     line-height: 100%;
     vertical-align: middle;
@@ -116,10 +116,10 @@ export const OrderList = styled.table`
     height: 104px;
     border-radius: 10px;
   }
-  & td:not(:nth-child(1)):not(:nth-child(4)) {
+  & td:not(:nth-of-type(1)):not(:nth-of-type(4)) {
     color: #767676;
   }
-  & td:last-child {
+  & td:last-of-type {
     font-size: 18px;
     font-weight: 700;
   }
@@ -133,6 +133,9 @@ export const OrderList = styled.table`
     height: 2.5rem;
     margin: 0 auto;
     border: 1px solid #dbdbdb;
+    &:hover {
+      border: 1px solid #dbdbdb;
+    }
   }
 `;
 

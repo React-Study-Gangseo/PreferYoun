@@ -1,5 +1,5 @@
-import React from "react";
-import Dummy from "../../assets/images/dummy.jpg";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   OrderList,
   ProductInfo,
@@ -18,31 +18,62 @@ import {
   OrdererInfoForm,
   OrderPageTitle,
 } from "./OrderPage.Style";
-const Order: React.FC = () => {
+import { orderdata, Products } from "types/type";
+
+const OrderPage: React.FC = () => {
+  const location = useLocation();
+  const info = location.state;
+  const [orderProducts, setOrderProducts] = useState<Products[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const { order_kind, productInfo, count } = info;
+  useEffect(() => {
+    if (info) {
+      setOrderProducts([productInfo]);
+      CalcTotalPrice();
+    }
+  }, [info]);
+  useEffect(() => {
+    CalcTotalPrice();
+  }, [orderProducts, count]);
+  if (!info) {
+    return <div>주문 정보가 없습니다.</div>;
+  }
+
+  const CalcTotalPrice = () => {
+    orderProducts.map((item: Products) => {
+      if (item.price && item.stock && item.shipping_fee) {
+        return setTotalPrice(item.price * count + item.shipping_fee);
+      }
+    });
+  };
   return (
     <main className="wrapper">
       <OrderPageTitle>주문/결제하기</OrderPageTitle>
       <OrderList>
         <thead>
-          <th>상품정보</th>
-          <th>할인</th>
-          <th>배송비</th>
-          <th>주문금액</th>
+          <tr>
+            <th>상품정보</th>
+            <th>할인</th>
+            <th>배송비</th>
+            <th>주문금액</th>
+          </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <img src={Dummy} alt="상품이미지" />
-              <ProductInfo>
-                <span>백엔드글로벌</span>
-                <h3>딥러닝 개발자 무릎 담요</h3>
-                <span>수량: 1개</span>
-              </ProductInfo>
-            </td>
-            <td>-</td>
-            <td>무료배송</td>
-            <td>17,500원</td>
-          </tr>
+          {orderProducts?.map((product, index) => (
+            <tr key={index}>
+              <td>
+                <img src={product.image} alt="상품이미지" />
+                <ProductInfo>
+                  <span>{product.store_name}</span>
+                  <h3>{product.product_name}</h3>
+                  <span>수량: {count}개</span>
+                </ProductInfo>
+              </td>
+              <td>-</td>
+              <td>{product.shipping_fee}</td>
+              {product?.price && count && <td>{product.price * count}</td>}
+            </tr>
+          ))}
         </tbody>
         <tfoot>
           <tr>
@@ -50,7 +81,7 @@ const Order: React.FC = () => {
             <td />
             <td />
             <td>
-              총 주문금액 <TotalPrice>46,500원</TotalPrice>
+              총 주문금액 <TotalPrice>{totalPrice}</TotalPrice>
             </td>
           </tr>
         </tfoot>
@@ -172,4 +203,4 @@ const Order: React.FC = () => {
   );
 };
 
-export default Order;
+export default OrderPage;
