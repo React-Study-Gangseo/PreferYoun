@@ -13,10 +13,10 @@ import {
   MoreInfo,
   BtnGroup,
 } from "./DetailPage.Style";
-import { Products } from "types/type";
+import { Products, cartItem, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DetailProduct } from "API/ProductAPI";
-import { AddKeepProduct } from "API/KeepAPI";
+import { AddKeepProduct, KeepProductList } from "API/KeepAPI";
 import Swal from "sweetalert2";
 import Button from "component/common/Button/Button";
 const DetailPage: React.FC = () => {
@@ -24,7 +24,15 @@ const DetailPage: React.FC = () => {
   const product = location.state;
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState<Products>();
+  const [postCartData, setPostCartData] = useState<orderdata>({
+    product_id: product.product,
+    quantity: 0,
+    check: true,
+  });
   const [count, setCount] = useState(1);
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const token = userInfo ? userInfo.token : null;
   const FetchDetailProduct = async (data: { product: number }) => {
     try {
       const res = await DetailProduct(data.product);
@@ -90,6 +98,8 @@ const DetailPage: React.FC = () => {
       });
       setCount(productInfo.stock);
       return;
+    } else {
+      setPostCartData((prevState) => ({ ...prevState, quantity: count }));
     }
   }, [count]);
   const handleBuyProduct = () => {
@@ -103,20 +113,24 @@ const DetailPage: React.FC = () => {
   };
   const handleKeepProduct = async () => {
     try {
-      const storedData = localStorage.getItem("UserInfo");
-      const userInfo = storedData ? JSON.parse(storedData) : null;
-      const token = userInfo ? userInfo.token : null;
-      // const res = await AddKeepProduct(token);
+      const storedCart = localStorage.getItem("userCart");
+      const userCart = storedCart ? JSON.parse(storedCart) : null;
+      console.log(userCart);
+      console.log(product);
+      userCart.forEach((item: any) => {
+        if (item.product_id === product.product) {
+          setPostCartData((prevState) => ({ ...prevState, check: false }));
+        }
+      });
+
+      const res = await AddKeepProduct(postCartData, token);
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
-    navigate("/cart", {
-      state: {
-        productInfo: productInfo,
-        count: count,
-      },
-    });
+    navigate("/cart");
   };
+
   return (
     <>
       {/* <Header /> */}
@@ -126,12 +140,31 @@ const DetailPage: React.FC = () => {
           <span>{productInfo?.store_name}</span>
           <h3>{productInfo?.product_name}</h3>
           <Price>
-            <strong>{productInfo?.price}</strong>원
+            {productInfo?.price && (
+              <strong>
+                {new Intl.NumberFormat("ko-KR").format(productInfo?.price)}
+              </strong>
+            )}
+            원
           </Price>
           {productInfo?.shipping_method === "PARCEL" ? (
-            <span>택배배송 / {`${productInfo.shipping_fee}원`}</span>
+            <span>
+              택배배송 /{" "}
+              {productInfo?.shipping_fee === 0
+                ? "무료배송"
+                : `${new Intl.NumberFormat("ko-KR").format(
+                    productInfo?.shipping_fee || 0
+                  )}원`}
+            </span>
           ) : (
-            <span>직접배송 / {`${productInfo?.shipping_fee}원`}</span>
+            <span>
+              직접배송 /{" "}
+              {productInfo?.shipping_fee === 0
+                ? "무료배송"
+                : `${new Intl.NumberFormat("ko-KR").format(
+                    productInfo?.shipping_fee || 0
+                  )}원`}
+            </span>
           )}
           <CountWrap>
             <DecreaseButton onClick={handleMinusCount}>-</DecreaseButton>
@@ -145,7 +178,11 @@ const DetailPage: React.FC = () => {
             </span>
             <p>
               {productInfo?.price && (
-                <strong>{count * productInfo.price}</strong>
+                <strong>
+                  {new Intl.NumberFormat("ko-KR").format(
+                    productInfo?.price * count
+                  )}
+                </strong>
               )}
               원
             </p>

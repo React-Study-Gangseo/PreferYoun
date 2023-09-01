@@ -1,5 +1,5 @@
 import axios from "axios";
-import { orderdata } from "types/type";
+import { cartItem, orderdata } from "types/type";
 import BaseUrl from "./api";
 
 export const KeepProductList = async (token: string) => {
@@ -31,6 +31,22 @@ export const AddKeepProduct = async (orderdata: orderdata, token: string) => {
         },
       }
     );
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
+export const DeleteAllCart = async () => {
+  try {
+    const res = await axios.delete(`${BaseUrl}/cart`);
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
+export const DeleteCartItem = async (cart_item_id: cartItem) => {
+  try {
+    const res = await axios.delete(`${BaseUrl}/cart/${cart_item_id}/`);
     return res;
   } catch (err) {
     throw err;
