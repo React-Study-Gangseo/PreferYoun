@@ -31,8 +31,10 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   const [login, setLogin] = useState(false);
 
   const handleCenterBtn = () => {
-    console.log("check");
     navigate("/seller/center");
+  };
+  const handleMoveCart = () => {
+    navigate("/cart");
   };
   const handleLogin = () => {
     setModalShow(true);
@@ -107,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
-          <CartBtn>
+          <CartBtn onClick={handleMoveCart}>
             <img src={Cart} alt="쇼핑카트 아이콘" />
             장바구니
           </CartBtn>

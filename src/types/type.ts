@@ -55,3 +55,24 @@ export interface orderdata {
   total_price?: number;
   check?: boolean;
 }
+export interface cartItem {
+  my_cart: number; // 카트 고유번호; User가 바뀌지 않는이상 번호가 바뀌지 않음
+  cart_item_id: number; // cartItem의 고유번호; 요청시마다 번호가 바뀜
+  product_id: number; // 상품 아이디
+  quantity: number;
+}
+export interface cartData {
+  count?: number;
+  next?: string;
+  previous?: string;
+  results?: cartItem[];
+}
+
+export interface totalPrice {
+  count?: number;
+  shipping_fee?: number;
+  price?: number;
+  setCount: (value: number) => void;
+  setShippingFee: (value: number) => void;
+  setPrice: (value: number) => void;
+}
