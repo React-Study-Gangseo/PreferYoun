@@ -15,24 +15,12 @@ import Button from "../../common/Button/Button";
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { CheckCRN, CheckId, SellerJoin } from "API/AuthAPI";
+import { Join, CheckCRN, CheckId } from "API/AuthAPI";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { FormValue } from "types/type";
 
-export interface FormValue {
-  id: string;
-  password: string;
-  password2: string;
-  name: string;
-  CRNumber: string;
-  Phone: string;
-  StoreName: string;
-  phoneCode: string;
-  firstNumber: string;
-  secondNumber: string;
-}
-
-const Join: React.FC = () => {
+const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const {
     watch,
     handleSubmit,
@@ -44,62 +32,67 @@ const Join: React.FC = () => {
   } = useForm<FormValue>({ mode: "onChange" });
   const navigate = useNavigate();
   const passwordValue = watch("password", "");
-  const onSubmit = async (data: FormValue) => {
-    try {
-      const response = await SellerJoin(data);
-      if (response && response.status === 201) {
-        console.log("회원가입 성공");
-      }
-    } catch (error) {
-      console.log("회원가입 실패", error);
-    }
-  };
+
   const CRNVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const checkCRN = getValues("CRNumber");
-    console.log(checkCRN);
-    try {
-      const response = await CheckCRN(checkCRN);
+    if (watch("company_registration_number")) {
+      const checkCRN: string | undefined = getValues(
+        "company_registration_number"
+      );
+      if (typeof checkCRN === "string") {
+        try {
+          const response = await CheckCRN(checkCRN);
 
-      if (response?.data.Success === "사용 가능한 사업자등록번호입니다.") {
-        alert("사용 가능한 사업자등록번호입니다.");
-        clearErrors();
-      }
-    } catch (error) {
-      console.log("check");
-      const axiosError = error as AxiosError; // 타입 단언
-      const responseData = axiosError?.response?.data as any;
-      console.log("사업자등록번호 체크 실패", responseData);
-      if (responseData.FAIL_Message === "이미 등록된 사업자등록번호입니다.") {
-        setError("CRNumber", {
-          type: "manual",
-          message: "* 이미 등록된 사업자등록번호입니다.",
-        });
+          if (response?.data.Success === "사용 가능한 사업자등록번호입니다.") {
+            alert("사용 가능한 사업자등록번호입니다.");
+            clearErrors();
+          }
+        } catch (error) {
+          console.log("check");
+          const axiosError = error as AxiosError; // 타입 단언
+          const responseData = axiosError?.response?.data as any;
+          console.log("사업자등록번호 체크 실패", responseData);
+          if (
+            responseData.FAIL_Message === "이미 등록된 사업자등록번호입니다."
+          ) {
+            setError("company_registration_number", {
+              type: "manual",
+              message: "* 이미 등록된 사업자등록번호입니다.",
+            });
+          }
+        }
+      } else {
+        console.log("checkCRN is not defined");
       }
     }
   };
   const IdVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const checkId = getValues("id");
-    console.log(checkId);
-    try {
-      const response = await CheckId(checkId);
+    if (watch("id")) {
+      const checkId: string | undefined = getValues("id");
+      console.log(checkId);
+      if (typeof checkId === "string") {
+        // checkId가 문자열인지 확인
+        try {
+          const response = await CheckId(checkId);
 
-      if (response?.data.Success === "멋진 아이디네요 :)") {
-        alert("Success: '멋진 아이디네요 :)");
+          if (response?.data.Success === "멋진 아이디네요 :)") {
+            alert("Success: '멋진 아이디네요 :)");
+          }
+        } catch (error) {
+          const axiosError = error as AxiosError;
+          const responseData = axiosError?.response?.data as any;
+          console.log("아이디 체크 실패", responseData.FAIL_Message);
+          if (responseData.FAIL_Message === "이미 사용 중인 아이디입니다.") {
+            setError("id", {
+              type: "manual",
+              message: "* 이미 가입된 아이디 입니다.",
+            });
+          }
+        }
+      } else {
+        console.log("checkID is not defined");
       }
-    } catch (error) {
-      // error is the exception thrown from CheckId function
-      const axiosError = error as AxiosError; // 타입 단언
-      const responseData = axiosError?.response?.data as any;
-      console.log("아이디 체크 실패", responseData.FAIL_Message);
-      if (responseData.FAIL_Message === "이미 사용 중인 아이디입니다.") {
-        setError("id", {
-          type: "manual",
-          message: "* 이미 가입된 아이디 입니다.",
-        });
-      }
-      // 이미 가입된 아이디인 경우 에러 처리...
     }
   };
 
@@ -268,7 +261,7 @@ const Join: React.FC = () => {
           <CRNumber>
             <Controller
               control={control}
-              name="CRNumber"
+              name="company_registration_number"
               defaultValue=""
               rules={{
                 required: "사업자 등록 번호는 필수 입력값 입니다.",
@@ -288,8 +281,10 @@ const Join: React.FC = () => {
                 />
               )}
             />
-            {errors.CRNumber && (
-              <StyledError role="alert">{errors.CRNumber.message}</StyledError>
+            {errors.company_registration_number && (
+              <StyledError role="alert">
+                {errors.company_registration_number.message}
+              </StyledError>
             )}
             <Button
               width="ms"
@@ -327,4 +322,4 @@ const Join: React.FC = () => {
   );
 };
 
-export default Join;
+export default SellerJoin;

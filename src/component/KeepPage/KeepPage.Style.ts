@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-
+import PlusIcon from "../../assets/images/icon-plus-line.svg";
+import MinusIcon from "../../assets/images/icon-minus-line.svg";
 export const Wrapper = styled.div`
   width: 80rem;
   margin: 0 auto;
@@ -139,12 +140,21 @@ export const ClacPrice = styled.ul`
     display: block;
     width: 2.125rem;
     height: 2.125rem;
-    background: white;
+    background-color: #fff;
     position: absolute;
     border-radius: 100%;
     right: -18px;
     top: 10px;
-    background: red;
+  }
+  & li:first-of-type::after {
+    background-image: url(${MinusIcon});
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  & li:nth-of-type(2)::after {
+    background-image: url(${PlusIcon});
+    background-repeat: no-repeat;
+    background-position: center;
   }
 `;
 const Button = styled.button`

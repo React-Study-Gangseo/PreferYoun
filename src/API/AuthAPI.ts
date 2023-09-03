@@ -1,8 +1,8 @@
 import BaseUrl from "./api";
 import axios from "axios";
-import { FormValue } from "../component/Auth/Join/SellerJoin";
+import { FormValue } from "types/type";
 import { LoginData } from "../types/type";
-export const SellerJoin = async (formData: FormValue) => {
+export const Join = async (formData: FormValue) => {
   try {
     // const { id, password, password2, name, CRNumber, Phone, StoreName } =
     //   formData;
@@ -16,7 +16,7 @@ export const SellerJoin = async (formData: FormValue) => {
         password2: formData.password2,
         name: formData.name,
         phone_number: phoneNumber,
-        company_registration_number: formData.CRNumber,
+        company_registration_number: formData.company_registration_number,
         store_name: formData.StoreName,
       },
       {

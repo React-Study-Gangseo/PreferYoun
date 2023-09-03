@@ -12,7 +12,8 @@ import {
   LogoImg,
   ButtonGroup,
 } from "../../Auth/Join/Join.Style";
-
+import { FormValue } from "types/type";
+import { Join } from "API/AuthAPI";
 interface ModalProps {
   closeModal: () => void;
 }
@@ -44,7 +45,16 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
   if (!modalRoot) {
     return null;
   }
-
+  const handleFormSubmit = async (data: FormValue) => {
+    try {
+      const response = await Join(data);
+      if (response && response.status === 201) {
+        console.log("회원가입 성공");
+      }
+    } catch (error) {
+      console.log("회원가입 실패", error);
+    }
+  };
   return createPortal(
     <ModalWrapper>
       <StyledModalContainer>
@@ -78,7 +88,13 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
               판매자 회원가입
             </SellerBtn>
           </ButtonGroup>
-          {userType === "seller" ? <SellerJoin /> : <BuyerJoin />}
+          {userType === "seller" ? (
+            <SellerJoin
+              onSubmit={(data: FormValue) => handleFormSubmit(data)}
+            />
+          ) : (
+            <BuyerJoin onSubmit={(data: FormValue) => handleFormSubmit(data)} />
+          )}
           <CheckJoinForm>
             <CheckBox type="checkbox" />
             <Terms>

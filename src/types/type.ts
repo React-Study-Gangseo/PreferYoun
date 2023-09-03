@@ -70,7 +70,7 @@ export interface cartData {
 
 export interface totalPrice {
   count?: number;
-  shipping_fee?: number;
+  shippingFee?: number;
   price?: number;
   setCount: (value: number) => void;
   setShippingFee: (value: number) => void;
