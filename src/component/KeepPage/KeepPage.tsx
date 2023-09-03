@@ -14,7 +14,7 @@ import CartItem from "component/CartItem/CartItem";
 
 export const MyContext = createContext<totalPrice>({
   count: 0,
-  shipping_fee: 0,
+  shippingFee: 0,
   price: 0,
   setCount: (value: number) => {},
   setShippingFee: (value: number) => {},
@@ -27,7 +27,12 @@ const KeepPage: React.FC = () => {
   const [count, setCount] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
   const [price, setPrice] = useState(0);
-
+  const [allItem, setAllItem] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>(
+    {}
+  );
+  // const [selectedItemInfo,setSelectedItemInfo] = useState<Record<string,
+  // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
   const FetchKeepList = async () => {
     try {
       const storedData = localStorage.getItem("UserInfo");
@@ -45,17 +50,43 @@ const KeepPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const checkedObj = cartItem.reduce<Record<string, boolean>>((acc, item) => {
+      acc[item.product_id] = false; // 초기값을 false로 설정합니다. 필요에 따라 true로 변경할 수 있습니다.
+      return acc;
+    }, {});
+
+    setSelectedItems(checkedObj);
+  }, [cartItem]);
+  console.log(selectedItems);
+  useEffect(() => {
     cartData.map((data: cartData) =>
       data.results ? setCartItem(data.results) : null
     );
   }, [cartData]);
 
-  console.log("cart", cartData);
+  const handleAllCheck = (checked: boolean) => {
+    setSelectedItems((prevState) => {
+      const newState = { ...prevState };
+      for (let key in newState) {
+        newState[key] = checked;
+      }
+      return newState;
+    });
+  };
+  const allChecked = Object.values(selectedItems).every((value) => value);
+  const handleItemCheck = (id: number) => {
+    setSelectedItems((prevState) => ({
+      ...prevState,
+      [id.toString()]: !prevState[id.toString()],
+    }));
+  };
+  console.log(price, count, shippingFee);
+  const CalcTotalPrice = () => {};
   return (
     <MyContext.Provider
       value={{
         count: count,
-        shipping_fee: shippingFee,
+        shippingFee: shippingFee,
         price: price,
         setCount: setCount,
         setShippingFee: setShippingFee,
@@ -63,12 +94,15 @@ const KeepPage: React.FC = () => {
       }}
     >
       <Wrapper>
-        {/* <Header /> */}
         <Heading>장바구니</Heading>
         <KeepForm>
           <FormTop>
             <li>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={allChecked}
+                onChange={(e) => handleAllCheck(e.target.checked)}
+              />
               <label className="a11y-hidden">
                 장바구니 아이템 전체 체크 박스
               </label>
@@ -78,9 +112,15 @@ const KeepPage: React.FC = () => {
             <li>상품금액</li>
           </FormTop>
           <KeepList>
-            {cartItem.map((item: cartItem, itemIndex: number) => (
-              <li key={itemIndex}>
-                <CartItem product={item} />
+            {cartItem.map((item: cartItem) => (
+              <li key={item.product_id}>
+                <CartItem
+                  product={item}
+                  allCheck={allItem}
+                  index={item.product_id}
+                  isChecked={selectedItems[item.product_id]} // 추가된 prop
+                  onCheckChange={() => handleItemCheck(item.product_id)} // 추가된 prop
+                />
               </li>
             ))}
           </KeepList>

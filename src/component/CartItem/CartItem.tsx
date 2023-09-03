@@ -16,29 +16,41 @@ import { DetailProduct } from "API/ProductAPI";
 import Swal from "sweetalert2";
 import { MyContext } from "../KeepPage/KeepPage";
 import DeleteIcon from "../../assets/images/icon-delete.svg";
-const CartItem: React.FC<{ product: cartItem }> = (product) => {
+
+const CartItem: React.FC<{
+  product: cartItem;
+  allCheck: boolean;
+  index: number;
+  isChecked: boolean; // 추가된 prop type 선언
+  onCheckChange(): void;
+}> = ({
+  product,
+  allCheck,
+  index,
+  isChecked, // 추가된 prop type 선언
+  onCheckChange,
+}) => {
   const [cartItem, setCartItem] = useState<Products>();
-  const [itemCount, setItemCount] = useState(product.product.quantity);
-  const { count, shipping_fee, price, setCount, setShippingFee, setPrice } =
+  const [itemCount, setItemCount] = useState(product.quantity);
+  const { count, shippingFee, price, setCount, setShippingFee, setPrice } =
     useContext(MyContext);
+  const [selectItem, setSelectItem] = useState(false);
 
   const KeepProductDetail = async (product_id: number) => {
     try {
       const keepItem = await DetailProduct(product_id);
       setCartItem(keepItem.data);
-      console.log(keepItem.data);
       setShippingFee(keepItem.data.shipping_fee);
       setPrice(keepItem.data.price);
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
-    setCount(itemCount);
-    KeepProductDetail(product.product.product_id);
+    setCount(product.quantity);
+    KeepProductDetail(product.product_id);
   }, []);
-
+  console.log(product.quantity, count, shippingFee, price);
   useEffect(() => {
     if (itemCount < 1) {
       Swal.fire({
@@ -78,9 +90,50 @@ const CartItem: React.FC<{ product: cartItem }> = (product) => {
   const handleDeleteItem = (product_id: any) => {
     console.log(product_id);
   };
+
+  useEffect(() => {
+    setSelectItem(isChecked);
+  }, [isChecked]);
+
+  useEffect(() => {
+    if (allCheck) {
+      setSelectItem(true);
+    } else {
+      setSelectItem(false);
+    }
+  }, [allCheck]);
+
+  const handleItemCheck = (checked: boolean) => {
+    if (checked) {
+      setSelectItem(true);
+    } else {
+      setSelectItem(false);
+    }
+
+    onCheckChange(); // 체크박스 상태가 변경될 때마다 부모에게 알림
+  };
+  const CalcPrice = () => {
+    console.log(cartItem);
+    if (cartItem?.price && count && cartItem?.shipping_fee !== undefined) {
+      setPrice(cartItem.price);
+      setCount(count);
+      setShippingFee(cartItem.shipping_fee);
+    } else {
+      console.log("error");
+    }
+  };
+  useEffect(() => {
+    if (selectItem) {
+      CalcPrice();
+    }
+  }, [selectItem]);
   return (
     <KeepProduct>
-      <input type="checkbox" />
+      <input
+        type="checkbox"
+        checked={selectItem}
+        onChange={(e) => handleItemCheck(e.target.checked)}
+      />
       <label className="a11y-hidden">장바구니 아이템 체크박스</label>
       <KeepProductImg src={cartItem?.image} alt="장바구나 상품 이미지" />
       <KeepProductInfo>
