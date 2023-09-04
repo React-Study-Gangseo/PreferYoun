@@ -44,9 +44,35 @@ export const DeleteAllCart = async () => {
     throw err;
   }
 };
-export const DeleteCartItem = async (cart_item_id: cartItem) => {
+export const DeleteCartItem = async (cart_item_id: cartItem, token: string) => {
   try {
-    const res = await axios.delete(`${BaseUrl}/cart/${cart_item_id}/`);
+    const res = await axios.delete(`${BaseUrl}/cart/${cart_item_id}/`, {
+      headers: {
+        Authorization: `JWT ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
+export const UpdateQuantity = async (cartItem: cartItem, token: string) => {
+  try {
+    const res = await axios.put(
+      `${BaseUrl}/cart/${cartItem.cart_item_id}/`,
+      {
+        product_id: cartItem.product_id,
+        quantity: cartItem.quantity,
+        is_active: true,
+      },
+      {
+        headers: {
+          Authorization: `JWT ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return res;
   } catch (err) {
     throw err;

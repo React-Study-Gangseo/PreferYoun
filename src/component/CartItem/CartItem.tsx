@@ -16,41 +16,43 @@ import { DetailProduct } from "API/ProductAPI";
 import Swal from "sweetalert2";
 import { MyContext } from "../KeepPage/KeepPage";
 import DeleteIcon from "../../assets/images/icon-delete.svg";
+import { DeleteCartItem, UpdateQuantity } from "API/KeepAPI";
 
 const CartItem: React.FC<{
   product: cartItem;
-  allCheck: boolean;
-  index: number;
   isChecked: boolean; // 추가된 prop type 선언
   onCheckChange(): void;
+  FetchKeepList(): void;
+  itemQuantity: number;
+  setItemQuantity(): void; // 추가된 prop type 선언
 }> = ({
   product,
-  allCheck,
-  index,
   isChecked, // 추가된 prop type 선언
   onCheckChange,
+  FetchKeepList,
+  itemQuantity,
+  setItemQuantity,
+  // 추가된 prop type 선언
 }) => {
   const [cartItem, setCartItem] = useState<Products>();
   const [itemCount, setItemCount] = useState(product.quantity);
-  const { count, shippingFee, price, setCount, setShippingFee, setPrice } =
-    useContext(MyContext);
+  const { count, setCount } = useContext(MyContext);
   const [selectItem, setSelectItem] = useState(false);
-
+  const [updateItem, setUpdateItem] = useState<cartItem>();
   const KeepProductDetail = async (product_id: number) => {
     try {
       const keepItem = await DetailProduct(product_id);
       setCartItem(keepItem.data);
-      setShippingFee(keepItem.data.shipping_fee);
-      setPrice(keepItem.data.price);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    setCount(product.quantity);
+    setUpdateItem(product);
     KeepProductDetail(product.product_id);
+    if (cartItem?.price) setCount(cartItem?.price * itemCount);
   }, []);
-  console.log(product.quantity, count, shippingFee, price);
+
   useEffect(() => {
     if (itemCount < 1) {
       Swal.fire({
@@ -63,6 +65,7 @@ const CartItem: React.FC<{
         },
       });
       setItemCount(1);
+
       return;
     } else if (cartItem?.stock && itemCount > cartItem?.stock) {
       Swal.fire({
@@ -75,33 +78,62 @@ const CartItem: React.FC<{
         },
       });
       setItemCount(cartItem.stock);
+
       return;
     } else {
-      setCount(itemCount);
+      setUpdateItem((prevState) => {
+        if (prevState) {
+          return { ...prevState, quantity: itemCount };
+        } else {
+          return prevState;
+        }
+      });
+      setItemCount(itemCount);
+      if (cartItem?.price) setCount(cartItem?.price * itemCount);
     }
   }, [itemCount]);
 
+  useEffect(() => {
+    UpdateItemQuantity();
+  }, [updateItem]);
+
+  const UpdateItemQuantity = async () => {
+    const storedData = localStorage.getItem("UserInfo");
+    const userInfo = storedData ? JSON.parse(storedData) : null;
+    const token = userInfo ? userInfo.token : null;
+    console.log(updateItem);
+    if (updateItem) {
+      try {
+        await UpdateQuantity(updateItem, token);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   const handleMinusItemCount = () => {
     setItemCount((prevItemCount) => prevItemCount - 1);
   };
   const handlePlusItemCount = () => {
     setItemCount((prevItemCount) => prevItemCount + 1);
   };
-  const handleDeleteItem = (product_id: any) => {
-    console.log(product_id);
+  const handleDeleteItem = async (cart_item_id: any) => {
+    const storedData = localStorage.getItem("UserInfo");
+    const userInfo = storedData ? JSON.parse(storedData) : null;
+    const token = userInfo ? userInfo.token : null;
+    try {
+      const res = await DeleteCartItem(cart_item_id, token);
+      console.log(res);
+      if (res.status === 204) {
+        FetchKeepList();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   useEffect(() => {
     setSelectItem(isChecked);
+    if (cartItem?.price) setCount(cartItem?.price * itemCount);
   }, [isChecked]);
-
-  useEffect(() => {
-    if (allCheck) {
-      setSelectItem(true);
-    } else {
-      setSelectItem(false);
-    }
-  }, [allCheck]);
 
   const handleItemCheck = (checked: boolean) => {
     if (checked) {
@@ -112,21 +144,6 @@ const CartItem: React.FC<{
 
     onCheckChange(); // 체크박스 상태가 변경될 때마다 부모에게 알림
   };
-  const CalcPrice = () => {
-    console.log(cartItem);
-    if (cartItem?.price && count && cartItem?.shipping_fee !== undefined) {
-      setPrice(cartItem.price);
-      setCount(count);
-      setShippingFee(cartItem.shipping_fee);
-    } else {
-      console.log("error");
-    }
-  };
-  useEffect(() => {
-    if (selectItem) {
-      CalcPrice();
-    }
-  }, [selectItem]);
   return (
     <KeepProduct>
       <input
@@ -179,7 +196,7 @@ const CartItem: React.FC<{
         )}
         <OrderBtnS>주문하기</OrderBtnS>
       </Total>
-      <DeleteBtn onClick={() => handleDeleteItem(cartItem?.product_id)}>
+      <DeleteBtn onClick={() => handleDeleteItem(product.cart_item_id)}>
         <img src={DeleteIcon} alt="상품 삭제 버튼" />
       </DeleteBtn>
     </KeepProduct>
