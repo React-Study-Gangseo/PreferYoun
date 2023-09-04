@@ -188,3 +188,20 @@ export const OrderBtnS = styled(Button)`
   font-weight: 500;
   line-height: 12px;
 `;
+
+export const EmptyKeepList = styled.section`
+  width: 100%;
+  height: 100vh;
+  min-height: 100%;
+  text-align: center;
+  padding-top: 200px;
+  & h5 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 17px;
+  }
+  & p {
+    font-size: 14px;
+    font-weight: 400;
+  }
+`;
