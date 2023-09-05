@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import styled from "@emotion/styled";
 import SellerJoin from "component/Auth/Join/SellerJoin";
 import BuyerJoin from "../../Auth/Join/BuyerJoin";
-import { ButtonStyle } from "../Button/Button";
 import Logo from "../../../assets/images/Logo-hodu.png";
 import Close from "../../../assets/images/close-r.svg";
 import {
@@ -13,18 +12,29 @@ import {
   ButtonGroup,
 } from "../../Auth/Join/Join.Style";
 import { FormValue } from "types/type";
-import { Join } from "API/AuthAPI";
+import { Seller_Join, Join } from "API/AuthAPI";
+
 interface ModalProps {
   closeModal: () => void;
 }
 const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
   const modalRoot = document.getElementById("modal");
-  const [userType, setUserType] = useState("seller");
+  const [userType, setUserType] = useState("SELLER");
+  const [JoinSuccess, setJoinSuccess] = useState(false);
+
   const handleUserType = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.id === "buyer"
-      ? setUserType("buyer")
-      : setUserType("seller");
+    e.currentTarget.id === "BUYER"
+      ? setUserType("BUYER")
+      : setUserType("SELLER");
   };
+
+  useEffect(() => {
+    if (JoinSuccess && userType === "SELLER") {
+      console.log(JoinSuccess);
+    } else if (JoinSuccess && userType === "BUYER") {
+      console.log(JoinSuccess, "BUYER");
+    }
+  }, [JoinSuccess]);
 
   useEffect(() => {
     if (!modalRoot) return;
@@ -46,13 +56,28 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
     return null;
   }
   const handleFormSubmit = async (data: FormValue) => {
-    try {
-      const response = await Join(data);
-      if (response && response.status === 201) {
-        console.log("회원가입 성공");
+    if (userType === "SELLER") {
+      try {
+        const response = await Seller_Join(data);
+        if (response && response.status === 201) {
+          console.log("회원가입 성공");
+          setJoinSuccess(true);
+        }
+      } catch (error) {
+        console.log("회원가입 실패", error);
+        setJoinSuccess(false);
       }
-    } catch (error) {
-      console.log("회원가입 실패", error);
+    } else {
+      try {
+        const response = await Join(data);
+        if (response && response.status === 201) {
+          console.log("회원가입 성공");
+          setJoinSuccess(true);
+        }
+      } catch (error) {
+        console.log("회원가입 실패", error);
+        setJoinSuccess(false);
+      }
     }
   };
   return createPortal(
@@ -62,14 +87,14 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
           <LogoImg src={Logo} alt="Hodu 로고" />
           <ButtonGroup>
             <BuyerBtn
-              id="buyer"
+              id="BUYER"
               onClick={(e) => {
                 handleUserType(e);
               }}
               style={{
-                backgroundColor: userType === "buyer" ? "#fff" : "#F2F2F2",
+                backgroundColor: userType === "BUYER" ? "#fff" : "#F2F2F2",
                 borderBottom:
-                  userType === "buyer" ? "none" : "1px solid #767676",
+                  userType === "BUYER" ? "none" : "1px solid #767676",
               }}
             >
               구매자 회원가입
@@ -80,7 +105,7 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
                 handleUserType(e);
               }}
               style={{
-                backgroundColor: userType === "seller" ? "#fff" : "#F2F2F2",
+                backgroundColor: userType === "SELLER" ? "#fff" : "#F2F2F2",
                 borderBottom:
                   userType === "seller" ? "none" : "1px solid #767676",
               }}
@@ -88,26 +113,13 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
               판매자 회원가입
             </SellerBtn>
           </ButtonGroup>
-          {userType === "seller" ? (
+          {userType === "SELLER" ? (
             <SellerJoin
               onSubmit={(data: FormValue) => handleFormSubmit(data)}
             />
           ) : (
             <BuyerJoin onSubmit={(data: FormValue) => handleFormSubmit(data)} />
           )}
-          <CheckJoinForm>
-            <CheckBox type="checkbox" />
-            <Terms>
-              호두샵의 <CheckTerms>이용약관</CheckTerms> 및
-              <CheckTerms> 개인정보처리방침</CheckTerms>에 대한 내용을 확인
-              하였고
-              <br />
-              동의합니다.
-            </Terms>
-            <JoinBtn width="l" bgColor="active">
-              가입하기
-            </JoinBtn>
-          </CheckJoinForm>
         </ModalBody>
         <CloseBtn onClick={closeModal}>
           <img src={Close} alt="모달닫힘버튼" aria-label="모달닫힘버튼" />
@@ -145,30 +157,8 @@ const ModalBody = styled.div`
   padding: 15px;
 `;
 
-const CheckTerms = styled.a`
-  font-weight: bold;
-  text-decoration: underline;
-`;
-const CheckJoinForm = styled.form`
-  width: 30rem;
-  margin: 0 auto 0.625rem;
-`;
-const CheckBox = styled.input`
-  margin-right: 0.3rem;
-`;
-const Terms = styled.label`
-  display: block;
-  float: right;
-  padding: 0 40px 0 0;
-  line-height: normal;
-`;
-
 const CloseBtn = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-`;
-
-const JoinBtn = styled(ButtonStyle)`
-  margin: 34px auto;
 `;

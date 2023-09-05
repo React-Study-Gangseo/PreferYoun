@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import PlusIcon from "../../assets/images/icon-plus-line.svg";
 import MinusIcon from "../../assets/images/icon-minus-line.svg";
+import { ButtonStyle } from "component/common/Button/Button";
 export const Wrapper = styled.div`
   width: 80rem;
   margin: 0 auto;
@@ -157,33 +158,15 @@ export const ClacPrice = styled.ul`
     background-position: center;
   }
 `;
-const Button = styled.button`
-  display: block;
-  padding: 15px;
-  font-size: 20px;
-  width: 50%;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.5s ease;
-`;
 
-export const OrderBtn = styled(Button)`
-  width: 13.75rem;
-  height: 4.25rem;
-  border-radius: 5px;
-  background: #21bf48;
-  color: white;
+export const OrderBtn = styled(ButtonStyle)`
   margin: 2.5rem auto 0;
   font-size: 24px;
   font-weight: 700;
+  height: 4.25rem;
 `;
 
-export const OrderBtnS = styled(Button)`
-  width: 130px;
-  height: 40px;
-  border-radius: 5px;
-  background: #21bf48;
-  color: white;
+export const OrderBtnS = styled(ButtonStyle)`
   font-size: 16px;
   font-weight: 500;
   line-height: 12px;

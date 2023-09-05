@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   JoinSection,
@@ -10,15 +10,25 @@ import {
   NameWrap,
   CRNumber,
   StyledError,
+  CheckJoin,
+  CheckTerms,
+  Terms,
+  JoinBtn,
 } from "./Join.Style";
 import Button from "../../common/Button/Button";
-import { TextField, IconButton, InputAdornment } from "@mui/material";
+import { TextField, IconButton, InputAdornment, Checkbox } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Join, CheckCRN, CheckId } from "API/AuthAPI";
+import { CheckCRN, CheckId } from "API/AuthAPI";
 import { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
 import { FormValue } from "types/type";
+import Swal from "sweetalert2";
+
+const label = {
+  inputProps: {
+    "aria-label": "동의 체크",
+  },
+};
 
 const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const {
@@ -30,7 +40,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
     control,
     formState: { errors },
   } = useForm<FormValue>({ mode: "onChange" });
-  const navigate = useNavigate();
+  const [checked, setChecked] = useState(false);
   const passwordValue = watch("password", "");
 
   const CRNVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,7 +87,17 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
           const response = await CheckId(checkId);
 
           if (response?.data.Success === "멋진 아이디네요 :)") {
-            alert("Success: '멋진 아이디네요 :)");
+            Swal.fire({
+              title: "Success",
+              text: "멋진아이디네요:)",
+              icon: "success",
+              confirmButtonColor: "#21bf48",
+              confirmButtonAriaLabel: "확인버튼",
+              customClass: {
+                icon: "my-icon",
+              },
+            });
+            clearErrors();
           }
         } catch (error) {
           const axiosError = error as AxiosError;
@@ -106,10 +126,17 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
     event.preventDefault();
   };
 
+  const handleChange = () => {
+    if (!checked) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  };
   return (
     <>
-      <JoinSection>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <JoinSection>
           <EmailWrap>
             <Controller
               control={control}
@@ -316,8 +343,31 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               )}
             />
           </div>
-        </Form>
-      </JoinSection>
+        </JoinSection>
+        <CheckJoin>
+          <Checkbox
+            required
+            size="small"
+            {...label}
+            checked={checked}
+            onChange={handleChange}
+          />
+          <Terms>
+            호두샵의 <CheckTerms>이용약관</CheckTerms> 및
+            <CheckTerms> 개인정보처리방침</CheckTerms>에 대한 내용을 확인 하였고
+            <br />
+            동의합니다.
+          </Terms>
+        </CheckJoin>
+        <JoinBtn
+          width="l"
+          bgColor="active"
+          type="submit"
+          disabled={checked ? false : true}
+        >
+          가입하기
+        </JoinBtn>
+      </Form>
     </>
   );
 };

@@ -69,6 +69,6 @@ export interface cartData {
 }
 
 export interface totalPrice {
-  count?: number;
-  setCount: (value: number) => void;
+  totalPrice?: number;
+  setTotalPrice?: (value: number) => void;
 }

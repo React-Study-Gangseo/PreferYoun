@@ -25,6 +25,8 @@ const OrderPage: React.FC = () => {
   const info = location.state;
   const [orderProducts, setOrderProducts] = useState<Products[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [totalShippingFee, setTotalShippingFee] = useState(0);
+  const [totalProductPrice, setTotalProductPrice] = useState(0);
   const { order_kind, productInfo, count } = info;
   useEffect(() => {
     if (info) {
@@ -38,13 +40,37 @@ const OrderPage: React.FC = () => {
   if (!info) {
     return <div>주문 정보가 없습니다.</div>;
   }
-
+  console.log(order_kind, productInfo, count);
   const CalcTotalPrice = () => {
-    orderProducts.map((item: Products) => {
-      if (item.price && item.stock && item.shipping_fee) {
-        return setTotalPrice(item.price * count + item.shipping_fee);
-      }
-    });
+    // orderProducts.map((item: Products) => {
+    //   if (item.price && item.stock && item.shipping_fee) {
+    //     return setTotalPrice(item.price * count + item.shipping_fee);
+    //   }
+    // });
+    let total = orderProducts.reduce(
+      (
+        acc: {
+          totalPrice: number;
+          totalShippingFee: number;
+          totalProductPrice: number;
+        },
+        item: Products
+      ) => {
+        if (item.price && item.stock && item.shipping_fee) {
+          return {
+            totalPrice:
+              acc.totalPrice + (item.price * count + item.shipping_fee),
+            totalShippingFee: acc.totalShippingFee + item.shipping_fee,
+            totalProductPrice: acc.totalPrice + item.price * count,
+          };
+        }
+        return acc;
+      },
+      { totalPrice: 0, totalShippingFee: 0, totalProductPrice: 0 }
+    );
+    setTotalProductPrice(total.totalProductPrice);
+    setTotalShippingFee(total.totalShippingFee);
+    setTotalPrice(total.totalPrice);
   };
   return (
     <main className="wrapper">
@@ -165,28 +191,26 @@ const OrderPage: React.FC = () => {
           <FinallyPayWrapper>
             <ul>
               <li>
-                <p>- 상품금액</p>
+                <p>상품금액</p>
                 <p>
-                  <strong>46500</strong>원
+                  <strong>{totalProductPrice} </strong>원
                 </p>
               </li>
               <li>
-                <p>- 할인금액</p>
+                <p>할인금액</p>
                 <p>
-                  <strong>46500</strong>원
+                  <strong>0 </strong>원
                 </p>
               </li>
               <li>
-                <p>- 배송비</p>
+                <p>배송비</p>
                 <p>
-                  <strong>46500</strong>원
+                  <strong>{totalShippingFee} </strong>원
                 </p>
               </li>
               <li>
-                <p>- 결제금액</p>
-                <p>
-                  <strong>46500</strong>원
-                </p>
+                <p>결제금액</p>
+                <strong>{totalPrice} 원</strong>
               </li>
             </ul>
             <LastCheck>

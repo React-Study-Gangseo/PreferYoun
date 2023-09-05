@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-
+import { ButtonStyle } from "component/common/Button/Button";
 export const KeepProduct = styled.article`
   width: 100%;
   border: 2px solid #e0e0e0;
@@ -94,12 +94,10 @@ export const OrderBtn = styled(Button)`
   font-weight: 700;
 `;
 
-export const OrderBtnS = styled(Button)`
-  width: 130px;
+export const OrderBtnS = styled(ButtonStyle)`
   height: 40px;
+  width: 8.125rem;
   border-radius: 5px;
-  background: #21bf48;
-  color: white;
   font-size: 16px;
   font-weight: 500;
   line-height: 12px;

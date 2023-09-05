@@ -10,6 +10,7 @@ export const KeepProductList = async (token: string) => {
         "Content-Type": "multipart/form-data",
       },
     });
+    console.log(res);
     return res;
   } catch (err) {
     throw err;
