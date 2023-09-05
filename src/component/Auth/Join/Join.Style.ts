@@ -1,13 +1,15 @@
 import styled from "@emotion/styled";
+import { ButtonStyle } from "../../common/Button/Button";
 
 export const JoinSection = styled.section`
   background: white;
-  max-width: 34.5rem;
+  padding: 1.875rem 2.1875rem 2.25rem 2.1875rem;
+  width: 100%;
   height: auto;
-  margin: 0 auto 1.5rem;
+  border-radius: 0 0 0.625rem 0.625rem;
   border: 1px solid #767676;
   border-top: none;
-  border-radius: 0 0 0.625rem 0.625rem;
+  margin-bottom: 1.5rem;
 `;
 export const LogoImg = styled.img`
   display: block;
@@ -44,25 +46,10 @@ export const SellerBtn = styled(Button)`
 `;
 
 export const Form = styled.form`
-  width: 100%;
-  padding: 1.25rem 2.1875rem 2.25rem 2.1875rem;
+  max-width: 34.5rem;
+  margin: 0 auto;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 3.375rem;
-  border: 1px solid #c4c4c4;
-  margin-top: 0.75rem;
-  border-radius: 0.3125rem;
-`;
-
-export const JoinBtn = styled(Button)`
-  width: 100%;
-  margin: 2.25rem auto 0;
-  background-color: #21bf48;
-  color: white;
-  border-radius: 10px;
-`;
 export const VaildBtn = styled(Button)`
   width: 7.625rem;
   height: 3.6rem;
@@ -130,4 +117,25 @@ export const StyledError = styled.small`
   position: absolute;
   bottom: -18px;
   left: 5px;
+`;
+export const CheckTerms = styled.a`
+  font-weight: bold;
+  text-decoration: underline;
+`;
+export const CheckJoin = styled.div`
+  width: 30rem;
+  margin: 0 auto 0.625rem;
+  display: flex;
+`;
+export const CheckBox = styled.input`
+  margin-right: 0.3rem;
+`;
+export const Terms = styled.p`
+  display: block;
+  float: right;
+  line-height: normal;
+`;
+
+export const JoinBtn = styled(ButtonStyle)`
+  margin: 34px auto;
 `;

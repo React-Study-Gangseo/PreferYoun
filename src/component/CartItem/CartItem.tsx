@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   KeepProduct,
   KeepProductImg,
@@ -14,31 +14,25 @@ import {
 import { Products, cartItem } from "types/type";
 import { DetailProduct } from "API/ProductAPI";
 import Swal from "sweetalert2";
-import { MyContext } from "../KeepPage/KeepPage";
+import { useDispatch } from "react-redux";
 import DeleteIcon from "../../assets/images/icon-delete.svg";
 import { DeleteCartItem, UpdateQuantity } from "API/KeepAPI";
+import { calcPrice } from "redux/TotalPrice";
+import { useNavigate } from "react-router-dom";
+import { orderdata } from "types/type";
 
 const CartItem: React.FC<{
   product: cartItem;
-  isChecked: boolean; // 추가된 prop type 선언
+  isChecked: boolean;
   onCheckChange(): void;
   FetchKeepList(): void;
-  itemQuantity: number;
-  setItemQuantity(): void; // 추가된 prop type 선언
-}> = ({
-  product,
-  isChecked, // 추가된 prop type 선언
-  onCheckChange,
-  FetchKeepList,
-  itemQuantity,
-  setItemQuantity,
-  // 추가된 prop type 선언
-}) => {
+}> = ({ product, isChecked, onCheckChange, FetchKeepList }) => {
+  const dispatch = useDispatch();
   const [cartItem, setCartItem] = useState<Products>();
   const [itemCount, setItemCount] = useState(product.quantity);
-  const { count, setCount } = useContext(MyContext);
   const [selectItem, setSelectItem] = useState(false);
   const [updateItem, setUpdateItem] = useState<cartItem>();
+  const navigate = useNavigate();
   const KeepProductDetail = async (product_id: number) => {
     try {
       const keepItem = await DetailProduct(product_id);
@@ -50,7 +44,6 @@ const CartItem: React.FC<{
   useEffect(() => {
     setUpdateItem(product);
     KeepProductDetail(product.product_id);
-    if (cartItem?.price) setCount(cartItem?.price * itemCount);
   }, []);
 
   useEffect(() => {
@@ -89,7 +82,6 @@ const CartItem: React.FC<{
         }
       });
       setItemCount(itemCount);
-      if (cartItem?.price) setCount(cartItem?.price * itemCount);
     }
   }, [itemCount]);
 
@@ -132,7 +124,6 @@ const CartItem: React.FC<{
   };
   useEffect(() => {
     setSelectItem(isChecked);
-    if (cartItem?.price) setCount(cartItem?.price * itemCount);
   }, [isChecked]);
 
   const handleItemCheck = (checked: boolean) => {
@@ -143,6 +134,36 @@ const CartItem: React.FC<{
     }
 
     onCheckChange(); // 체크박스 상태가 변경될 때마다 부모에게 알림
+  };
+  useEffect(() => {
+    if (selectItem && cartItem?.price && cartItem.shipping_fee) {
+      dispatch(
+        calcPrice({
+          key: product.product_id.toString(),
+          price: cartItem.price * itemCount,
+          shipping_fee: cartItem.shipping_fee,
+        })
+      );
+    } else {
+      dispatch(
+        calcPrice({
+          key: product.product_id.toString(),
+          price: 0,
+          shipping_fee: 0,
+        })
+      );
+    }
+  }, [cartItem, selectItem, itemCount]);
+
+  const handleOrderItem = () => {
+    const order_kind: string = "cart_one_order";
+    navigate("/orderpage", {
+      state: {
+        productInfo: cartItem,
+        order_kind: order_kind,
+        count: itemCount,
+      },
+    });
   };
   return (
     <KeepProduct>
@@ -194,7 +215,13 @@ const CartItem: React.FC<{
             원
           </TotalPrice>
         )}
-        <OrderBtnS>주문하기</OrderBtnS>
+        <OrderBtnS
+          width="ms"
+          bgColor="active"
+          onClick={() => handleOrderItem()}
+        >
+          주문하기
+        </OrderBtnS>
       </Total>
       <DeleteBtn onClick={() => handleDeleteItem(product.cart_item_id)}>
         <img src={DeleteIcon} alt="상품 삭제 버튼" />

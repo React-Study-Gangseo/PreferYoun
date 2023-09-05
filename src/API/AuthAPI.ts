@@ -1,11 +1,9 @@
 import BaseUrl from "./api";
 import axios from "axios";
-import { FormValue } from "types/type";
-import { LoginData } from "../types/type";
-export const Join = async (formData: FormValue) => {
+import { FormValue, LoginData } from "types/type";
+
+export const Seller_Join = async (formData: FormValue) => {
   try {
-    // const { id, password, password2, name, CRNumber, Phone, StoreName } =
-    //   formData;
     const phoneNumber = `${formData.phoneCode}${formData.firstNumber}${formData.secondNumber}`;
 
     const res = await axios.post(
@@ -18,6 +16,31 @@ export const Join = async (formData: FormValue) => {
         phone_number: phoneNumber,
         company_registration_number: formData.company_registration_number,
         store_name: formData.StoreName,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(res);
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const Join = async (formData: FormValue) => {
+  try {
+    const phoneNumber = `${formData.phoneCode}${formData.firstNumber}${formData.secondNumber}`;
+    console.log(formData);
+    const res = await axios.post(
+      `${BaseUrl}/accounts/signup/`,
+      {
+        username: formData.id,
+        password: formData.password,
+        password2: formData.password2,
+        name: formData.name,
+        phone_number: formData.Phone,
       },
       {
         headers: {
@@ -72,6 +95,7 @@ export const CheckId = async (id: string) => {
 
 export const Login = async (data: LoginData, userType: string) => {
   try {
+    console.log(userType, data.id, data.password);
     const res = await axios.post(
       `${BaseUrl}/accounts/login/`,
       {
@@ -85,6 +109,7 @@ export const Login = async (data: LoginData, userType: string) => {
         },
       }
     );
+    console.log(res);
     return res;
   } catch (err) {
     throw err;

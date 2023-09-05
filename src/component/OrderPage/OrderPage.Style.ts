@@ -9,6 +9,7 @@ export const OrderPageTitle = styled.h2`
 export const Wrapper = styled.main`
   width: 80rem;
   margin: 0 auto;
+  height: 100%;
   /* box-shadow: inset 0 0 10px 0 red; */
 `;
 export const TableContainer = styled.div`
@@ -189,7 +190,7 @@ export const FinallyPay = styled.section`
 export const FinallyPayWrapper = styled.article`
   border: 3px solid #21bf48;
   width: 30rem;
-  height: 25rem;
+  min-height: 25rem;
   margin-top: 1.125rem;
   border-radius: 10px;
   background: #f2f2f2;
@@ -199,18 +200,39 @@ export const FinallyPayWrapper = styled.article`
     border-radius: 10px 10px 0 0;
     background: white;
   }
-  & ul li {
+  & li {
     display: flex;
     justify-content: space-between;
     font-size: 16px;
     height: auto;
     font-weight: 400;
     line-height: 20.03px;
+    padding-left: 13px;
     margin-bottom: 0.9375rem;
+    position: relative;
+  }
+  & li::before {
+    content: "-";
+    position: absolute;
+    top: 0;
+    left: -5px;
   }
   & li:nth-of-type(3) {
     border-bottom: 1px solid #c4c4c4;
     padding-bottom: 19px;
+  }
+  & li:last-of-type {
+    margin-top: 1.5rem;
+  }
+  & strong {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  & li:last-of-type strong {
+    margin-top: -5px;
+    font-size: 24px;
+    font-weight: 700;
+    color: red;
   }
 `;
 export const LastCheck = styled.div`

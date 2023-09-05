@@ -26,7 +26,7 @@ export const ButtonStyle = styled.button<ButtonProps>`
       ? "20rem"
       : props.width === "tabMenu"
       ? "15.625rem"
-      : "30rem"};
+      : "13.75rem"};
   padding: ${(props) =>
     props.width === "s"
       ? "0px 25px"
@@ -38,7 +38,7 @@ export const ButtonStyle = styled.button<ButtonProps>`
       ? "16px 142px"
       : props.width === "tabMenu"
       ? "15px 15px 15px 20px"
-      : "11px 206px"};
+      : "19px 50px"};
   background-color: ${(props) =>
     props.bgColor === "active"
       ? "#21BF48"
