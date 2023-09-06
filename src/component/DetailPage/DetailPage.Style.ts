@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import Button from "component/common/Button/Button";
+import { ButtonStyle } from "component/common/Button/Button";
 export const DetailPageWrapper = styled.section`
   width: 100%;
   height: 100%;
@@ -71,7 +71,7 @@ export const TotalPriceWrap = styled.div`
   display: flex;
   align-items: flex-end;
   margin-bottom: 1.375rem;
-
+  white-space: nowrap;
   & > p:first-of-type {
     font-size: 18px;
     font-weight: bold;
@@ -97,12 +97,17 @@ export const TotalPriceWrap = styled.div`
   }
 `;
 
-export const BuyButton = styled(Button)`
+export const BuyButton = styled(ButtonStyle)`
+  width: 416px;
+  height: 60px;
   font-size: 1.125rem;
   font-weight: 700;
+  line-height: 22px;
 `;
 
-export const KeepButton = styled(Button)`
+export const KeepButton = styled(ButtonStyle)`
+  width: 200px;
+  height: 60px;
   font-size: 1.125rem;
   font-weight: 700;
 `;

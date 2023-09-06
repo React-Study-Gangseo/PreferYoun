@@ -30,9 +30,6 @@ const DetailPage: React.FC = () => {
     check: true,
   });
   const [count, setCount] = useState(1);
-  const storedData = localStorage.getItem("UserInfo");
-  const userInfo = storedData ? JSON.parse(storedData) : null;
-  const token = userInfo ? userInfo.token : null;
   const FetchDetailProduct = async (data: { product: number }) => {
     try {
       const res = await DetailProduct(data.product);
@@ -106,8 +103,7 @@ const DetailPage: React.FC = () => {
     navigate("/orderpage", {
       state: {
         order_kind: "direct_order",
-        productInfo: productInfo,
-        count: count,
+        productInfo: { ...productInfo, quantity: count },
       },
     });
   };
@@ -115,15 +111,13 @@ const DetailPage: React.FC = () => {
     try {
       const storedCart = localStorage.getItem("userCart");
       const userCart = storedCart ? JSON.parse(storedCart) : null;
-      console.log(userCart);
-      console.log(product);
       userCart.forEach((item: any) => {
         if (item.product_id === product.product) {
           setPostCartData((prevState) => ({ ...prevState, check: false }));
         }
       });
 
-      const res = await AddKeepProduct(postCartData, token);
+      const res = await AddKeepProduct(postCartData);
       console.log(res);
     } catch (error) {
       console.log(error);

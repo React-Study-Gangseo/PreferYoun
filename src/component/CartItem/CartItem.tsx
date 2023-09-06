@@ -16,17 +16,24 @@ import { DetailProduct } from "API/ProductAPI";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import DeleteIcon from "../../assets/images/icon-delete.svg";
-import { DeleteCartItem, UpdateQuantity } from "API/KeepAPI";
+import { UpdateQuantity } from "API/KeepAPI";
 import { calcPrice } from "redux/TotalPrice";
+import { OrderProduct, removeOrderProduct } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
-import { orderdata } from "types/type";
 
 const CartItem: React.FC<{
   product: cartItem;
   isChecked: boolean;
   onCheckChange(): void;
   FetchKeepList(): void;
-}> = ({ product, isChecked, onCheckChange, FetchKeepList }) => {
+  handleDeleteItem(id: number): void;
+}> = ({
+  product,
+  isChecked,
+  onCheckChange,
+  FetchKeepList,
+  handleDeleteItem,
+}) => {
   const dispatch = useDispatch();
   const [cartItem, setCartItem] = useState<Products>();
   const [itemCount, setItemCount] = useState(product.quantity);
@@ -41,6 +48,7 @@ const CartItem: React.FC<{
       console.log(error);
     }
   };
+
   useEffect(() => {
     setUpdateItem(product);
     KeepProductDetail(product.product_id);
@@ -90,13 +98,9 @@ const CartItem: React.FC<{
   }, [updateItem]);
 
   const UpdateItemQuantity = async () => {
-    const storedData = localStorage.getItem("UserInfo");
-    const userInfo = storedData ? JSON.parse(storedData) : null;
-    const token = userInfo ? userInfo.token : null;
-    console.log(updateItem);
     if (updateItem) {
       try {
-        await UpdateQuantity(updateItem, token);
+        await UpdateQuantity(updateItem);
       } catch (error) {
         console.log(error);
       }
@@ -108,20 +112,7 @@ const CartItem: React.FC<{
   const handlePlusItemCount = () => {
     setItemCount((prevItemCount) => prevItemCount + 1);
   };
-  const handleDeleteItem = async (cart_item_id: any) => {
-    const storedData = localStorage.getItem("UserInfo");
-    const userInfo = storedData ? JSON.parse(storedData) : null;
-    const token = userInfo ? userInfo.token : null;
-    try {
-      const res = await DeleteCartItem(cart_item_id, token);
-      console.log(res);
-      if (res.status === 204) {
-        FetchKeepList();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   useEffect(() => {
     setSelectItem(isChecked);
   }, [isChecked]);
@@ -135,6 +126,57 @@ const CartItem: React.FC<{
 
     onCheckChange(); // 체크박스 상태가 변경될 때마다 부모에게 알림
   };
+  const handleDelete = (cart_item_id: number) => {
+    handleDeleteItem(cart_item_id);
+    FetchKeepList();
+  };
+  useEffect(() => {
+    if (
+      selectItem &&
+      cartItem?.price &&
+      cartItem.shipping_fee &&
+      cartItem.product_name &&
+      cartItem.image &&
+      cartItem.store_name &&
+      cartItem.product_id
+    ) {
+      dispatch(
+        OrderProduct({
+          key: cartItem?.product_id?.toString(),
+          image: cartItem?.image,
+          price: cartItem?.price,
+          store_name: cartItem?.store_name,
+          shipping_fee: cartItem?.shipping_fee,
+          product_name: cartItem?.product_name,
+          quantity: itemCount,
+        })
+      );
+    } else {
+      dispatch(removeOrderProduct(product.product_id?.toString()));
+    }
+  }, [selectItem]);
+  useEffect(() => {
+    if (
+      cartItem?.price &&
+      cartItem.shipping_fee &&
+      cartItem.product_name &&
+      cartItem.image &&
+      cartItem.store_name &&
+      cartItem.product_id
+    ) {
+      dispatch(
+        OrderProduct({
+          key: cartItem?.product_id?.toString(),
+          image: cartItem?.image,
+          price: cartItem?.price,
+          store_name: cartItem?.store_name,
+          shipping_fee: cartItem?.shipping_fee,
+          product_name: cartItem?.product_name,
+          quantity: itemCount,
+        })
+      );
+    }
+  }, [cartItem]);
   useEffect(() => {
     if (selectItem && cartItem?.price && cartItem.shipping_fee) {
       dispatch(
@@ -157,11 +199,11 @@ const CartItem: React.FC<{
 
   const handleOrderItem = () => {
     const order_kind: string = "cart_one_order";
+    console.log(cartItem);
     navigate("/orderpage", {
       state: {
-        productInfo: cartItem,
+        productInfo: { ...cartItem, quantity: itemCount },
         order_kind: order_kind,
-        count: itemCount,
       },
     });
   };
@@ -169,7 +211,7 @@ const CartItem: React.FC<{
     <KeepProduct>
       <input
         type="checkbox"
-        checked={selectItem}
+        checked={!!selectItem}
         onChange={(e) => handleItemCheck(e.target.checked)}
       />
       <label className="a11y-hidden">장바구니 아이템 체크박스</label>
@@ -223,7 +265,7 @@ const CartItem: React.FC<{
           주문하기
         </OrderBtnS>
       </Total>
-      <DeleteBtn onClick={() => handleDeleteItem(product.cart_item_id)}>
+      <DeleteBtn onClick={() => handleDelete(product.cart_item_id)}>
         <img src={DeleteIcon} alt="상품 삭제 버튼" />
       </DeleteBtn>
     </KeepProduct>

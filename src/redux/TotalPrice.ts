@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TotalPriceState {
-  value: Array<{ key: string; price: number; shipping_fee: number }>;
+  value: Array<{
+    key: string;
+    price: number;
+    shipping_fee: number;
+  }>;
 }
 
 const initialState: TotalPriceState = { value: [] };

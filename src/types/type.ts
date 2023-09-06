@@ -28,6 +28,7 @@ export interface Products {
   shipping_fee?: number;
   stock?: number;
   products_info?: string;
+  quantity?: number;
 }
 
 export interface UploadProducts {
@@ -47,8 +48,8 @@ export interface orderdata {
   product_id?: number;
   quantity?: number;
   order_kind?: string;
-  reciever?: string;
-  reciever_phone_number?: string;
+  receiver?: string;
+  receiver_phone_number?: string;
   address?: string;
   address_message?: string;
   payment_method?: string;

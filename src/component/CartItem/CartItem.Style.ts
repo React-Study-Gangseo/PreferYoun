@@ -7,6 +7,28 @@ export const KeepProduct = styled.article`
   display: flex;
   padding: 1.25rem 6.25rem 1.25rem 1.875rem;
   position: relative;
+  & input[type="checkbox"] {
+    align-self: center;
+    appearance: none;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #21bf48;
+    border-radius: 50%;
+  }
+  & input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    background-color: #21bf48;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
 `;
 
 export const KeepProductImg = styled.img`

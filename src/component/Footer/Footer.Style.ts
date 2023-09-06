@@ -23,7 +23,7 @@ export const InfoList = styled.ul`
   line-height: 2rem;
 `;
 export const InfoItem = styled.li`
-  &:not(:last-child)::after {
+  &:not(:last-of-type)::after {
     content: "";
     border-right: 1px solid black;
     margin-left: 0.875rem;
