@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-
+import { OutlinedInput } from "@mui/material";
+import { ButtonStyle } from "component/common/Button/Button";
 export const OrderPageTitle = styled.h2`
   text-align: center;
   font-size: 2.25rem;
@@ -10,7 +11,6 @@ export const Wrapper = styled.main`
   width: 80rem;
   margin: 0 auto;
   height: 100%;
-  /* box-shadow: inset 0 0 10px 0 red; */
 `;
 export const TableContainer = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ export const OrderList = styled.table`
   & td:nth-of-type(1) {
     display: flex;
     gap: 2.25rem;
-    padding: 0.5rem 0 1.125rem 0.5rem;
+    padding: 1.25rem 0 1.125rem 0.5rem;
   }
   & td:not(:nth-of-type(1)) {
     text-align: center;
@@ -64,7 +64,7 @@ export const OrderList = styled.table`
     font-weight: 500;
   }
 `;
-
+export const Input = styled(OutlinedInput)``;
 export const OrdererInfoForm = styled.form`
   margin-top: 6rem;
 `;
@@ -144,6 +144,7 @@ export const Address = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 50rem;
+
   & input {
     width: 100%;
   }
@@ -164,17 +165,35 @@ export const PayInfo = styled.section`
   border-bottom: 2px solid #c4c4c4;
   margin-top: 4.375rem;
   float: left;
-  & div {
+  & ul {
     display: flex;
     align-items: center;
   }
-  & input[type="checkbox"] {
-    width: 1.25rem;
-    height: 1.25rem;
-    border-radius: 50%;
-    border: 2px solid #c4c4c4;
+  & li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  & li input[type="checkbox"] {
     appearance: none;
-    cursor: pointer;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #c4c4c4;
+    border-radius: 50%;
+  }
+  & li input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2.5px;
+    left: 2.2px;
+    width: 12px;
+    height: 12px;
+    background-color: #21bf48;
+    border-radius: 50%;
+    box-sizing: border-box;
   }
   & label {
     line-height: 100%;
@@ -242,11 +261,7 @@ export const LastCheck = styled.div`
     display: flex;
     align-items: center;
   }
-  & div input {
-    width: 1rem;
-    height: 1rem;
-    margin-left: 1.75rem;
-  }
+
   & div label {
     font-size: 16px;
     font-weight: 400;
@@ -254,15 +269,12 @@ export const LastCheck = styled.div`
     line-height: 100%;
     align-self: center;
   }
-  & button {
-    display: block;
-    width: 13.75rem;
-    height: 4.25rem;
-    border-radius: 0.3125rem;
-    background: #c4c4c4;
-    color: white;
-    font-size: 24px;
-    font-weight: 700;
-    margin: 1.875rem auto 0 auto;
-  }
+`;
+export const PayBtn = styled(ButtonStyle)`
+  width: 13.75rem;
+  height: 4.25rem;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 1.875rem auto 0 auto;
 `;

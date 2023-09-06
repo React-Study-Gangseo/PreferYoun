@@ -9,11 +9,13 @@ import {
   ClacPrice,
   OrderBtn,
   EmptyKeepList,
+  AllDeleteBtn,
 } from "./KeepPage.Style";
-import { KeepProductList } from "API/KeepAPI";
+import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
 import { cartData, cartItem } from "types/type";
 import CartItem from "component/CartItem/CartItem";
 import { TotalPriceState } from "redux/TotalPrice";
+import { CartOrderState } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
 
 const KeepPage: React.FC = () => {
@@ -26,6 +28,7 @@ const KeepPage: React.FC = () => {
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
+
   const totalShippingFee = useSelector(
     (state: { totalPrice: TotalPriceState }) => {
       return state.totalPrice.value.reduce(
@@ -34,14 +37,14 @@ const KeepPage: React.FC = () => {
       );
     }
   );
+  const orderCartInfo = useSelector((state: { cartOrder: CartOrderState }) => {
+    return state.cartOrder.value;
+  });
   const allChecked = Object.values(selectedItems).every((value) => value);
   // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
   const FetchKeepList = async () => {
     try {
-      const storedData = localStorage.getItem("UserInfo");
-      const userInfo = storedData ? JSON.parse(storedData) : null;
-      const token = userInfo ? userInfo.token : null;
-      const keepList = await KeepProductList(token);
+      const keepList = await KeepProductList();
       setCartData([keepList.data]);
     } catch (error) {
       console.log(error);
@@ -54,7 +57,7 @@ const KeepPage: React.FC = () => {
 
   useEffect(() => {
     const checkedObj = cartItem.reduce<Record<string, boolean>>((acc, item) => {
-      acc[item.product_id] = false; // 초기값을 false로 설정합니다. 필요에 따라 true로 변경할 수 있습니다.
+      acc[item.product_id] = true;
       return acc;
     }, {});
     setSelectedItems(checkedObj);
@@ -65,6 +68,7 @@ const KeepPage: React.FC = () => {
       data.results ? setCartItem(data.results) : null
     );
   }, [cartData]);
+
   const handleAllCheck = (checked: boolean) => {
     for (let key in selectedItems) {
       if (selectedItems[key] !== checked) {
@@ -72,7 +76,7 @@ const KeepPage: React.FC = () => {
       }
     }
   };
-  console.log(totalPrice, totalShippingFee);
+
   const handleItemCheck = (id: number) => {
     setSelectedItems((prevState) => {
       const wasChecked = prevState[id.toString()];
@@ -88,11 +92,46 @@ const KeepPage: React.FC = () => {
     const order_kind: string = "cart_order";
     navigate("/orderpage", {
       state: {
-        productInfo: cartItem,
+        productInfo: orderCartInfo,
         order_kind: order_kind,
-        // count: ,
       },
     });
+  };
+  console.log(cartItem);
+  const handleAllDelete = async () => {
+    const allCartItem = Object.values(selectedItems).every(
+      (value) => value === true
+    );
+    if (allCartItem) {
+      try {
+        const res = await DeleteAllCart();
+        if (res.status === 204) {
+          FetchKeepList();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      const selectedKeys = Object.keys(selectedItems).filter(
+        (key) => selectedItems[key] === true
+      );
+      for (let item of cartItem) {
+        if (selectedKeys.includes(item.product_id.toString())) {
+          handleDeleteItem(item.cart_item_id);
+        }
+      }
+    }
+  };
+  const handleDeleteItem = async (cart_item_id: number) => {
+    try {
+      const res = await DeleteCartItem(cart_item_id);
+      console.log(res);
+      if (res.status === 204) {
+        FetchKeepList();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Wrapper>
@@ -123,10 +162,14 @@ const KeepPage: React.FC = () => {
                     isChecked={selectedItems[item.product_id]}
                     onCheckChange={() => handleItemCheck(item.product_id)}
                     FetchKeepList={FetchKeepList}
+                    handleDeleteItem={handleDeleteItem}
                   />
                 </li>
               ))}
             </KeepList>
+            <AllDeleteBtn width="s" bgColor="active" onClick={handleAllDelete}>
+              전체삭제
+            </AllDeleteBtn>
             <ClacPrice>
               <li>
                 총상품금액

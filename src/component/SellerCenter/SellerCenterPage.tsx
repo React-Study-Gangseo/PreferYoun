@@ -19,16 +19,12 @@ import { Products } from "types/type";
 const SellerCenterPage: React.FC = () => {
   const navigate = useNavigate();
   const [sellerProducts, setSellerProducts] = useState<Products[]>([]);
-  const storedData = localStorage.getItem("UserInfo");
-  const userInfo = storedData ? JSON.parse(storedData) : null;
-  const token = userInfo ? userInfo.token : null;
-  console.log(token);
   const handleOnClick = () => {
     navigate("/seller/center/upload");
   };
   const getSellerProduct = async () => {
     try {
-      const res = await GetSellerProduct(token);
+      const res = await GetSellerProduct();
       console.log(res.data.results);
       setSellerProducts(res.data.results);
     } catch (error) {
@@ -40,7 +36,7 @@ const SellerCenterPage: React.FC = () => {
   }, []);
   const handleDeleteProduct = async (product_id: number) => {
     try {
-      const res = await DeleteProduct(product_id, token);
+      const res = await DeleteProduct(product_id);
       console.log(res);
       getSellerProduct();
     } catch (error) {

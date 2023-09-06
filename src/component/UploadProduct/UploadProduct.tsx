@@ -50,11 +50,7 @@ export default function UploadProduct() {
   };
   const UploadProduct = async () => {
     try {
-      const storedData = localStorage.getItem("UserInfo");
-      const userInfo = storedData ? JSON.parse(storedData) : null;
-      const token = userInfo ? userInfo.token : null;
-      console.log(token);
-      const uploadProduct = await PostProduct(product, token);
+      const uploadProduct = await PostProduct(product);
       console.log(uploadProduct);
     } catch (err) {
       console.log(err);

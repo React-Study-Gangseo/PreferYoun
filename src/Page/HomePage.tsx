@@ -7,9 +7,7 @@ import { useLocation } from "react-router-dom";
 
 export default function HomePage() {
   const location = useLocation();
-  const storedData = localStorage.getItem("UserInfo");
-  const userInfo = storedData ? JSON.parse(storedData) : null;
-  const token = userInfo ? userInfo.token : null;
+
   let type: "home" | "seller" | "buyer";
   switch (location.pathname) {
     case "/seller":
@@ -23,7 +21,7 @@ export default function HomePage() {
   }
   const FetchKeepList = async () => {
     try {
-      const keepList = await KeepProductList(token);
+      const keepList = await KeepProductList();
       console.log(keepList);
       localStorage.setItem("userCart", JSON.stringify(keepList.data.results));
     } catch (error) {

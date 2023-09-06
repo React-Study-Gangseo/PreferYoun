@@ -363,7 +363,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
           width="l"
           bgColor="active"
           type="submit"
-          disabled={checked ? false : true}
+          disabled={checked ? true : false}
         >
           가입하기
         </JoinBtn>

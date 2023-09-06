@@ -27,6 +27,27 @@ export const FormTop = styled.ul`
   padding: 1.1875rem 8.1875rem 1.125rem 1.875rem;
   margin-bottom: 2.1875rem;
   font-size: 1.125rem;
+  & input[type="checkbox"] {
+    appearance: none;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #21bf48;
+    border-radius: 50%;
+  }
+  & input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 2.2px;
+    width: 12px;
+    height: 12px;
+    background-color: #21bf48;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
 `;
 
 export const KeepList = styled.ul`
@@ -187,4 +208,9 @@ export const EmptyKeepList = styled.section`
     font-size: 14px;
     font-weight: 400;
   }
+`;
+
+export const AllDeleteBtn = styled(ButtonStyle)`
+  padding: 10px;
+  margin: 0 0 20px auto;
 `;
