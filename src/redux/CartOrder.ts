@@ -66,7 +66,6 @@ export const cartOrderSlice = createSlice({
     ) => {
       const keyToRemove = action.payload;
 
-      // Remove the item from the cart using filter
       state.value = state.value.filter((item) => item.key !== keyToRemove);
     },
   },

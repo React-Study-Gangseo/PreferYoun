@@ -53,7 +53,7 @@ const CartItem: React.FC<{
     setUpdateItem(product);
     KeepProductDetail(product.product_id);
   }, []);
-
+  console.log("item", product, updateItem);
   useEffect(() => {
     if (itemCount < 1) {
       Swal.fire({
@@ -115,6 +115,8 @@ const CartItem: React.FC<{
 
   useEffect(() => {
     setSelectItem(isChecked);
+    setUpdateItem(product);
+    UpdateItemQuantity();
   }, [isChecked]);
 
   const handleItemCheck = (checked: boolean) => {
@@ -128,13 +130,20 @@ const CartItem: React.FC<{
   };
   const handleDelete = (cart_item_id: number) => {
     handleDeleteItem(cart_item_id);
+    dispatch(
+      calcPrice({
+        key: product.product_id.toString(),
+        price: 0,
+        shipping_fee: 0,
+      })
+    );
+    dispatch(removeOrderProduct(product.product_id?.toString()));
     FetchKeepList();
   };
   useEffect(() => {
     if (
       selectItem &&
       cartItem?.price &&
-      cartItem.shipping_fee &&
       cartItem.product_name &&
       cartItem.image &&
       cartItem.store_name &&
@@ -146,19 +155,19 @@ const CartItem: React.FC<{
           image: cartItem?.image,
           price: cartItem?.price,
           store_name: cartItem?.store_name,
-          shipping_fee: cartItem?.shipping_fee,
+          shipping_fee: cartItem.shipping_fee || 0,
           product_name: cartItem?.product_name,
           quantity: itemCount,
         })
       );
     } else {
+      console.log("check");
       dispatch(removeOrderProduct(product.product_id?.toString()));
     }
   }, [selectItem]);
   useEffect(() => {
     if (
       cartItem?.price &&
-      cartItem.shipping_fee &&
       cartItem.product_name &&
       cartItem.image &&
       cartItem.store_name &&
@@ -170,20 +179,21 @@ const CartItem: React.FC<{
           image: cartItem?.image,
           price: cartItem?.price,
           store_name: cartItem?.store_name,
-          shipping_fee: cartItem?.shipping_fee,
+          shipping_fee: cartItem.shipping_fee || 0,
           product_name: cartItem?.product_name,
           quantity: itemCount,
         })
       );
     }
   }, [cartItem]);
+
   useEffect(() => {
-    if (selectItem && cartItem?.price && cartItem.shipping_fee) {
+    if (selectItem && cartItem?.price) {
       dispatch(
         calcPrice({
           key: product.product_id.toString(),
           price: cartItem.price * itemCount,
-          shipping_fee: cartItem.shipping_fee,
+          shipping_fee: cartItem.shipping_fee || 0,
         })
       );
     } else {
@@ -202,11 +212,15 @@ const CartItem: React.FC<{
     console.log(cartItem);
     navigate("/orderpage", {
       state: {
-        productInfo: { ...cartItem, quantity: itemCount },
+        productInfo: {
+          ...cartItem,
+          quantity: itemCount,
+        },
         order_kind: order_kind,
       },
     });
   };
+
   return (
     <KeepProduct>
       <input

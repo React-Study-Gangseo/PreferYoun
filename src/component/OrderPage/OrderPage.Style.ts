@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { OutlinedInput } from "@mui/material";
+import { OutlinedInput, Radio } from "@mui/material";
 import { ButtonStyle } from "component/common/Button/Button";
 export const OrderPageTitle = styled.h2`
   text-align: center;
@@ -165,43 +165,9 @@ export const PayInfo = styled.section`
   border-bottom: 2px solid #c4c4c4;
   margin-top: 4.375rem;
   float: left;
-  & ul {
-    display: flex;
-    align-items: center;
-  }
-  & li {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  & li input[type="checkbox"] {
-    appearance: none;
-    position: relative;
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #c4c4c4;
-    border-radius: 50%;
-  }
-  & li input[type="checkbox"]:checked::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 2.5px;
-    left: 2.2px;
-    width: 12px;
-    height: 12px;
-    background-color: #21bf48;
-    border-radius: 50%;
-    box-sizing: border-box;
-  }
-  & label {
-    line-height: 100%;
-    font-size: 16px;
-    font-weight: 400;
-    margin-right: 1.25rem;
-  }
 `;
+
+export const PayCheck = styled(Radio)``;
 export const FinallyPay = styled.section`
   float: right;
   margin-top: 4.375rem;

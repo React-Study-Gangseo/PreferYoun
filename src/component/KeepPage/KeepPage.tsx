@@ -22,9 +22,6 @@ const KeepPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState<cartData[]>([]);
   const [cartItem, setCartItem] = useState<cartItem[]>([]);
-  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>(
-    {}
-  );
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
@@ -40,12 +37,15 @@ const KeepPage: React.FC = () => {
   const orderCartInfo = useSelector((state: { cartOrder: CartOrderState }) => {
     return state.cartOrder.value;
   });
-  const allChecked = Object.values(selectedItems).every((value) => value);
+  const allChecked = cartItem.every((item) => item.is_active);
+
+  console.log(cartItem);
   // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
   const FetchKeepList = async () => {
     try {
       const keepList = await KeepProductList();
       setCartData([keepList.data]);
+      console.log(keepList);
     } catch (error) {
       console.log(error);
     }
@@ -55,13 +55,16 @@ const KeepPage: React.FC = () => {
     FetchKeepList();
   }, []);
 
-  useEffect(() => {
-    const checkedObj = cartItem.reduce<Record<string, boolean>>((acc, item) => {
-      acc[item.product_id] = true;
-      return acc;
-    }, {});
-    setSelectedItems(checkedObj);
-  }, [cartItem]);
+  // useEffect(() => {
+  //   const checkedObj = cartItem.reduce<Record<string, boolean>>((acc, item) => {
+  //     acc[item.product_id] = true;
+  //     return acc;
+  //   }, {});
+  //   setSelectedItems(checkedObj);
+  //   // setCartItem((prevCartItem) =>
+  //   //   prevCartItem.map((item) => ({ ...item, is_active: true }))
+  //   // );
+  // }, [cartItem]);
 
   useEffect(() => {
     cartData.map((data: cartData) =>
@@ -70,25 +73,20 @@ const KeepPage: React.FC = () => {
   }, [cartData]);
 
   const handleAllCheck = (checked: boolean) => {
-    for (let key in selectedItems) {
-      if (selectedItems[key] !== checked) {
-        handleItemCheck(Number(key));
-      }
-    }
+    cartItem.map((item) =>
+      item.is_active !== checked ? handleItemCheck(item.product_id) : item
+    );
   };
 
   const handleItemCheck = (id: number) => {
-    setSelectedItems((prevState) => {
-      const wasChecked = prevState[id.toString()];
-      const isChecked = !wasChecked;
-
-      return {
-        ...prevState,
-        [id.toString()]: isChecked,
-      };
-    });
+    setCartItem((prevCartItems) =>
+      prevCartItems.map((item) =>
+        item.product_id === id ? { ...item, is_active: !item.is_active } : item
+      )
+    );
   };
   const handleOrderList = () => {
+    console.log(orderCartInfo);
     const order_kind: string = "cart_order";
     navigate("/orderpage", {
       state: {
@@ -97,12 +95,9 @@ const KeepPage: React.FC = () => {
       },
     });
   };
-  console.log(cartItem);
+
   const handleAllDelete = async () => {
-    const allCartItem = Object.values(selectedItems).every(
-      (value) => value === true
-    );
-    if (allCartItem) {
+    if (allChecked) {
       try {
         const res = await DeleteAllCart();
         if (res.status === 204) {
@@ -112,14 +107,10 @@ const KeepPage: React.FC = () => {
         console.log(error);
       }
     } else {
-      const selectedKeys = Object.keys(selectedItems).filter(
-        (key) => selectedItems[key] === true
-      );
-      for (let item of cartItem) {
-        if (selectedKeys.includes(item.product_id.toString())) {
-          handleDeleteItem(item.cart_item_id);
-        }
-      }
+      const activeItems = cartItem.filter((item) => item.is_active === true);
+      console.log(activeItems);
+
+      activeItems.map((item) => handleDeleteItem(item.cart_item_id));
     }
   };
   const handleDeleteItem = async (cart_item_id: number) => {
@@ -159,7 +150,7 @@ const KeepPage: React.FC = () => {
                 <li key={item.product_id}>
                   <CartItem
                     product={item}
-                    isChecked={selectedItems[item.product_id]}
+                    isChecked={item.is_active}
                     onCheckChange={() => handleItemCheck(item.product_id)}
                     FetchKeepList={FetchKeepList}
                     handleDeleteItem={handleDeleteItem}

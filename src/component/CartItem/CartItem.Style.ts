@@ -21,10 +21,10 @@ export const KeepProduct = styled.article`
     content: "";
     display: block;
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 12px;
-    height: 12px;
+    top: 1.2px;
+    left: 1.2px;
+    width: 15px;
+    height: 15px;
     background-color: #21bf48;
     border-radius: 50%;
     box-sizing: border-box;

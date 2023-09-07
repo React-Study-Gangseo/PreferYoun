@@ -39,11 +39,13 @@ export const DeleteCartItem = async (cart_item_id: number) => {
 };
 export const UpdateQuantity = async (cartItem: cartItem) => {
   try {
+    console.log("api", cartItem);
     const res = await accessInstance.put(`/cart/${cartItem.cart_item_id}/`, {
       product_id: cartItem.product_id,
       quantity: cartItem.quantity,
-      is_active: true,
+      is_active: cartItem.is_active,
     });
+    console.log(res);
     return res;
   } catch (err) {
     throw err;

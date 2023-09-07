@@ -61,6 +61,7 @@ export interface cartItem {
   cart_item_id: number; // cartItem의 고유번호; 요청시마다 번호가 바뀜
   product_id: number; // 상품 아이디
   quantity: number;
+  is_active: boolean;
 }
 export interface cartData {
   count?: number;
