@@ -1,15 +1,23 @@
 import styled from "@emotion/styled";
 import Search from "../../assets/images/search.svg";
-
+import { Link } from "react-router-dom";
 export const HeaderSection = styled.header`
-  width: 100%;
+  width: 100vw;
   height: 5.625rem;
-  display: flex;
-  padding: 20px;
-  align-items: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 4px 5px 0px #0000001a;
+  & section {
+    width: 80rem;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+  }
 `;
 
-export const Logo = styled.a`
+export const Logo = styled(Link)`
   width: 7.75rem;
   height: 2.375rem;
   margin-right: 1.875rem;

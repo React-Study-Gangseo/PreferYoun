@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { TotalPriceState } from "redux/TotalPrice";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   OrderList,
   ProductInfo,
@@ -20,7 +20,7 @@ import {
   OrdererInfoForm,
   OrderPageTitle,
   PayBtn,
-  PayCheck,
+  Wrapper,
 } from "./OrderPage.Style";
 import { Checkbox, Radio, FormControlLabel, RadioGroup } from "@mui/material";
 import { orderdata, Products } from "types/type";
@@ -33,8 +33,11 @@ const label = {
 
 const OrderPage: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const info = location.state;
   const [orderProducts, setOrderProducts] = useState<Products[]>([]);
+  const [orderTotalPrice, setOrderTotalPrice] = useState(0);
+  const [orderTotalShippingFee, setOrderTotalShippingFee] = useState(0);
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
@@ -81,17 +84,35 @@ const OrderPage: React.FC = () => {
         setOrderKind(order_kind);
         setOrderProducts([productInfo]);
       } else if (order_kind === "cart_order") {
+        console.log("check cart", totalPrice, totalShippingFee);
         setOrderKind(order_kind);
         setOrderProducts(productInfo);
+        setOrderTotalShippingFee(totalShippingFee);
+        setOrderTotalPrice(totalPrice);
       } else {
       }
     }
   }, [info]);
   useEffect(() => {
+    console.log(orderKind, orderProducts);
     if (orderProducts[0]?.product_id) {
-      setOrderData({ ...orderData, product_id: orderProducts[0].product_id });
+      setOrderData({
+        ...orderData,
+        product_id: orderProducts[0].product_id,
+        quantity: orderProducts[0].quantity,
+      });
     }
-  }, [orderProducts]);
+    if (
+      orderKind !== "cart_order" &&
+      orderProducts[0]?.price &&
+      orderProducts[0]?.quantity &&
+      orderProducts[0]?.shipping_fee !== undefined
+    ) {
+      console.log("not cart");
+      setOrderTotalShippingFee(orderProducts[0].shipping_fee);
+      setOrderTotalPrice(orderProducts[0].price * orderProducts[0].quantity);
+    }
+  }, [orderKind, orderProducts]);
   console.log(orderProducts);
   const handlePayCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPayCheck((event.target as HTMLInputElement).value);
@@ -109,7 +130,7 @@ const OrderPage: React.FC = () => {
         address: receiver_address,
         payment_method: payCheck,
         order_kind: orderKind,
-        total_price: totalPrice + totalShippingFee,
+        total_price: orderTotalPrice + orderTotalShippingFee,
       });
     } else {
       setLastCheck(false);
@@ -132,13 +153,18 @@ const OrderPage: React.FC = () => {
         console.log(orderData);
         const res = await CartOneOrder(orderData);
         console.log(res);
+        if (res.status === 200) {
+          localStorage.removeItem("persist:root");
+          console.log("localStorage data removed");
+          navigate("/buyer");
+        }
       } catch (error) {
         console.log(error);
       }
     }
   };
   return (
-    <main className="wrapper">
+    <Wrapper>
       <OrderPageTitle>주문/결제하기</OrderPageTitle>
       <OrderList>
         <thead>
@@ -175,7 +201,7 @@ const OrderPage: React.FC = () => {
             <td />
             <td>
               총 주문금액
-              <TotalPrice>{totalPrice + totalShippingFee}</TotalPrice>
+              <TotalPrice>{orderTotalPrice + orderTotalShippingFee}</TotalPrice>
             </td>
           </tr>
         </tfoot>
@@ -395,7 +421,7 @@ const OrderPage: React.FC = () => {
               <li>
                 <p>상품금액</p>
                 <p>
-                  <strong>{totalPrice} </strong>원
+                  <strong>{orderTotalPrice} </strong>원
                 </p>
               </li>
               <li>
@@ -407,12 +433,12 @@ const OrderPage: React.FC = () => {
               <li>
                 <p>배송비</p>
                 <p>
-                  <strong>{totalShippingFee} </strong>원
+                  <strong>{orderTotalShippingFee} </strong>원
                 </p>
               </li>
               <li>
                 <p>결제금액</p>
-                <strong>{totalPrice + totalShippingFee} 원</strong>
+                <strong>{orderTotalPrice + orderTotalShippingFee} 원</strong>
               </li>
             </ul>
             <LastCheck>
@@ -438,7 +464,7 @@ const OrderPage: React.FC = () => {
           </FinallyPayWrapper>
         </FinallyPay>
       </OrdererInfoForm>
-    </main>
+    </Wrapper>
   );
 };
 

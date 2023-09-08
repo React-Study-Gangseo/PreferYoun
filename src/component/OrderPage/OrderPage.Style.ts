@@ -8,9 +8,9 @@ export const OrderPageTitle = styled.h2`
   margin: 3.25rem 0;
 `;
 export const Wrapper = styled.main`
-  width: 80rem;
-  margin: 0 auto;
-  height: 100%;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 22.375rem;
 `;
 export const TableContainer = styled.div`
   display: flex;
@@ -176,7 +176,7 @@ export const FinallyPayWrapper = styled.article`
   border: 3px solid #21bf48;
   width: 30rem;
   min-height: 25rem;
-  margin-top: 1.125rem;
+  margin: 1.125rem 0 200px;
   border-radius: 10px;
   background: #f2f2f2;
   & ul {

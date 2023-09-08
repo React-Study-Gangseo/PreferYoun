@@ -12,13 +12,14 @@ import {
 } from "./Header.Style";
 import HoduLogo from "../../assets/images/Logo-hodu.png";
 import Cart from "../../assets/images/icon-shopping-cart.svg";
+import OnCart from "../../assets/images/icon-shopping-cart-2.svg";
 import User from "../../assets/images/icon-user.svg";
 import Button from "component/common/Button/Button";
 import SellerCenter from "../../assets/images/icon-shopping-bag.svg";
 import JoinModal from "component/common/Modal/JoinModal";
 import LoginModal from "component/common/Modal/LoginModal";
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface HeaderProps {
   type: "home" | "seller" | "buyer";
@@ -26,15 +27,22 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ type }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [modalShow, setModalShow] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [login, setLogin] = useState(false);
+  const pathname = location.pathname;
+
+  const isCartPage = pathname === "/cart";
 
   const handleCenterBtn = () => {
     navigate("/seller/center");
   };
   const handleMoveCart = () => {
     navigate("/cart");
+  };
+  const handleMoveMyPage = () => {
+    navigate("/mypage");
   };
   const handleLogin = () => {
     setModalShow(true);
@@ -53,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   const UI = {
     home: (
       <>
-        <Logo>
+        <Logo to="/">
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm>
@@ -76,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     seller: (
       <>
-        <Logo>
+        <Logo to="/seller">
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm>
@@ -99,7 +107,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     buyer: (
       <>
-        <Logo>
+        <Logo to="/buyer">
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm>
@@ -110,10 +118,10 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
         </HeaderForm>
         <HeaderNav>
           <CartBtn onClick={handleMoveCart}>
-            <img src={Cart} alt="쇼핑카트 아이콘" />
+            <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
             장바구니
           </CartBtn>
-          <UserBtn>
+          <UserBtn onClick={handleMoveMyPage}>
             <img src={User} alt="로그인용 유저 아이콘" />
             마이페이지
           </UserBtn>
@@ -123,7 +131,9 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   };
   return (
     <>
-      <HeaderSection>{UI[type]}</HeaderSection>
+      <HeaderSection>
+        <section>{UI[type]}</section>
+      </HeaderSection>
       {modalShow && login && (
         <LoginModal closeModal={closeModal} openSignUp={handleSignUp} />
       )}

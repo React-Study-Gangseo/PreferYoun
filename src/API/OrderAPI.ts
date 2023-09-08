@@ -52,3 +52,12 @@ export const CartOrder = async (Orderdata: orderdata) => {
     throw err;
   }
 };
+
+export const GetOrderList = async () => {
+  try {
+    const res = await accessInstance.get(`/order/`);
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};

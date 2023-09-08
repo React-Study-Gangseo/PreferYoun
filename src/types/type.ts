@@ -57,9 +57,9 @@ export interface orderdata {
   check?: boolean;
 }
 export interface cartItem {
-  my_cart: number; // 카트 고유번호; User가 바뀌지 않는이상 번호가 바뀌지 않음
-  cart_item_id: number; // cartItem의 고유번호; 요청시마다 번호가 바뀜
-  product_id: number; // 상품 아이디
+  my_cart: number;
+  cart_item_id: number;
+  product_id: number;
   quantity: number;
   is_active: boolean;
 }
@@ -73,4 +73,18 @@ export interface cartData {
 export interface totalPrice {
   totalPrice?: number;
   setTotalPrice?: (value: number) => void;
+}
+
+export interface OrderedData {
+  buyer?: number;
+  created_at?: string;
+  order_number?: number;
+  order_items?: number[];
+  order_quantity?: number[];
+  receiver?: String;
+  receiver_phone_number?: String;
+  address?: String;
+  address_message?: String;
+  payment_method?: String;
+  total_price?: number;
 }

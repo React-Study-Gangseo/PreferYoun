@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 import PlusIcon from "../../assets/images/icon-plus-line.svg";
 import MinusIcon from "../../assets/images/icon-minus-line.svg";
 import { ButtonStyle } from "component/common/Button/Button";
-export const Wrapper = styled.div`
+export const Wrapper = styled.main`
   width: 80rem;
-  margin: 0 auto;
+  margin: 3.375rem auto 10rem;
 `;
 
 export const Heading = styled.h2`

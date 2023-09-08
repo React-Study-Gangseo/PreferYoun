@@ -209,7 +209,7 @@ const CartItem: React.FC<{
 
   const handleOrderItem = () => {
     const order_kind: string = "cart_one_order";
-    console.log(cartItem);
+    console.log(cartItem, itemCount);
     navigate("/orderpage", {
       state: {
         productInfo: {

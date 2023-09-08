@@ -4,8 +4,9 @@ import HomePage from "../../Page/HomePage";
 import SellerCenterPage from "../SellerCenter/SellerCenterPage";
 import UploadProduct from "component/UploadProduct/UploadProduct";
 import DetailPage from "component/DetailPage/DetailPage";
-import OrderPage from "component/OrderPage/OrderPage";
-import KeepPage from "component/KeepPage/KeepPage";
+import OrderPage from "../../Page/OrderPage/OrderPage";
+import CartPage from "../../Page/CartPage/CartPage";
+import MyPage from "Page/MyPage/MyPage";
 export interface RouterProps {}
 
 const Routers: React.FC<RouterProps> = () => {
@@ -21,7 +22,8 @@ const Routers: React.FC<RouterProps> = () => {
           <Route index element={<DetailPage />} />
         </Route>
         <Route path="/orderpage" element={<OrderPage />} />
-        <Route path="/cart" element={<KeepPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </Router>
   );
