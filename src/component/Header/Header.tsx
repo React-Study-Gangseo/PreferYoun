@@ -9,10 +9,12 @@ import {
   HeaderInput,
   CartBtn,
   UserBtn,
+  SearchSubmit,
 } from "./Header.Style";
 import HoduLogo from "../../assets/images/Logo-hodu.png";
 import Cart from "../../assets/images/icon-shopping-cart.svg";
 import OnCart from "../../assets/images/icon-shopping-cart-2.svg";
+import OnUser from "../../assets/images/icon-user-2.svg";
 import User from "../../assets/images/icon-user.svg";
 import Button from "component/common/Button/Button";
 import SellerCenter from "../../assets/images/icon-shopping-bag.svg";
@@ -20,9 +22,9 @@ import JoinModal from "component/common/Modal/JoinModal";
 import LoginModal from "component/common/Modal/LoginModal";
 import styled from "@emotion/styled";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import Search from "../../assets/images/search.svg";
 interface HeaderProps {
-  type: "home" | "seller" | "buyer";
+  type: "home" | "seller" | "buyer" | "seller_center";
 }
 
 const Header: React.FC<HeaderProps> = ({ type }) => {
@@ -34,6 +36,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   const pathname = location.pathname;
 
   const isCartPage = pathname === "/cart";
+  const isMyPage = pathname === "/mypage";
 
   const handleCenterBtn = () => {
     navigate("/seller/center");
@@ -58,6 +61,9 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     setSignUp(true);
     setLogin(false);
   };
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const userType = userInfo ? userInfo.user_type : null;
   const UI = {
     home: (
       <>
@@ -66,8 +72,11 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
         </Logo>
         <HeaderForm>
           <FormDiv>
-            <label className="a11y-hidden">검색창</label>
-            <HeaderInput type="text" placeholder=" " />
+            <HeaderInput type="text" placeholder=" " id="search-box" />
+            <label htmlFor="search-box">
+              <img src={Search} alt="검색창 아이콘" />
+            </label>
+            <SearchSubmit type="submit" id="search-submit" />
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
@@ -84,20 +93,23 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     seller: (
       <>
-        <Logo to="/seller">
+        <Logo to={`/${userType.toLowerCase()}`}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm>
           <FormDiv>
-            <label className="a11y-hidden">검색창</label>
-            <HeaderInput type="text" placeholder=" " />
+            <HeaderInput type="text" placeholder=" " id="search-box" />
+            <label htmlFor="search-box">
+              <img src={Search} alt="검색창 아이콘" />
+            </label>
+            <SearchSubmit type="submit" id="search-submit" />
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
-          <CartBtn>
-            <img src={Cart} alt="쇼핑카트 아이콘" />
-            장바구니
-          </CartBtn>
+          <UserBtn onClick={handleMoveMyPage}>
+            <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
+            마이페이지
+          </UserBtn>
           <Button width="ms" bgColor="active" onClick={handleCenterBtn}>
             <CenterImg src={SellerCenter} alt="판매자 센터 아이콘" />
             판매자 센터
@@ -107,13 +119,16 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     buyer: (
       <>
-        <Logo to="/buyer">
+        <Logo to={`/${userType.toLowerCase()}`}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm>
           <FormDiv>
-            <label className="a11y-hidden">검색창</label>
-            <HeaderInput type="text" placeholder=" " />
+            <HeaderInput type="text" placeholder=" " id="search-box" />
+            <label htmlFor="search-box">
+              <img src={Search} alt="검색창 아이콘" />
+            </label>
+            <SearchSubmit type="submit" id="search-submit" />
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
@@ -122,10 +137,20 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
             장바구니
           </CartBtn>
           <UserBtn onClick={handleMoveMyPage}>
-            <img src={User} alt="로그인용 유저 아이콘" />
+            <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
             마이페이지
           </UserBtn>
         </HeaderNav>
+      </>
+    ),
+    seller_center: (
+      <>
+        <Logo to="/seller">
+          <LogoImage src={HoduLogo} alt="호두마켓 로고" />
+        </Logo>
+        <HeaderForm>
+          <h2>판매자센터</h2>
+        </HeaderForm>
       </>
     ),
   };

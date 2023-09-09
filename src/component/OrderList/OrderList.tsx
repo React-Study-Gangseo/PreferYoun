@@ -12,6 +12,9 @@ import OrderedItem from "component/MyPage/OrderedItem/OrderedItem";
 
 export default function OrderList() {
   const [orderedItem, setOrderedItem] = useState<OrderedData[]>([]);
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const userType = userInfo ? userInfo.user_type : null;
 
   const FetchOrderList = async () => {
     try {
@@ -22,7 +25,7 @@ export default function OrderList() {
     }
   };
   useEffect(() => {
-    FetchOrderList();
+    if (userType === "BUYER") FetchOrderList();
   }, []);
   // useEffect(() => {
   //   // if (orderedItem) {

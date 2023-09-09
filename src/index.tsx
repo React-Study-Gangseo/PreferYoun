@@ -15,14 +15,14 @@ const root = ReactDOM.createRoot(rootElement);
 export let persistor = persistStore(store);
 // const store = configureStore();
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <GlobalStyle />
-          <App />
-        </PersistGate>
-      </Provider>
-    </ThemeProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <GlobalStyle />
+        <App />
+      </PersistGate>
+    </Provider>
+  </ThemeProvider>
+  // </React.StrictMode>
 );

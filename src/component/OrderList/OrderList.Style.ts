@@ -45,6 +45,7 @@ export const OrderedList = styled.table`
 `;
 export const LogOutBtn = styled(ButtonStyle)`
   margin: 0 auto;
+  font-size: 20px;
 `;
 
 export const Item = styled.div`
