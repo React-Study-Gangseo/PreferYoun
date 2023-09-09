@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
-import { OutlinedInput } from "@mui/material";
+import { OutlinedInput, InputAdornment } from "@mui/material";
+import { ButtonStyle } from "component/common/Button/Button";
 export const Wrapper = styled.div`
-  width: calc(100vw - 12.5rem);
+  width: 100%;
   margin: 0 auto;
 `;
 
@@ -27,7 +28,7 @@ export const HeaderSection = styled.section`
   }
 `;
 
-export const Warning = styled.aside`
+export const WarningSection = styled.aside`
   margin-top: 10px;
   width: 20rem;
   flex-shrink: 0;
@@ -42,6 +43,7 @@ export const Warning = styled.aside`
     font-size: 14px;
     font-weight: 400;
     line-height: normal;
+    padding-left: 5px;
   }
 `;
 export const MainSection = styled.main`
@@ -112,6 +114,36 @@ export const Input = styled(OutlinedInput)`
   width: 100%;
   margin-top: 0.625rem;
   border-radius: 0.3125rem;
+  position: relative;
+`;
+export const Sufix = styled(InputAdornment)`
+  background-color: #c4c4c4;
+  width: 54px;
+  max-height: 56px;
+  height: 60px;
+  padding: 10px 0;
+  position: absolute;
+  right: -8px;
+  top: 0;
+  border-radius: 0 5px 5px 0;
+  & p {
+    color: #fff;
+    margin: 0 auto;
+  }
+`;
+export const NameSufix = styled(InputAdornment)`
+  width: 54px;
+  max-height: 56px;
+  height: 60px;
+  padding: 10px 0;
+  position: absolute;
+  right: -2px;
+  top: 0;
+  border-radius: 0 5px 5px 0;
+  & p {
+    color: #c4c4c4;
+    margin: 0 auto;
+  }
 `;
 
 export const ButtonGroup = styled.div`
@@ -183,5 +215,13 @@ export const ShippingBtn = styled.div`
     &:hover {
       border: 1px solid #c4c4c4;
     }
+  }
+`;
+
+export const MethodBtn = styled(ButtonStyle)`
+  &:active,
+  &.active {
+    background-color: #21bf48;
+    color: white;
   }
 `;

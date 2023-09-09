@@ -1,23 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ProductItem from "../ProductItem/ProductItem";
 import { MainSection, ProductList, Banner, ProductSection } from "./Main.Style";
 import LeftBanner from "../../assets/images/icon-swiper-1.svg";
 import RightBanner from "../../assets/images/icon-swiper-2.svg";
 import { GetFullProduct } from "API/ProductAPI";
 import { Products } from "types/type";
+import useInfiniteScroll from "CustomHook/InfiniteScroll";
 const Main: React.FC = () => {
   const [products, setProducts] = useState<Products[]>([]);
-  const fetchProduct = async () => {
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const target = useRef(null);
+  const [observe, unobserve] = useInfiniteScroll(() => {
+    setPage((page) => page + 1);
+  });
+  const fetchProduct = async (page: number) => {
     try {
-      const response = await GetFullProduct();
-      console.log(response);
-      setProducts(response.data.results);
+      console.log(page);
+      const response = await GetFullProduct(page);
+      console.log("count", response);
+      setProducts((prevProducts) => [
+        ...prevProducts,
+        ...response.data.results,
+      ]);
+      setCount(response.data.count);
     } catch (error) {}
   };
-  useEffect(() => {
-    fetchProduct();
-  }, []);
 
+  useEffect(() => {
+    if (page === 1) observe(target.current);
+
+    const N = products.length;
+    const totalCount = count;
+
+    if (0 === N || totalCount <= N) {
+      unobserve(target.current);
+    }
+  }, [products]);
+
+  useEffect(() => {
+    console.log("!", page);
+    fetchProduct(page);
+  }, [page]);
+  console.log(products);
   return (
     <MainSection>
       <Banner>
@@ -35,6 +60,7 @@ const Main: React.FC = () => {
           ))}
         </ProductList>
       </ProductSection>
+      <div ref={target} style={{ width: "100&", height: 30 }} />
     </MainSection>
   );
 };

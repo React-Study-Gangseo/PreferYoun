@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import Plus from "../../assets/images/icon-plus.svg";
+
+import { ButtonStyle } from "../common/Button/Button";
 export const Wrapper = styled.div`
   width: calc(100vw - 12.5rem);
   margin: 0 auto;
@@ -63,11 +65,16 @@ export const MainSection = styled.main`
 
 export const AsideSection = styled.aside`
   width: 15.625rem;
-  & button {
-    width: 100%;
-    text-align: left;
-    font-size: 16px;
-    font-weight: 500;
+`;
+export const TabBtn = styled(ButtonStyle)`
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 20.03px;
+  &:active,
+  &.active {
+    background-color: #21bf48;
+    color: white;
   }
 `;
 export const MainContent = styled.section`
@@ -160,3 +167,5 @@ export const ProductInfo = styled.article`
     margin: 0.625rem 0;
   }
 `;
+
+export const UploadBtn = styled(ButtonStyle)``;

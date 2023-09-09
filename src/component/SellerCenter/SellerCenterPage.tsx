@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import Logo from "../../assets/images/Logo-hodu.png";
-
+import Header from "component/Header/Header";
 import {
-  HeaderSection,
   Wrapper,
   MainSection,
   AsideSection,
   SellerProduct,
   MainContent,
-  ProductInfo,
   OrderList,
+  TabBtn,
+  UploadBtn,
 } from "./SellerCenterPage.Style";
-import Button from "../common/Button/Button";
-import { useNavigate, Link } from "react-router-dom";
-import { DeleteProduct, GetSellerProduct } from "API/ProductAPI";
+import { useNavigate } from "react-router-dom";
+import { GetSellerProduct } from "API/ProductAPI";
 import { Products } from "types/type";
+import SellerItem from "./SellerItem/SellerItem";
 
 const SellerCenterPage: React.FC = () => {
   const navigate = useNavigate();
+  const [isActive, setIsActive] = useState("ProductsOnSale");
   const [sellerProducts, setSellerProducts] = useState<Products[]>([]);
   const handleOnClick = () => {
     navigate("/seller/center/upload");
@@ -34,59 +34,78 @@ const SellerCenterPage: React.FC = () => {
   useEffect(() => {
     getSellerProduct();
   }, []);
-  const handleDeleteProduct = async (product_id: number) => {
-    try {
-      const res = await DeleteProduct(product_id);
-      console.log(res);
-      getSellerProduct();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  function handleClick(e: any) {
+    setIsActive(e.target.value);
+  }
   return (
     <>
       <h1 className="a11y-hidden">판매자 센터</h1>
+      <Header type={"seller_center"} />
       <Wrapper>
-        <HeaderSection>
-          <Link to="/seller">
-            <img alt="호두 로고 이미지" src={Logo} />
-          </Link>
-          <h2>판매자 센터</h2>
-        </HeaderSection>
         <MainSection>
           <h2>
             대시보드<span>백엔드글로벌</span>
           </h2>
-          <Button width="ms" bgColor="active" onClick={handleOnClick}>
+          <UploadBtn width="ms" bgColor="active" onClick={handleOnClick}>
             상품 업로드
-          </Button>
+          </UploadBtn>
           <MainContent>
             <AsideSection>
               <ul>
-                <li>
-                  <Button width="tabMenu" color="black">
-                    판매중인 상품
-                  </Button>
+                <li key={1}>
+                  <TabBtn
+                    width="tabMenu"
+                    color="black"
+                    onClick={(e) => handleClick(e)}
+                    value="ProductsOnSale"
+                    className={isActive === "ProductsOnSale" ? "active" : ""}
+                  >
+                    {`판매중인 상품(${sellerProducts.length})`}
+                  </TabBtn>
                 </li>
-                <li>
-                  <Button width="tabMenu" color="black">
+                <li key={2}>
+                  <TabBtn
+                    width="tabMenu"
+                    color="black"
+                    onClick={(e) => handleClick(e)}
+                    value="Order"
+                    className={isActive === "Order" ? "active" : ""}
+                  >
                     주문/배송
-                  </Button>
+                  </TabBtn>
                 </li>
-                <li>
-                  <Button width="tabMenu" color="black">
+                <li key={3}>
+                  <TabBtn
+                    width="tabMenu"
+                    color="black"
+                    onClick={(e) => handleClick(e)}
+                    value="QA"
+                    className={isActive === "QA" ? "active" : ""}
+                  >
                     문의/리뷰
-                  </Button>
+                  </TabBtn>
                 </li>
-                <li>
-                  <Button width="tabMenu" color="black">
+                <li key={4}>
+                  <TabBtn
+                    width="tabMenu"
+                    color="black"
+                    onClick={(e) => handleClick(e)}
+                    value="Statistics"
+                    className={isActive === "Statistics" ? "active" : ""}
+                  >
                     통계
-                  </Button>
+                  </TabBtn>
                 </li>
-                <li>
-                  <Button width="tabMenu" color="black">
+                <li key={5}>
+                  <TabBtn
+                    width="tabMenu"
+                    color="black"
+                    onClick={(e) => handleClick(e)}
+                    value="SetStore"
+                    className={isActive === "SetStore" ? "active" : ""}
+                  >
                     스토어 설정
-                  </Button>
+                  </TabBtn>
                 </li>
               </ul>
             </AsideSection>
@@ -102,36 +121,12 @@ const SellerCenterPage: React.FC = () => {
                 </thead>
                 <tbody>
                   {sellerProducts.map((product, index) => (
-                    <tr key={index}>
-                      <td>
-                        <ProductInfo>
-                          <img src={product.image} alt="상품이미지" />
-                          <h3>{product.product_name}</h3>
-                          <span>재고 : {product.stock}개</span>
-                        </ProductInfo>
-                      </td>
-                      <td>{product.price}원</td>
-                      <td>
-                        <Button width="s" bgColor="active">
-                          수정
-                        </Button>
-                      </td>
-                      <td>
-                        <Button
-                          width="s"
-                          bgColor="tabActive"
-                          color="black"
-                          border="active"
-                          onClick={() => {
-                            if (product.product_id !== undefined) {
-                              handleDeleteProduct(product.product_id);
-                            }
-                          }}
-                        >
-                          삭제
-                        </Button>
-                      </td>
-                    </tr>
+                    <SellerItem
+                      key={product.product_id}
+                      product={product}
+                      index={index}
+                      getSellerProduct={getSellerProduct}
+                    />
                   ))}
                 </tbody>
               </OrderList>
