@@ -12,14 +12,14 @@ import {
   TotalPriceWrap,
   MoreInfo,
   BtnGroup,
-} from "./DetailPage.Style";
-import { Products, cartItem, orderdata } from "types/type";
+} from "./ProductDetail.Style";
+import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DetailProduct } from "API/ProductAPI";
-import { AddKeepProduct, KeepProductList } from "API/KeepAPI";
+import { AddKeepProduct } from "API/KeepAPI";
 import Swal from "sweetalert2";
 import Button from "component/common/Button/Button";
-const DetailPage: React.FC = () => {
+const ProductDetail: React.FC = () => {
   const location = useLocation();
   const product = location.state;
   const navigate = useNavigate();
@@ -103,7 +103,11 @@ const DetailPage: React.FC = () => {
     navigate("/orderpage", {
       state: {
         order_kind: "direct_order",
-        productInfo: { ...productInfo, quantity: count },
+        productInfo: {
+          ...productInfo,
+          quantity: count,
+          product_id: product.product,
+        },
       },
     });
   };
@@ -126,8 +130,7 @@ const DetailPage: React.FC = () => {
   };
 
   return (
-    <>
-      {/* <Header /> */}
+    <main>
       <DetailPageWrapper>
         <ProductImg src={productInfo?.image} alt="상품 사진" />
         <ProductInfoSection>
@@ -215,8 +218,8 @@ const DetailPage: React.FC = () => {
           </li>
         </ul>
       </MoreInfo>
-    </>
+    </main>
   );
 };
 
-export default DetailPage;
+export default ProductDetail;

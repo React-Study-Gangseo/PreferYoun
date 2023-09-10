@@ -39,7 +39,7 @@ const KeepPage: React.FC = () => {
   });
   const allChecked = cartItem.every((item) => item.is_active);
 
-  console.log(cartItem);
+  console.log(totalPrice);
   // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
   const FetchKeepList = async () => {
     try {

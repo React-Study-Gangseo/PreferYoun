@@ -72,10 +72,11 @@ export const TotalPriceWrap = styled.div`
   align-items: flex-end;
   margin-bottom: 1.375rem;
   white-space: nowrap;
+
   & > p:first-of-type {
     font-size: 18px;
     font-weight: bold;
-    margin: 0 20rem 0 0;
+    margin: 0 auto 0 0;
   }
 
   & > span::after {

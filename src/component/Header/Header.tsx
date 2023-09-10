@@ -10,6 +10,7 @@ import {
   CartBtn,
   UserBtn,
   SearchSubmit,
+  HeaderCenterSection,
 } from "./Header.Style";
 import HoduLogo from "../../assets/images/Logo-hodu.png";
 import Cart from "../../assets/images/icon-shopping-cart.svg";
@@ -21,8 +22,11 @@ import SellerCenter from "../../assets/images/icon-shopping-bag.svg";
 import JoinModal from "component/common/Modal/JoinModal";
 import LoginModal from "component/common/Modal/LoginModal";
 import styled from "@emotion/styled";
+import { useDispatch } from "react-redux";
+import { setSearchData } from "redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search from "../../assets/images/search.svg";
+import { SearchAPI } from "../../API/ProductAPI";
 interface HeaderProps {
   type: "home" | "seller" | "buyer" | "seller_center";
 }
@@ -34,10 +38,10 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   const [signUp, setSignUp] = useState(false);
   const [login, setLogin] = useState(false);
   const pathname = location.pathname;
-
+  const dispatch = useDispatch();
   const isCartPage = pathname === "/cart";
   const isMyPage = pathname === "/mypage";
-
+  const [inputValue, setInputValue] = useState("");
   const handleCenterBtn = () => {
     navigate("/seller/center");
   };
@@ -61,6 +65,31 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     setSignUp(true);
     setLogin(false);
   };
+
+  // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const keyword = e.target.value;
+  //   console.log("Dispatching action with keyword:", keyword);
+  //
+  // };
+  const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+  const search = async (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      try {
+        console.log(inputValue);
+        const res = await SearchAPI(inputValue);
+        console.log(res);
+        dispatch(setSearchData({ value: res.data.results }));
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    }
+  };
+  const onClickHome = () => {
+    setInputValue("");
+    dispatch(setSearchData({ value: [] }));
+  };
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
@@ -68,15 +97,25 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     home: (
       <>
         <Logo to="/">
-          <LogoImage src={HoduLogo} alt="호두마켓 로고" />
+          <LogoImage
+            src={HoduLogo}
+            alt="호두마켓 로고"
+            onClick={() => onClickHome()}
+          />
         </Logo>
-        <HeaderForm>
+        <HeaderForm onSubmit={(e) => e.preventDefault()}>
           <FormDiv>
-            <HeaderInput type="text" placeholder=" " id="search-box" />
+            <HeaderInput
+              type="text"
+              placeholder=" "
+              id="search-box"
+              value={inputValue}
+              onInput={handleData}
+              onKeyDown={search}
+            />
             <label htmlFor="search-box">
               <img src={Search} alt="검색창 아이콘" />
             </label>
-            <SearchSubmit type="submit" id="search-submit" />
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
@@ -93,16 +132,22 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     seller: (
       <>
-        <Logo to={`/${userType.toLowerCase()}`}>
+        <Logo to={`/${userType.toLowerCase()}`} onClick={() => onClickHome()}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
-        <HeaderForm>
+        <HeaderForm onSubmit={(e) => e.preventDefault()}>
           <FormDiv>
-            <HeaderInput type="text" placeholder=" " id="search-box" />
+            <HeaderInput
+              type="text"
+              placeholder=" "
+              id="search-box"
+              value={inputValue}
+              onInput={handleData}
+              onKeyDown={search}
+            />
             <label htmlFor="search-box">
               <img src={Search} alt="검색창 아이콘" />
             </label>
-            <SearchSubmit type="submit" id="search-submit" />
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
@@ -119,16 +164,22 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     buyer: (
       <>
-        <Logo to={`/${userType.toLowerCase()}`}>
+        <Logo to={`/${userType.toLowerCase()}`} onClick={() => onClickHome()}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
-        <HeaderForm>
+        <HeaderForm onSubmit={(e) => e.preventDefault()}>
           <FormDiv>
-            <HeaderInput type="text" placeholder=" " id="search-box" />
+            <HeaderInput
+              type="text"
+              placeholder=" "
+              id="search-box"
+              value={inputValue}
+              onInput={handleData}
+              onKeyDown={search}
+            />
             <label htmlFor="search-box">
               <img src={Search} alt="검색창 아이콘" />
             </label>
-            <SearchSubmit type="submit" id="search-submit" />
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
@@ -156,9 +207,15 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   };
   return (
     <>
-      <HeaderSection>
-        <section>{UI[type]}</section>
-      </HeaderSection>
+      {type === "seller_center" ? (
+        <HeaderCenterSection>
+          <section>{UI[type]}</section>
+        </HeaderCenterSection>
+      ) : (
+        <HeaderSection>
+          <section>{UI[type]}</section>
+        </HeaderSection>
+      )}
       {modalShow && login && (
         <LoginModal closeModal={closeModal} openSignUp={handleSignUp} />
       )}

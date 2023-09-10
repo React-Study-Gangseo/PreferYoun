@@ -1,9 +1,12 @@
 import styled from "@emotion/styled";
 import { OutlinedInput, InputAdornment } from "@mui/material";
 import { ButtonStyle } from "component/common/Button/Button";
-export const Wrapper = styled.div`
-  width: 100%;
+export const Wrapper = styled.main`
+  width: 110%;
   margin: 0 auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 export const HeaderSection = styled.section`

@@ -71,7 +71,8 @@ export const EditProductAPI = async (Products: UploadProducts) => {
 
 export const SearchAPI = async (keyword: string) => {
   try {
-    const res = await instance.get(`/products/?serach=${keyword}`);
+    console.log(keyword);
+    const res = await instance.get(`/products/?search=${keyword}`);
     return res;
   } catch (err) {
     throw err;
