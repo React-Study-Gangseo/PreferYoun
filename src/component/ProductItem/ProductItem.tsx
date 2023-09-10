@@ -34,7 +34,10 @@ const ProductItem: React.FC<ProductItemProps> = (product) => {
         <ProductInfo>{product.product.store_name}</ProductInfo>
         <ProductName>{product.product.product_name}</ProductName>
         <ProductPriceUnit>
-          <ProductPrice>{product.product.price}</ProductPrice>원
+          <ProductPrice>{`${new Intl.NumberFormat("ko-KR").format(
+            product.product.price || 0
+          )}`}</ProductPrice>
+          원
         </ProductPriceUnit>
       </ProductInfoContainer>
     </ProductItemWrapper>

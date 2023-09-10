@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import DeleteIcon from "../../assets/images/icon-delete.svg";
 import { UpdateQuantity } from "API/KeepAPI";
-import { calcPrice } from "redux/TotalPrice";
+import { calcPrice, resetPrice } from "redux/TotalPrice";
 import { OrderProduct, removeOrderProduct } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
 
@@ -40,6 +40,7 @@ const CartItem: React.FC<{
   const [selectItem, setSelectItem] = useState(false);
   const [updateItem, setUpdateItem] = useState<cartItem>();
   const navigate = useNavigate();
+  let order_kind: string = "";
   const KeepProductDetail = async (product_id: number) => {
     try {
       const keepItem = await DetailProduct(product_id);
@@ -52,6 +53,7 @@ const CartItem: React.FC<{
   useEffect(() => {
     setUpdateItem(product);
     KeepProductDetail(product.product_id);
+    dispatch(resetPrice());
   }, []);
   console.log("item", product, updateItem);
   useEffect(() => {
@@ -95,7 +97,10 @@ const CartItem: React.FC<{
 
   useEffect(() => {
     UpdateItemQuantity();
-  }, [updateItem]);
+    if (order_kind === "cart_one_order") {
+      console.log(order_kind);
+    }
+  }, [updateItem, order_kind]);
 
   const UpdateItemQuantity = async () => {
     if (updateItem) {
@@ -161,7 +166,6 @@ const CartItem: React.FC<{
         })
       );
     } else {
-      console.log("check");
       dispatch(removeOrderProduct(product.product_id?.toString()));
     }
   }, [selectItem]);
@@ -208,17 +212,20 @@ const CartItem: React.FC<{
   }, [cartItem, selectItem, itemCount]);
 
   const handleOrderItem = () => {
-    const order_kind: string = "cart_one_order";
-    console.log(cartItem, itemCount);
-    navigate("/orderpage", {
-      state: {
-        productInfo: {
-          ...cartItem,
-          quantity: itemCount,
+    order_kind = "cart_one_order";
+    if (updateItem && !updateItem?.is_active) {
+      const orderItem = { ...updateItem, is_active: true };
+      UpdateQuantity(orderItem);
+      navigate("/orderpage", {
+        state: {
+          productInfo: {
+            ...cartItem,
+            quantity: itemCount,
+          },
+          order_kind: order_kind,
         },
-        order_kind: order_kind,
-      },
-    });
+      });
+    }
   };
 
   return (
@@ -243,7 +250,7 @@ const CartItem: React.FC<{
         </p>
         {cartItem?.shipping_method === "PARCEL" ? (
           <span>
-            택배배송 /{" "}
+            택배배송 /
             {cartItem?.shipping_fee === 0
               ? "무료배송"
               : `${new Intl.NumberFormat("ko-KR").format(
@@ -252,7 +259,7 @@ const CartItem: React.FC<{
           </span>
         ) : (
           <span>
-            직접배송 /{" "}
+            직접배송 /
             {cartItem?.shipping_fee === 0
               ? "무료배송"
               : `${cartItem?.shipping_fee}원`}

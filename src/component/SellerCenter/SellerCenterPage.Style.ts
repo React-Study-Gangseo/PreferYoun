@@ -2,9 +2,12 @@ import styled from "@emotion/styled";
 import Plus from "../../assets/images/icon-plus.svg";
 
 import { ButtonStyle } from "../common/Button/Button";
-export const Wrapper = styled.div`
-  width: calc(100vw - 12.5rem);
+export const Wrapper = styled.main`
+  width: 110%;
   margin: 0 auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 export const HeaderSection = styled.section`

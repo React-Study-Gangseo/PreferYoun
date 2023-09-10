@@ -75,7 +75,7 @@ const OrderPage: React.FC = () => {
   const [payCheck, setPayCheck] = useState("");
   const [lastCheck, setLastCheck] = useState(false);
   const [orderKind, setOrderKind] = useState("");
-
+  console.log("order", info);
   useEffect(() => {
     if (info) {
       const { order_kind, productInfo } = info;
@@ -144,7 +144,11 @@ const OrderPage: React.FC = () => {
       try {
         console.log(orderData);
         const res = await CartOrder(orderData);
-        console.log(res);
+        if (res.status === 200) {
+          localStorage.removeItem("persist:root");
+          console.log("localStorage data removed");
+          navigate("/mypage");
+        }
       } catch (error) {
         console.log(error);
       }
@@ -156,7 +160,20 @@ const OrderPage: React.FC = () => {
         if (res.status === 200) {
           localStorage.removeItem("persist:root");
           console.log("localStorage data removed");
-          navigate("/buyer");
+          navigate("/mypage");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (orderKind === "direct_order") {
+      try {
+        console.log(orderData);
+        const res = await OrderDirect(orderData);
+        console.log(res);
+        if (res.status === 200) {
+          localStorage.removeItem("persist:root");
+          console.log("localStorage data removed");
+          navigate("/mypage");
         }
       } catch (error) {
         console.log(error);

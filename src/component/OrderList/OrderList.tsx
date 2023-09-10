@@ -9,13 +9,16 @@ import {
 import { GetOrderList } from "API/OrderAPI";
 import { OrderedData } from "types/type";
 import OrderedItem from "component/MyPage/OrderedItem/OrderedItem";
+import { Logout } from "API/AuthAPI";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderList() {
   const [orderedItem, setOrderedItem] = useState<OrderedData[]>([]);
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
-
+  const navigate = useNavigate();
   const FetchOrderList = async () => {
     try {
       const res = await GetOrderList();
@@ -27,13 +30,28 @@ export default function OrderList() {
   useEffect(() => {
     if (userType === "BUYER") FetchOrderList();
   }, []);
-  // useEffect(() => {
-  //   // if (orderedItem) {
-  //   // const totalQuantity = orderedItem.order_quantity.reduce((acc, cur) => (acc += cur), 0);
-  //   console.log(orderedItem);
-  // }, [orderedItem]);
 
-  console.log(orderedItem);
+  const handleLogOut = () => {
+    Swal.fire({
+      text: "로그아웃 하시겠습니까?",
+      icon: "success",
+      confirmButtonColor: "#21bf48",
+      confirmButtonAriaLabel: "확인버튼",
+      customClass: {
+        icon: "my-icon",
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await Logout();
+        if (response.status === 200) {
+          navigate("/");
+        } else {
+          console.log("통신에러");
+        }
+      }
+    });
+  };
+
   return (
     <Main>
       <Heading>주문 목록</Heading>
@@ -51,12 +69,12 @@ export default function OrderList() {
           </thead>
           <tbody>
             {orderedItem?.map((item, index) => (
-              <OrderedItem index={index} ListItem={item} />
+              <OrderedItem key={index} index={index} ListItem={item} />
             ))}
           </tbody>
         </OrderedList>
       </OrderListSection>
-      <LogOutBtn width="ms" bgColor="active">
+      <LogOutBtn width="ms" bgColor="active" onClick={handleLogOut}>
         로그아웃
       </LogOutBtn>
     </Main>

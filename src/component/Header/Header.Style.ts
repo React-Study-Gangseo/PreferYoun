@@ -16,6 +16,21 @@ export const HeaderSection = styled.header`
     align-items: center;
   }
 `;
+export const HeaderCenterSection = styled.header`
+  width: 100vw;
+  height: 5.625rem;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 4px 5px 0px #0000001a;
+  & section {
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+  }
+`;
 
 export const Logo = styled(Link)`
   width: 7.75rem;

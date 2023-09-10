@@ -68,3 +68,12 @@ export const Login = async (data: LoginData, userType: string) => {
     throw err;
   }
 };
+
+export const Logout = async () => {
+  try {
+    const res = await instance.post(`/accounts/logout/`);
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};

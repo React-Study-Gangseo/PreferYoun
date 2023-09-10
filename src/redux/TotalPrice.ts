@@ -32,9 +32,12 @@ export const totalPriceSlice = createSlice({
         state.value.push({ key, price, shipping_fee });
       }
     },
+    resetPrice: (state: TotalPriceState) => {
+      state.value = [];
+    },
   },
 });
 
 export default totalPriceSlice.reducer;
 
-export const { calcPrice } = totalPriceSlice.actions;
+export const { calcPrice, resetPrice } = totalPriceSlice.actions;

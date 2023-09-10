@@ -1,12 +1,14 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import totalPriceReducer from "./TotalPrice";
 import CartOrderReducer from "./CartOrder";
+import searchReducer from "./Search";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
   totalPrice: totalPriceReducer,
   cartOrder: CartOrderReducer,
+  search: searchReducer,
 });
 
 const persistConfig = {

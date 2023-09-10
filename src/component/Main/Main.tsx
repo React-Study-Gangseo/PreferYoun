@@ -3,17 +3,23 @@ import ProductItem from "../ProductItem/ProductItem";
 import { MainSection, ProductList, Banner, ProductSection } from "./Main.Style";
 import LeftBanner from "../../assets/images/icon-swiper-1.svg";
 import RightBanner from "../../assets/images/icon-swiper-2.svg";
-import { GetFullProduct } from "API/ProductAPI";
+import { GetFullProduct, SearchAPI } from "API/ProductAPI";
 import { Products } from "types/type";
 import useInfiniteScroll from "CustomHook/InfiniteScroll";
+import { searchData } from "redux/Search";
+import { useSelector } from "react-redux";
 const Main: React.FC = () => {
   const [products, setProducts] = useState<Products[]>([]);
+  const [searchProducts, setSearchProducts] = useState<Products[]>([]);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const target = useRef(null);
   const [observe, unobserve] = useInfiniteScroll(() => {
     setPage((page) => page + 1);
   });
+  const keyword = useSelector(
+    (state: { search: searchData }) => state.search.value
+  );
   const fetchProduct = async (page: number) => {
     try {
       console.log(page);
@@ -26,7 +32,7 @@ const Main: React.FC = () => {
       setCount(response.data.count);
     } catch (error) {}
   };
-
+  console.log("keyword", keyword);
   useEffect(() => {
     if (page === 1) observe(target.current);
 
@@ -37,12 +43,15 @@ const Main: React.FC = () => {
       unobserve(target.current);
     }
   }, [products]);
+  useEffect(() => {
+    setSearchProducts(keyword);
+  }, [keyword]);
 
   useEffect(() => {
     console.log("!", page);
     fetchProduct(page);
   }, [page]);
-  console.log(products);
+  console.log(searchProducts);
   return (
     <MainSection>
       <Banner>
@@ -55,12 +64,14 @@ const Main: React.FC = () => {
       </Banner>
       <ProductSection>
         <ProductList>
-          {products?.map((item) => (
-            <ProductItem key={Number(item.product_id)} product={item} />
-          ))}
+          {(searchProducts?.length > 0 ? searchProducts : products)?.map(
+            (item) => (
+              <ProductItem key={Number(item.product_id)} product={item} />
+            )
+          )}
         </ProductList>
       </ProductSection>
-      <div ref={target} style={{ width: "100&", height: 30 }} />
+      <div ref={target} style={{ width: "100%", height: 30 }} />
     </MainSection>
   );
 };
