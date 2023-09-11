@@ -63,6 +63,9 @@ export const OrderList = styled.table`
     font-size: 18px;
     font-weight: 500;
   }
+  & tfoot td:nth-of-type(3) {
+    text-align: end;
+  }
 `;
 export const Input = styled(OutlinedInput)``;
 export const OrdererInfoForm = styled.form`
@@ -125,6 +128,7 @@ export const OrderInfo = styled.section`
     display: flex;
   }
   & ul label {
+    line-height: 40px;
     width: 10.625rem;
   }
 `;
@@ -144,7 +148,7 @@ export const Address = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 50rem;
-
+  position: relative;
   & input {
     width: 100%;
   }
@@ -153,7 +157,9 @@ export const Address = styled.div`
   }
 `;
 export const Message = styled.div`
-  width: 50rem;
+  width: 60.625rem;
+  display: flex;
+  gap: 27px;
   & input {
     width: 100%;
   }
@@ -243,4 +249,12 @@ export const PayBtn = styled(ButtonStyle)`
   font-size: 24px;
   font-weight: 700;
   margin: 1.875rem auto 0 auto;
+`;
+
+export const SearchAddress = styled(ButtonStyle)`
+  width: 9.625rem;
+  height: 40px;
+  position: absolute;
+  right: 470px;
+  top: 0;
 `;

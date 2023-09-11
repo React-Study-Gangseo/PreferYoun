@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import ProductItem from "../ProductItem/ProductItem";
-import { MainSection, ProductList, Banner, ProductSection } from "./Main.Style";
-import LeftBanner from "../../assets/images/icon-swiper-1.svg";
-import RightBanner from "../../assets/images/icon-swiper-2.svg";
-import { GetFullProduct, SearchAPI } from "API/ProductAPI";
+import { MainSection, ProductList, ProductSection } from "./Main.Style";
+import { GetFullProduct } from "API/ProductAPI";
 import { Products } from "types/type";
 import useInfiniteScroll from "CustomHook/InfiniteScroll";
 import { searchData } from "redux/Search";
 import { useSelector } from "react-redux";
+import BannerSection from "./Banner/Banner";
 const Main: React.FC = () => {
   const [products, setProducts] = useState<Products[]>([]);
   const [searchProducts, setSearchProducts] = useState<Products[]>([]);
@@ -48,25 +47,23 @@ const Main: React.FC = () => {
   }, [keyword]);
 
   useEffect(() => {
-    console.log("!", page);
-    fetchProduct(page);
+    const fetchData = async () => {
+      await fetchProduct(page);
+    };
+
+    fetchData();
   }, [page]);
-  console.log(searchProducts);
+  console.log(products);
   return (
     <MainSection>
-      <Banner>
-        <button aria-label="배너 좌측으로 넘기기">
-          <img src={LeftBanner} alt="좌측 화살표 이미지" />
-        </button>
-        <button aria-label="배너 우측으로 넘기기">
-          <img src={RightBanner} alt="우측 화살표 이미지" />
-        </button>
-      </Banner>
       <ProductSection>
+        <BannerSection />
         <ProductList>
           {(searchProducts?.length > 0 ? searchProducts : products)?.map(
             (item) => (
-              <ProductItem key={Number(item.product_id)} product={item} />
+              <li key={Number(item.product_id)}>
+                <ProductItem product={item} />
+              </li>
             )
           )}
         </ProductList>

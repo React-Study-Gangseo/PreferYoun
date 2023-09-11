@@ -21,6 +21,7 @@ import {
   OrderPageTitle,
   PayBtn,
   Wrapper,
+  SearchAddress,
 } from "./OrderPage.Style";
 import { Checkbox, Radio, FormControlLabel, RadioGroup } from "@mui/material";
 import { orderdata, Products } from "types/type";
@@ -31,7 +32,9 @@ const label = {
   },
 };
 
-const OrderPage: React.FC = () => {
+const OrderPage: React.FC<{ handleSearchAddress: () => void }> = ({
+  handleSearchAddress,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const info = location.state;
@@ -75,16 +78,14 @@ const OrderPage: React.FC = () => {
   const [payCheck, setPayCheck] = useState("");
   const [lastCheck, setLastCheck] = useState(false);
   const [orderKind, setOrderKind] = useState("");
-  console.log("order", info);
+
   useEffect(() => {
     if (info) {
       const { order_kind, productInfo } = info;
       if (order_kind === "direct_order" || order_kind === "cart_one_order") {
-        console.log("check");
         setOrderKind(order_kind);
         setOrderProducts([productInfo]);
       } else if (order_kind === "cart_order") {
-        console.log("check cart", totalPrice, totalShippingFee);
         setOrderKind(order_kind);
         setOrderProducts(productInfo);
         setOrderTotalShippingFee(totalShippingFee);
@@ -94,7 +95,6 @@ const OrderPage: React.FC = () => {
     }
   }, [info]);
   useEffect(() => {
-    console.log(orderKind, orderProducts);
     if (orderProducts[0]?.product_id) {
       setOrderData({
         ...orderData,
@@ -108,12 +108,11 @@ const OrderPage: React.FC = () => {
       orderProducts[0]?.quantity &&
       orderProducts[0]?.shipping_fee !== undefined
     ) {
-      console.log("not cart");
       setOrderTotalShippingFee(orderProducts[0].shipping_fee);
       setOrderTotalPrice(orderProducts[0].price * orderProducts[0].quantity);
     }
   }, [orderKind, orderProducts]);
-  console.log(orderProducts);
+
   const handlePayCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPayCheck((event.target as HTMLInputElement).value);
   };
@@ -122,7 +121,6 @@ const OrderPage: React.FC = () => {
       setLastCheck(true);
       const phone = `${phoneNumber.firstNumber}${phoneNumber.secondNumber}${phoneNumber.thirdNumber}`;
       const receiver_address = `${address.firstAddress}${address.secondAddress}${address.thirdAddress}`;
-      console.log(orderKind, phone, receiver_address);
       setOrderData({
         ...orderData,
 
@@ -136,17 +134,15 @@ const OrderPage: React.FC = () => {
       setLastCheck(false);
     }
   };
-  console.log(orderKind);
+
   const handleSubmitOrderData = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (orderKind === "cart_order") {
       try {
-        console.log(orderData);
         const res = await CartOrder(orderData);
         if (res.status === 200) {
           localStorage.removeItem("persist:root");
-          console.log("localStorage data removed");
           navigate("/mypage");
         }
       } catch (error) {
@@ -154,12 +150,11 @@ const OrderPage: React.FC = () => {
       }
     } else if (orderKind === "cart_one_order") {
       try {
-        console.log(orderData);
         const res = await CartOneOrder(orderData);
         console.log(res);
         if (res.status === 200) {
           localStorage.removeItem("persist:root");
-          console.log("localStorage data removed");
+
           navigate("/mypage");
         }
       } catch (error) {
@@ -167,12 +162,11 @@ const OrderPage: React.FC = () => {
       }
     } else if (orderKind === "direct_order") {
       try {
-        console.log(orderData);
         const res = await OrderDirect(orderData);
         console.log(res);
         if (res.status === 200) {
           localStorage.removeItem("persist:root");
-          console.log("localStorage data removed");
+
           navigate("/mypage");
         }
       } catch (error) {
@@ -180,6 +174,7 @@ const OrderPage: React.FC = () => {
       }
     }
   };
+
   return (
     <Wrapper>
       <OrderPageTitle>주문/결제하기</OrderPageTitle>
@@ -204,9 +199,18 @@ const OrderPage: React.FC = () => {
                 </ProductInfo>
               </td>
               <td>-</td>
-              <td>{product.shipping_fee}</td>
+              <td>
+                {new Intl.NumberFormat("ko-KR").format(
+                  product.shipping_fee || 0
+                )}
+              </td>
               {product?.price && product.quantity && (
-                <td>{product.price * product.quantity} 원</td>
+                <td>
+                  {new Intl.NumberFormat("ko-KR").format(
+                    product.price * product.quantity
+                  )}{" "}
+                  원
+                </td>
               )}
             </tr>
           ))}
@@ -215,10 +219,14 @@ const OrderPage: React.FC = () => {
           <tr>
             <td />
             <td />
-            <td />
+            <td>총 주문금액</td>
             <td>
-              총 주문금액
-              <TotalPrice>{orderTotalPrice + orderTotalShippingFee}</TotalPrice>
+              <TotalPrice>
+                {new Intl.NumberFormat("ko-KR").format(
+                  orderTotalPrice + orderTotalShippingFee
+                )}
+                원
+              </TotalPrice>
             </td>
           </tr>
         </tfoot>
@@ -307,7 +315,14 @@ const OrderPage: React.FC = () => {
             <li>
               <label>배송주소</label>
               <Address>
-                <button>우편번호 조회</button>
+                <SearchAddress
+                  width="s"
+                  bgColor="active"
+                  type="button"
+                  onClick={handleSearchAddress}
+                >
+                  우편번호 조회
+                </SearchAddress>
                 <input
                   id="address"
                   value={address.firstAddress}
@@ -341,8 +356,8 @@ const OrderPage: React.FC = () => {
               </Address>
             </li>
             <li>
-              <label>배송메세지</label>
               <Message>
+                <label>배송메세지</label>
                 <input
                   id="address_message"
                   value={orderData.address_message}
@@ -371,64 +386,26 @@ const OrderPage: React.FC = () => {
               control={<Radio />}
               label="신용/체크카드"
             />
-            {/* <PayCheck
-                checked={payCheck === "CARD"}
-                value="CARD"
-                onChange={(e) => handlePayCheck(e.target.value)}
-              />
-              <label>신용/체크카드</label> */}
-
             <FormControlLabel
               value="DEPOSIT"
               control={<Radio />}
               label="무통장입금"
             />
-            {/* <input
-                type="radio"
-                value="DEPOSIT"
-                checked={payCheck === "DEPOSIT"}
-                onChange={(e) => handlePayCheck(e.target.value)}
-              />
-              <label>무통장 입금</label> */}
-
             <FormControlLabel
               value="PHONE_PAYMENT"
               control={<Radio />}
               label="휴대폰 결제"
             />
-            {/* <input
-                type="radio"
-                value="PHONE_PAYMENT"
-                checked={payCheck === "PHONE_PAYMENT"}
-                onChange={(e) => handlePayCheck(e.target.value)}
-              />
-              <label>휴대폰 결제</label> */}
-
             <FormControlLabel
               value="NAVERPAY"
               control={<Radio />}
               label="네이버페이"
             />
-            {/* <input
-                type="radio"
-                value="NAVERPAY"
-                checked={payCheck === "NAVERPAY"}
-                onChange={(e) => handlePayCheck(e.target.value)}
-              />
-              <label>네이버페이</label> */}
-
             <FormControlLabel
               value="KAKAOPAY"
               control={<Radio />}
               label="카카오페이"
             />
-            {/* <input
-                type="radio"
-                checked={payCheck === "KAKAOPAY"}
-                value="KAKAOPAY"
-                onChange={(e) => handlePayCheck(e.target.value)}
-              />
-              <label>카카오페이</label> */}
           </RadioGroup>
         </PayInfo>
         <FinallyPay>
@@ -438,7 +415,10 @@ const OrderPage: React.FC = () => {
               <li>
                 <p>상품금액</p>
                 <p>
-                  <strong>{orderTotalPrice} </strong>원
+                  <strong>
+                    {new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}{" "}
+                  </strong>
+                  원
                 </p>
               </li>
               <li>
@@ -450,12 +430,22 @@ const OrderPage: React.FC = () => {
               <li>
                 <p>배송비</p>
                 <p>
-                  <strong>{orderTotalShippingFee} </strong>원
+                  <strong>
+                    {new Intl.NumberFormat("ko-KR").format(
+                      orderTotalShippingFee
+                    )}{" "}
+                  </strong>
+                  원
                 </p>
               </li>
               <li>
                 <p>결제금액</p>
-                <strong>{orderTotalPrice + orderTotalShippingFee} 원</strong>
+                <strong>
+                  {new Intl.NumberFormat("ko-KR").format(
+                    orderTotalPrice + orderTotalShippingFee
+                  )}{" "}
+                  원
+                </strong>
               </li>
             </ul>
             <LastCheck>

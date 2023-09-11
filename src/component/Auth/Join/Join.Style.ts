@@ -50,18 +50,16 @@ export const Form = styled.form`
   margin: 0 auto;
 `;
 
-export const VaildBtn = styled(Button)`
+export const VaildBtn = styled(ButtonStyle)`
   width: 7.625rem;
   height: 3.6rem;
   font-size: 1rem;
   border-radius: 5px;
-  background-color: #21bf48;
-  color: white;
   border-radius: 10px;
   margin-top: auto;
 `;
 export const InputWrap = styled.div`
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 `;
 export const EmailWrap = styled(InputWrap)`
   position: relative;
@@ -71,14 +69,11 @@ export const EmailWrap = styled(InputWrap)`
     margin-top: auto;
     padding: 10px;
   }
-  /* margin-top: 0.75rem; */
 `;
 export const CheckPw = styled(InputWrap)`
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
 `;
-export const NameWrap = styled(InputWrap)`
-  margin-bottom: 1rem;
-`;
+export const NameWrap = styled(InputWrap)``;
 export const PhoneWrap = styled(InputWrap)`
   display: flex;
   gap: 0.75rem;
@@ -138,4 +133,5 @@ export const Terms = styled.p`
 
 export const JoinBtn = styled(ButtonStyle)`
   margin: 34px auto;
+  padding: 10px;
 `;

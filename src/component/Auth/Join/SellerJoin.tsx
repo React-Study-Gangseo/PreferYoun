@@ -14,6 +14,7 @@ import {
   CheckTerms,
   Terms,
   JoinBtn,
+  VaildBtn,
 } from "./Join.Style";
 import Button from "../../common/Button/Button";
 import { TextField, IconButton, InputAdornment, Checkbox } from "@mui/material";
@@ -156,7 +157,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
                 />
               )}
             />
-            <Button
+            <VaildBtn
               width="ms"
               bgColor="active"
               onClick={(event) => {
@@ -164,7 +165,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               }}
             >
               중복체크
-            </Button>
+            </VaildBtn>
             {errors.id && (
               <StyledError role="alert">{errors.id.message}</StyledError>
             )}
@@ -313,7 +314,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
                 {errors.company_registration_number.message}
               </StyledError>
             )}
-            <Button
+            <VaildBtn
               width="ms"
               bgColor="active"
               onClick={(event) => {
@@ -321,7 +322,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               }}
             >
               인증
-            </Button>
+            </VaildBtn>
           </CRNumber>
           <div>
             <Controller

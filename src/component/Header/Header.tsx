@@ -27,6 +27,7 @@ import { setSearchData } from "redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search from "../../assets/images/search.svg";
 import { SearchAPI } from "../../API/ProductAPI";
+import Swal from "sweetalert2";
 interface HeaderProps {
   type: "home" | "seller" | "buyer" | "seller_center";
 }
@@ -49,7 +50,24 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     navigate("/cart");
   };
   const handleMoveMyPage = () => {
-    navigate("/mypage");
+    if (userInfo) {
+      navigate("/mypage");
+    } else {
+      Swal.fire({
+        text: "로그인 후 이용하실 수 있는 기능 입니다.",
+        confirmButtonColor: "#21bf48",
+        confirmButtonAriaLabel: "로그인 하러가기",
+        confirmButtonText: "로그인 하러가기",
+        icon: "warning",
+        customClass: {
+          icon: "my-icon",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleLogin();
+        }
+      });
+    }
   };
   const handleLogin = () => {
     setModalShow(true);
@@ -119,7 +137,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
-          <CartBtn>
+          <CartBtn onClick={handleMoveCart}>
             <img src={Cart} alt="쇼핑카트 아이콘" />
             장바구니
           </CartBtn>
@@ -132,7 +150,10 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     seller: (
       <>
-        <Logo to={`/${userType.toLowerCase()}`} onClick={() => onClickHome()}>
+        <Logo
+          to={userType ? `/${userType?.toLowerCase()}` : "/"}
+          onClick={() => onClickHome()}
+        >
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm onSubmit={(e) => e.preventDefault()}>
@@ -164,7 +185,10 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     buyer: (
       <>
-        <Logo to={`/${userType.toLowerCase()}`} onClick={() => onClickHome()}>
+        <Logo
+          to={userType ? `/${userType?.toLowerCase()}` : "/"}
+          onClick={() => onClickHome()}
+        >
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm onSubmit={(e) => e.preventDefault()}>

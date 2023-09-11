@@ -13,8 +13,8 @@ import {
   CheckTerms,
   Terms,
   JoinBtn,
+  VaildBtn,
 } from "./Join.Style";
-import Button from "../../common/Button/Button";
 import { TextField, IconButton, InputAdornment, Checkbox } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -122,7 +122,7 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
                 />
               )}
             />
-            <Button
+            <VaildBtn
               width="ms"
               bgColor="active"
               onClick={(event) => {
@@ -130,7 +130,7 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               }}
             >
               중복체크
-            </Button>
+            </VaildBtn>
             {errors.id && (
               <StyledError role="alert">{errors.id.message}</StyledError>
             )}

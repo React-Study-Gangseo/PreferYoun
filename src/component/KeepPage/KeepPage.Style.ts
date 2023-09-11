@@ -214,3 +214,8 @@ export const AllDeleteBtn = styled(ButtonStyle)`
   padding: 10px;
   margin: 0 0 20px auto;
 `;
+
+export const LoginBtn = styled(ButtonStyle)`
+  margin: 10px auto 0;
+  font-size: 1.25rem;
+`;
