@@ -16,7 +16,7 @@ export const Banner = styled.article`
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 `;
 export const ProductList = styled.ul`
   width: 80rem;

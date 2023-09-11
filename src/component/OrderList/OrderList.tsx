@@ -44,6 +44,7 @@ export default function OrderList() {
       if (result.isConfirmed) {
         const response = await Logout();
         if (response.status === 200) {
+          localStorage.removeItem("UserInfo");
           navigate("/");
         } else {
           console.log("통신에러");

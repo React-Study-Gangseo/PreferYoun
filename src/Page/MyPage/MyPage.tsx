@@ -10,7 +10,7 @@ export default function MyPage() {
   const userType = userInfo ? userInfo.user_type : null;
   return (
     <>
-      <Header type={userType.toLowerCase() === "buyer" ? "buyer" : "seller"} />
+      <Header type={userType ? userType?.toLowerCase() : "home"} />
       <OrderList />
       <Footer />
     </>

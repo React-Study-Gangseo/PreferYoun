@@ -100,14 +100,14 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
               구매자 회원가입
             </BuyerBtn>
             <SellerBtn
-              id="seller"
+              id="SELLER"
               onClick={(e) => {
                 handleUserType(e);
               }}
               style={{
                 backgroundColor: userType === "SELLER" ? "#fff" : "#F2F2F2",
                 borderBottom:
-                  userType === "seller" ? "none" : "1px solid #767676",
+                  userType === "SELLER" ? "none" : "1px solid #767676",
               }}
             >
               판매자 회원가입
@@ -132,7 +132,7 @@ const JoinModal: React.FC<ModalProps> = ({ closeModal }) => {
 
 export default JoinModal;
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.section`
   position: fixed;
   bottom: 0;
   left: 50%;
