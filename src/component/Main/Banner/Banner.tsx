@@ -48,7 +48,7 @@ const BannerSection: React.FC = () => {
 
     return () => clearInterval(intervalId);
   }, []);
-  console.log(currentIndex);
+
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex - 1 < 0 ? bannerImg.length - 1 : prevIndex - 1

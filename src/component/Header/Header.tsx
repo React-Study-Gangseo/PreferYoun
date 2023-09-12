@@ -19,15 +19,16 @@ import OnUser from "../../assets/images/icon-user-2.svg";
 import User from "../../assets/images/icon-user.svg";
 import Button from "component/common/Button/Button";
 import SellerCenter from "../../assets/images/icon-shopping-bag.svg";
-import JoinModal from "component/common/Modal/JoinModal";
-import LoginModal from "component/common/Modal/LoginModal";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { setSearchData } from "redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search from "../../assets/images/search.svg";
 import { SearchAPI } from "../../API/ProductAPI";
+import { openModal } from "redux/Modal";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import { closeModal, selectModal } from "redux/Modal";
 interface HeaderProps {
   type: "home" | "seller" | "buyer" | "seller_center";
 }
@@ -35,9 +36,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ type }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [modalShow, setModalShow] = useState(false);
-  const [signUp, setSignUp] = useState(false);
-  const [login, setLogin] = useState(false);
+  const { modalType, isOpen } = useSelector(selectModal);
   const pathname = location.pathname;
   const dispatch = useDispatch();
   const isCartPage = pathname === "/cart";
@@ -64,31 +63,25 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          handleLogin();
+          // handleLogin();
         }
       });
     }
   };
-  const handleLogin = () => {
-    setModalShow(true);
-    setLogin(true);
-  };
-
-  const closeModal = () => {
-    setModalShow(false);
-    setSignUp(false);
-    setLogin(false);
-  };
-  const handleSignUp = () => {
-    setSignUp(true);
-    setLogin(false);
-  };
-
   // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   const keyword = e.target.value;
   //   console.log("Dispatching action with keyword:", keyword);
   //
   // };
+  console.log({ modalType, isOpen });
+  const handleOpenLoginModal = () => {
+    dispatch(
+      openModal({
+        modalType: "LoginModal",
+        isOpen: true,
+      })
+    );
+  };
   const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -111,6 +104,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
+
   const UI = {
     home: (
       <>
@@ -141,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
             <img src={Cart} alt="쇼핑카트 아이콘" />
             장바구니
           </CartBtn>
-          <UserBtn onClick={handleLogin}>
+          <UserBtn onClick={handleOpenLoginModal}>
             <img src={User} alt="로그인용 유저 아이콘" />
             로그인
           </UserBtn>
@@ -240,10 +234,10 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
           <section>{UI[type]}</section>
         </HeaderSection>
       )}
-      {modalShow && login && (
+      {/* {modalShow && login && (
         <LoginModal closeModal={closeModal} openSignUp={handleSignUp} />
       )}
-      {modalShow && signUp && <JoinModal closeModal={closeModal} />}
+      {modalShow && signUp && <JoinModal closeModal={closeModal} />} */}
     </>
   );
 };

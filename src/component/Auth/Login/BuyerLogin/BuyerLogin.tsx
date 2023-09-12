@@ -4,7 +4,6 @@ import { useForm, Controller } from "react-hook-form";
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Login } from "API/AuthAPI";
 import { InputWrap } from "component/Auth/Join/Join.Style";
 import { LoginData } from "../../../../types/type";
 
