@@ -246,10 +246,6 @@ const KeepPage: React.FC = () => {
           )}
         </KeepForm>
       </Wrapper>
-      {modalShow && login && (
-        <LoginModal closeModal={closeModal} openSignUp={handleSignUp} />
-      )}
-      {modalShow && signUp && <JoinModal closeModal={closeModal} />}
     </>
   );
 };
