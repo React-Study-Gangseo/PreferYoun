@@ -18,20 +18,23 @@ import Swal from "sweetalert2";
 import { LoginData } from "types/type";
 import { Login } from "API/AuthAPI";
 import { openModal, closeModal } from "redux/Modal";
-import { saveUserInfo } from "redux/Auth";
+import { useNavigate } from "react-router-dom";
 const LoginModal: React.FC = () => {
   const [userType, setUserType] = useState("SELLER");
-  const [loginSuccess, setLoginSuccess] = useState(false);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (loginSuccess && userType === "SELLER") {
-  //     console.log(loginSuccess);
-  //     // closeModal();
-  //   } else if (loginSuccess && userType === "BUYER") {
-  //     console.log(loginSuccess);
-  //     // closeModal();
-  //   }
-  // }, [loginSuccess, navigate]);
+  const navigate = useNavigate();
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  useEffect(() => {
+    if (loginSuccess && userType === "SELLER") {
+      console.log(loginSuccess);
+      dispatch(closeModal());
+      navigate("/seller");
+    } else if (loginSuccess && userType === "BUYER") {
+      console.log(loginSuccess, userType);
+      dispatch(closeModal());
+      navigate("/buyer");
+    }
+  }, [loginSuccess, navigate]);
 
   const handleUserType = (e: React.MouseEvent<HTMLButtonElement>) => {
     const clickedButtonId = e.currentTarget.id;
@@ -49,9 +52,8 @@ const LoginModal: React.FC = () => {
       console.log(response);
       if (response && response.status === 200) {
         console.log("로그인성공", response.data);
+        localStorage.setItem("UserInfo", JSON.stringify(response.data));
         setLoginSuccess(true);
-        dispatch(saveUserInfo(response.data));
-        dispatch(closeModal());
       }
     } catch (error) {
       const axiosError = error as AxiosError; // 타입 단언

@@ -1,59 +1,72 @@
-import React, { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import TextField from "@mui/material/TextField";
-import {
-  ModalWrapper,
-  ModalBody,
-  StyledModalContainer,
-  CloseBtn,
-} from "./SearchAddress.Style";
-import Close from "../../../../assets/images/close-r.svg";
-interface ModalProps {
-  closeModal: () => void;
+import React, { useState, useEffect } from "react";
+import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
+import { ModalBody, Title } from "./SearchAddress.Style";
+import { closeModal } from "redux/Modal";
+import { useDispatch } from "react-redux";
+import { saveAddress } from "redux/Address";
+
+interface AddressState {
+  address: string;
+  postCode: string;
+  additional: string;
 }
-const SearchAddress: React.FC<ModalProps> = ({ closeModal }) => {
-  const modalRoot = document.getElementById("modal");
+
+const SearchAddress: React.FC = () => {
+  const [address, setAddress] = useState<AddressState[]>([]);
+  const dispatch = useDispatch();
+  const handleComplete = (data: Address) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    setAddress((prevAddress) => [
+      ...prevAddress,
+      {
+        address: fullAddress,
+        postCode: data.zonecode,
+        additional: "",
+      },
+    ]);
+    dispatch(
+      saveAddress({
+        address: fullAddress,
+        postCode: data.zonecode,
+        additional: "",
+      })
+    );
+  };
   useEffect(() => {
-    if (!modalRoot) return;
-
-    document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`;
-
-    return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
-    };
-  }, [modalRoot]);
-
-  if (!modalRoot) {
-    return null;
-  }
-
-  return createPortal(
-    <ModalWrapper>
-      <StyledModalContainer>
-        <ModalBody>
-          <form>
-            <label>주소검색</label>
-            <TextField
-              fullWidth
-              id="standard-helperText"
-              defaultValue="Default Value"
-              helperText="Some important text"
-              variant="standard"
-            />
-          </form>
-        </ModalBody>
-        <CloseBtn onClick={closeModal}>
-          <img src={Close} alt="모달닫힘버튼" aria-label="모달닫힘버튼" />
-        </CloseBtn>
-      </StyledModalContainer>
-    </ModalWrapper>,
-    modalRoot
+    console.log(address);
+  }, [address]);
+  console.log(address);
+  return (
+    <>
+      <Title>주소검색</Title>
+      <ModalBody>
+        <DaumPostcodeEmbed
+          onComplete={handleComplete}
+          style={{
+            height: "500px",
+            borderRadius: "15px",
+            overflow: "hidden",
+            scrollbarWidth: "thin",
+            scrollbarColor: "#217af4 rgba(33, 122, 244, .1)",
+          }}
+          onClose={() => dispatch(closeModal())}
+        />
+      </ModalBody>
+    </>
   );
 };
 

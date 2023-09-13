@@ -26,17 +26,19 @@ import {
 import { Checkbox, Radio, FormControlLabel, RadioGroup } from "@mui/material";
 import { orderdata, Products } from "types/type";
 import { CartOrder, CartOneOrder, OrderDirect } from "API/OrderAPI";
+import { useDispatch } from "react-redux";
+import { openModal } from "redux/Modal";
+import { AddressState } from "redux/Address";
 const label = {
   inputProps: {
     "aria-label": "최종 금액 확인 체크",
   },
 };
 
-const OrderPage: React.FC<{ handleSearchAddress: () => void }> = ({
-  handleSearchAddress,
-}) => {
+const OrderPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const info = location.state;
   const [orderProducts, setOrderProducts] = useState<Products[]>([]);
   const [orderTotalPrice, setOrderTotalPrice] = useState(0);
@@ -53,6 +55,10 @@ const OrderPage: React.FC<{ handleSearchAddress: () => void }> = ({
       );
     }
   );
+  const FullAddress = useSelector(
+    (state: { address: AddressState }) => state.address?.value
+  );
+
   const [orderData, setOrderData] = useState<orderdata>({
     product_id: 0,
     quantity: 0,
@@ -134,7 +140,7 @@ const OrderPage: React.FC<{ handleSearchAddress: () => void }> = ({
       setLastCheck(false);
     }
   };
-
+  console.log(FullAddress);
   const handleSubmitOrderData = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -174,7 +180,14 @@ const OrderPage: React.FC<{ handleSearchAddress: () => void }> = ({
       }
     }
   };
-
+  const handleSearchAddress = () => {
+    dispatch(
+      openModal({
+        modalType: "SearchAddressModal",
+        isOpen: true,
+      })
+    );
+  };
   return (
     <Wrapper>
       <OrderPageTitle>주문/결제하기</OrderPageTitle>

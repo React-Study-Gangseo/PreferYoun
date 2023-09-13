@@ -136,15 +136,7 @@ const KeepPage: React.FC = () => {
     setModalShow(true);
     setLogin(true);
   };
-  const closeModal = () => {
-    setModalShow(false);
-    setSignUp(false);
-    setLogin(false);
-  };
-  const handleSignUp = () => {
-    setSignUp(true);
-    setLogin(false);
-  };
+
   console.log(isLogin);
   return (
     <>
