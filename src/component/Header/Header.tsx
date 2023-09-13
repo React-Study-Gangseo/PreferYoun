@@ -27,8 +27,7 @@ import Search from "../../assets/images/search.svg";
 import { SearchAPI } from "../../API/ProductAPI";
 import { openModal } from "redux/Modal";
 import Swal from "sweetalert2";
-import { useSelector } from "react-redux";
-import { closeModal, selectModal } from "redux/Modal";
+
 interface HeaderProps {
   type: "home" | "seller" | "buyer" | "seller_center";
 }
@@ -36,7 +35,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ type }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { modalType, isOpen } = useSelector(selectModal);
   const pathname = location.pathname;
   const dispatch = useDispatch();
   const isCartPage = pathname === "/cart";
@@ -63,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          // handleLogin();
+          handleOpenLoginModal();
         }
       });
     }
@@ -73,7 +71,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   //   console.log("Dispatching action with keyword:", keyword);
   //
   // };
-  console.log({ modalType, isOpen });
+
   const handleOpenLoginModal = () => {
     dispatch(
       openModal({
@@ -234,10 +232,6 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
           <section>{UI[type]}</section>
         </HeaderSection>
       )}
-      {/* {modalShow && login && (
-        <LoginModal closeModal={closeModal} openSignUp={handleSignUp} />
-      )}
-      {modalShow && signUp && <JoinModal closeModal={closeModal} />} */}
     </>
   );
 };

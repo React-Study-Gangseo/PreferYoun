@@ -24,10 +24,10 @@ const MODAL_COMPONENTS = [
     type: MODAL_TYPES.SignupModal,
     component: <SignupModal />,
   },
-  // {
-  //   type: MODAL_TYPES.SearchAddressModal,
-  //   component: <SearchAddressModal />,
-  // },
+  {
+    type: MODAL_TYPES.SearchAddressModal,
+    component: <SearchAddressModal />,
+  },
 ];
 
 export default function GlobalModal() {
@@ -75,7 +75,9 @@ export default function GlobalModal() {
 
   return createPortal(
     <ModalWrapper>
-      <StyledModalContainer>
+      <StyledModalContainer
+        isSearchAddress={modalType === MODAL_TYPES.SearchAddressModal}
+      >
         {renderModal()}
         <CloseBtn onClick={handleModalClose}>
           <img src={Close} alt="모달닫힘버튼" aria-label="모달닫힘버튼" />
@@ -97,15 +99,27 @@ const ModalWrapper = styled.div`
   width: 100vw;
 `;
 
-const StyledModalContainer = styled.article`
+const StyledModalContainer = styled.article<{ isSearchAddress: boolean }>`
   background-color: white;
   position: relative;
-  width: 800px;
+  width: ${({ isSearchAddress }) => (isSearchAddress ? "500px" : "800px")};
+  height: ${({ isSearchAddress }) => (isSearchAddress ? "500px" : "auto")};
+  padding: ${({ isSearchAddress }) => (isSearchAddress ? "30px 0 0" : "0")};
   margin: 3.125rem auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   overflow: hidden;
 `;
+
+// const StyledModalContainer = styled.article`
+//   background-color: white;
+//   position: relative;
+//   width: 800px;
+//   margin: 3.125rem auto;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   border-radius: 5px;
+//   overflow: hidden;
+// `;
 const CloseBtn = styled.button`
   position: absolute;
   top: 10px;

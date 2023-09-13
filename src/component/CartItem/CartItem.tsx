@@ -55,7 +55,7 @@ const CartItem: React.FC<{
     KeepProductDetail(product.product_id);
     dispatch(resetPrice());
   }, []);
-  console.log("item", product, updateItem);
+
   useEffect(() => {
     if (itemCount < 1) {
       Swal.fire({
@@ -216,16 +216,16 @@ const CartItem: React.FC<{
     if (updateItem && !updateItem?.is_active) {
       const orderItem = { ...updateItem, is_active: true };
       UpdateQuantity(orderItem);
-      navigate("/orderpage", {
-        state: {
-          productInfo: {
-            ...cartItem,
-            quantity: itemCount,
-          },
-          order_kind: order_kind,
-        },
-      });
     }
+    navigate("/orderpage", {
+      state: {
+        productInfo: {
+          ...cartItem,
+          quantity: itemCount,
+        },
+        order_kind: order_kind,
+      },
+    });
   };
 
   return (

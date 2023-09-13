@@ -22,6 +22,7 @@ export default function OrderList() {
   const FetchOrderList = async () => {
     try {
       const res = await GetOrderList();
+      console.log(res);
       setOrderedItem(res.data.results);
     } catch (error) {
       console.log(error);
