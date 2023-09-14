@@ -25,17 +25,14 @@ const OrderedItem: React.FC<{
 
   const OrderedProductDetail = async (product_id: number) => {
     try {
-      console.log(product_id);
       const keepItem = await DetailProduct(product_id);
       setOrderedItem(keepItem.data);
-      console.log(keepItem);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     if (order_items && order_items.length > 0) {
-      console.log(order_items[0]);
       OrderedProductDetail(order_items[0]);
     }
   }, [order_items]);

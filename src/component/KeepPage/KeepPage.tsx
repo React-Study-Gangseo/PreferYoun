@@ -137,7 +137,6 @@ const KeepPage: React.FC = () => {
     setLogin(true);
   };
 
-  console.log(isLogin);
   return (
     <>
       <Wrapper>

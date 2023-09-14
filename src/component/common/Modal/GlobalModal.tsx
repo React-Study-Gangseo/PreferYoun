@@ -49,12 +49,6 @@ export default function GlobalModal() {
       document.body.style.cssText = "";
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     }
-
-    return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
-    };
   }, [modalRoot, isOpen]);
 
   if (!modalRoot) {

@@ -6,8 +6,9 @@ import UploadProduct from "component/UploadProduct/UploadProduct";
 import DetailPage from "../../Page/DetailPage/DetailPage";
 import OrderPage from "../../Page/OrderPage/OrderPage";
 import CartPage from "../../Page/CartPage/CartPage";
-import MyPage from "Page/MyPage/MyPage";
+import MyPage from "../../Page/MyPage/MyPage";
 import GlobalModal from "component/common/Modal/GlobalModal";
+import ScrollToTop from "CustomHook/ScrollTop";
 
 export interface RouterProps {}
 
@@ -15,6 +16,7 @@ const Routers: React.FC<RouterProps> = () => {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/seller" element={<HomePage />} />

@@ -3,18 +3,12 @@ import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
 import { ModalBody, Title } from "./SearchAddress.Style";
 import { closeModal } from "redux/Modal";
 import { useDispatch } from "react-redux";
-import { saveAddress } from "redux/Address";
-
-interface AddressState {
-  address: string;
-  postCode: string;
-  additional: string;
-}
+import { removeAddress, saveAddress } from "redux/Address";
 
 const SearchAddress: React.FC = () => {
-  const [address, setAddress] = useState<AddressState[]>([]);
   const dispatch = useDispatch();
   const handleComplete = (data: Address) => {
+    dispatch(removeAddress());
     let fullAddress = data.address;
     let extraAddress = "";
 
@@ -30,14 +24,7 @@ const SearchAddress: React.FC = () => {
     }
 
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-    setAddress((prevAddress) => [
-      ...prevAddress,
-      {
-        address: fullAddress,
-        postCode: data.zonecode,
-        additional: "",
-      },
-    ]);
+
     dispatch(
       saveAddress({
         address: fullAddress,
@@ -46,10 +33,7 @@ const SearchAddress: React.FC = () => {
       })
     );
   };
-  useEffect(() => {
-    console.log(address);
-  }, [address]);
-  console.log(address);
+
   return (
     <>
       <Title>주소검색</Title>

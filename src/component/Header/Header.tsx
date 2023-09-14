@@ -66,11 +66,6 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
       });
     }
   };
-  // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const keyword = e.target.value;
-  //   console.log("Dispatching action with keyword:", keyword);
-  //
-  // };
 
   const handleOpenLoginModal = () => {
     dispatch(
@@ -84,6 +79,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     setInputValue(e.target.value);
   };
   const search = async (e: React.KeyboardEvent) => {
+    console.log(e);
     if (e.key === "Enter") {
       try {
         console.log(inputValue);
@@ -98,6 +94,9 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   const onClickHome = () => {
     setInputValue("");
     dispatch(setSearchData({ value: [] }));
+  };
+  const handleIconClick = () => {
+    search({ key: "Enter" } as React.KeyboardEvent);
   };
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
@@ -123,7 +122,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
               onInput={handleData}
               onKeyDown={search}
             />
-            <label htmlFor="search-box">
+            <label htmlFor="search-box" onClick={handleIconClick}>
               <img src={Search} alt="검색창 아이콘" />
             </label>
           </FormDiv>
@@ -158,7 +157,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
               onInput={handleData}
               onKeyDown={search}
             />
-            <label htmlFor="search-box">
+            <label htmlFor="search-box" onClick={handleIconClick}>
               <img src={Search} alt="검색창 아이콘" />
             </label>
           </FormDiv>
@@ -193,7 +192,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
               onInput={handleData}
               onKeyDown={search}
             />
-            <label htmlFor="search-box">
+            <label htmlFor="search-box" onClick={handleIconClick}>
               <img src={Search} alt="검색창 아이콘" />
             </label>
           </FormDiv>
