@@ -48,6 +48,9 @@ export const FormTop = styled.ul`
     border-radius: 50%;
     box-sizing: border-box;
   }
+  & li:nth-of-type(2) {
+    margin-right: 80px;
+  }
 `;
 
 export const KeepList = styled.ul`

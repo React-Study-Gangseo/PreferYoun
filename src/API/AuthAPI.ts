@@ -63,6 +63,7 @@ export const Login = async (data: LoginData, userType: string) => {
       password: data.password,
       login_type: userType,
     });
+    console.log(res);
     return res;
   } catch (err) {
     throw err;

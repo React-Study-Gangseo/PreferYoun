@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { OutlinedInput, Radio } from "@mui/material";
+import { OutlinedInput, Radio, FormControlLabel } from "@mui/material";
 import { ButtonStyle } from "component/common/Button/Button";
 export const OrderPageTitle = styled.h2`
   text-align: center;
@@ -111,6 +111,14 @@ export const SectionTitle = styled.h4`
   margin: 2.5rem 0 0 0;
 `;
 
+export const AddressInfo = styled.div`
+  position: relative;
+`;
+export const FormControlLabelStyle = styled(FormControlLabel)`
+  position: absolute;
+  left: 170px;
+  top: -11px;
+`;
 export const OrderInfo = styled.section`
   & input {
     width: 334px;

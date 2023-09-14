@@ -26,12 +26,8 @@ export const addressSlice = createSlice({
 
       state.value.push({ address, postCode, additional });
     },
-    removeAddress: (state: AddressState, action: PayloadAction<string>) => {
-      const addressToRemove = action.payload;
-
-      state.value = state.value.filter(
-        (item) => item.address !== addressToRemove
-      );
+    removeAddress: (state) => {
+      state.value = []; // 모든 주소 정보 제거
     },
   },
 });

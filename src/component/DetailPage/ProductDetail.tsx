@@ -19,8 +19,12 @@ import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";
 import Swal from "sweetalert2";
 import Button from "component/common/Button/Button";
+import { useDispatch } from "react-redux";
+import { openModal } from "redux/Modal";
+
 const ProductDetail: React.FC = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const product = location.state;
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState<Products>();
@@ -112,21 +116,44 @@ const ProductDetail: React.FC = () => {
     });
   };
   const handleKeepProduct = async () => {
-    try {
-      const storedCart = localStorage.getItem("userCart");
-      const userCart = storedCart ? JSON.parse(storedCart) : null;
-      userCart.forEach((item: any) => {
-        if (item.product_id === product.product) {
-          setPostCartData((prevState) => ({ ...prevState, check: false }));
+    const storedData = localStorage.getItem("UserInfo");
+    if (storedData) {
+      try {
+        const storedCart = localStorage.getItem("userCart");
+        const userCart = storedCart ? JSON.parse(storedCart) : null;
+        userCart.forEach((item: any) => {
+          if (item.product_id === product.product) {
+            setPostCartData((prevState) => ({ ...prevState, check: false }));
+          }
+        });
+        const res = await AddKeepProduct(postCartData);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+      navigate("/cart");
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용 가능한 기능입니다.",
+        text: "로그인 하시겠습니까?",
+        icon: "warning",
+        confirmButtonColor: "#21bf48",
+        confirmButtonAriaLabel: "로그인하러가기",
+        confirmButtonText: "로그인하러가기",
+        customClass: {
+          icon: "my-icon",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(
+            openModal({
+              modalType: "LoginModal",
+              isOpen: true,
+            })
+          );
         }
       });
-
-      const res = await AddKeepProduct(postCartData);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
     }
-    navigate("/cart");
   };
 
   return (

@@ -22,19 +22,20 @@ import {
   PayBtn,
   Wrapper,
   SearchAddress,
+  FormControlLabelStyle,
+  AddressInfo,
 } from "./OrderPage.Style";
 import { Checkbox, Radio, FormControlLabel, RadioGroup } from "@mui/material";
 import { orderdata, Products } from "types/type";
 import { CartOrder, CartOneOrder, OrderDirect } from "API/OrderAPI";
 import { useDispatch } from "react-redux";
 import { openModal } from "redux/Modal";
-import { AddressState } from "redux/Address";
+import { RootState } from "redux/store";
 const label = {
   inputProps: {
     "aria-label": "최종 금액 확인 체크",
   },
 };
-
 const OrderPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,10 +56,7 @@ const OrderPage: React.FC = () => {
       );
     }
   );
-  const FullAddress = useSelector(
-    (state: { address: AddressState }) => state.address?.value
-  );
-
+  const FullAddress = useSelector((state: RootState) => state.Address.value);
   const [orderData, setOrderData] = useState<orderdata>({
     product_id: 0,
     quantity: 0,
@@ -80,11 +78,17 @@ const OrderPage: React.FC = () => {
     secondAddress: "",
     thirdAddress: "",
   });
-
+  const [ordererInfo, setOrdererInfo] = useState({
+    ordererName: "",
+    ordererFirstNumber: "",
+    ordererSecondNumber: "",
+    ordererThirdNumber: "",
+    ordererMail: "",
+  });
   const [payCheck, setPayCheck] = useState("");
   const [lastCheck, setLastCheck] = useState(false);
+  const [sameCheck, setSameCheck] = useState(false);
   const [orderKind, setOrderKind] = useState("");
-
   useEffect(() => {
     if (info) {
       const { order_kind, productInfo } = info;
@@ -140,7 +144,17 @@ const OrderPage: React.FC = () => {
       setLastCheck(false);
     }
   };
-  console.log(FullAddress);
+  useEffect(() => {
+    if (FullAddress.length > 0) {
+      console.log(FullAddress);
+
+      setAddress({
+        firstAddress: FullAddress[0].postCode,
+        secondAddress: FullAddress[0].address,
+        thirdAddress: "",
+      });
+    }
+  }, [FullAddress]);
   const handleSubmitOrderData = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -187,6 +201,21 @@ const OrderPage: React.FC = () => {
         isOpen: true,
       })
     );
+  };
+  const handleSameInfo = () => {
+    if (!sameCheck) {
+      setSameCheck(true);
+      setOrderData({
+        receiver: ordererInfo.ordererName,
+      });
+      setPhoneNumber({
+        firstNumber: ordererInfo.ordererFirstNumber,
+        secondNumber: ordererInfo.ordererSecondNumber,
+        thirdNumber: ordererInfo.ordererThirdNumber,
+      });
+    } else {
+      setSameCheck(false);
+    }
   };
   return (
     <Wrapper>
@@ -251,26 +280,86 @@ const OrderPage: React.FC = () => {
           <ul>
             <li>
               <label>이름</label>
-              <input id="name" />
+              <input
+                id="name"
+                value={ordererInfo.ordererName}
+                onChange={(e) =>
+                  setOrdererInfo({
+                    ...ordererInfo,
+                    ordererName: String(e.target.value),
+                  })
+                }
+              />
             </li>
             <li>
               <label>휴대폰</label>
               <Phone>
-                <input placeholder="000" id="phone_number_first" />
+                <input
+                  placeholder="000"
+                  id="phone_number_first"
+                  value={ordererInfo.ordererFirstNumber}
+                  onChange={(e) =>
+                    setOrdererInfo({
+                      ...ordererInfo,
+                      ordererFirstNumber: String(e.target.value),
+                    })
+                  }
+                />
                 <span>-</span>
-                <input placeholder="0000" id="phone_number_second" />
+                <input
+                  placeholder="0000"
+                  id="phone_number_second"
+                  value={ordererInfo.ordererSecondNumber}
+                  onChange={(e) =>
+                    setOrdererInfo({
+                      ...ordererInfo,
+                      ordererSecondNumber: String(e.target.value),
+                    })
+                  }
+                />
                 <span>-</span>
-                <input placeholder="0000" id="phone_number_last" />
+                <input
+                  placeholder="0000"
+                  id="phone_number_last"
+                  value={ordererInfo.ordererThirdNumber}
+                  onChange={(e) =>
+                    setOrdererInfo({
+                      ...ordererInfo,
+                      ordererThirdNumber: String(e.target.value),
+                    })
+                  }
+                />
               </Phone>
             </li>
             <li>
               <label>이메일</label>
-              <input id="email" />
+              <input
+                id="email"
+                value={ordererInfo.ordererMail}
+                onChange={(e) =>
+                  setOrdererInfo({
+                    ...ordererInfo,
+                    ordererMail: String(e.target.value),
+                  })
+                }
+              />
             </li>
           </ul>
         </OrderInfo>
         <OrderInfo>
-          <SectionTitle>배송지 정보</SectionTitle>
+          <AddressInfo>
+            <SectionTitle>배송지 정보</SectionTitle>
+            <FormControlLabelStyle
+              label="주문자정보와 동일"
+              control={
+                <Checkbox
+                  size="small"
+                  checked={sameCheck}
+                  onChange={handleSameInfo}
+                />
+              }
+            />
+          </AddressInfo>
           <ul>
             <li>
               <label>수령인</label>
@@ -358,6 +447,7 @@ const OrderPage: React.FC = () => {
                 />
                 <input
                   id="address"
+                  placeholder="상세주소"
                   value={address.thirdAddress}
                   onChange={(e) =>
                     setAddress({

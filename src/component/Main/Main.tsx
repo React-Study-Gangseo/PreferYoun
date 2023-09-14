@@ -23,7 +23,6 @@ const Main: React.FC = () => {
     try {
       console.log(page);
       const response = await GetFullProduct(page);
-      console.log("count", response);
       setProducts((prevProducts) => [
         ...prevProducts,
         ...response.data.results,
@@ -31,7 +30,7 @@ const Main: React.FC = () => {
       setCount(response.data.count);
     } catch (error) {}
   };
-  console.log("keyword", keyword);
+
   useEffect(() => {
     if (page === 1) observe(target.current);
 

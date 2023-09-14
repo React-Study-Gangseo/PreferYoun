@@ -92,7 +92,6 @@ export const HeaderInput = styled.input`
     cursor: pointer;
   }
 `;
-
 /* position: relative;
   height: 2rem;
   border-radius: 1rem;

@@ -4,9 +4,10 @@ import Main from "../component/Main/Main";
 import Footer from "component/Footer/Footer";
 import { KeepProductList } from "API/KeepAPI";
 import { useLocation } from "react-router-dom";
-
+// import useScrollRestoration from "CustomHook/useScrollRestore";
 export default function HomePage() {
   const location = useLocation();
+  // useScrollRestoration();
 
   let type: "home" | "seller" | "buyer";
   switch (location.pathname) {
