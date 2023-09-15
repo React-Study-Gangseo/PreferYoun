@@ -2,21 +2,25 @@ import styled from "@emotion/styled";
 
 export const LoginSection = styled.section`
   background: white;
-  max-width: 34.375rem;
+  max-width: 34.5rem;
   height: auto;
-  margin: 2.5rem auto;
-  border: 1px solid #c4c4c4;
-  border-radius: 0.625rem;
+  margin: 0 auto 2.125rem;
+  border: 1px solid #767676;
+  border-top: none;
+  border-radius: 0 0 0.625rem 0.625rem;
 `;
 export const LogoImg = styled.img`
   display: block;
   margin: 1.25rem auto 4.375rem auto;
 `;
 export const BtnGroup = styled.div`
-  width: 100%;
+  max-width: 34.5rem;
+  margin: 0 auto;
   padding: 0;
   display: flex;
   border-radius: 10px 10px 0 0;
+  border: 1px solid #767676;
+  border-bottom: none;
 `;
 const Button = styled.button`
   display: block;
@@ -26,22 +30,23 @@ const Button = styled.button`
   width: 50%;
   text-align: center;
   cursor: pointer;
-  transition: 0.5s ease;
 `;
 
 export const BuyerBtn = styled(Button)`
   border-radius: 10px 0 0 0;
-  border-right: 1px solid #c4c4c4;
-  width: 50%;
+  border-right: 1px solid #767676;
+  width: 49.9%;
+  margin-left: auto;
 `;
 
 export const SellerBtn = styled(Button)`
   border-radius: 0 10px 0 0;
-  width: 50%;
+  width: 49.9%;
+  margin-right: auto;
 `;
 
 export const Form = styled.form`
-  padding: 14px 35px 36px 35px;
+  padding: 34px 35px 36px 35px;
 `;
 export const Input = styled.input`
   width: 100%;
@@ -60,13 +65,17 @@ export const JoinBtn = styled(Button)`
 export const LinkGroup = styled.div`
   width: 100%;
   text-align: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 3rem;
+  & button {
+    font-size: 1rem;
+    font-weight: 400;
+  }
 `;
-export const SignUp = styled.a`
+export const SignUp = styled.button`
   &::after {
     content: "";
     border-right: 1px solid #c4c4c4;
     margin: 0 0.875rem;
   }
 `;
-export const FindPw = styled.a``;
+export const FindPw = styled.button``;

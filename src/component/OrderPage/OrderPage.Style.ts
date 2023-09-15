@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-
+import { OutlinedInput, Radio, FormControlLabel } from "@mui/material";
+import { ButtonStyle } from "component/common/Button/Button";
 export const OrderPageTitle = styled.h2`
   text-align: center;
   font-size: 2.25rem;
@@ -7,9 +8,9 @@ export const OrderPageTitle = styled.h2`
   margin: 3.25rem 0;
 `;
 export const Wrapper = styled.main`
-  width: 80rem;
-  margin: 0 auto;
-  /* box-shadow: inset 0 0 10px 0 red; */
+  width: 100%;
+  height: auto;
+  margin: 0 auto 22.375rem;
 `;
 export const TableContainer = styled.div`
   display: flex;
@@ -23,23 +24,23 @@ export const OrderList = styled.table`
     background: #f2f2f2;
     height: 3.75rem;
   }
-  & th:nth-child(1) {
+  & th:nth-of-type(1) {
     width: calc(100% * 3 / 6);
     vertical-align: middle;
   }
-  & th:not(:nth-child(1)) {
+  & th:not(:nth-of-type(1)) {
     width: calc(100% * 1 / 6);
     vertical-align: middle;
   }
   & tr:not(tfoot tr) {
     border-bottom: 1px solid #c4c4c4;
   }
-  & td:nth-child(1) {
+  & td:nth-of-type(1) {
     display: flex;
     gap: 2.25rem;
-    padding: 0.5rem 0 1.125rem 0.5rem;
+    padding: 1.25rem 0 1.125rem 0.5rem;
   }
-  & td:not(:nth-child(1)) {
+  & td:not(:nth-of-type(1)) {
     text-align: center;
     line-height: 100%;
     vertical-align: middle;
@@ -49,10 +50,10 @@ export const OrderList = styled.table`
     height: 104px;
     border-radius: 10px;
   }
-  & td:not(:nth-child(1)):not(:nth-child(4)) {
+  & td:not(:nth-of-type(1)):not(:nth-of-type(4)) {
     color: #767676;
   }
-  & td:last-child {
+  & td:last-of-type {
     font-size: 18px;
     font-weight: 700;
   }
@@ -62,8 +63,11 @@ export const OrderList = styled.table`
     font-size: 18px;
     font-weight: 500;
   }
+  & tfoot td:nth-of-type(3) {
+    text-align: end;
+  }
 `;
-
+export const Input = styled(OutlinedInput)``;
 export const OrdererInfoForm = styled.form`
   margin-top: 6rem;
 `;
@@ -107,6 +111,14 @@ export const SectionTitle = styled.h4`
   margin: 2.5rem 0 0 0;
 `;
 
+export const AddressInfo = styled.div`
+  position: relative;
+`;
+export const FormControlLabelStyle = styled(FormControlLabel)`
+  position: absolute;
+  left: 170px;
+  top: -11px;
+`;
 export const OrderInfo = styled.section`
   & input {
     width: 334px;
@@ -124,6 +136,7 @@ export const OrderInfo = styled.section`
     display: flex;
   }
   & ul label {
+    line-height: 40px;
     width: 10.625rem;
   }
 `;
@@ -134,7 +147,7 @@ export const Phone = styled.div`
   & input {
     width: 6.25rem;
   }
-  & input:first-child {
+  & input:first-of-type {
     width: 5rem;
   }
 `;
@@ -143,15 +156,18 @@ export const Address = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 50rem;
+  position: relative;
   & input {
     width: 100%;
   }
-  & input:first-child {
+  & input:first-of-type {
     width: 10.625rem;
   }
 `;
 export const Message = styled.div`
-  width: 50rem;
+  width: 60.625rem;
+  display: flex;
+  gap: 27px;
   & input {
     width: 100%;
   }
@@ -163,25 +179,9 @@ export const PayInfo = styled.section`
   border-bottom: 2px solid #c4c4c4;
   margin-top: 4.375rem;
   float: left;
-  & div {
-    display: flex;
-    align-items: center;
-  }
-  & input[type="checkbox"] {
-    width: 1.25rem;
-    height: 1.25rem;
-    border-radius: 50%;
-    border: 2px solid #c4c4c4;
-    appearance: none;
-    cursor: pointer;
-  }
-  & label {
-    line-height: 100%;
-    font-size: 16px;
-    font-weight: 400;
-    margin-right: 1.25rem;
-  }
 `;
+
+export const PayCheck = styled(Radio)``;
 export const FinallyPay = styled.section`
   float: right;
   margin-top: 4.375rem;
@@ -189,8 +189,8 @@ export const FinallyPay = styled.section`
 export const FinallyPayWrapper = styled.article`
   border: 3px solid #21bf48;
   width: 30rem;
-  height: 25rem;
-  margin-top: 1.125rem;
+  min-height: 25rem;
+  margin: 1.125rem 0 200px;
   border-radius: 10px;
   background: #f2f2f2;
   & ul {
@@ -199,18 +199,39 @@ export const FinallyPayWrapper = styled.article`
     border-radius: 10px 10px 0 0;
     background: white;
   }
-  & ul li {
+  & li {
     display: flex;
     justify-content: space-between;
     font-size: 16px;
     height: auto;
     font-weight: 400;
     line-height: 20.03px;
+    padding-left: 13px;
     margin-bottom: 0.9375rem;
+    position: relative;
   }
-  & li:nth-child(3) {
+  & li::before {
+    content: "-";
+    position: absolute;
+    top: 0;
+    left: -5px;
+  }
+  & li:nth-of-type(3) {
     border-bottom: 1px solid #c4c4c4;
     padding-bottom: 19px;
+  }
+  & li:last-of-type {
+    margin-top: 1.5rem;
+  }
+  & strong {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  & li:last-of-type strong {
+    margin-top: -5px;
+    font-size: 24px;
+    font-weight: 700;
+    color: red;
   }
 `;
 export const LastCheck = styled.div`
@@ -220,11 +241,7 @@ export const LastCheck = styled.div`
     display: flex;
     align-items: center;
   }
-  & div input {
-    width: 1rem;
-    height: 1rem;
-    margin-left: 1.75rem;
-  }
+
   & div label {
     font-size: 16px;
     font-weight: 400;
@@ -232,15 +249,20 @@ export const LastCheck = styled.div`
     line-height: 100%;
     align-self: center;
   }
-  & button {
-    display: block;
-    width: 13.75rem;
-    height: 4.25rem;
-    border-radius: 0.3125rem;
-    background: #c4c4c4;
-    color: white;
-    font-size: 24px;
-    font-weight: 700;
-    margin: 1.875rem auto 0 auto;
-  }
+`;
+export const PayBtn = styled(ButtonStyle)`
+  width: 13.75rem;
+  height: 4.25rem;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 1.875rem auto 0 auto;
+`;
+
+export const SearchAddress = styled(ButtonStyle)`
+  width: 9.625rem;
+  height: 40px;
+  position: absolute;
+  right: 470px;
+  top: 0;
 `;

@@ -1,31 +1,31 @@
-import BaseUrl from "./api";
-import axios from "axios";
-import { FormValue } from "../component/Auth/Join/SellerJoin";
+import { instance } from "./instance";
+import { FormValue, LoginData } from "types/type";
 
-export const SellerJoin = async (formData: FormValue) => {
+export const Seller_Join = async (formData: FormValue) => {
   try {
-    // const { id, password, password2, name, CRNumber, Phone, StoreName } =
-    //   formData;
-    const phoneNumber = `${formData.phoneCode}${formData.firstNumber}${formData.secondNumber}`;
-
-    const res = await axios.post(
-      `${BaseUrl}/accounts/signup_seller/`,
-      {
-        username: formData.id,
-        password: formData.password,
-        password2: formData.password2,
-        name: formData.name,
-        phone_number: phoneNumber,
-        company_registration_number: formData.CRNumber,
-        store_name: formData.StoreName,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log(res);
+    const res = await instance.post(`/accounts/signup_seller/`, {
+      username: formData.id,
+      password: formData.password,
+      password2: formData.password2,
+      name: formData.name,
+      phone_number: formData.Phone,
+      company_registration_number: formData.company_registration_number,
+      store_name: formData.StoreName,
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const Join = async (formData: FormValue) => {
+  try {
+    const res = await instance.post(`/accounts/signup/`, {
+      username: formData.id,
+      password: formData.password,
+      password2: formData.password2,
+      name: formData.name,
+      phone_number: formData.Phone,
+    });
     return res;
   } catch (err) {
     console.log(err);
@@ -33,40 +33,48 @@ export const SellerJoin = async (formData: FormValue) => {
 };
 
 export const CheckCRN = async (CRN: string) => {
-  console.log("CRN", CRN);
   try {
-    const res = await axios.post(
-      `${BaseUrl}/accounts/signup/valid/company_registration_number/`,
+    const res = await instance.post(
+      `accounts/signup/valid/company_registration_number/`,
       {
         company_registration_number: CRN,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
       }
     );
     return res;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 export const CheckId = async (id: string) => {
-  console.log("id", id);
   try {
-    const res = await axios.post(
-      `${BaseUrl}/accounts/signup/valid/username/`,
-      {
-        username: id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await instance.post(`/accounts/signup/valid/username/`, {
+      username: id,
+    });
+    return res;
+  } catch (err: any) {
+    throw err;
+  }
+};
+
+export const Login = async (data: LoginData, userType: string) => {
+  try {
+    const res = await instance.post(`/accounts/login/`, {
+      username: data.id,
+      password: data.password,
+      login_type: userType,
+    });
+    console.log(res);
     return res;
   } catch (err) {
-    console.log(err);
+    throw err;
+  }
+};
+
+export const Logout = async () => {
+  try {
+    const res = await instance.post(`/accounts/logout/`);
+    return res;
+  } catch (err) {
+    throw err;
   }
 };

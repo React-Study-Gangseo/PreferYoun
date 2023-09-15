@@ -1,17 +1,19 @@
 import styled from "@emotion/styled";
+import { ButtonStyle } from "../../common/Button/Button";
 
 export const JoinSection = styled.section`
   background: white;
-  max-width: 34.5rem;
+  padding: 1.875rem 2.1875rem 2.25rem 2.1875rem;
+  width: 100%;
   height: auto;
-  margin: 0 auto 2.125rem;
+  border-radius: 0 0 0.625rem 0.625rem;
   border: 1px solid #767676;
   border-top: none;
-  border-radius: 0 0 0.625rem 0.625rem;
+  margin-bottom: 1.5rem;
 `;
 export const LogoImg = styled.img`
   display: block;
-  margin: 1.25rem auto 4.375rem auto;
+  margin: 1.25rem auto 2.5rem auto;
 `;
 export const ButtonGroup = styled.div`
   max-width: 34.5rem;
@@ -44,59 +46,40 @@ export const SellerBtn = styled(Button)`
 `;
 
 export const Form = styled.form`
-  width: 100%;
-  padding: 1.25rem 2.1875rem 2.25rem 2.1875rem;
+  max-width: 34.5rem;
+  margin: 0 auto;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 3.375rem;
-  border: 1px solid #c4c4c4;
-  margin-top: 0.75rem;
-  border-radius: 0.3125rem;
-`;
-
-export const JoinBtn = styled(Button)`
-  width: 100%;
-  margin: 2.25rem auto 0;
-  background-color: #21bf48;
-  color: white;
-  border-radius: 10px;
-`;
-export const VaildBtn = styled(Button)`
+export const VaildBtn = styled(ButtonStyle)`
   width: 7.625rem;
   height: 3.6rem;
   font-size: 1rem;
   border-radius: 5px;
-  background-color: #21bf48;
-  color: white;
   border-radius: 10px;
   margin-top: auto;
 `;
 export const InputWrap = styled.div`
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 `;
 export const EmailWrap = styled(InputWrap)`
+  position: relative;
   display: flex;
   gap: 0.75rem;
   & button {
     margin-top: auto;
     padding: 10px;
   }
-  /* margin-top: 0.75rem; */
 `;
 export const CheckPw = styled(InputWrap)`
-  margin-bottom: 3.125rem;
+  margin-bottom: 1.25rem;
 `;
-export const NameWrap = styled(InputWrap)`
-  margin-bottom: 1rem;
-`;
+export const NameWrap = styled(InputWrap)``;
 export const PhoneWrap = styled(InputWrap)`
   display: flex;
   gap: 0.75rem;
   width: 100%;
   flex: 1;
-  margin: 0.75rem 0 3.125rem 0;
+  margin: 0.75rem 0 0.75rem 0;
 
   & > select,
   & > input {
@@ -118,8 +101,37 @@ export const CRNumber = styled.div`
   width: 100%;
   display: flex;
   gap: 12px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   & button {
-    margin-top: auto;
+    margin-bottom: auto;
   }
+`;
+export const StyledError = styled.small`
+  font-size: 12px;
+  color: red;
+  position: absolute;
+  bottom: -18px;
+  left: 5px;
+`;
+export const CheckTerms = styled.a`
+  font-weight: bold;
+  text-decoration: underline;
+`;
+export const CheckJoin = styled.div`
+  width: 30rem;
+  margin: 0 auto 0.625rem;
+  display: flex;
+`;
+export const CheckBox = styled.input`
+  margin-right: 0.3rem;
+`;
+export const Terms = styled.p`
+  display: block;
+  float: right;
+  line-height: normal;
+`;
+
+export const JoinBtn = styled(ButtonStyle)`
+  margin: 34px auto;
+  padding: 10px;
 `;

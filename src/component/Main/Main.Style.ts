@@ -5,6 +5,7 @@ export const MainSection = styled.main`
   height: 100%;
   min-height: 100%;
   padding-bottom: 11.25rem;
+  /* margin-bottom: 19.6013rem; */
 `;
 export const Banner = styled.article`
   width: 100vw;
@@ -15,13 +16,18 @@ export const Banner = styled.article`
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 `;
 export const ProductList = styled.ul`
+  width: 80rem;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4.875rem 4.375rem;
+  align-items: center;
+  justify-items: center;
 `;
 export const ProductSection = styled.section`
-  height: calc(100vh - 41.875rem);
+  height: 100%;
+  min-height: 100%;
 `;

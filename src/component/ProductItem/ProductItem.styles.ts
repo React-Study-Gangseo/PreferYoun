@@ -10,6 +10,7 @@ export const ProductImage = styled.img`
   border-radius: 10px;
   border: 1px solid #c4c4c4;
   margin-bottom: 1rem;
+  object-fit: cover;
 `;
 export const ProductInfoContainer = styled.div`
   display: flex;

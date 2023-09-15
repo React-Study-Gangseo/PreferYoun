@@ -8,19 +8,36 @@ import {
   ProductName,
   ProductInfoContainer,
 } from "./ProductItem.styles";
-import dummyImage from "../../assets/images/dummy.jpg";
+import { Products } from "types/type";
+import { useNavigate } from "react-router-dom";
 type ProductItemProps = {
-  // 필요한 props 타입 정의.
+  product: Products;
 };
-const ProductItem: React.FC<ProductItemProps> = () => {
+const ProductItem: React.FC<ProductItemProps> = (product) => {
+  const navigate = useNavigate();
+  const handleProductDetail = ({ product_id }: Products) => {
+    console.log(product_id);
+    navigate(`/detailProduct/${product_id}`, {
+      state: {
+        product: product_id,
+      },
+    });
+  };
   return (
-    <ProductItemWrapper>
-      <ProductImage src={dummyImage} alt="상품 더미 이미지" />
+    <ProductItemWrapper
+      onClick={() => {
+        handleProductDetail(product.product);
+      }}
+    >
+      <ProductImage src={product.product.image} alt="상품 이미지" />
       <ProductInfoContainer>
-        <ProductInfo>우당탕탕 라이캣의 실험실</ProductInfo>
-        <ProductName>Hack Your Life 개발자 노트북 파우치</ProductName>
+        <ProductInfo>{product.product.store_name}</ProductInfo>
+        <ProductName>{product.product.product_name}</ProductName>
         <ProductPriceUnit>
-          <ProductPrice>29,000</ProductPrice>원
+          <ProductPrice>{`${new Intl.NumberFormat("ko-KR").format(
+            product.product.price || 0
+          )}`}</ProductPrice>
+          원
         </ProductPriceUnit>
       </ProductInfoContainer>
     </ProductItemWrapper>

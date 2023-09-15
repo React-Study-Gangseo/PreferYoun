@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
-
-export const Wrapper = styled.div`
+import PlusIcon from "../../assets/images/icon-plus-line.svg";
+import MinusIcon from "../../assets/images/icon-minus-line.svg";
+import { ButtonStyle } from "component/common/Button/Button";
+export const Wrapper = styled.main`
   width: 80rem;
-  margin: 0 auto;
+  margin: 3.375rem auto 10rem;
 `;
 
 export const Heading = styled.h2`
@@ -25,6 +27,30 @@ export const FormTop = styled.ul`
   padding: 1.1875rem 8.1875rem 1.125rem 1.875rem;
   margin-bottom: 2.1875rem;
   font-size: 1.125rem;
+  & input[type="checkbox"] {
+    appearance: none;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #21bf48;
+    border-radius: 50%;
+  }
+  & input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 2.2px;
+    width: 12px;
+    height: 12px;
+    background-color: #21bf48;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
+  & li:nth-of-type(2) {
+    margin-right: 80px;
+  }
 `;
 
 export const KeepList = styled.ul`
@@ -128,53 +154,71 @@ export const ClacPrice = styled.ul`
     font-size: 16px;
     font-weight: 400;
   }
-  & li:first-child,
-  & li:nth-child(2) {
+  & li:first-of-type,
+  & li:nth-of-type(2) {
     position: relative;
   }
 
-  & li:first-child::after,
-  & li:nth-child(2)::after {
+  & li:first-of-type::after,
+  & li:nth-of-type(2)::after {
     content: "";
     display: block;
     width: 2.125rem;
     height: 2.125rem;
-    background: white;
+    background-color: #fff;
     position: absolute;
     border-radius: 100%;
     right: -18px;
     top: 10px;
-    background: red;
+  }
+  & li:first-of-type::after {
+    background-image: url(${MinusIcon});
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  & li:nth-of-type(2)::after {
+    background-image: url(${PlusIcon});
+    background-repeat: no-repeat;
+    background-position: center;
   }
 `;
-const Button = styled.button`
-  display: block;
-  padding: 15px;
-  font-size: 20px;
-  width: 50%;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.5s ease;
-`;
 
-export const OrderBtn = styled(Button)`
-  width: 13.75rem;
-  height: 4.25rem;
-  border-radius: 5px;
-  background: #21bf48;
-  color: white;
+export const OrderBtn = styled(ButtonStyle)`
   margin: 2.5rem auto 0;
   font-size: 24px;
   font-weight: 700;
+  height: 4.25rem;
 `;
 
-export const OrderBtnS = styled(Button)`
-  width: 130px;
-  height: 40px;
-  border-radius: 5px;
-  background: #21bf48;
-  color: white;
+export const OrderBtnS = styled(ButtonStyle)`
   font-size: 16px;
   font-weight: 500;
   line-height: 12px;
+`;
+
+export const EmptyKeepList = styled.section`
+  width: 100%;
+  height: 100vh;
+  min-height: 100%;
+  text-align: center;
+  padding-top: 200px;
+  & h5 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 17px;
+  }
+  & p {
+    font-size: 14px;
+    font-weight: 400;
+  }
+`;
+
+export const AllDeleteBtn = styled(ButtonStyle)`
+  padding: 10px;
+  margin: 0 0 20px auto;
+`;
+
+export const LoginBtn = styled(ButtonStyle)`
+  margin: 10px auto 0;
+  font-size: 1.25rem;
 `;

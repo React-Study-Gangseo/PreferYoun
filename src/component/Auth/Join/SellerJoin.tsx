@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
   JoinSection,
-  Input,
   InputWrap,
   PhoneWrap,
   Form,
@@ -10,94 +9,155 @@ import {
   CheckPw,
   NameWrap,
   CRNumber,
+  StyledError,
+  CheckJoin,
+  CheckTerms,
+  Terms,
+  JoinBtn,
+  VaildBtn,
 } from "./Join.Style";
 import Button from "../../common/Button/Button";
-import { CheckCRN, CheckId, SellerJoin } from "API/AuthAPI";
+import { TextField, IconButton, InputAdornment, Checkbox } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { CheckCRN, CheckId } from "API/AuthAPI";
+import { AxiosError } from "axios";
+import { FormValue } from "types/type";
+import Swal from "sweetalert2";
 
-export interface FormValue {
-  id: string;
-  password: string;
-  password2: string;
-  name: string;
-  CRNumber: string;
-  Phone: string;
-  StoreName: string;
-  phoneCode: string;
-  firstNumber: string;
-  secondNumber: string;
-}
+const label = {
+  inputProps: {
+    "aria-label": "동의 체크",
+  },
+};
 
-const Join: React.FC = () => {
+const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const {
-    register,
+    watch,
     handleSubmit,
-    clearErrors,
     setError,
     getValues,
+    clearErrors,
     control,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormValue>({ mode: "onChange" });
+  const [checked, setChecked] = useState(false);
+  const passwordValue = watch("password", "");
 
-  const onSubmit = async (data: FormValue) => {
-    try {
-      const response = await SellerJoin(data);
-      if (response && response.status === 201) {
-        console.log("회원가입 성공");
-        // 회원가입 성공 시 다른 작업들을 수행
-      }
-    } catch (error) {
-      console.log("회원가입 실패", error);
-    }
-  };
   const CRNVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const checkCRN = getValues("CRNumber");
-    console.log(checkCRN);
-    try {
-      const response = await CheckCRN(checkCRN);
+    if (watch("company_registration_number")) {
+      const checkCRN: string | undefined = getValues(
+        "company_registration_number"
+      );
+      if (typeof checkCRN === "string") {
+        try {
+          const response = await CheckCRN(checkCRN);
 
-      if (response?.data.Success === "사용 가능한 사업자등록번호입니다.") {
-        alert("사용 가능한 사업자등록번호입니다.");
+          if (response?.data.Success === "사용 가능한 사업자등록번호입니다.") {
+            alert("사용 가능한 사업자등록번호입니다.");
+            clearErrors();
+          }
+        } catch (error) {
+          console.log("check");
+          const axiosError = error as AxiosError; // 타입 단언
+          const responseData = axiosError?.response?.data as any;
+          console.log("사업자등록번호 체크 실패", responseData);
+          if (
+            responseData.FAIL_Message === "이미 등록된 사업자등록번호입니다."
+          ) {
+            setError("company_registration_number", {
+              type: "manual",
+              message: "* 이미 등록된 사업자등록번호입니다.",
+            });
+          }
+        }
       } else {
-        alert("중복된 사업자등록번호입니다. 다른 사업자등록번호를 입력하세요.");
+        console.log("checkCRN is not defined");
       }
-      console.log("res", response);
-    } catch (error) {
-      console.log("아이디 체크 실패", error);
     }
   };
   const IdVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const checkId = getValues("id");
-    console.log(checkId);
-    try {
-      const response = await CheckId(checkId);
+    if (watch("id")) {
+      const checkId: string | undefined = getValues("id");
+      console.log(checkId);
+      if (typeof checkId === "string") {
+        // checkId가 문자열인지 확인
+        try {
+          const response = await CheckId(checkId);
 
-      if (response?.data.Success === "멋진 아이디네요 :)") {
-        alert("Success: '멋진 아이디네요 :)");
+          if (response?.data.Success === "멋진 아이디네요 :)") {
+            Swal.fire({
+              title: "Success",
+              text: "멋진아이디네요:)",
+              icon: "success",
+              confirmButtonColor: "#21bf48",
+              confirmButtonAriaLabel: "확인버튼",
+              customClass: {
+                icon: "my-icon",
+              },
+            });
+            clearErrors();
+          }
+        } catch (error) {
+          const axiosError = error as AxiosError;
+          const responseData = axiosError?.response?.data as any;
+          console.log("아이디 체크 실패", responseData.FAIL_Message);
+          if (responseData.FAIL_Message === "이미 사용 중인 아이디입니다.") {
+            setError("id", {
+              type: "manual",
+              message: "* 이미 가입된 아이디 입니다.",
+            });
+          }
+        }
       } else {
-        alert("중복된 아이디입니다. 다른 아이디를 입력하세요.");
+        console.log("checkID is not defined");
       }
-      console.log("res", response);
-    } catch (error) {
-      console.log("아이디 체크 실패", error);
+    }
+  };
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
+  const handleChange = () => {
+    if (!checked) {
+      setChecked(true);
+    } else {
+      setChecked(false);
     }
   };
   return (
     <>
-      <JoinSection>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <label>아이디</label>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <JoinSection>
           <EmailWrap>
-            <Input
-              type="id"
-              id="id"
-              autoComplete="off"
-              {...register("id", {
-                required: "아이디는 필수 입력입니다.",
-              })}
+            <Controller
+              control={control}
+              name="id"
+              defaultValue=""
+              rules={{
+                required: true,
+                pattern: /^[A-Za-z0-9]{1,20}$/,
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type="text"
+                  fullWidth
+                  label="아이디"
+                  error={error !== undefined}
+                />
+              )}
             />
-            <Button
+            <VaildBtn
               width="ms"
               bgColor="active"
               onClick={(event) => {
@@ -105,91 +165,156 @@ const Join: React.FC = () => {
               }}
             >
               중복체크
-            </Button>
+            </VaildBtn>
+            {errors.id && (
+              <StyledError role="alert">{errors.id.message}</StyledError>
+            )}
           </EmailWrap>
           <InputWrap>
-            <label>비밀번호</label>
-            <Input
-              id="password"
-              type="password"
-              autoComplete="off"
-              {...register("password", {
-                required: "비밀번호는 필수 입력입니다.",
-                minLength: {
-                  value: 8,
-                  message:
-                    "비밀번호는 최소 8자 이상, 영소문자를 포함해야 합니다.",
+            <Controller
+              control={control}
+              name="password"
+              defaultValue=""
+              rules={{
+                required: true,
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*\d).{8,}$/,
+                  message: "비밀번호 형식이 올바르지 않습니다",
                 },
-              })}
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type={showPassword ? "text" : "password"}
+                  fullWidth
+                  label="비밀번호"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="비밀번호 확인 아이콘"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  error={error !== undefined}
+                  helperText={error ? error.message : null}
+                />
+              )}
             />
           </InputWrap>
           <CheckPw>
-            <label>비밀번호 재확인</label>
-            <Input
-              id="password2"
-              type="password"
-              {...register("password2", {
-                required: "비밀번호 확인은 필수 입력입니다.",
-                validate: {
-                  matchesPreviousPassword: (value) => {
-                    const { password } = getValues();
-                    return (
-                      password === value || "비밀번호가 일치하지 않습니다."
-                    );
-                  },
-                },
-              })}
+            <Controller
+              control={control}
+              name="password2"
+              defaultValue=""
+              rules={{
+                required: "비밀번호 중복 확인은 필수 입니다.",
+                validate: (value) =>
+                  value === passwordValue || "비밀번호가 일치 하지 않습니다.",
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type={showPassword ? "text" : "password"}
+                  fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="비밀번호 확인 아이콘"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  label="비밀번호 중복 확인"
+                  error={error !== undefined}
+                />
+              )}
             />
           </CheckPw>
           <NameWrap>
-            <label>이름</label>
-            <Input
-              type="text"
-              {...register("name", {
-                required: "이름은 필수 입력값 입니다.",
-              })}
-            />
-          </NameWrap>
-          <label>휴대폰번호</label>
-          <PhoneWrap>
             <Controller
-              name="phoneCode"
               control={control}
-              defaultValue="010"
-              render={({ field }) => (
-                <select {...field}>
-                  <option>010</option>
-                  <option>011</option>
-                  <option>017</option>
-                </select>
+              name="name"
+              defaultValue=""
+              rules={{
+                required: "필수 항목 입니다.",
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type="text"
+                  fullWidth
+                  label="이름"
+                  error={error !== undefined}
+                  helperText={error ? error.message : null}
+                />
               )}
             />
-            <input
-              {...register("firstNumber", {
-                required: true,
-                min: 1000,
-                max: 9999,
-                pattern: /^[0-9]+$/,
-              })}
-            />
-            <input
-              {...register("secondNumber", {
-                required: true,
-                min: 1000,
-                max: 9999,
-                pattern: /^[0-9]+$/,
-              })}
+          </NameWrap>
+          <PhoneWrap>
+            <Controller
+              name="Phone"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "필수 항목입니다",
+                pattern: {
+                  value: /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/,
+                  message: "전화번호 형식이 올바르지 않습니다 (000-0000-0000)",
+                },
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  label="전화번호"
+                  fullWidth
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
             />
           </PhoneWrap>
-          <label>사업자 등록번호</label>
           <CRNumber>
-            <Input
-              type="text"
-              {...register("CRNumber", {
-                required: "사업자등록번호는 필수 입력값 입니다.",
-              })}
+            <Controller
+              control={control}
+              name="company_registration_number"
+              defaultValue=""
+              rules={{
+                required: "사업자 등록 번호는 필수 입력값 입니다.",
+                pattern: {
+                  value: /^\d{6}$/,
+                  message: "사업자 등록 번호는 10자리 숫자입니다.",
+                },
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type="text"
+                  fullWidth
+                  label="사업자등록번호"
+                  error={error !== undefined}
+                  helperText={error ? error.message : null}
+                />
+              )}
             />
-            <Button
+            {errors.company_registration_number && (
+              <StyledError role="alert">
+                {errors.company_registration_number.message}
+              </StyledError>
+            )}
+            <VaildBtn
               width="ms"
               bgColor="active"
               onClick={(event) => {
@@ -197,21 +322,55 @@ const Join: React.FC = () => {
               }}
             >
               인증
-            </Button>
+            </VaildBtn>
           </CRNumber>
           <div>
-            <label>스토어 이름</label>
-            <Input
-              type="text"
-              {...register("StoreName", {
-                required: "스토어 이름은 필수 입력값 입니다.",
-              })}
+            <Controller
+              control={control}
+              name="StoreName"
+              defaultValue=""
+              rules={{
+                required: "스토어 이름은 필수 입력값입니다.",
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type="text"
+                  fullWidth
+                  label="스토어 이름"
+                  error={error !== undefined}
+                  helperText={error ? error.message : null}
+                />
+              )}
             />
           </div>
-        </Form>
-      </JoinSection>
+        </JoinSection>
+        <CheckJoin>
+          <Checkbox
+            required
+            size="small"
+            {...label}
+            checked={checked}
+            onChange={handleChange}
+          />
+          <Terms>
+            호두샵의 <CheckTerms>이용약관</CheckTerms> 및
+            <CheckTerms> 개인정보처리방침</CheckTerms>에 대한 내용을 확인 하였고
+            <br />
+            동의합니다.
+          </Terms>
+        </CheckJoin>
+        <JoinBtn
+          width="l"
+          bgColor="active"
+          type="submit"
+          disabled={checked ? true : false}
+        >
+          가입하기
+        </JoinBtn>
+      </Form>
     </>
   );
 };
 
-export default Join;
+export default SellerJoin;
