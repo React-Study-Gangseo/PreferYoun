@@ -14,7 +14,7 @@ interface ButtonProps {
 
 export const ButtonStyle = styled.button<ButtonProps>`
   display: block;
-  border-radius: 0.3125rem;
+  border-radius: ${(props) => (props.width === "tab" ? "0rem" : "0.3125rem")};
   width: ${(props) =>
     props.width === "s"
       ? "5rem"
@@ -35,7 +35,7 @@ export const ButtonStyle = styled.button<ButtonProps>`
       : props.width === "m"
       ? "19px 223px"
       : props.width === "tab"
-      ? "16px 142px"
+      ? "16px 50px"
       : props.width === "tabMenu"
       ? "15px 15px 15px 20px"
       : "19px 50px"};
@@ -77,7 +77,7 @@ export const ButtonStyle = styled.button<ButtonProps>`
         ? "1px solid #767676"
         : "inherit"};
     border-bottom: ${(props) =>
-      props.width === "tab" ? "6px solid #E0E0E0" : "inherit"};
+      props.width === "tab" ? "6px solid #21BF48" : "inherit"};
   }
   font-size: 1rem;
   height: 3.375rem;

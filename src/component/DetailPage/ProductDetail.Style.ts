@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { ButtonStyle } from "component/common/Button/Button";
+import { Link } from "react-router-dom";
 export const DetailPageWrapper = styled.section`
   width: 100%;
   height: 100%;
@@ -11,6 +12,7 @@ export const DetailPageWrapper = styled.section`
 export const ProductImg = styled.img`
   width: 37.5rem;
   height: 37.5rem;
+  object-fit: cover;
 `;
 export const ProductInfoSection = styled.section`
   width: 39.375rem;
@@ -123,7 +125,6 @@ export const MoreInfo = styled.div`
   }
   & > ul > li {
     flex: 1 1 25%;
-    border-bottom: 6px solid #e0e0e0;
     text-align: center;
     line-height: 3.75rem;
   }
@@ -136,4 +137,12 @@ export const MoreInfo = styled.div`
 export const BtnGroup = styled.div`
   display: flex;
   gap: 14px;
+`;
+
+export const MoreInfoSecion = styled.section`
+  margin: 10px 0 400px;
+  width: 100%;
+  height: 500px;
+  border: 2px solid #e0e0e0;
+  padding: 20px;
 `;

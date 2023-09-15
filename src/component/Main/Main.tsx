@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import ProductItem from "../ProductItem/ProductItem";
 import { MainSection, ProductList, ProductSection } from "./Main.Style";
 import { GetFullProduct } from "API/ProductAPI";
@@ -21,8 +21,8 @@ const Main: React.FC = () => {
   );
   const fetchProduct = async (page: number) => {
     try {
-      console.log(page);
       const response = await GetFullProduct(page);
+      console.log(response);
       setProducts((prevProducts) => [
         ...prevProducts,
         ...response.data.results,
@@ -52,20 +52,22 @@ const Main: React.FC = () => {
 
     fetchData();
   }, [page]);
-  console.log(products);
+
   return (
     <MainSection>
       <ProductSection>
         <BannerSection />
-        <ProductList>
-          {(searchProducts?.length > 0 ? searchProducts : products)?.map(
-            (item) => (
-              <li key={Number(item.product_id)}>
-                <ProductItem product={item} />
-              </li>
-            )
-          )}
-        </ProductList>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ProductList>
+            {(searchProducts?.length > 0 ? searchProducts : products)?.map(
+              (item) => (
+                <li key={Number(item.product_id)}>
+                  <ProductItem product={item} />
+                </li>
+              )
+            )}
+          </ProductList>
+        </Suspense>
       </ProductSection>
       <div ref={target} style={{ width: "100%", height: 30 }} />
     </MainSection>

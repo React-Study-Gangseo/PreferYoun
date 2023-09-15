@@ -9,7 +9,6 @@ import {
   HeaderInput,
   CartBtn,
   UserBtn,
-  SearchSubmit,
   HeaderCenterSection,
 } from "./Header.Style";
 import HoduLogo from "../../assets/images/Logo-hodu.png";
@@ -79,12 +78,9 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     setInputValue(e.target.value);
   };
   const search = async (e: React.KeyboardEvent) => {
-    console.log(e);
     if (e.key === "Enter") {
       try {
-        console.log(inputValue);
         const res = await SearchAPI(inputValue);
-        console.log(res);
         dispatch(setSearchData({ value: res.data.results }));
       } catch (error) {
         console.error("Failed to fetch products:", error);
