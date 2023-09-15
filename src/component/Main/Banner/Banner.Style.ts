@@ -35,6 +35,8 @@ export const LeftButton = styled(BannerControlButton)`
   left: 0;
   & img {
     translate: -0.5px -0.1px;
+    width: 60px;
+    height: 120px;
   }
 `;
 
@@ -42,6 +44,8 @@ export const RightButton = styled(BannerControlButton)`
   right: 0;
   & img {
     translate: -2px;
+    width: 60px;
+    height: 120px;
   }
 `;
 export const BannerIndicator = styled.div`

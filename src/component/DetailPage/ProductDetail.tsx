@@ -12,6 +12,7 @@ import {
   TotalPriceWrap,
   MoreInfo,
   BtnGroup,
+  MoreInfoSecion,
 } from "./ProductDetail.Style";
 import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -34,6 +35,11 @@ const ProductDetail: React.FC = () => {
     check: true,
   });
   const [count, setCount] = useState(1);
+  const [activeTab, setActiveTab] = useState("tab1");
+
+  const handleTabClick = (tabId: string) => {
+    setActiveTab(tabId);
+  };
   const FetchDetailProduct = async (data: { product: number }) => {
     try {
       const res = await DetailProduct(data.product);
@@ -46,8 +52,9 @@ const ProductDetail: React.FC = () => {
         shipping_method,
         shipping_fee,
         stock,
-        products_info,
+        product_info,
       } = res.data;
+      console.log(res);
       const updatedProductInfo: Products = {
         product_name,
         seller,
@@ -57,7 +64,7 @@ const ProductDetail: React.FC = () => {
         shipping_method,
         shipping_fee,
         stock,
-        products_info,
+        product_info,
       };
       setProductInfo(updatedProductInfo);
     } catch (error) {
@@ -155,7 +162,7 @@ const ProductDetail: React.FC = () => {
       });
     }
   };
-
+  console.log(productInfo);
   return (
     <main>
       <DetailPageWrapper>
@@ -224,27 +231,66 @@ const ProductDetail: React.FC = () => {
       <MoreInfo>
         <ul>
           <li>
-            <Button width="tabMenu" color="black">
+            <Button
+              width="tab"
+              color="black"
+              bgColor={activeTab === "tab1" ? "tabActive" : undefined}
+              onClick={() => handleTabClick("tab1")}
+            >
               상세보기
             </Button>
           </li>
           <li>
-            <Button width="tabMenu" color="black">
+            <Button
+              width="tab"
+              color="black"
+              bgColor={activeTab === "tab2" ? "tabActive" : undefined}
+              onClick={() => handleTabClick("tab2")}
+            >
               리뷰
             </Button>
           </li>
           <li>
-            <Button width="tabMenu" color="black">
+            <Button
+              width="tab"
+              color="black"
+              bgColor={activeTab === "tab3" ? "tabActive" : undefined}
+              onClick={() => handleTabClick("tab3")}
+            >
               Q & A
             </Button>
           </li>
           <li>
-            <Button width="tabMenu" color="black">
+            <Button
+              width="tab"
+              color="black"
+              bgColor={activeTab === "tab4" ? "tabActive" : undefined}
+              onClick={() => handleTabClick("tab4")}
+            >
               반품/교환정보
             </Button>
           </li>
         </ul>
       </MoreInfo>
+      {activeTab === "tab1" && (
+        <MoreInfoSecion>
+          {productInfo?.product_info === undefined
+            ? "여기에 상세 정보 내용을 넣으세요"
+            : productInfo.product_info}
+        </MoreInfoSecion>
+      )}
+
+      {activeTab === "tab2" && (
+        <MoreInfoSecion>여기에 리뷰 내용을 넣으세요.</MoreInfoSecion>
+      )}
+
+      {activeTab === "tab3" && (
+        <MoreInfoSecion>여기에 Q/A 내용을 넣으세요.</MoreInfoSecion>
+      )}
+
+      {activeTab === "tab4" && (
+        <MoreInfoSecion>여기에 반품/교환정보 내용을 넣으세요.</MoreInfoSecion>
+      )}
     </main>
   );
 };

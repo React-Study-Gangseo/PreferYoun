@@ -35,6 +35,10 @@ export const Nav = styled.nav`
 export const NavList = styled.ul`
   display: flex;
   gap: 0.875rem;
+  & img {
+    width: 32px;
+    height: 32px;
+  }
 `;
 export const Address = styled.address`
   display: flex;

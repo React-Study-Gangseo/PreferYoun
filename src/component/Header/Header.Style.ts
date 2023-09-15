@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+
 export const HeaderSection = styled.header`
   width: 100vw;
   height: 5.625rem;
@@ -54,10 +55,6 @@ export const FormDiv = styled.div`
   padding: 0.625rem;
   place-items: center;
 `;
-export const SearchSubmit = styled.input`
-  position: relative;
-  left: -5000px;
-`;
 export const HeaderInput = styled.input`
   transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s;
   width: 40px;
@@ -91,48 +88,15 @@ export const HeaderInput = styled.input`
     color: white;
     cursor: pointer;
   }
+  & + label img {
+    width: 28px;
+    height: 28px;
+  }
 `;
-/* position: relative;
-  height: 2rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  font-size: 1.125rem;
-  color: transparent;
-  border: 2px solid #21bf48;
-  transition: width 300ms;
-  overflow: hidden;
-  background: url(${Search}) no-repeat transparent;
-  background-size: 2.5rem;
-  background-position: 45% 50%;
-  width: 2.5rem;
-  padding: 0.625rem 0.625rem 0.625rem 3.75rem;
-  &:hover {
-    cursor: pointer;
-    border: 2px solid #21bf48;
-    background: url(${Search}) no-repeat transparent;
-    background-size: 2.5rem;
-    background-position: 45% 50%;
-  }
-  &:focus,
-  :not(:placeholder-shown) {
-    max-width: 24.375rem;
-    width: 100%;
-    cursor: text;
-    color: #000000;
-    margin-left: 1.875rem;
-    padding-left: 3.75rem;
-    outline: none;
-    border: 2px solid #21bf48;
-    background-color: transparent;
-    background: url(${Search}) no-repeat transparent;
-    background-size: 2.5rem;
-    background-position: 0.625rem 50%;
-    transition: width 500ms;
-  }
-`; */
+
 export const LogoImage = styled.img`
   width: 100%;
+  height: 38px;
 `;
 export const HeaderNav = styled.nav`
   margin-left: auto;
@@ -146,6 +110,8 @@ export const CartBtn = styled.button`
   & img {
     display: block;
     margin: 0 auto;
+    width: 32px;
+    height: 32px;
   }
 `;
 export const UserBtn = styled.button`
@@ -155,5 +121,7 @@ export const UserBtn = styled.button`
   & img {
     display: block;
     margin: 0 auto;
+    width: 32px;
+    height: 32px;
   }
 `;

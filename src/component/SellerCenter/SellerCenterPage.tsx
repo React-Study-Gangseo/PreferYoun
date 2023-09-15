@@ -19,13 +19,14 @@ const SellerCenterPage: React.FC = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("ProductsOnSale");
   const [sellerProducts, setSellerProducts] = useState<Products[]>([]);
+
   const handleOnClick = () => {
     navigate("/seller/center/upload");
   };
   const getSellerProduct = async () => {
     try {
       const res = await GetSellerProduct();
-      console.log(res.data.results);
+      console.log("판매", res);
       setSellerProducts(res.data.results);
     } catch (error) {
       console.log(error);
@@ -34,6 +35,7 @@ const SellerCenterPage: React.FC = () => {
   useEffect(() => {
     getSellerProduct();
   }, []);
+
   function handleClick(e: any) {
     setIsActive(e.target.value);
   }
