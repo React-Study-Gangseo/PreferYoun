@@ -26,7 +26,6 @@ const SellerCenterPage: React.FC = () => {
   const getSellerProduct = async () => {
     try {
       const res = await GetSellerProduct();
-      console.log("판매", res);
       setSellerProducts(res.data.results);
     } catch (error) {
       console.log(error);
@@ -112,26 +111,42 @@ const SellerCenterPage: React.FC = () => {
               </ul>
             </AsideSection>
             <SellerProduct>
-              <OrderList>
-                <thead>
-                  <tr>
-                    <th>상품정보</th>
-                    <th>판매가격</th>
-                    <th>수정</th>
-                    <th>삭제</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sellerProducts.map((product, index) => (
-                    <SellerItem
-                      key={product.product_id}
-                      product={product}
-                      index={index}
-                      getSellerProduct={getSellerProduct}
-                    />
-                  ))}
-                </tbody>
-              </OrderList>
+              {isActive === "ProductsOnSale" && (
+                <OrderList>
+                  <thead>
+                    <tr>
+                      <th>상품정보</th>
+                      <th>판매가격</th>
+                      <th>수정</th>
+                      <th>삭제</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sellerProducts.map((product, index) => (
+                      <SellerItem
+                        key={product.product_id}
+                        product={product}
+                        index={index}
+                        getSellerProduct={getSellerProduct}
+                      />
+                    ))}
+                  </tbody>
+                </OrderList>
+              )}
+              {isActive === "Order" && (
+                <SellerProduct>여기에 주문 배송 내용을 넣으세요.</SellerProduct>
+              )}
+              {isActive === "QA" && (
+                <SellerProduct>여기에 Q/A 내용을 넣으세요.</SellerProduct>
+              )}
+              {isActive === "Statistics" && (
+                <SellerProduct>여기에 통계 내용을 넣으세요.</SellerProduct>
+              )}
+              {isActive === "SetStore" && (
+                <SellerProduct>
+                  여기에 스토어 설정 내용을 넣으세요.
+                </SellerProduct>
+              )}
             </SellerProduct>
           </MainContent>
         </MainSection>

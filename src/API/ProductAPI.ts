@@ -1,5 +1,7 @@
-import { Products, UploadProducts } from "types/type";
+import { UploadProducts } from "types/type";
 import { accessDataInstance, accessInstance, instance } from "./instance";
+import axios from "axios";
+import BaseUrl from "./api";
 export const GetFullProduct = async (n: number) => {
   try {
     const res = await instance.get(`/products/?page=${n}`);
