@@ -26,11 +26,9 @@ const LoginModal: React.FC = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   useEffect(() => {
     if (loginSuccess && userType === "SELLER") {
-      console.log(loginSuccess);
       dispatch(closeModal());
       navigate("/seller");
     } else if (loginSuccess && userType === "BUYER") {
-      console.log(loginSuccess, userType);
       dispatch(closeModal());
       navigate("/buyer");
     }
@@ -47,11 +45,8 @@ const LoginModal: React.FC = () => {
 
   const handleFormSubmit = async (loginData: LoginData, userType: string) => {
     try {
-      console.log(userType, loginData);
       const response = await Login(loginData, userType);
-      console.log(response);
       if (response && response.status === 200) {
-        console.log("로그인성공", response.data);
         localStorage.setItem("UserInfo", JSON.stringify(response.data));
         setLoginSuccess(true);
       }
