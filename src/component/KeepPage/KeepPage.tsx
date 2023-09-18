@@ -18,8 +18,6 @@ import CartItem from "component/CartItem/CartItem";
 import { TotalPriceState } from "redux/TotalPrice";
 import { CartOrderState } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
-import LoginModal from "component/common/Modal/LoginModal";
-import JoinModal from "component/common/Modal/JoinModal";
 
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +25,7 @@ const KeepPage: React.FC = () => {
   const [cartItem, setCartItem] = useState<cartItem[]>([]);
   const [isLogin, setIsLogin] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const [signUp, setSignUp] = useState(false);
+
   const [login, setLogin] = useState(false);
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
