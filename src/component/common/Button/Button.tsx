@@ -41,7 +41,7 @@ export const ButtonStyle = styled.button<ButtonProps>`
       : "19px 50px"};
   background-color: ${(props) =>
     props.bgColor === "active"
-      ? "#21BF48"
+      ? "#26b744"
       : props.bgColor === "inactive"
       ? "#C4C4C4"
       : props.bgColor === "dark"
