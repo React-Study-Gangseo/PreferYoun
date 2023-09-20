@@ -15,7 +15,7 @@ import { Products, cartItem } from "types/type";
 import { DetailProduct } from "API/ProductAPI";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
-import DeleteIcon from "../../assets/images/icon-delete.svg";
+import DeleteIcon from "../../../assets/images/icon-delete.svg";
 import { UpdateQuantity } from "API/KeepAPI";
 import { calcPrice, resetPrice } from "redux/TotalPrice";
 import { OrderProduct, removeOrderProduct } from "redux/CartOrder";

@@ -8,7 +8,7 @@ export const FooterSection = styled.footer`
   padding: 3.75rem 0;
   position: relative;
   left: 50%;
-  bottom: 0px;
+  bottom: 0;
   transform: translateX(-50%);
   margin-top: 50px;
 `;

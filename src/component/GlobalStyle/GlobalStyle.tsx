@@ -183,7 +183,8 @@ const customStyles = css`
     }
   }
   #root {
-    width: 80rem;
+    width: 90%;
+    max-width: 80rem;
     min-height: 100%;
     height: 100%;
     margin: 0 auto;

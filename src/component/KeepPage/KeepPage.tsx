@@ -14,7 +14,7 @@ import {
 } from "./KeepPage.Style";
 import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
 import { cartData, cartItem } from "types/type";
-import CartItem from "component/CartItem/CartItem";
+import CartItem from "component/Item/CartItem/CartItem";
 import { TotalPriceState } from "redux/TotalPrice";
 import { CartOrderState } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";

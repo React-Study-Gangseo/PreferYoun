@@ -1,7 +1,6 @@
 import { UploadProducts } from "types/type";
 import { accessDataInstance, accessInstance, instance } from "./instance";
-import axios from "axios";
-import BaseUrl from "./api";
+
 export const GetFullProduct = async (n: number) => {
   try {
     const res = await instance.get(`/products/?page=${n}`);
@@ -20,7 +19,7 @@ export const PostProduct = async (Products: UploadProducts) => {
       shipping_method: Products.shipping_method, // PARCEL 또는 DELIVERY 선택
       shipping_fee: Products.shipping_fee,
       stock: Products.stock,
-      product_info: "전통주",
+      product_info: Products.product_info,
     });
     return res;
   } catch (err) {

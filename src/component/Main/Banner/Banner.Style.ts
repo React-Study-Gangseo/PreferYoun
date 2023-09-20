@@ -5,9 +5,15 @@ export const BannerImages = styled.div`
     width: 100%;
     height: 31.25rem;
     object-fit: cover;
+    @media (max-width: 896px) {
+      height: 20rem;
+    }
   }
   img.inactive {
     display: none;
+  }
+  @media (max-width: 896px) {
+    height: 20rem;
   }
 `;
 

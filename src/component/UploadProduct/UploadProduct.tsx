@@ -24,7 +24,7 @@ import UploadIcon from "../../assets/images/icon-img.png";
 import Button from "component/common/Button/Button";
 import { EditProductAPI, PostProduct } from "API/ProductAPI";
 import { UploadProducts } from "types/type";
-import Header from "component/Header/Header";
+import MDEditor from "@uiw/react-md-editor";
 import Warning from "./Warning/Warning";
 import { useLocation, useNavigate } from "react-router-dom";
 export default function UploadProduct() {
@@ -41,6 +41,7 @@ export default function UploadProduct() {
     shipping_fee: 0,
     stock: 0,
     image: undefined,
+    product_info: "",
   });
   const handleUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -74,6 +75,7 @@ export default function UploadProduct() {
   };
   console.log(product.image);
   const UploadProduct = async () => {
+    console.log(product);
     try {
       const uploadProduct = await PostProduct(product);
       console.log(uploadProduct);
@@ -99,7 +101,7 @@ export default function UploadProduct() {
   return (
     <>
       <h1 className="a11y-hidden">판매자 센터 상품 등록</h1>
-      <Header type={"seller_center"} />
+
       <Wrapper>
         <MainSection>
           <h2>상품등록</h2>
@@ -218,8 +220,19 @@ export default function UploadProduct() {
                 </UploadProductInfo>
               </div>
               <UploadProductDetail>
-                <label>상품 상세 정보</label>
-                <textarea />
+                <div data-color-mode="light">
+                  <MDEditor
+                    value={product.product_info}
+                    onChange={(newValue) =>
+                      setProduct({
+                        ...product,
+                        product_info: newValue || "", // e.target.value 대신 newValue 사용
+                      })
+                    }
+                    preview="edit"
+                    height={"800px"}
+                  />
+                </div>
               </UploadProductDetail>
               <ButtonGroup>
                 <Button width="ms" color="black" border="active">

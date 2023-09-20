@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "component/Header/Header";
+import Header from "component/common/Header/Header";
 import {
   Wrapper,
   MainSection,
@@ -41,7 +41,6 @@ const SellerCenterPage: React.FC = () => {
   return (
     <>
       <h1 className="a11y-hidden">판매자 센터</h1>
-      <Header type={"seller_center"} />
       <Wrapper>
         <MainSection>
           <h2>

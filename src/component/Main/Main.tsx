@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, Suspense } from "react";
-import ProductItem from "../ProductItem/ProductItem";
+import ProductItem from "../Item/ProductItem/ProductItem";
 import { MainSection, ProductList, ProductSection } from "./Main.Style";
 import { GetFullProduct } from "API/ProductAPI";
 import { Products } from "types/type";
@@ -22,7 +22,6 @@ const Main: React.FC = () => {
   const fetchProduct = async (page: number) => {
     try {
       const response = await GetFullProduct(page);
-      console.log(response);
       setProducts((prevProducts) => [
         ...prevProducts,
         ...response.data.results,
@@ -55,8 +54,8 @@ const Main: React.FC = () => {
 
   return (
     <MainSection>
+      <BannerSection />
       <ProductSection>
-        <BannerSection />
         <Suspense fallback={<div>Loading...</div>}>
           <ProductList>
             {(searchProducts?.length > 0 ? searchProducts : products)?.map(

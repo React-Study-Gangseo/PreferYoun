@@ -27,10 +27,10 @@ const LoginModal: React.FC = () => {
   useEffect(() => {
     if (loginSuccess && userType === "SELLER") {
       dispatch(closeModal());
-      navigate("/seller");
+      navigate("/");
     } else if (loginSuccess && userType === "BUYER") {
       dispatch(closeModal());
-      navigate("/buyer");
+      navigate("/");
     }
   }, [loginSuccess, navigate]);
 
