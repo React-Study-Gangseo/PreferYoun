@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   HeaderSection,
   HeaderNav,
@@ -11,27 +11,27 @@ import {
   UserBtn,
   HeaderCenterSection,
 } from "./Header.Style";
-import HoduLogo from "../../assets/images/Logo-hodu.png";
-import Cart from "../../assets/images/icon-shopping-cart.svg";
-import OnCart from "../../assets/images/icon-shopping-cart-2.svg";
-import OnUser from "../../assets/images/icon-user-2.svg";
-import User from "../../assets/images/icon-user.svg";
+import HoduLogo from "../../../assets/images/Logo-hodu.png";
+import Cart from "../../../assets/images/icon-shopping-cart.svg";
+import OnCart from "../../../assets/images/icon-shopping-cart-2.svg";
+import OnUser from "../../../assets/images/icon-user-2.svg";
+import User from "../../../assets/images/icon-user.svg";
 import Button from "component/common/Button/Button";
-import SellerCenter from "../../assets/images/icon-shopping-bag.svg";
+import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { setSearchData } from "redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
-import Search from "../../assets/images/search.svg";
-import { SearchAPI } from "../../API/ProductAPI";
+import Search from "../../../assets/images/search.svg";
+import { SearchAPI } from "../../../API/ProductAPI";
 import { openModal } from "redux/Modal";
 import Swal from "sweetalert2";
 
 interface HeaderProps {
-  type: "home" | "seller" | "buyer" | "seller_center";
+  type?: "home" | "seller" | "buyer" | "seller_center";
 }
 
-const Header: React.FC<HeaderProps> = ({ type }) => {
+const Header: React.FC<HeaderProps> = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
@@ -39,6 +39,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   const isCartPage = pathname === "/cart";
   const isMyPage = pathname === "/mypage";
   const [inputValue, setInputValue] = useState("");
+  const [type, setType] = useState("home");
   const handleCenterBtn = () => {
     navigate("/seller/center");
   };
@@ -65,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
       });
     }
   };
-
+  console.log(pathname);
   const handleOpenLoginModal = () => {
     dispatch(
       openModal({
@@ -97,8 +98,25 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
+  useEffect(() => {
+    if (userType) {
+      if (userType === "BUYER") {
+        setType("buyer");
+      } else {
+        setType("seller");
+        if (
+          pathname === "/seller/center" ||
+          pathname === "/seller/center/upload"
+        ) {
+          setType("seller_center");
+        }
+      }
+    } else {
+      setType("home");
+    }
+  }, [pathname, type, userType]);
 
-  const UI = {
+  const UI: { [key: string]: JSX.Element } = {
     home: (
       <>
         <Logo to="/">
@@ -137,10 +155,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     seller: (
       <>
-        <Logo
-          to={userType ? `/${userType?.toLowerCase()}` : "/"}
-          onClick={() => onClickHome()}
-        >
+        <Logo to="/" onClick={() => onClickHome()}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm onSubmit={(e) => e.preventDefault()}>
@@ -172,10 +187,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     buyer: (
       <>
-        <Logo
-          to={userType ? `/${userType?.toLowerCase()}` : "/"}
-          onClick={() => onClickHome()}
-        >
+        <Logo to="/" onClick={() => onClickHome()}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm onSubmit={(e) => e.preventDefault()}>
@@ -207,7 +219,7 @@ const Header: React.FC<HeaderProps> = ({ type }) => {
     ),
     seller_center: (
       <>
-        <Logo to="/seller">
+        <Logo to="/">
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm>

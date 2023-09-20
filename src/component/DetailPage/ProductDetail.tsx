@@ -22,7 +22,8 @@ import Swal from "sweetalert2";
 import Button from "component/common/Button/Button";
 import { useDispatch } from "react-redux";
 import { openModal } from "redux/Modal";
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 const ProductDetail: React.FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -274,9 +275,11 @@ const ProductDetail: React.FC = () => {
       </MoreInfo>
       {activeTab === "tab1" && (
         <MoreInfoSecion>
-          {productInfo?.product_info === undefined
-            ? "여기에 상세 정보 내용을 넣으세요"
-            : productInfo.product_info}
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {productInfo?.product_info === undefined
+              ? "여기에 상세 정보 내용을 넣으세요"
+              : productInfo.product_info}
+          </ReactMarkdown>
         </MoreInfoSecion>
       )}
 

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "component/Header/Header";
-import Main from "../component/Main/Main";
-import Footer from "component/Footer/Footer";
+import Main from "../../component/Main/Main";
 import { KeepProductList } from "API/KeepAPI";
 import { useLocation } from "react-router-dom";
 // import useScrollRestoration from "CustomHook/useScrollRestore";
@@ -37,9 +35,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Header type={type} />
       <Main />
-      <Footer />
     </>
   );
 }

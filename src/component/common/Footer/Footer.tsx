@@ -8,9 +8,9 @@ import {
   NavList,
   Address,
 } from "./Footer.Style";
-import InstaIcon from "../../assets/images/icon-insta.svg";
-import MetaIcon from "../../assets/images/icon-fb.svg";
-import YtIcon from "../../assets/images/icon-yt.svg";
+import InstaIcon from "../../../assets/images/icon-insta.svg";
+import MetaIcon from "../../../assets/images/icon-fb.svg";
+import YtIcon from "../../../assets/images/icon-yt.svg";
 const Footer: React.FC = () => {
   return (
     <FooterSection>

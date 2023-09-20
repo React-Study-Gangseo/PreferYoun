@@ -9,7 +9,8 @@ export const HeaderSection = styled.header`
   transform: translateX(-50%);
   box-shadow: 0px 4px 5px 0px #0000001a;
   & section {
-    width: 80rem;
+    max-width: 80rem;
+    width: 90%;
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -24,7 +25,8 @@ export const HeaderCenterSection = styled.header`
   transform: translateX(-50%);
   box-shadow: 0px 4px 5px 0px #0000001a;
   & section {
-    width: 90%;
+    max-width: 87.75rem;
+    width: 85%;
     height: 100%;
     margin: 0 auto;
     display: flex;
