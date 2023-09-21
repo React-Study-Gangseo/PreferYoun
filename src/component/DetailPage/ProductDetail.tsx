@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  MainSection,
   DetailPageWrapper,
   Price,
   ProductImg,
@@ -55,7 +56,6 @@ const ProductDetail: React.FC = () => {
         stock,
         product_info,
       } = res.data;
-      console.log(res);
       const updatedProductInfo: Products = {
         product_name,
         seller,
@@ -165,7 +165,7 @@ const ProductDetail: React.FC = () => {
   };
   console.log(productInfo);
   return (
-    <main>
+    <MainSection>
       <DetailPageWrapper>
         <ProductImg src={productInfo?.image} alt="상품 사진" />
         <ProductInfoSection>
@@ -294,7 +294,7 @@ const ProductDetail: React.FC = () => {
       {activeTab === "tab4" && (
         <MoreInfoSecion>여기에 반품/교환정보 내용을 넣으세요.</MoreInfoSecion>
       )}
-    </main>
+    </MainSection>
   );
 };
 

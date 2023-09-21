@@ -1,62 +1,90 @@
 import styled from "@emotion/styled";
 import { ButtonStyle } from "component/common/Button/Button";
-export const KeepProduct = styled.article`
+export const KeepProduct = styled.tr`
   width: 100%;
-  border: 2px solid #e0e0e0;
-  border-radius: 0.625rem;
-  display: flex;
-  padding: 1.25rem 6.25rem 1.25rem 1.875rem;
   position: relative;
-  & input[type="checkbox"] {
-    align-self: center;
-    appearance: none;
-    position: relative;
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #21bf48;
-    border-radius: 50%;
-  }
-  & input[type="checkbox"]:checked::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 1.2px;
-    left: 1.2px;
-    width: 15px;
-    height: 15px;
-    background-color: #21bf48;
-    border-radius: 50%;
-    box-sizing: border-box;
+  & td {
+    & input[type="checkbox"] {
+      appearance: none;
+      position: relative;
+      display: block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #21bf48;
+      border-radius: 50%;
+      margin: 0 auto;
+    }
+    & input[type="checkbox"]:checked::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 2px;
+      left: 2.2px;
+      width: 12px;
+      height: 12px;
+      background-color: #21bf48;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+    text-align: center;
+    vertical-align: middle;
+    padding: 1.25rem 0;
+    border-top: 2px solid #e0e0e0;
+    border-bottom: 2px solid #e0e0e0;
+    &:first-of-type {
+      border-left: 2px solid #e0e0e0;
+      border-radius: 10px 0 0 10px;
+    }
+    &:last-of-type {
+      border-right: 2px solid #e0e0e0;
+      border-radius: 0 10px 10px 0;
+    }
   }
 `;
 
 export const KeepProductImg = styled.img`
-  width: 10rem;
-  height: 10rem;
+  max-width: 10rem;
+  max-height: 10rem;
   border-radius: 0.625rem;
   margin: 0 2.25rem 0 2.5rem;
+  @media (max-width: 896px) {
+    margin: 0 auto;
+  }
 `;
 
 export const KeepProductInfo = styled.div`
-  width: 26.125rem;
+  width: 100%;
   padding-top: 0.3125rem;
-  & > span {
-    font-size: 14px;
-    font-weight: 400;
-    color: #767676;
-  }
+  display: flex;
+  & div {
+    text-align: left;
 
-  & h3 {
-    font-size: 18px;
-    font-weight: 400;
-    margin: 0.625rem 0 0.625rem 0;
-  }
+    & > span {
+      font-size: 14px;
+      font-weight: 400;
+      color: #767676;
+    }
 
-  & p {
-    margin: 0 0 3.5rem 0;
-    font-size: 1rem;
-    font-weight: 700;
+    & h3 {
+      font-size: 18px;
+      font-weight: 400;
+      margin: 0.625rem 0 0.625rem 0;
+    }
+
+    & p {
+      margin: 0 0 3.5rem 0;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+  }
+  @media (max-width: 896px) {
+    flex-direction: column;
+    & div {
+      margin: 0 auto;
+      & p {
+        margin-bottom: 20px;
+      }
+    }
   }
 `;
 export const TotalPrice = styled.p`
@@ -72,7 +100,7 @@ export const CountWrap = styled.div`
   height: 3.125rem;
   border-radius: 5px;
   border: 1px solid #c4c4c4;
-  margin: auto 0;
+  margin: 0 auto;
   & > div,
   & > button {
     flex: 1 1 33%;
@@ -92,7 +120,7 @@ export const DecreaseButton = styled.button`
 `;
 
 export const Total = styled.div`
-  margin: auto 0 auto auto;
+  margin: 0 auto;
 `;
 
 const Button = styled.button`
@@ -123,6 +151,7 @@ export const OrderBtnS = styled(ButtonStyle)`
   font-size: 16px;
   font-weight: 500;
   line-height: 12px;
+  margin: 0 auto;
 `;
 
 export const DeleteBtn = styled.button`

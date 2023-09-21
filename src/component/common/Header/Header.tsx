@@ -66,7 +66,6 @@ const Header: React.FC<HeaderProps> = () => {
       });
     }
   };
-  console.log(pathname);
   const handleOpenLoginModal = () => {
     dispatch(
       openModal({

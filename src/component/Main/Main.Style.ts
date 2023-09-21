@@ -20,6 +20,7 @@ export const Banner = styled.article`
   flex-direction: column;
   @media (max-width: 896px) {
     height: 20rem;
+    margin-bottom: 3.2rem;
   }
 `;
 export const ProductList = styled.ul`
