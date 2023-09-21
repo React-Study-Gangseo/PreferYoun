@@ -3,7 +3,8 @@ import PlusIcon from "../../assets/images/icon-plus-line.svg";
 import MinusIcon from "../../assets/images/icon-minus-line.svg";
 import { ButtonStyle } from "component/common/Button/Button";
 export const Wrapper = styled.main`
-  width: 80rem;
+  width: 100%;
+  max-width: 80rem;
   margin: 3.375rem auto 10rem;
 `;
 
@@ -13,14 +14,50 @@ export const Heading = styled.h2`
   font-weight: 700;
 `;
 
-export const KeepForm = styled.div`
-  margin-top: 3.25rem;
+export const KeepForm = styled.section`
+  margin-top: 1.0625rem;
   width: 100%;
 `;
-
+export const CartTable = styled.table`
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  & thead {
+    background: #f2f2f2;
+    height: 3.75rem;
+  }
+  & thead th {
+    vertical-align: middle;
+    font-size: 1.125rem;
+    & input[type="checkbox"] {
+      appearance: none;
+      position: relative;
+      display: block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #21bf48;
+      border-radius: 50%;
+      margin: 0 auto;
+    }
+    & input[type="checkbox"]:checked::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 2px;
+      left: 2.2px;
+      width: 12px;
+      height: 12px;
+      background-color: #21bf48;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+  }
+  & tbody tr {
+    height: 25px;
+  }
+`;
 export const FormTop = styled.ul`
   width: 100%;
-  background: #f2f2f2;
   display: flex;
   list-style: none;
   justify-content: space-between;

@@ -1,6 +1,14 @@
 import styled from "@emotion/styled";
 import { ButtonStyle } from "component/common/Button/Button";
-import { Link } from "react-router-dom";
+
+export const MainSection = styled.main`
+  width: 100%;
+  max-width: 80rem;
+  height: 100%;
+  min-height: 100%;
+  padding-bottom: 11.25rem;
+  /* margin-bottom: 19.6013rem; */
+`;
 export const DetailPageWrapper = styled.section`
   width: 100%;
   height: 100%;
@@ -8,6 +16,8 @@ export const DetailPageWrapper = styled.section`
   display: flex;
   gap: 3.125rem;
   margin-top: 5rem;
+  flex-wrap: wrap;
+  /* @media (max-width: ); */
 `;
 export const ProductImg = styled.img`
   width: 37.5rem;
@@ -15,7 +25,8 @@ export const ProductImg = styled.img`
   object-fit: cover;
 `;
 export const ProductInfoSection = styled.section`
-  width: 39.375rem;
+  max-width: 39.375rem;
+  width: 100%;
   & > span {
     color: #767676;
     font-size: 1.125rem;
@@ -38,6 +49,9 @@ export const Price = styled.p`
     font-size: 1rem;
     border-bottom: 1px solid #c4c4c4;
     padding-bottom: 1.25rem;
+  }
+  @media (max-width: 1421px) {
+    margin-bottom: 4rem;
   }
 `;
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   NavWrapper,
   NavList,
@@ -30,16 +30,24 @@ export default function Navigation() {
         </ButtonContainer>
         <NavList>
           <li>
-            <img src={HomeIcon} alt="홈 아이콘" />
+            <Link to="/">
+              <img src={HomeIcon} alt="홈 아이콘" />
+            </Link>
           </li>
           <li>
-            <img src={Search} alt="검색창 아이콘" />
+            <Link to="/search">
+              <img src={Search} alt="검색창 아이콘" />
+            </Link>
           </li>
           <li>
-            <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
+            <Link to="/mypage">
+              <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
+            </Link>
           </li>
           <li>
-            <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
+            <Link to="/cart">
+              <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
+            </Link>
           </li>
         </NavList>
       </NavWrapper>
