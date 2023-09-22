@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
-import styled from "@emotion/styled";
+
 import SellerJoin from "component/Auth/Join/SellerJoin";
-import BuyerJoin from "../../Auth/Join/BuyerJoin";
-import Logo from "../../../assets/images/Logo-hodu.png";
+import BuyerJoin from "component/Auth/Join/BuyerJoin";
+import Logo from "../../assets/images/Logo-hodu.png";
 import {
   SellerBtn,
   BuyerBtn,
   LogoImg,
   ButtonGroup,
-} from "../../Auth/Join/Join.Style";
+  Main,
+} from "component/Auth/Join/Join.Style";
 import { FormValue } from "types/type";
 import { Seller_Join, Join } from "API/AuthAPI";
-
-const JoinModal: React.FC = () => {
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+const JoinPage: React.FC = () => {
   const [userType, setUserType] = useState("SELLER");
   const [JoinSuccess, setJoinSuccess] = useState(false);
-
+  const navigate = useNavigate();
   const handleUserType = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.id === "BUYER"
       ? setUserType("BUYER")
@@ -31,6 +33,7 @@ const JoinModal: React.FC = () => {
   }, [JoinSuccess]);
 
   const handleFormSubmit = async (data: FormValue) => {
+    console.log("check");
     if (userType === "SELLER") {
       try {
         const response = await Seller_Join(data);
@@ -46,8 +49,7 @@ const JoinModal: React.FC = () => {
       try {
         const response = await Join(data);
         if (response && response.status === 201) {
-          console.log("회원가입 성공");
-          setJoinSuccess(true);
+          navigate("/login");
         }
       } catch (error) {
         console.log("회원가입 실패", error);
@@ -58,8 +60,10 @@ const JoinModal: React.FC = () => {
 
   return (
     <>
-      <ModalBody>
-        <LogoImg src={Logo} alt="Hodu 로고" />
+      <Main>
+        <Link to="/">
+          <LogoImg src={Logo} alt="Hodu 로고" />
+        </Link>
         <ButtonGroup>
           <BuyerBtn
             id="BUYER"
@@ -92,13 +96,9 @@ const JoinModal: React.FC = () => {
         ) : (
           <BuyerJoin onSubmit={(data: FormValue) => handleFormSubmit(data)} />
         )}
-      </ModalBody>
+      </Main>
     </>
   );
 };
 
-export default JoinModal;
-
-const ModalBody = styled.div`
-  padding: 15px;
-`;
+export default JoinPage;

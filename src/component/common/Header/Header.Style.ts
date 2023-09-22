@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 export const HeaderSection = styled.header`
   width: 100vw;
-  height: 5.625rem;
+  min-height: 5.625rem;
+  height: auto;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -15,6 +16,12 @@ export const HeaderSection = styled.header`
     margin: 0 auto;
     display: flex;
     align-items: center;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      gap: 5px;
+      margin: 10px auto;
+      padding-bottom: 10px;
+    }
   }
 `;
 export const HeaderCenterSection = styled.header`
@@ -31,13 +38,21 @@ export const HeaderCenterSection = styled.header`
     margin: 0 auto;
     display: flex;
     align-items: center;
+    @media (max-width: 500px) {
+      gap: 10px;
+      margin: 10px auto;
+      padding-bottom: 10px;
+    }
   }
 `;
 
 export const Logo = styled(Link)`
-  width: 7.75rem;
+  max-width: 7.75rem;
   height: 2.375rem;
   margin-right: 1.875rem;
+  @media (max-width: 500px) {
+    margin: 0;
+  }
 `;
 
 export const HeaderForm = styled.form`

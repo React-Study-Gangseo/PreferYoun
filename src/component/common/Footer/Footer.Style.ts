@@ -14,11 +14,13 @@ export const FooterSection = styled.footer`
 `;
 export const FooterTop = styled.section`
   width: 85vw;
+  max-width: 80rem;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
 `;
 export const InfoList = styled.ul`
   width: 100%;
-  float: left;
   display: flex;
   gap: 1.125rem;
   line-height: 2rem;
@@ -34,9 +36,7 @@ export const InfoList = styled.ul`
   }
 `;
 export const InfoItem = styled(Link)``;
-export const Nav = styled.nav`
-  float: right;
-`;
+export const Nav = styled.nav``;
 export const NavList = styled.ul`
   display: flex;
   gap: 0.875rem;
@@ -47,6 +47,7 @@ export const NavList = styled.ul`
 `;
 export const Address = styled.address`
   display: flex;
+  max-width: 80rem;
   gap: 0.75rem;
   flex-direction: column;
   width: 85vw;

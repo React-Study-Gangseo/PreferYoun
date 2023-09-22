@@ -16,7 +16,6 @@ import {
   JoinBtn,
   VaildBtn,
 } from "./Join.Style";
-import Button from "../../common/Button/Button";
 import { TextField, IconButton, InputAdornment, Checkbox } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -81,9 +80,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
     event.preventDefault();
     if (watch("id")) {
       const checkId: string | undefined = getValues("id");
-      console.log(checkId);
       if (typeof checkId === "string") {
-        // checkId가 문자열인지 확인
         try {
           const response = await CheckId(checkId);
 
@@ -103,7 +100,6 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
         } catch (error) {
           const axiosError = error as AxiosError;
           const responseData = axiosError?.response?.data as any;
-          console.log("아이디 체크 실패", responseData.FAIL_Message);
           if (responseData.FAIL_Message === "이미 사용 중인 아이디입니다.") {
             setError("id", {
               type: "manual",
@@ -144,7 +140,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               name="id"
               defaultValue=""
               rules={{
-                required: true,
+                required: "아이디는 필수 입니다.",
                 pattern: /^[A-Za-z0-9]{1,20}$/,
               }}
               render={({ field, fieldState: { error } }) => (
@@ -176,7 +172,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               name="password"
               defaultValue=""
               rules={{
-                required: true,
+                required: "비밀번호는 필수 입니다.",
                 pattern: {
                   value: /^(?=.*[a-z])(?=.*\d).{8,}$/,
                   message: "비밀번호 형식이 올바르지 않습니다",
@@ -271,7 +267,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               rules={{
                 required: "필수 항목입니다",
                 pattern: {
-                  value: /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/,
+                  value: /^[0-9]{3}[0-9]{4}[0-9]{4}$/,
                   message: "전화번호 형식이 올바르지 않습니다 (000-0000-0000)",
                 },
               }}
@@ -309,11 +305,6 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
                 />
               )}
             />
-            {errors.company_registration_number && (
-              <StyledError role="alert">
-                {errors.company_registration_number.message}
-              </StyledError>
-            )}
             <VaildBtn
               width="ms"
               bgColor="active"
@@ -323,6 +314,11 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
             >
               인증
             </VaildBtn>
+            {/* {errors.company_registration_number && (
+              <StyledError role="alert">
+                {errors.company_registration_number.message}
+              </StyledError>
+            )} */}
           </CRNumber>
           <div>
             <Controller
@@ -364,7 +360,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
           width="l"
           bgColor="active"
           type="submit"
-          disabled={checked ? true : false}
+          disabled={checked ? false : true}
         >
           가입하기
         </JoinBtn>

@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import LoginModal from "./LoginModal";
-import SignupModal from "./JoinModal";
 import SearchAddressModal from "./SearchAddress/SearchAddress";
 import { useSelector } from "react-redux";
 import { closeModal, selectModal } from "redux/Modal";
@@ -16,14 +14,6 @@ const MODAL_TYPES = {
 };
 
 const MODAL_COMPONENTS = [
-  {
-    type: MODAL_TYPES.LoginModal,
-    component: <LoginModal />,
-  },
-  {
-    type: MODAL_TYPES.SignupModal,
-    component: <SignupModal />,
-  },
   {
     type: MODAL_TYPES.SearchAddressModal,
     component: <SearchAddressModal />,

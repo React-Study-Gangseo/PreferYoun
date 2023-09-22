@@ -25,6 +25,9 @@ export const CartTable = styled.table`
   & thead {
     background: #f2f2f2;
     height: 3.75rem;
+    @media (max-width: 896px) {
+      display: none;
+    }
   }
   & thead th {
     vertical-align: middle;
@@ -143,7 +146,7 @@ export const TotalPrice = styled.p`
 `;
 export const CountWrap = styled.div`
   display: flex;
-  width: 9.375rem;
+  max-width: 9.375rem;
   height: 3.125rem;
   border-radius: 5px;
   border: 1px solid #c4c4c4;
@@ -174,22 +177,32 @@ export const ClacPrice = styled.ul`
   background: #f2f2f2;
   display: flex;
   width: 100%;
-  height: 9.375rem;
+  max-height: 9.375rem;
+  min-height: 100px;
   align-items: center;
 
   & li {
     text-align: center;
     flex: 1 1 25%;
+    @media (max-width: 500px) {
+      font-size: 0.9rem;
+    }
   }
   & li strong {
     display: block;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 700;
     margin-top: 0.75rem;
+    @media (max-width: 500px) {
+      font-size: 1rem;
+    }
   }
   & li strong > span {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
+    @media (max-width: 500px) {
+      font-size: 0.8rem;
+    }
   }
   & li:first-of-type,
   & li:nth-of-type(2) {
@@ -200,13 +213,15 @@ export const ClacPrice = styled.ul`
   & li:nth-of-type(2)::after {
     content: "";
     display: block;
-    width: 2.125rem;
-    height: 2.125rem;
+    max-width: 2.125rem;
+    min-width: 25px;
+    aspect-ratio: 1 / 1;
     background-color: #fff;
     position: absolute;
     border-radius: 100%;
-    right: -18px;
-    top: 10px;
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
   }
   & li:first-of-type::after {
     background-image: url(${MinusIcon});

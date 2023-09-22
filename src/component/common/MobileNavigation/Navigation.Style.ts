@@ -14,7 +14,10 @@ const NavWrapper = styled.nav`
   background-color: #fff;
   border-top: 1px solid #dbdbdb;
 `;
-
+const CenterImg = styled.img`
+  margin-top: 9px;
+  width: 2rem;
+`;
 const NavList = styled.ul`
   height: 60px;
   display: flex;
@@ -95,6 +98,16 @@ const HeaderSearchInp = styled.input`
     color: #c4c4c4;
   }
 `;
+const Center = styled.div`
+  background-color: #26b744;
+  width: 100%;
+  padding: 0 10px;
+  border-radius: 10px;
+  & a {
+    color: white;
+    line-height: 50px;
+  }
+`;
 export {
   NavWrapper,
   NavList,
@@ -108,4 +121,6 @@ export {
   LogoGroup,
   HeaderSearchInp,
   MoreLi,
+  CenterImg,
+  Center,
 };

@@ -2,13 +2,6 @@ import styled from "@emotion/styled";
 import Plus from "../../assets/images/icon-plus.svg";
 
 import { ButtonStyle } from "../common/Button/Button";
-export const Wrapper = styled.main`
-  width: 110%;
-  margin: 0 auto;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-`;
 
 export const HeaderSection = styled.section`
   padding-left: 6.25rem;
@@ -33,6 +26,12 @@ export const HeaderSection = styled.section`
 `;
 
 export const MainSection = styled.main`
+  max-width: 110%;
+  margin: 0 auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
   padding-top: 2.375rem;
   margin-bottom: 96px;
   & h2 {
@@ -68,6 +67,17 @@ export const MainSection = styled.main`
 
 export const AsideSection = styled.aside`
   width: 15.625rem;
+  @media (max-width: 896px) {
+    width: 100%;
+    & ul {
+      width: 100%;
+      display: flex;
+      gap: 0;
+      & li {
+        width: 100%;
+      }
+    }
+  }
 `;
 export const TabBtn = styled(ButtonStyle)`
   text-align: left;
@@ -79,12 +89,22 @@ export const TabBtn = styled(ButtonStyle)`
     background-color: #21bf48;
     color: white;
   }
+  @media (max-width: 896px) {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #c4c4c4;
+    border-radius: 0;
+    text-align: center;
+  }
 `;
 export const MainContent = styled.section`
   width: 100%;
   display: flex;
   gap: 1.875rem;
   height: 55.25rem;
+  @media (max-width: 896px) {
+    flex-direction: column;
+  }
 `;
 export const SellerProduct = styled.section`
   width: 100%;

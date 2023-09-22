@@ -56,10 +56,10 @@ export const VaildBtn = styled(ButtonStyle)`
   font-size: 1rem;
   border-radius: 5px;
   border-radius: 10px;
-  margin-top: auto;
+  margin-bottom: auto;
 `;
 export const InputWrap = styled.div`
-  margin-bottom: 1rem;
+  margin-bottom: 1.4rem;
 `;
 export const EmailWrap = styled(InputWrap)`
   position: relative;
@@ -134,4 +134,8 @@ export const Terms = styled.p`
 export const JoinBtn = styled(ButtonStyle)`
   margin: 34px auto;
   padding: 10px;
+`;
+export const Main = styled.main`
+  width: 100%;
+  margin-top: 80px;
 `;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
 import SellerLogin from "component/Auth/Login/SellerLogin/SellerLogin";
 import {
   BtnGroup,
@@ -9,27 +8,24 @@ import {
   LinkGroup,
   SignUp,
   FindPw,
-} from "../../Auth/Login/Login.Style";
-import Logo from "../../../assets/images/Logo-hodu.png";
+  Main,
+} from "component/Auth/Login/Login.Style";
+import Logo from "../../assets/images/Logo-hodu.png";
 import BuyerLogin from "component/Auth/Login/BuyerLogin/BuyerLogin";
 import { AxiosError } from "axios";
-import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { LoginData } from "types/type";
 import { Login } from "API/AuthAPI";
-import { openModal, closeModal } from "redux/Modal";
-import { useNavigate } from "react-router-dom";
-const LoginModal: React.FC = () => {
+import { Link, useNavigate } from "react-router-dom";
+
+const LoginPage: React.FC = () => {
   const [userType, setUserType] = useState("SELLER");
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
   useEffect(() => {
     if (loginSuccess && userType === "SELLER") {
-      dispatch(closeModal());
       navigate("/");
     } else if (loginSuccess && userType === "BUYER") {
-      dispatch(closeModal());
       navigate("/");
     }
   }, [loginSuccess, navigate]);
@@ -68,18 +64,15 @@ const LoginModal: React.FC = () => {
     }
   };
   const handleOpenLoginModal = () => {
-    dispatch(
-      openModal({
-        modalType: "SignupModal",
-        isOpen: true,
-      })
-    );
+    navigate("/join");
   };
 
   return (
     <>
-      <ModalBody>
-        <LogoImg src={Logo} alt="Hodu 로고" />
+      <Main>
+        <Link to="/">
+          <LogoImg src={Logo} alt="Hodu 로고" />
+        </Link>
         <BtnGroup>
           <BuyerBtn
             id="BUYER"
@@ -116,7 +109,7 @@ const LoginModal: React.FC = () => {
             onSubmit={(data: LoginData) => handleFormSubmit(data, userType)}
           />
         )}
-      </ModalBody>
+      </Main>
       <LinkGroup>
         <SignUp onClick={handleOpenLoginModal}>회원가입</SignUp>
         <FindPw>비밀번호찾기</FindPw>
@@ -125,8 +118,4 @@ const LoginModal: React.FC = () => {
   );
 };
 
-export default LoginModal;
-
-const ModalBody = styled.div`
-  padding: 15px;
-`;
+export default LoginPage;

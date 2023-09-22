@@ -49,6 +49,8 @@ export const OrderList = styled.table`
     width: 104px;
     height: 104px;
     border-radius: 10px;
+    /* @media (max-width: ) {
+    } */
   }
   & td:not(:nth-of-type(1)):not(:nth-of-type(4)) {
     color: #767676;
@@ -155,19 +157,24 @@ export const Address = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 50rem;
-  position: relative;
+  flex-grow: 1;
   & input {
     width: 100%;
   }
-  & input:first-of-type {
-    width: 10.625rem;
+
+  & div {
+    margin-right: auto;
+    display: flex;
+    gap: 12px;
+    flex-direction: row-reverse;
+
+    & input {
+      width: 10.625rem;
+    }
   }
 `;
 export const Message = styled.div`
-  width: 60.625rem;
-  display: flex;
-  gap: 27px;
+  flex-grow: 1;
   & input {
     width: 100%;
   }
@@ -179,6 +186,19 @@ export const PayInfo = styled.section`
   border-bottom: 2px solid #c4c4c4;
   margin-top: 4.375rem;
   float: left;
+  @media (max-width: 896px) {
+    display: none;
+  }
+`;
+export const MobilePayInfo = styled.section`
+  width: 25%;
+  padding-bottom: 1.125rem;
+  border-bottom: 2px solid #c4c4c4;
+  margin-top: 4.375rem;
+  float: left;
+  @media (min-width: 897px) {
+    display: none;
+  }
 `;
 
 export const PayCheck = styled(Radio)``;
@@ -262,7 +282,4 @@ export const PayBtn = styled(ButtonStyle)`
 export const SearchAddress = styled(ButtonStyle)`
   width: 9.625rem;
   height: 40px;
-  position: absolute;
-  right: 470px;
-  top: 0;
 `;

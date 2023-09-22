@@ -24,7 +24,6 @@ import { setSearchData } from "redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search from "../../../assets/images/search.svg";
 import { SearchAPI } from "../../../API/ProductAPI";
-import { openModal } from "redux/Modal";
 import Swal from "sweetalert2";
 
 interface HeaderProps {
@@ -67,12 +66,7 @@ const Header: React.FC<HeaderProps> = () => {
     }
   };
   const handleOpenLoginModal = () => {
-    dispatch(
-      openModal({
-        modalType: "LoginModal",
-        isOpen: true,
-      })
-    );
+    navigate("/login");
   };
   const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);

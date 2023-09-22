@@ -79,3 +79,8 @@ export const SignUp = styled.button`
   }
 `;
 export const FindPw = styled.button``;
+
+export const Main = styled.main`
+  width: 100%;
+  margin-top: 80px;
+`;
