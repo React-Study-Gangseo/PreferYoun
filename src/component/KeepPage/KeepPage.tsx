@@ -19,13 +19,13 @@ import { TotalPriceState } from "redux/TotalPrice";
 import { CartOrderState } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
 import { openModal } from "redux/Modal";
+
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState<cartData[]>([]);
   const [cartItem, setCartItem] = useState<cartItem[]>([]);
   const [isLogin, setIsLogin] = useState(false);
   const dispatch = useDispatch();
-
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
@@ -130,12 +130,7 @@ const KeepPage: React.FC = () => {
     }
   };
   const handleLogin = () => {
-    dispatch(
-      openModal({
-        modalType: "LoginModal",
-        isOpen: true,
-      })
-    );
+    navigate("/login");
   };
 
   return (

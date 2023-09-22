@@ -20,6 +20,7 @@ export const OrderedList = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 3.125rem;
+  white-space: nowrap;
   & thead {
     background: #f2f2f2;
     height: 3rem;

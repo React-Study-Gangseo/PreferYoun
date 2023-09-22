@@ -10,6 +10,7 @@ import {
   TotalPrice,
   OrderBtnS,
   DeleteBtn,
+  KeepProductMobile,
 } from "./CartItem.Style";
 import { Products, cartItem } from "types/type";
 import { DetailProduct } from "API/ProductAPI";
@@ -229,79 +230,165 @@ const CartItem: React.FC<{
   };
 
   return (
-    <KeepProduct>
-      <td>
-        <input
-          type="checkbox"
-          checked={!!selectItem}
-          onChange={(e) => handleItemCheck(e.target.checked)}
-        />
-        <label className="a11y-hidden">장바구니 아이템 체크박스</label>
-      </td>
-      <td>
-        <KeepProductInfo>
-          <KeepProductImg src={cartItem?.image} alt="장바구나 상품 이미지" />
-          <div>
-            <span>{cartItem?.store_name}</span>
-            <h3>{cartItem?.product_name}</h3>
-            <p>
-              <strong>
-                {cartItem?.price
-                  ? new Intl.NumberFormat("ko-KR").format(cartItem.price)
-                  : "0"}
-              </strong>
-              원
-            </p>
-            {cartItem?.shipping_method === "PARCEL" ? (
-              <span>
-                택배배송 /
-                {cartItem?.shipping_fee === 0
-                  ? "무료배송"
-                  : `${new Intl.NumberFormat("ko-KR").format(
-                      cartItem?.shipping_fee || 0
-                    )}원`}
-              </span>
-            ) : (
-              <span>
-                직접배송 /
-                {cartItem?.shipping_fee === 0
-                  ? "무료배송"
-                  : `${cartItem?.shipping_fee}원`}
-              </span>
-            )}
-          </div>
-        </KeepProductInfo>
-      </td>
-      <td>
-        <CountWrap>
-          <DecreaseButton onClick={handleMinusItemCount}>-</DecreaseButton>
-          <div>{itemCount}</div>
-          <IncreaseButton onClick={handlePlusItemCount}>+</IncreaseButton>
-        </CountWrap>
-      </td>
-      <td>
-        <Total>
-          {cartItem?.price && (
-            <TotalPrice>
-              {new Intl.NumberFormat("ko-KR").format(
-                cartItem?.price * itemCount
+    <>
+      <>
+        <KeepProduct>
+          <td>
+            <input
+              type="checkbox"
+              checked={!!selectItem}
+              onChange={(e) => handleItemCheck(e.target.checked)}
+            />
+            <label className="a11y-hidden">장바구니 아이템 체크박스</label>
+          </td>
+          <td>
+            <KeepProductInfo>
+              <KeepProductImg
+                src={cartItem?.image}
+                alt="장바구나 상품 이미지"
+              />
+              <div>
+                <span>{cartItem?.store_name}</span>
+                <h3>{cartItem?.product_name}</h3>
+                <p>
+                  <strong>
+                    {cartItem?.price
+                      ? new Intl.NumberFormat("ko-KR").format(cartItem.price)
+                      : "0"}
+                  </strong>
+                  원
+                </p>
+                {cartItem?.shipping_method === "PARCEL" ? (
+                  <span>
+                    택배배송 /
+                    {cartItem?.shipping_fee === 0
+                      ? "무료배송"
+                      : `${new Intl.NumberFormat("ko-KR").format(
+                          cartItem?.shipping_fee || 0
+                        )}원`}
+                  </span>
+                ) : (
+                  <span>
+                    직접배송 /
+                    {cartItem?.shipping_fee === 0
+                      ? "무료배송"
+                      : `${cartItem?.shipping_fee}원`}
+                  </span>
+                )}
+              </div>
+            </KeepProductInfo>
+          </td>
+          <td>
+            <CountWrap>
+              <DecreaseButton onClick={handleMinusItemCount}>-</DecreaseButton>
+              <div>{itemCount}</div>
+              <IncreaseButton onClick={handlePlusItemCount}>+</IncreaseButton>
+            </CountWrap>
+          </td>
+          <td>
+            <Total>
+              {cartItem?.price && (
+                <TotalPrice>
+                  {new Intl.NumberFormat("ko-KR").format(
+                    cartItem?.price * itemCount
+                  )}
+                  원
+                </TotalPrice>
               )}
-              원
-            </TotalPrice>
-          )}
-          <OrderBtnS
-            width="ms"
-            bgColor="active"
-            onClick={() => handleOrderItem()}
-          >
-            주문하기
-          </OrderBtnS>
-        </Total>
-      </td>
-      <DeleteBtn onClick={() => handleDelete(product.cart_item_id)}>
-        <img src={DeleteIcon} alt="상품 삭제 버튼" />
-      </DeleteBtn>
-    </KeepProduct>
+              <OrderBtnS
+                width="ms"
+                bgColor="active"
+                onClick={() => handleOrderItem()}
+              >
+                주문하기
+              </OrderBtnS>
+              <DeleteBtn onClick={() => handleDelete(product.cart_item_id)}>
+                <img src={DeleteIcon} alt="상품 삭제 버튼" />
+              </DeleteBtn>
+            </Total>
+          </td>
+        </KeepProduct>
+      </>
+      <>
+        <KeepProductMobile>
+          <td>
+            <input
+              type="checkbox"
+              checked={!!selectItem}
+              onChange={(e) => handleItemCheck(e.target.checked)}
+            />
+            <label className="a11y-hidden">장바구니 아이템 체크박스</label>
+          </td>
+          <td>
+            <KeepProductInfo>
+              <KeepProductImg
+                src={cartItem?.image}
+                alt="장바구나 상품 이미지"
+              />
+              <div>
+                <span>{cartItem?.store_name}</span>
+                <h3>{cartItem?.product_name}</h3>
+                <p>
+                  <strong>
+                    {cartItem?.price
+                      ? new Intl.NumberFormat("ko-KR").format(cartItem.price)
+                      : "0"}
+                  </strong>
+                  원
+                </p>
+                {cartItem?.shipping_method === "PARCEL" ? (
+                  <span>
+                    택배배송 /
+                    {cartItem?.shipping_fee === 0
+                      ? "무료배송"
+                      : `${new Intl.NumberFormat("ko-KR").format(
+                          cartItem?.shipping_fee || 0
+                        )}원`}
+                  </span>
+                ) : (
+                  <span>
+                    직접배송 /
+                    {cartItem?.shipping_fee === 0
+                      ? "무료배송"
+                      : `${cartItem?.shipping_fee}원`}
+                  </span>
+                )}
+              </div>
+            </KeepProductInfo>
+          </td>
+          <td></td>
+          <td>
+            <Total>
+              <CountWrap>
+                <DecreaseButton onClick={handleMinusItemCount}>
+                  -
+                </DecreaseButton>
+                <div>{itemCount}</div>
+                <IncreaseButton onClick={handlePlusItemCount}>+</IncreaseButton>
+              </CountWrap>
+              {cartItem?.price && (
+                <TotalPrice>
+                  {new Intl.NumberFormat("ko-KR").format(
+                    cartItem?.price * itemCount
+                  )}
+                  원
+                </TotalPrice>
+              )}
+              <OrderBtnS
+                width="ms"
+                bgColor="active"
+                onClick={() => handleOrderItem()}
+              >
+                주문하기
+              </OrderBtnS>
+              <DeleteBtn onClick={() => handleDelete(product.cart_item_id)}>
+                <img src={DeleteIcon} alt="상품 삭제 버튼" />
+              </DeleteBtn>
+            </Total>
+          </td>
+        </KeepProductMobile>
+      </>
+    </>
   );
 };
 

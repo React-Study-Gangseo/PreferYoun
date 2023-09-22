@@ -40,6 +40,53 @@ export const KeepProduct = styled.tr`
       border-radius: 0 10px 10px 0;
     }
   }
+  @media (max-width: 896px) {
+    display: none;
+  }
+`;
+export const KeepProductMobile = styled.tr`
+  width: 100%;
+  position: relative;
+  & td {
+    & input[type="checkbox"] {
+      appearance: none;
+      position: relative;
+      display: block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #21bf48;
+      border-radius: 50%;
+      margin: 0 auto;
+    }
+    & input[type="checkbox"]:checked::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 2px;
+      left: 2.2px;
+      width: 12px;
+      height: 12px;
+      background-color: #21bf48;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+    text-align: center;
+    vertical-align: middle;
+    padding: 1.25rem 0;
+    border-top: 2px solid #e0e0e0;
+    border-bottom: 2px solid #e0e0e0;
+    &:first-of-type {
+      border-left: 2px solid #e0e0e0;
+      border-radius: 10px 0 0 10px;
+    }
+    &:last-of-type {
+      border-right: 2px solid #e0e0e0;
+      border-radius: 0 10px 10px 0;
+    }
+  }
+  @media (min-width: 897px) {
+    display: none;
+  }
 `;
 
 export const KeepProductImg = styled.img`
@@ -48,6 +95,8 @@ export const KeepProductImg = styled.img`
   border-radius: 0.625rem;
   margin: 0 2.25rem 0 2.5rem;
   @media (max-width: 896px) {
+    max-width: 10rem;
+    max-height: 5rem;
     margin: 0 auto;
   }
 `;
@@ -106,6 +155,17 @@ export const CountWrap = styled.div`
     flex: 1 1 33%;
     text-align: center;
     line-height: 3.125rem;
+  }
+  @media (max-width: 896px) {
+    width: 70px;
+    height: 30px;
+    margin-bottom: 15px;
+    & > div,
+    & > button {
+      flex: 1 1 33%;
+      text-align: center;
+      line-height: 30px;
+    }
   }
 `;
 

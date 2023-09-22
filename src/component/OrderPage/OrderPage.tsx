@@ -24,8 +24,18 @@ import {
   SearchAddress,
   FormControlLabelStyle,
   AddressInfo,
+  MobilePayInfo,
 } from "./OrderPage.Style";
-import { Checkbox, Radio, FormControlLabel, RadioGroup } from "@mui/material";
+import {
+  Checkbox,
+  Radio,
+  FormControlLabel,
+  RadioGroup,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  OutlinedInput,
+} from "@mui/material";
 import { orderdata, Products } from "types/type";
 import { CartOrder, CartOneOrder, OrderDirect } from "API/OrderAPI";
 import { useDispatch } from "react-redux";
@@ -123,8 +133,13 @@ const OrderPage: React.FC = () => {
     }
   }, [orderKind, orderProducts]);
 
-  const handlePayCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPayCheck((event.target as HTMLInputElement).value);
+  const handlePayCheck = (
+    event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>
+  ) => {
+    const value = event.target
+      ? (event.target as HTMLInputElement).value
+      : event;
+    setPayCheck(value as string);
   };
   const handleChange = () => {
     if (!lastCheck) {
@@ -417,24 +432,26 @@ const OrderPage: React.FC = () => {
             <li>
               <label>배송주소</label>
               <Address>
-                <SearchAddress
-                  width="s"
-                  bgColor="active"
-                  type="button"
-                  onClick={handleSearchAddress}
-                >
-                  우편번호 조회
-                </SearchAddress>
-                <input
-                  id="address"
-                  value={address.firstAddress}
-                  onChange={(e) =>
-                    setAddress({
-                      ...address,
-                      firstAddress: String(e.target.value),
-                    })
-                  }
-                />
+                <div>
+                  <SearchAddress
+                    width="s"
+                    bgColor="active"
+                    type="button"
+                    onClick={handleSearchAddress}
+                  >
+                    우편번호 조회
+                  </SearchAddress>
+                  <input
+                    id="address"
+                    value={address.firstAddress}
+                    onChange={(e) =>
+                      setAddress({
+                        ...address,
+                        firstAddress: String(e.target.value),
+                      })
+                    }
+                  />
+                </div>
                 <input
                   id="address"
                   value={address.secondAddress}
@@ -459,8 +476,8 @@ const OrderPage: React.FC = () => {
               </Address>
             </li>
             <li>
+              <label>배송메세지</label>
               <Message>
-                <label>배송메세지</label>
                 <input
                   id="address_message"
                   value={orderData.address_message}
@@ -511,6 +528,21 @@ const OrderPage: React.FC = () => {
             />
           </RadioGroup>
         </PayInfo>
+        <MobilePayInfo>
+          <HeadInfoTitle>결제수단</HeadInfoTitle>
+          <Select
+            value={payCheck}
+            onChange={handlePayCheck}
+            sx={{ width: "100%" }}
+            inputProps={{ "aria-label": "Without label" }}
+          >
+            <MenuItem value={"CARD"}>신용/체크카드</MenuItem>
+            <MenuItem value={"DEPOSIT"}>무통장입금</MenuItem>
+            <MenuItem value={"PHONE_PAYMENT"}>휴대폰결제</MenuItem>
+            <MenuItem value={"NAVERPAY"}>네이버페이</MenuItem>
+            <MenuItem value={"KAKAOPAY"}>카카오페이</MenuItem>
+          </Select>
+        </MobilePayInfo>
         <FinallyPay>
           <InfoTitle>최종결제 정보</InfoTitle>
           <FinallyPayWrapper>

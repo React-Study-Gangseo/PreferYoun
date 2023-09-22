@@ -11,20 +11,18 @@ import {
   DecreaseButton,
   IncreaseButton,
   TotalPriceWrap,
-  MoreInfo,
   BtnGroup,
-  MoreInfoSecion,
 } from "./ProductDetail.Style";
 import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";
 import Swal from "sweetalert2";
-import Button from "component/common/Button/Button";
+
 import { useDispatch } from "react-redux";
 import { openModal } from "redux/Modal";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import MoreProductInfo from "./MoreInfo/MoreProductInfo";
+
 const ProductDetail: React.FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -37,11 +35,10 @@ const ProductDetail: React.FC = () => {
     check: true,
   });
   const [count, setCount] = useState(1);
-  const [activeTab, setActiveTab] = useState("tab1");
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const userType = userInfo ? userInfo.user_type : null;
 
-  const handleTabClick = (tabId: string) => {
-    setActiveTab(tabId);
-  };
   const FetchDetailProduct = async (data: { product: number }) => {
     try {
       const res = await DetailProduct(data.product);
@@ -163,7 +160,6 @@ const ProductDetail: React.FC = () => {
       });
     }
   };
-  console.log(productInfo);
   return (
     <MainSection>
       <DetailPageWrapper>
@@ -199,9 +195,19 @@ const ProductDetail: React.FC = () => {
             </span>
           )}
           <CountWrap>
-            <DecreaseButton onClick={handleMinusCount}>-</DecreaseButton>
+            <DecreaseButton
+              onClick={handleMinusCount}
+              disabled={userType === "BUYER" ? false : true}
+            >
+              -
+            </DecreaseButton>
             <div>{count}</div>
-            <IncreaseButton onClick={handlePlusCount}>+</IncreaseButton>
+            <IncreaseButton
+              onClick={handlePlusCount}
+              disabled={userType === "BUYER" ? false : true}
+            >
+              +
+            </IncreaseButton>
           </CountWrap>
           <TotalPriceWrap>
             <p>총 상품 금액</p>
@@ -220,80 +226,26 @@ const ProductDetail: React.FC = () => {
             </p>
           </TotalPriceWrap>
           <BtnGroup>
-            <BuyButton width="l" bgColor="active" onClick={handleBuyProduct}>
+            <BuyButton
+              width="l"
+              bgColor={userType === "BUYER" ? "active" : "dark"}
+              onClick={handleBuyProduct}
+              disabled={userType === "BUYER" ? false : true}
+            >
               바로구매
             </BuyButton>
-            <KeepButton width="ms" bgColor="dark" onClick={handleKeepProduct}>
+            <KeepButton
+              width="ms"
+              onClick={handleKeepProduct}
+              bgColor="dark"
+              disabled={userType === "BUYER" ? false : true}
+            >
               장바구니
             </KeepButton>
           </BtnGroup>
         </ProductInfoSection>
       </DetailPageWrapper>
-      <MoreInfo>
-        <ul>
-          <li>
-            <Button
-              width="tab"
-              color="black"
-              bgColor={activeTab === "tab1" ? "tabActive" : undefined}
-              onClick={() => handleTabClick("tab1")}
-            >
-              상세보기
-            </Button>
-          </li>
-          <li>
-            <Button
-              width="tab"
-              color="black"
-              bgColor={activeTab === "tab2" ? "tabActive" : undefined}
-              onClick={() => handleTabClick("tab2")}
-            >
-              리뷰
-            </Button>
-          </li>
-          <li>
-            <Button
-              width="tab"
-              color="black"
-              bgColor={activeTab === "tab3" ? "tabActive" : undefined}
-              onClick={() => handleTabClick("tab3")}
-            >
-              Q & A
-            </Button>
-          </li>
-          <li>
-            <Button
-              width="tab"
-              color="black"
-              bgColor={activeTab === "tab4" ? "tabActive" : undefined}
-              onClick={() => handleTabClick("tab4")}
-            >
-              반품/교환정보
-            </Button>
-          </li>
-        </ul>
-      </MoreInfo>
-      {activeTab === "tab1" && (
-        <MoreInfoSecion>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {productInfo?.product_info === undefined
-              ? "여기에 상세 정보 내용을 넣으세요"
-              : productInfo.product_info}
-          </ReactMarkdown>
-        </MoreInfoSecion>
-      )}
-
-      {activeTab === "tab2" && (
-        <MoreInfoSecion>여기에 리뷰 내용을 넣으세요.</MoreInfoSecion>
-      )}
-
-      {activeTab === "tab3" && (
-        <MoreInfoSecion>여기에 Q/A 내용을 넣으세요.</MoreInfoSecion>
-      )}
-
-      {activeTab === "tab4" && (
-        <MoreInfoSecion>여기에 반품/교환정보 내용을 넣으세요.</MoreInfoSecion>
-      )}
+      <MoreProductInfo Productinfo={productInfo?.product_info || ""} />
     </MainSection>
   );
 };
