@@ -91,6 +91,8 @@ const resetCSS = css`
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
   }
   /* HTML5 display-role reset for older browsers */
   article,

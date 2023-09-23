@@ -4,7 +4,7 @@ import {
   NavWrapper,
   NavList,
   Center,
-  ButtonContainer,
+  BuyBtn,
   CenterImg,
 } from "./Navigation.Style";
 import HomeIcon from "../../../assets/images/home-icon.svg";
@@ -14,7 +14,7 @@ import OnCart from "../../../assets/images/icon-shopping-cart-2.svg";
 import OnUser from "../../../assets/images/icon-user-2.svg";
 import User from "../../../assets/images/icon-user.svg";
 import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
-import Swal from "sweetalert2";
+import Share from "../../../assets/images/share-icon.svg";
 export default function Navigation() {
   // const [showButton, setShowButton] = useState(false);
   const location = useLocation();
@@ -36,43 +36,65 @@ export default function Navigation() {
   return (
     <>
       <NavWrapper>
-        <ButtonContainer>
-          {/* {showButton && (
+        {/* <ButtonContainer>
+          {showButton && (
             <ScrollButton onClick={scrollToTop}>
               <TopIcon src={topIcon} alt="Top" />
             </ScrollButton>
-          )} */}
-        </ButtonContainer>
+          )}
+        </ButtonContainer> */}
         <NavList>
-          <li>
-            <Link to="/">
-              <img src={HomeIcon} alt="홈 아이콘" />
-            </Link>
-          </li>
-          <li>
-            <Link to="/search">
-              <img src={Search} alt="검색창 아이콘" />
-            </Link>
-          </li>
-          <li>
-            <button onClick={handleMoveMyPage}>
-              <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
-            </button>
-          </li>
-          {userType === "SELLER" ? (
-            <li>
-              <Center>
-                <Link to="/seller/center">
-                  <CenterImg src={SellerCenter} alt="판매자 센터 아이콘" />
-                </Link>
-              </Center>
-            </li>
+          {pathname.startsWith("/detailProduct/") ? (
+            <>
+              <li>
+                <button>
+                  <img
+                    src={Share}
+                    alt="공유하기 아이콘"
+                    aria-label="공유하기"
+                  />
+                </button>
+              </li>
+              <li>
+                <BuyBtn bgColor="active">구매하기</BuyBtn>
+              </li>
+            </>
           ) : (
-            <li>
-              <Link to="/cart">
-                <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link to="/">
+                  <img src={HomeIcon} alt="홈 아이콘" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/search">
+                  <img src={Search} alt="검색창 아이콘" />
+                </Link>
+              </li>
+              <li>
+                <button onClick={handleMoveMyPage}>
+                  <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
+                </button>
+              </li>
+              {userType === "SELLER" ? (
+                <li>
+                  <Center>
+                    <Link to="/seller/center">
+                      <CenterImg src={SellerCenter} alt="판매자 센터 아이콘" />
+                    </Link>
+                  </Center>
+                </li>
+              ) : (
+                <li>
+                  <Link to="/cart">
+                    <img
+                      src={isCartPage ? OnCart : Cart}
+                      alt="쇼핑카트 아이콘"
+                    />
+                  </Link>
+                </li>
+              )}
+            </>
           )}
         </NavList>
       </NavWrapper>

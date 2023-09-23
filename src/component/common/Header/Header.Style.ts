@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export const HeaderSection = styled.header`
   width: 100vw;
-  min-height: 5.625rem;
-  height: auto;
+  /* min-height: 5.625rem; */
+  height: 5.625rem;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -13,7 +13,7 @@ export const HeaderSection = styled.header`
     max-width: 80rem;
     width: 90%;
     height: 100%;
-    margin: 0 auto;
+    margin: auto auto 0;
     display: flex;
     align-items: center;
     @media (max-width: 500px) {

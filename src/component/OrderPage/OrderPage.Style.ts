@@ -122,10 +122,15 @@ export const FormControlLabelStyle = styled(FormControlLabel)`
   top: -11px;
 `;
 export const OrderInfo = styled.section`
+  width: 100%;
   & input {
     width: 334px;
     height: 40px;
     border: 1px solid #c4c4c4;
+    display: flex;
+    @media (max-width: 500px) {
+      width: 100%;
+    }
   }
   & ul {
     margin: 0;
@@ -136,6 +141,9 @@ export const OrderInfo = styled.section`
     font-size: 16px;
     font-weight: 400;
     display: flex;
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
   }
   & ul label {
     line-height: 40px;
@@ -147,7 +155,7 @@ export const Phone = styled.div`
   gap: 9px;
   align-items: center;
   & input {
-    width: 6.25rem;
+    max-width: 6.25rem;
   }
   & input:first-of-type {
     width: 5rem;
@@ -191,11 +199,10 @@ export const PayInfo = styled.section`
   }
 `;
 export const MobilePayInfo = styled.section`
-  width: 25%;
+  width: 100%;
   padding-bottom: 1.125rem;
   border-bottom: 2px solid #c4c4c4;
   margin-top: 4.375rem;
-  float: left;
   @media (min-width: 897px) {
     display: none;
   }
@@ -203,16 +210,18 @@ export const MobilePayInfo = styled.section`
 
 export const PayCheck = styled(Radio)``;
 export const FinallyPay = styled.section`
-  float: right;
   margin-top: 4.375rem;
+  float: right;
 `;
 export const FinallyPayWrapper = styled.article`
   border: 3px solid #21bf48;
-  width: 30rem;
+  max-width: 30rem;
+  width: 100%;
   min-height: 25rem;
   margin: 1.125rem 0 200px;
   border-radius: 10px;
   background: #f2f2f2;
+
   & ul {
     margin: 0;
     padding: 34px 30px 25px 30px;
