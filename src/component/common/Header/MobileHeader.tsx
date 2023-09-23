@@ -19,7 +19,13 @@ import Search from "../../../assets/images/search.svg";
 import { SearchAPI } from "../../../API/ProductAPI";
 
 interface HeaderProps {
-  type?: "home" | "seller" | "buyer" | "seller_center" | "cart_mypage";
+  type?:
+    | "home"
+    | "seller"
+    | "buyer"
+    | "seller_center"
+    | "cart_mypage"
+    | "detail";
 }
 
 const MobileHeader: React.FC<HeaderProps> = () => {
@@ -55,7 +61,9 @@ const MobileHeader: React.FC<HeaderProps> = () => {
   const userType = userInfo ? userInfo.user_type : null;
   useEffect(() => {
     if (userType) {
-      if (pathname === "/cart" || pathname === "/mypage") {
+      if (pathname.startsWith("/detailProduct")) {
+        setType("detail");
+      } else if (pathname === "/cart" || pathname === "/mypage") {
         setType("cart_mypage");
       } else if (userType === "BUYER") {
         setType("buyer");
@@ -72,10 +80,12 @@ const MobileHeader: React.FC<HeaderProps> = () => {
       setType("home");
       if (pathname === "/cart" || pathname === "/mypage") {
         setType("cart_mypage");
+      } else if (pathname.startsWith("/detailProduct")) {
+        setType("detail");
       }
     }
   }, [pathname, type, userType]);
-
+  console.log(pathname);
   const UI: { [key: string]: JSX.Element } = {
     home: (
       <>
@@ -96,7 +106,8 @@ const MobileHeader: React.FC<HeaderProps> = () => {
             onInput={handleData}
             onKeyDown={search}
             fullWidth
-            style={{ fontSize: "20px" }}
+            size="small"
+            style={{ fontSize: "16px" }}
           />
           <label className="a11y-hidden">상품검색</label>
           <SearchBtn onClick={(e) => handleIconClick(e)} type="submit">
@@ -120,7 +131,8 @@ const MobileHeader: React.FC<HeaderProps> = () => {
             onInput={handleData}
             onKeyDown={search}
             fullWidth
-            style={{ fontSize: "20px" }}
+            size="small"
+            style={{ fontSize: "16px" }}
           />
           <label className="a11y-hidden">상품검색</label>
           <SearchBtn onClick={(e) => handleIconClick(e)} type="submit">
@@ -145,6 +157,7 @@ const MobileHeader: React.FC<HeaderProps> = () => {
             onInput={handleData}
             onKeyDown={search}
             fullWidth
+            size="small"
             style={{ fontSize: "20px" }}
           />
           <label className="a11y-hidden">상품검색</label>
@@ -170,8 +183,19 @@ const MobileHeader: React.FC<HeaderProps> = () => {
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
         <HeaderForm>
-          <h2>마이페이지</h2>
+          {pathname.startsWith("/cart") ? (
+            <h2>장바구니</h2>
+          ) : (
+            <h2>마이페이지</h2>
+          )}
         </HeaderForm>
+      </>
+    ),
+    detail: (
+      <>
+        <Logo to="/">
+          <LogoImage src={HoduLogo} alt="호두마켓 로고" />
+        </Logo>
       </>
     ),
   };
@@ -191,15 +215,10 @@ const MobileHeader: React.FC<HeaderProps> = () => {
 };
 export default MobileHeader;
 
-const CenterImg = styled.img`
-  width: 2rem;
-  margin-right: 0.5rem;
-`;
-
 const SearchBtn = styled.button`
   position: absolute;
-  right: 10px;
-  top: 15px;
+  right: 8px;
+  top: 6px;
 `;
 
 const Form = styled.form`

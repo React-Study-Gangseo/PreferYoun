@@ -37,6 +37,7 @@ export const ProductName = styled.h3`
   font-size: 1.125rem;
   font-weight: 400;
   line-height: 22px;
+  word-break: keep-all;
 `;
 export const ProductPrice = styled.strong`
   font-size: 1.5rem;

@@ -6,12 +6,18 @@ export const Wrapper = styled.main`
   width: 100%;
   max-width: 80rem;
   margin: 3.375rem auto 10rem;
+  @media (max-width: 896px) {
+    margin-top: 10px;
+  }
 `;
 
 export const Heading = styled.h2`
   text-align: center;
   font-size: 2.25rem;
   font-weight: 700;
+  @media (max-width: 896px) {
+    display: none;
+  }
 `;
 
 export const KeepForm = styled.section`
@@ -222,6 +228,9 @@ export const ClacPrice = styled.ul`
     right: 0;
     top: 50%;
     transform: translate(50%, -50%);
+    @media (max-width: 500px) {
+      display: none;
+    }
   }
   & li:first-of-type::after {
     background-image: url(${MinusIcon});
@@ -232,6 +241,24 @@ export const ClacPrice = styled.ul`
     background-image: url(${PlusIcon});
     background-repeat: no-repeat;
     background-position: center;
+  }
+  @media (max-width: 500px) {
+    flex-direction: column;
+    padding: 10px;
+    & li {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      margin: 5px;
+      & strong {
+        margin: 0;
+      }
+    }
+    & li:nth-of-type(3) {
+      border-bottom: 1px solid #767676;
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+    }
   }
 `;
 

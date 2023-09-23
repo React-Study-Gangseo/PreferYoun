@@ -6,6 +6,9 @@ export const MainSection = styled.main`
   height: 100%;
   min-height: 100%;
   padding-bottom: 11.25rem;
+  @media (max-width: 500px) {
+    margin-top: 20px;
+  }
   /* margin-bottom: 19.6013rem; */
 `;
 export const Banner = styled.article`
@@ -21,6 +24,9 @@ export const Banner = styled.article`
   @media (max-width: 896px) {
     height: 20rem;
     margin-bottom: 3.2rem;
+  }
+  @media (max-width: 500px) {
+    margin-top: auto;
   }
 `;
 export const ProductList = styled.ul`

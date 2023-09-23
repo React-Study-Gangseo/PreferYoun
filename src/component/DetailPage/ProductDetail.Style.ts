@@ -17,15 +17,19 @@ export const DetailPageWrapper = styled.section`
   gap: 3.125rem;
   margin-top: 5rem;
   flex-wrap: wrap;
-  /* @media (max-width: ); */
+  @media (max-width: 896px) {
+    margin: 1.25rem auto 0;
+    gap: 1rem;
+  }
 `;
 export const ProductImg = styled.img`
   width: 37.5rem;
   height: 37.5rem;
   object-fit: cover;
   @media (max-width: 896px) {
-    width: 100%;
+    width: 90%;
     height: auto;
+    margin: 0 auto;
   }
 `;
 export const ProductInfoSection = styled.section`
@@ -56,6 +60,9 @@ export const Price = styled.p`
   }
   @media (max-width: 1421px) {
     margin-bottom: 4rem;
+  }
+  @media (max-width: 896px) {
+    margin-bottom: 1.25rem;
   }
 `;
 

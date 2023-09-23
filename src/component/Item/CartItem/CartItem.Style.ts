@@ -78,10 +78,12 @@ export const KeepProductMobile = styled.tr`
     &:first-of-type {
       border-left: 2px solid #e0e0e0;
       border-radius: 10px 0 0 10px;
+      padding-left: 5px;
     }
     &:last-of-type {
       border-right: 2px solid #e0e0e0;
       border-radius: 0 10px 10px 0;
+      padding-right: 5px;
     }
   }
   @media (min-width: 897px) {
@@ -118,6 +120,7 @@ export const KeepProductInfo = styled.div`
       font-size: 18px;
       font-weight: 400;
       margin: 0.625rem 0 0.625rem 0;
+      word-break: keep-all;
     }
 
     & p {
@@ -129,7 +132,9 @@ export const KeepProductInfo = styled.div`
   @media (max-width: 896px) {
     flex-direction: column;
     & div {
+      width: 170px;
       margin: 0 auto;
+      padding: 0 10px;
       & p {
         margin-bottom: 20px;
       }
