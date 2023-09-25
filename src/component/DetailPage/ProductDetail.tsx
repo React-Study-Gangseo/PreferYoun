@@ -26,11 +26,13 @@ import MoreProductInfo from "./MoreInfo/MoreProductInfo";
 const ProductDetail: React.FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const pathname = location.pathname;
+  const productId = Number(pathname.slice(15));
   const product = location.state;
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState<Products>();
   const [postCartData, setPostCartData] = useState<orderdata>({
-    product_id: product.product,
+    product_id: productId,
     quantity: 0,
     check: true,
   });
