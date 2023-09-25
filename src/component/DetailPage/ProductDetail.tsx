@@ -74,7 +74,7 @@ const ProductDetail: React.FC = () => {
     }
   };
   useEffect(() => {
-    FetchDetailProduct(product);
+    FetchDetailProduct({ product: productId });
   }, []);
 
   const handleMinusCount = () => {
@@ -131,7 +131,7 @@ const ProductDetail: React.FC = () => {
         const storedCart = localStorage.getItem("userCart");
         const userCart = storedCart ? JSON.parse(storedCart) : null;
         userCart.forEach((item: any) => {
-          if (item.product_id === product.product) {
+          if (item.product_id === productId) {
             setPostCartData((prevState) => ({ ...prevState, check: false }));
           }
         });
