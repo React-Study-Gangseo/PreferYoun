@@ -69,8 +69,8 @@ export default function Navigation() {
         title: "호두 마켓에서 당신의 삶을 채워 보세요",
         imageUrl: productInfo?.image,
         link: {
-          mobileWebUrl: "https:markethodu.netlify.app",
-          webUrl: "https:markethodu.netlify.app",
+          mobileWebUrl: "https://markethodu.netlify.app",
+          webUrl: "https://markethodu.netlify.app",
         },
       },
       commerce: {
@@ -81,15 +81,15 @@ export default function Navigation() {
         {
           title: "구매하기",
           link: {
-            mobileWebUrl: `https:markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
-            webUrl: `https:markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+            mobileWebUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+            webUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
           },
         },
         {
           title: "공유하기",
           link: {
-            mobileWebUrl: `https:markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
-            webUrl: `https:markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+            mobileWebUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+            webUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
           },
         },
       ],
