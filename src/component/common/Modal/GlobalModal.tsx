@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
+import { css, keyframes } from "@emotion/react";
 import SearchAddressModal from "./SearchAddress/SearchAddress";
+import MobileModal from "../Modal/MobileModal/MobileModal";
 import { useSelector } from "react-redux";
 import { closeModal, selectModal } from "redux/Modal";
 import styled from "@emotion/styled";
@@ -8,8 +10,7 @@ import Close from "../../../assets/images/close-r.svg";
 import { useDispatch } from "react-redux";
 
 const MODAL_TYPES = {
-  LoginModal: "LoginModal",
-  SignupModal: "SignupModal",
+  MobileModal: "MobileModal",
   SearchAddressModal: "SearchAddressModal",
 };
 
@@ -17,6 +18,10 @@ const MODAL_COMPONENTS = [
   {
     type: MODAL_TYPES.SearchAddressModal,
     component: <SearchAddressModal />,
+  },
+  {
+    type: MODAL_TYPES.MobileModal,
+    component: <MobileModal />,
   },
 ];
 
@@ -47,7 +52,7 @@ export default function GlobalModal() {
   const handleModalClose = () => {
     dispatch(closeModal());
   };
-  console.log(isOpen);
+
   const findModal = MODAL_COMPONENTS.find((modal) => {
     return modal.type === modalType;
   });
@@ -61,6 +66,7 @@ export default function GlobalModal() {
     <ModalWrapper>
       <StyledModalContainer
         isSearchAddress={modalType === MODAL_TYPES.SearchAddressModal}
+        isMobileModal={modalType === MODAL_TYPES.MobileModal}
       >
         {renderModal()}
         <CloseBtn onClick={handleModalClose}>
@@ -72,6 +78,14 @@ export default function GlobalModal() {
   );
 }
 
+const slideUp = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
 const ModalWrapper = styled.div`
   position: fixed;
   bottom: 0;
@@ -83,16 +97,33 @@ const ModalWrapper = styled.div`
   width: 100vw;
 `;
 
-const StyledModalContainer = styled.article<{ isSearchAddress: boolean }>`
+const StyledModalContainer = styled.article<{
+  isSearchAddress: boolean;
+  isMobileModal: boolean;
+}>`
   background-color: white;
-  position: relative;
+  position: ${({ isMobileModal }) => (isMobileModal ? "absolute" : "relative")};
+  bottom: ${({ isMobileModal }) => (isMobileModal ? "-50px" : "0")};
   width: ${({ isSearchAddress }) => (isSearchAddress ? "500px" : "800px")};
+  width: ${({ isMobileModal }) => (isMobileModal ? "100%" : "500px")};
   height: ${({ isSearchAddress }) => (isSearchAddress ? "500px" : "auto")};
-  padding: ${({ isSearchAddress }) => (isSearchAddress ? "30px 0 0" : "0")};
+  padding: ${({ isSearchAddress }) =>
+    isSearchAddress ? "30px 0 0" : "16px 26px 10px"};
+  padding: ${({ isMobileModal }) =>
+    isMobileModal ? "16px 26px 10px" : "30px 0 0"};
   margin: 3.125rem auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   overflow: hidden;
+  animation: ${({ isMobileModal }) =>
+    isMobileModal
+      ? css`
+          ${slideUp} 0.5s ease
+        `
+      : "none"};
+  /* transform: ${({ isMobileModal }) =>
+    isMobileModal ? "translateY(0)" : "translateY(100%)"};
+  transition: transform 1s ease; */
 `;
 
 // const StyledModalContainer = styled.article`

@@ -4,13 +4,10 @@ import {
   Logo,
   LogoImage,
   HeaderForm,
-  HeaderInput,
   HeaderCenterSection,
 } from "./Header.Style";
 import { TextField } from "@mui/material";
 import HoduLogo from "../../../assets/images/Logo-hodu.png";
-import Button from "component/common/Button/Button";
-import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { setSearchData } from "redux/Search";
@@ -85,7 +82,6 @@ const MobileHeader: React.FC<HeaderProps> = () => {
       }
     }
   }, [pathname, type, userType]);
-  console.log(pathname);
   const UI: { [key: string]: JSX.Element } = {
     home: (
       <>
