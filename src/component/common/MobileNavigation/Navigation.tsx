@@ -81,15 +81,15 @@ export default function Navigation() {
         {
           title: "구매하기",
           link: {
-            mobileWebUrl: "https://developers.kakao.com",
-            webUrl: "https://developers.kakao.com",
+            mobileWebUrl: `https:markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+            webUrl: `https:markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
           },
         },
         {
           title: "공유하기",
           link: {
-            mobileWebUrl: "https://developers.kakao.com",
-            webUrl: "https://developers.kakao.com",
+            mobileWebUrl: `https:markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+            webUrl: `https:markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
           },
         },
       ],
