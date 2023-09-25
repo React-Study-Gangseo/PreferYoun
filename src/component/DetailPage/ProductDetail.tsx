@@ -65,6 +65,8 @@ const ProductDetail: React.FC = () => {
         product_info,
       };
       setProductInfo(updatedProductInfo);
+      console.log(res.data);
+      localStorage.setItem("ProductInfo", JSON.stringify(res.data));
     } catch (error) {
       console.log(error);
     }

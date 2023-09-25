@@ -34,7 +34,6 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-  OutlinedInput,
 } from "@mui/material";
 import { orderdata, Products } from "types/type";
 import { CartOrder, CartOneOrder, OrderDirect } from "API/OrderAPI";

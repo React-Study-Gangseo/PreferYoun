@@ -19,7 +19,7 @@ export const DetailPageWrapper = styled.section`
   flex-wrap: wrap;
   @media (max-width: 896px) {
     margin: 1.25rem auto 0;
-    gap: 1rem;
+    gap: 2rem;
   }
 `;
 export const ProductImg = styled.img`
@@ -27,8 +27,9 @@ export const ProductImg = styled.img`
   height: 37.5rem;
   object-fit: cover;
   @media (max-width: 896px) {
-    width: 90%;
+    width: 100%;
     height: auto;
+    aspect-ratio: 1/1;
     margin: 0 auto;
   }
 `;
@@ -79,6 +80,9 @@ export const CountWrap = styled.div`
     text-align: center;
     line-height: 3.125rem;
   }
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 
 export const IncreaseButton = styled.button`
@@ -122,6 +126,9 @@ export const TotalPriceWrap = styled.div`
   & > p > strong {
     font-size: 36px;
     font-weight: 700;
+  }
+  @media (max-width: 500px) {
+    display: none;
   }
 `;
 
@@ -189,6 +196,9 @@ export const MobileMoreInfo = styled.div`
 export const BtnGroup = styled.div`
   display: flex;
   gap: 14px;
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 
 export const MoreInfoSecion = styled.section`
