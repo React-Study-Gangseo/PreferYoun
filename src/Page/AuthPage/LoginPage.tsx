@@ -82,6 +82,7 @@ const LoginPage: React.FC = () => {
             style={{
               backgroundColor: userType === "BUYER" ? "#fff" : "#F2F2F2",
               borderBottom: userType === "BUYER" ? "none" : "1px solid #767676",
+              color: "black",
             }}
           >
             구매자로그인
@@ -95,6 +96,7 @@ const LoginPage: React.FC = () => {
               backgroundColor: userType === "SELLER" ? "#fff" : "#F2F2F2",
               borderBottom:
                 userType === "SELLER" ? "none" : "1px solid #767676",
+              color: "black",
             }}
           >
             판매자로그인

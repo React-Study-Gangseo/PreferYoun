@@ -160,6 +160,7 @@ const customStyles = css`
   button {
     font-family: "SUIT-Regular", sans-serif;
     cursor: pointer;
+    color: black;
     padding: 0;
     border: 0;
     background-color: transparent;
@@ -176,6 +177,7 @@ const customStyles = css`
   }
 
   input {
+    color: black;
     border: 0;
     box-sizing: border-box;
     font-family: "SUIT-Regular";

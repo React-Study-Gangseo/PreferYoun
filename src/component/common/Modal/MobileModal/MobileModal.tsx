@@ -114,11 +114,11 @@ export default function MobileModal() {
         });
         const res = await AddKeepProduct(postCartData);
         console.log(res);
+        dispatch(closeModal());
+        navigate("/cart");
       } catch (error) {
         console.log(error);
       }
-      dispatch(closeModal());
-      navigate("/cart");
     } else {
       Swal.fire({
         title: "로그인 후 이용 가능한 기능입니다.",
