@@ -1,13 +1,22 @@
 import React, { useEffect, useState, useRef, Suspense } from "react";
 import ProductItem from "../Item/ProductItem/ProductItem";
-import { MainSection, ProductList, ProductSection } from "./Main.Style";
+import {
+  MainSection,
+  ProductList,
+  ProductSection,
+  ButtonContainer,
+  TopIcon,
+  ScrollButton,
+} from "./Main.Style";
 import { GetFullProduct } from "API/ProductAPI";
 import { Products } from "types/type";
 import useInfiniteScroll from "CustomHook/InfiniteScroll";
 import { searchData } from "redux/Search";
 import { useSelector } from "react-redux";
 import BannerSection from "./Banner/Banner";
+import TopBtnIcon from "../../assets/images/arrow_top.svg";
 const Main: React.FC = () => {
+  const [showButton, setShowButton] = useState(false);
   const [products, setProducts] = useState<Products[]>([]);
   const [searchProducts, setSearchProducts] = useState<Products[]>([]);
   const [page, setPage] = useState(1);
@@ -51,7 +60,25 @@ const Main: React.FC = () => {
 
     fetchData();
   }, [page]);
-
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+  useEffect(() => {
+    const showButtonClick = () => {
+      if (window.scrollY > 800) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+    window.addEventListener("scroll", showButtonClick);
+    return () => {
+      window.removeEventListener("scroll", showButtonClick);
+    };
+  }, []);
   return (
     <MainSection>
       <BannerSection />
@@ -67,6 +94,13 @@ const Main: React.FC = () => {
             )}
           </ProductList>
         </Suspense>
+        <ButtonContainer>
+          {showButton && (
+            <ScrollButton onClick={scrollToTop}>
+              <TopIcon src={TopBtnIcon} alt="Top" />
+            </ScrollButton>
+          )}
+        </ButtonContainer>
       </ProductSection>
       <div ref={target} style={{ width: "100%", height: 30 }} />
     </MainSection>

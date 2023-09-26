@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { closeModal, selectModal } from "redux/Modal";
 import styled from "@emotion/styled";
 import { createPortal } from "react-dom";
-import Close from "../../../assets/images/close-r.svg";
 import { useDispatch } from "react-redux";
 
 const MODAL_TYPES = {
@@ -28,7 +27,6 @@ const MODAL_COMPONENTS = [
 export default function GlobalModal() {
   const { modalType, isOpen } = useSelector(selectModal);
   const dispatch = useDispatch();
-  console.log("Current modal state:", { modalType, isOpen });
   const modalRoot = document.getElementById("modal");
   useEffect(() => {
     if (!modalRoot) return;
@@ -49,14 +47,10 @@ export default function GlobalModal() {
   if (!modalRoot) {
     return null;
   }
-  const handleModalClose = () => {
-    dispatch(closeModal());
-  };
 
   const findModal = MODAL_COMPONENTS.find((modal) => {
     return modal.type === modalType;
   });
-  console.log("Selected modal component:", findModal);
   const renderModal = () => {
     return findModal?.component;
   };
@@ -69,9 +63,6 @@ export default function GlobalModal() {
         isMobileModal={modalType === MODAL_TYPES.MobileModal}
       >
         {renderModal()}
-        <CloseBtn onClick={handleModalClose}>
-          <img src={Close} alt="모달닫힘버튼" aria-label="모달닫힘버튼" />
-        </CloseBtn>
       </StyledModalContainer>
     </ModalWrapper>,
     modalRoot
@@ -101,6 +92,7 @@ const StyledModalContainer = styled.article<{
   isSearchAddress: boolean;
   isMobileModal: boolean;
 }>`
+  z-index: 9999;
   background-color: white;
   position: ${({ isMobileModal }) => (isMobileModal ? "absolute" : "relative")};
   bottom: ${({ isMobileModal }) => (isMobileModal ? "-50px" : "0")};
@@ -135,8 +127,3 @@ const StyledModalContainer = styled.article<{
 //   border-radius: 5px;
 //   overflow: hidden;
 // `;
-const CloseBtn = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-`;

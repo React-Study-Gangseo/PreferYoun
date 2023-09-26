@@ -156,9 +156,12 @@ export default function MobileModal() {
       },
     });
   };
+  const handleModalClose = () => {
+    dispatch(closeModal());
+  };
   return (
     <>
-      <ModalLineSpan />
+      <ModalLineSpan onClick={handleModalClose} />
       <CountWrap>
         <DecreaseButton
           onClick={handleMinusCount}

@@ -60,3 +60,29 @@ export const ProductSection = styled.section`
     width: 100%;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  @media (max-width: 896px) {
+    display: none;
+  }
+  position: fixed;
+  bottom: 20px;
+  right: 50px;
+`;
+export const ScrollButton = styled.button`
+  position: sticky;
+  top: 88%;
+  left: 85%;
+  background-color: #21bf48;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 999;
+  margin-right: 12px;
+`;
+
+export const TopIcon = styled.img`
+  width: 40px;
+  height: 40px;
+`;

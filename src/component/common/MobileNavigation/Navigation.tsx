@@ -3,11 +3,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   NavWrapper,
   NavList,
+  ScrollButton,
+  TopIcon,
+  ButtonContainer,
+  CenterImg,
   Center,
   BuyBtn,
-  CenterImg,
+  BuyBtnLi,
 } from "./Navigation.Style";
 import HomeIcon from "../../../assets/images/home-icon.svg";
+import TopBtnIcon from "../../../assets/images/arrow_top.svg";
 import Search from "../../../assets/images/search-black.svg";
 import Cart from "../../../assets/images/icon-shopping-cart.svg";
 import OnCart from "../../../assets/images/icon-shopping-cart-2.svg";
@@ -18,11 +23,10 @@ import Share from "../../../assets/images/share-icon.svg";
 import { useDispatch } from "react-redux";
 import { openModal } from "redux/Modal";
 export default function Navigation() {
-  // const [showButton, setShowButton] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [showButton, setShowButton] = useState(false);
   const pathname = location.pathname;
   const isCartPage = pathname === "/cart";
   const isMyPage = pathname === "/mypage";
@@ -95,16 +99,35 @@ export default function Navigation() {
       ],
     });
   }
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+  useEffect(() => {
+    const showButtonClick = () => {
+      if (window.scrollY > 800) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+    window.addEventListener("scroll", showButtonClick);
+    return () => {
+      window.removeEventListener("scroll", showButtonClick);
+    };
+  }, []);
   return (
     <>
       <NavWrapper>
-        {/* <ButtonContainer>
+        <ButtonContainer>
           {showButton && (
             <ScrollButton onClick={scrollToTop}>
-              <TopIcon src={topIcon} alt="Top" />
+              <TopIcon src={TopBtnIcon} alt="Top" />
             </ScrollButton>
           )}
-        </ButtonContainer> */}
+        </ButtonContainer>
         <NavList>
           {pathname.startsWith("/detailProduct/") ? (
             <>
@@ -117,11 +140,11 @@ export default function Navigation() {
                   />
                 </button>
               </li>
-              <li>
+              <BuyBtnLi>
                 <BuyBtn bgColor="active" onClick={handleCountQuantity}>
                   구매하기
                 </BuyBtn>
-              </li>
+              </BuyBtnLi>
             </>
           ) : (
             <>

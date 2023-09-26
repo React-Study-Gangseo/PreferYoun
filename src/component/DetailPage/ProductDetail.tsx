@@ -12,13 +12,14 @@ import {
   IncreaseButton,
   TotalPriceWrap,
   BtnGroup,
+  ShareBtn,
 } from "./ProductDetail.Style";
 import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";
 import Swal from "sweetalert2";
-
+import ShareIcon from "../../assets/images/share-icon-Large.svg";
 import { useDispatch } from "react-redux";
 import { openModal } from "redux/Modal";
 import MoreProductInfo from "./MoreInfo/MoreProductInfo";
@@ -164,6 +165,56 @@ const ProductDetail: React.FC = () => {
       });
     }
   };
+  const initializeKakao = () => {
+    //@ts-ignore
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      //@ts-ignore
+      window.Kakao.init("0a8f716c5157a42141e742f8d1dc57aa");
+    }
+  };
+
+  function kakaoButton() {
+    initializeKakao();
+    //@ts-ignore
+    if (!window.Kakao) {
+      return;
+    }
+    //@ts-ignore
+    const kakao = window.Kakao;
+    const ProductData = localStorage.getItem("ProductInfo");
+    const productInfo = ProductData ? JSON.parse(ProductData) : null;
+    kakao.Share.sendDefault({
+      objectType: "commerce",
+      content: {
+        title: "호두 마켓에서 당신의 삶을 채워 보세요",
+        imageUrl: productInfo?.image,
+        link: {
+          mobileWebUrl: "https://markethodu.netlify.app",
+          webUrl: "https://markethodu.netlify.app",
+        },
+      },
+      commerce: {
+        productName: productInfo.product_name,
+        regularPrice: productInfo.price,
+      },
+      buttons: [
+        {
+          title: "구매하기",
+          link: {
+            mobileWebUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+            webUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+          },
+        },
+        {
+          title: "공유하기",
+          link: {
+            mobileWebUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+            webUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
+          },
+        },
+      ],
+    });
+  }
   return (
     <MainSection>
       <DetailPageWrapper>
@@ -171,6 +222,9 @@ const ProductDetail: React.FC = () => {
         <ProductInfoSection>
           <span>{productInfo?.store_name}</span>
           <h3>{productInfo?.product_name}</h3>
+          <ShareBtn aria-label="공유하기 버튼" onClick={kakaoButton}>
+            <img src={ShareIcon} alt="공유하기 아이콘" />
+          </ShareBtn>
           <Price>
             {productInfo?.price && (
               <strong>

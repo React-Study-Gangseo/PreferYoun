@@ -20,6 +20,7 @@ export const TableContainer = styled.div`
 export const OrderList = styled.table`
   width: 100%;
   border-collapse: collapse;
+  white-space: nowrap;
   & thead {
     background: #f2f2f2;
     height: 3.75rem;
@@ -39,6 +40,10 @@ export const OrderList = styled.table`
     display: flex;
     gap: 2.25rem;
     padding: 1.25rem 0 1.125rem 0.5rem;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      gap: 1rem;
+    }
   }
   & td:not(:nth-of-type(1)) {
     text-align: center;
@@ -154,7 +159,7 @@ export const Phone = styled.div`
   display: flex;
   gap: 9px;
   align-items: center;
-  & input {
+  width: 100% & input {
     max-width: 6.25rem;
   }
   & input:first-of-type {
@@ -171,6 +176,7 @@ export const Address = styled.div`
   }
 
   & div {
+    width: 100%;
     margin-right: auto;
     display: flex;
     gap: 12px;
@@ -178,6 +184,7 @@ export const Address = styled.div`
 
     & input {
       width: 10.625rem;
+      flex-grow: 1;
     }
   }
 `;
@@ -291,4 +298,16 @@ export const PayBtn = styled(ButtonStyle)`
 export const SearchAddress = styled(ButtonStyle)`
   width: 9.625rem;
   height: 40px;
+`;
+
+export const RowLarge = styled.tr`
+  @media (max-width: 500px) {
+    display: none;
+  }
+`;
+export const RowSmall = styled.tr`
+  white-space: nowrap;
+  @media (min-width: 501px) {
+    display: none;
+  }
 `;
