@@ -17,8 +17,13 @@ export default function HomePage() {
     }
   };
   useEffect(() => {
-    if (userInfo.user_type === "buyer") {
-      FetchKeepList();
+    if (userInfo) {
+      console.log("userInfo");
+      if (userInfo.user_type === "BUYER") {
+        FetchKeepList();
+      }
+    } else {
+      return;
     }
   }, []);
 
