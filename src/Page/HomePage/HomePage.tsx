@@ -20,7 +20,7 @@ export default function HomePage() {
     if (userInfo.user_type === "buyer") {
       FetchKeepList();
     }
-  }, []);
+  }, [userInfo]);
 
   return (
     <>
