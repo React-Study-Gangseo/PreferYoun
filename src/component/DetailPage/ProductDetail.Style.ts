@@ -19,7 +19,7 @@ export const DetailPageWrapper = styled.section`
   flex-wrap: wrap;
   @media (max-width: 896px) {
     margin: 1.25rem auto 0;
-    gap: 2rem;
+    gap: 3rem;
   }
 `;
 export const ProductImg = styled.img`
@@ -36,6 +36,7 @@ export const ProductImg = styled.img`
 export const ProductInfoSection = styled.section`
   max-width: 39.375rem;
   width: 100%;
+  position: relative;
   & > span {
     color: #767676;
     font-size: 1.125rem;
@@ -45,7 +46,19 @@ export const ProductInfoSection = styled.section`
     margin: 1rem 0 1.25rem;
   }
 `;
-
+export const ShareBtn = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 100%;
+  box-shadow: 5px 8px 10px 0 #c4c4c4;
+  @media (max-width: 896px) {
+    display: none;
+  }
+`;
 export const Price = styled.p`
   margin-bottom: 11rem;
   & > strong {
@@ -80,7 +93,7 @@ export const CountWrap = styled.div`
     text-align: center;
     line-height: 3.125rem;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 896px) {
     display: none;
   }
 `;
@@ -127,7 +140,7 @@ export const TotalPriceWrap = styled.div`
     font-size: 36px;
     font-weight: 700;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 896px) {
     display: none;
   }
 `;
@@ -196,7 +209,7 @@ export const MobileMoreInfo = styled.div`
 export const BtnGroup = styled.div`
   display: flex;
   gap: 14px;
-  @media (max-width: 500px) {
+  @media (max-width: 896px) {
     display: none;
   }
 `;

@@ -60,6 +60,8 @@ const MobileHeader: React.FC<HeaderProps> = () => {
     if (userType) {
       if (pathname.startsWith("/detailProduct")) {
         setType("detail");
+      } else if (pathname.startsWith("/orderpage")) {
+        setType("detail");
       } else if (pathname === "/cart" || pathname === "/mypage") {
         setType("cart_mypage");
       } else if (userType === "BUYER") {
@@ -78,6 +80,8 @@ const MobileHeader: React.FC<HeaderProps> = () => {
       if (pathname === "/cart" || pathname === "/mypage") {
         setType("cart_mypage");
       } else if (pathname.startsWith("/detailProduct")) {
+        setType("detail");
+      } else if (pathname.startsWith("/orderpage")) {
         setType("detail");
       }
     }
@@ -197,7 +201,10 @@ const MobileHeader: React.FC<HeaderProps> = () => {
   };
   return (
     <>
-      {type === "seller_center" || type === "cart_mypage" ? (
+      {type === "seller_center" ||
+      type === "cart_mypage" ||
+      type === "detail" ||
+      type === "detail" ? (
         <HeaderCenterSection>
           <section>{UI[type]}</section>
         </HeaderCenterSection>

@@ -45,14 +45,14 @@ const StyledNavText = styled.p`
 `;
 const ButtonContainer = styled.div`
   position: absolute;
-  top: -58px;
-  right: 0;
+  top: -68px;
+  right: 20px;
 `;
 const ScrollButton = styled.button`
   position: sticky;
   top: 88%;
   left: 85%;
-  background-color: #629678;
+  background-color: #21bf48;
   border: none;
   padding: 10px;
   border-radius: 50%;
@@ -62,8 +62,8 @@ const ScrollButton = styled.button`
 `;
 
 const TopIcon = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
 `;
 const HeaderRightBtn = styled.button`
   border: 0;
@@ -109,10 +109,15 @@ const Center = styled.div`
   }
 `;
 const BuyBtn = styled(ButtonStyle)`
-  width: 300px;
+  min-width: 300px;
+  width: 100%;
   padding: 0 10px;
   font-size: 20px;
 `;
+const BuyBtnLi = styled.li`
+  flex-grow: 0.7;
+`;
+
 export {
   NavWrapper,
   NavList,
@@ -129,4 +134,5 @@ export {
   CenterImg,
   Center,
   BuyBtn,
+  BuyBtnLi,
 };

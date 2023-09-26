@@ -25,6 +25,8 @@ import {
   FormControlLabelStyle,
   AddressInfo,
   MobilePayInfo,
+  RowLarge,
+  RowSmall,
 } from "./OrderPage.Style";
 import {
   Checkbox,
@@ -272,7 +274,7 @@ const OrderPage: React.FC = () => {
           ))}
         </tbody>
         <tfoot>
-          <tr>
+          <RowLarge>
             <td />
             <td />
             <td>총 주문금액</td>
@@ -284,7 +286,19 @@ const OrderPage: React.FC = () => {
                 원
               </TotalPrice>
             </td>
-          </tr>
+          </RowLarge>
+          <RowSmall>
+            <td></td>
+            <td>총 주문금액</td>
+            <td colSpan={2}>
+              <TotalPrice>
+                {new Intl.NumberFormat("ko-KR").format(
+                  orderTotalPrice + orderTotalShippingFee
+                )}
+                원
+              </TotalPrice>
+            </td>
+          </RowSmall>
         </tfoot>
       </OrderList>
       <OrdererInfoForm onSubmit={handleSubmitOrderData}>
