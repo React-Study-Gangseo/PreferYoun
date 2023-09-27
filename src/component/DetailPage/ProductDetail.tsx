@@ -20,13 +20,10 @@ import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";
 import Swal from "sweetalert2";
 import ShareIcon from "../../assets/images/share-icon-Large.svg";
-import { useDispatch } from "react-redux";
-import { openModal } from "redux/Modal";
 import MoreProductInfo from "./MoreInfo/MoreProductInfo";
 
 const ProductDetail: React.FC = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const pathname = location.pathname;
   const productId = Number(pathname.slice(15));
   const product = location.state;
@@ -68,7 +65,6 @@ const ProductDetail: React.FC = () => {
         product_info,
       };
       setProductInfo(updatedProductInfo);
-      console.log(res.data);
       localStorage.setItem("ProductInfo", JSON.stringify(res.data));
     } catch (error) {
       console.log(error);
@@ -114,20 +110,32 @@ const ProductDetail: React.FC = () => {
     }
   }, [count]);
   const handleBuyProduct = () => {
-    navigate("/orderpage", {
-      state: {
-        order_kind: "direct_order",
-        productInfo: {
-          ...productInfo,
-          quantity: count,
-          product_id: product.product,
+    if (productInfo?.stock) {
+      navigate("/orderpage", {
+        state: {
+          order_kind: "direct_order",
+          productInfo: {
+            ...productInfo,
+            quantity: count,
+            product_id: product.product,
+          },
         },
-      },
-    });
+      });
+    } else {
+      Swal.fire({
+        text: "해당 상품은 현재 품절 상태 입니다.",
+        icon: "warning",
+        confirmButtonColor: "#21bf48",
+        confirmButtonAriaLabel: "확인버튼",
+        customClass: {
+          icon: "my-icon",
+        },
+      });
+    }
   };
   const handleKeepProduct = async () => {
     const storedData = localStorage.getItem("UserInfo");
-    if (storedData) {
+    if (storedData && productInfo?.stock) {
       try {
         const storedCart = localStorage.getItem("userCart");
         const userCart = storedCart ? JSON.parse(storedCart) : null;
@@ -142,6 +150,16 @@ const ProductDetail: React.FC = () => {
         console.log(error);
       }
       navigate("/cart");
+    } else if (storedData) {
+      Swal.fire({
+        text: "해당 상품은 현재 품절 상태 입니다.",
+        icon: "warning",
+        confirmButtonColor: "#21bf48",
+        confirmButtonAriaLabel: "확인버튼",
+        customClass: {
+          icon: "my-icon",
+        },
+      });
     } else {
       Swal.fire({
         title: "로그인 후 이용 가능한 기능입니다.",
@@ -155,12 +173,7 @@ const ProductDetail: React.FC = () => {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(
-            openModal({
-              modalType: "LoginModal",
-              isOpen: true,
-            })
-          );
+          navigate("/login");
         }
       });
     }
@@ -253,19 +266,9 @@ const ProductDetail: React.FC = () => {
             </span>
           )}
           <CountWrap>
-            <DecreaseButton
-              onClick={handleMinusCount}
-              disabled={userType === "BUYER" ? false : true}
-            >
-              -
-            </DecreaseButton>
+            <DecreaseButton onClick={handleMinusCount}>-</DecreaseButton>
             <div>{count}</div>
-            <IncreaseButton
-              onClick={handlePlusCount}
-              disabled={userType === "BUYER" ? false : true}
-            >
-              +
-            </IncreaseButton>
+            <IncreaseButton onClick={handlePlusCount}>+</IncreaseButton>
           </CountWrap>
           <TotalPriceWrap>
             <p>총 상품 금액</p>
@@ -288,16 +291,10 @@ const ProductDetail: React.FC = () => {
               width="l"
               bgColor={userType === "BUYER" ? "active" : "dark"}
               onClick={handleBuyProduct}
-              disabled={userType === "BUYER" ? false : true}
             >
               바로구매
             </BuyButton>
-            <KeepButton
-              width="ms"
-              onClick={handleKeepProduct}
-              bgColor="dark"
-              disabled={userType === "BUYER" ? false : true}
-            >
+            <KeepButton width="ms" onClick={handleKeepProduct} bgColor="dark">
               장바구니
             </KeepButton>
           </BtnGroup>
