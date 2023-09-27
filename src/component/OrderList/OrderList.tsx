@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  Main,
-  Heading,
-  OrderListSection,
-  LogOutBtn,
-  OrderedList,
-} from "./OrderList.Style";
+import { Main, Heading, OrderListSection, LogOutBtn } from "./OrderList.Style";
 import { GetOrderList } from "API/OrderAPI";
 import { OrderedData } from "types/type";
-import OrderedItem from "component/MyPage/OrderedItem/OrderedItem";
+import OrderedItem from "component/Item/OrderedItem/OrderedItem";
 import { Logout } from "API/AuthAPI";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +16,6 @@ export default function OrderList() {
   const FetchOrderList = async () => {
     try {
       const res = await GetOrderList();
-      console.log(res);
       setOrderedItem(res.data.results);
     } catch (error) {
       console.log(error);
@@ -58,23 +51,13 @@ export default function OrderList() {
     <Main>
       <Heading>주문 목록</Heading>
       <OrderListSection>
-        <OrderedList>
-          <thead>
-            <tr>
-              <th>주문번호</th>
-              <th>주문일시</th>
-              <th>주문상세</th>
-              <th>수령인</th>
-              <th>주소</th>
-              <th>결제금액</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderedItem?.map((item, index) => (
-              <OrderedItem key={index} index={index} ListItem={item} />
-            ))}
-          </tbody>
-        </OrderedList>
+        <ul>
+          {orderedItem?.map((item, index) => (
+            <li key={index}>
+              <OrderedItem ListItem={item} />
+            </li>
+          ))}
+        </ul>
       </OrderListSection>
       <LogOutBtn width="ms" bgColor="active" onClick={handleLogOut}>
         로그아웃

@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const ProductItemWrapper = styled.article`
   overflow: hidden;
+  position: relative;
   @media (max-width: 896px) {
     min-width: 350px;
     display: flex;
