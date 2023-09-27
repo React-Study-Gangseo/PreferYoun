@@ -26,6 +26,15 @@ export const OrderedIItemWrapper = styled.article`
       }
     }
   }
+  @media (min-width: 896px) {
+    display: flex;
+    height: 300px;
+    justify-content: space-between;
+    & div {
+      flex-grow: 0.7;
+      font-size: 32px;
+    }
+  }
 `;
 
 export const OrderedDate = styled.h2`
@@ -40,6 +49,13 @@ export const BtnGroup = styled.section`
   justify-content: space-around;
   margin-top: 10px;
   padding-bottom: 10px;
+  @media (min-width: 896px) {
+    flex-direction: column;
+    width: 200px;
+    justify-content: space-around;
+    height: 150px;
+    flex-shrink: 0;
+  }
 `;
 
 export const DetailBtn = styled(ButtonStyle)`
@@ -48,12 +64,18 @@ export const DetailBtn = styled(ButtonStyle)`
   height: 30px;
   border: 1px solid #767676;
   line-height: 100%;
+  @media (min-width: 896px) {
+    width: 100%;
+  }
 `;
 export const KeepBtn = styled(ButtonStyle)`
   padding: 0px 20px;
   flex-grow: 0.4;
   height: 30px;
   line-height: 100%;
+  @media (min-width: 896px) {
+    width: 100%;
+  }
 `;
 export const MoreInfoSection = styled.section`
   width: 100%;
