@@ -115,7 +115,7 @@ const BuyBtn = styled(ButtonStyle)`
   font-size: 20px;
 `;
 const BuyBtnLi = styled.li`
-  flex-grow: 0.7;
+  flex-grow: 0.5;
 `;
 
 export {
