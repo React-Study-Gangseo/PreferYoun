@@ -102,59 +102,100 @@ export default function MobileModal() {
     }
   }, [count]);
   const handleKeepProduct = async () => {
-    const storedData = localStorage.getItem("UserInfo");
-    if (storedData) {
-      try {
+    if (productInfo?.stock) {
+      const storedData = localStorage.getItem("UserInfo");
+      if (storedData) {
         const storedCart = localStorage.getItem("userCart");
         const userCart = storedCart ? JSON.parse(storedCart) : null;
+        let isItemInCart = false;
+
         userCart.forEach((item: any) => {
           if (item.product_id === productId) {
-            setPostCartData((prevState) => ({ ...prevState, check: false }));
+            isItemInCart = true;
           }
         });
-        const res = await AddKeepProduct(postCartData);
-        console.log(res);
-        dispatch(closeModal());
-        navigate("/cart");
-      } catch (error) {
-        console.log(error);
+
+        if (isItemInCart) {
+          setPostCartData((prevState) => ({ ...prevState, check: false }));
+          Swal.fire({
+            text: "해당상품은 이미 장바구니에 있습니다. 장바구니로 이동하시겠습니까?",
+            confirmButtonColor: "#21bf48",
+            confirmButtonAriaLabel: "확인버튼",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/cart");
+              dispatch(closeModal());
+            }
+          });
+        } else {
+          try {
+            const res = await AddKeepProduct(postCartData);
+            console.log(res);
+
+            navigate("/cart");
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } else {
+        Swal.fire({
+          title: "로그인 후 이용 가능한 기능입니다.",
+          text: "로그인 하시겠습니까?",
+          icon: "warning",
+          confirmButtonColor: "#21bf48",
+          confirmButtonAriaLabel: "로그인하러가기",
+          confirmButtonText: "로그인하러가기",
+          customClass: {
+            icon: "my-icon",
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(
+              openModal({
+                modalType: "LoginModal",
+                isOpen: true,
+              })
+            );
+          }
+        });
       }
     } else {
       Swal.fire({
-        title: "로그인 후 이용 가능한 기능입니다.",
-        text: "로그인 하시겠습니까?",
+        text: "해당 상품은 현재 품절 상태 입니다.",
         icon: "warning",
         confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "로그인하러가기",
-        confirmButtonText: "로그인하러가기",
+        confirmButtonAriaLabel: "확인버튼",
         customClass: {
           icon: "my-icon",
         },
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(
-            openModal({
-              modalType: "LoginModal",
-              isOpen: true,
-            })
-          );
-        }
       });
     }
   };
 
   const handleBuyProduct = () => {
-    dispatch(closeModal());
-    navigate("/orderpage", {
-      state: {
-        order_kind: "direct_order",
-        productInfo: {
-          ...productInfo,
-          quantity: count,
-          product_id: productId,
+    if (productInfo?.stock) {
+      navigate("/orderpage", {
+        state: {
+          order_kind: "direct_order",
+          productInfo: {
+            ...productInfo,
+            quantity: count,
+            product_id: productId,
+          },
         },
-      },
-    });
+      });
+      dispatch(closeModal());
+    } else {
+      Swal.fire({
+        text: "해당 상품은 현재 품절 상태 입니다.",
+        icon: "warning",
+        confirmButtonColor: "#21bf48",
+        confirmButtonAriaLabel: "확인버튼",
+        customClass: {
+          icon: "my-icon",
+        },
+      });
+    }
   };
   const handleModalClose = () => {
     dispatch(closeModal());

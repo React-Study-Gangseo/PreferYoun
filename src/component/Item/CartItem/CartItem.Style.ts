@@ -111,6 +111,7 @@ export const KeepProductInfo = styled.div`
   width: 100%;
   display: flex;
   margin-left: 10px;
+  gap: 20px;
   & div {
     text-align: left;
 
@@ -135,6 +136,7 @@ export const KeepProductInfo = styled.div`
   }
   @media (max-width: 896px) {
     flex-direction: column;
+    gap: 0;
     & div {
       width: 170px;
       margin: 5px auto 0;
@@ -227,4 +229,8 @@ export const DeleteBtn = styled.button`
   position: absolute;
   top: -66px;
   right: 4px;
+  @media (min-width: 897px) {
+    top: -46px;
+    right: 10px;
+  }
 `;

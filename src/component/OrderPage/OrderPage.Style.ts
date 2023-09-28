@@ -54,6 +54,7 @@ export const OrderList = styled.table`
     width: 104px;
     height: 104px;
     border-radius: 10px;
+    object-fit: cover;
     /* @media (max-width: ) {
     } */
   }
