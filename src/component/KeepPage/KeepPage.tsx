@@ -10,22 +10,22 @@ import {
   EmptyKeepList,
   AllDeleteBtn,
   LoginBtn,
+  AllSection,
 } from "./KeepPage.Style";
 import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
 import { cartData, cartItem } from "types/type";
 import CartItem from "component/Item/CartItem/CartItem";
-import { useDispatch } from "react-redux";
+
 import { TotalPriceState } from "redux/TotalPrice";
 import { CartOrderState } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
-import { openModal } from "redux/Modal";
 
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState<cartData[]>([]);
   const [cartItem, setCartItem] = useState<cartItem[]>([]);
   const [isLogin, setIsLogin] = useState(false);
-  const dispatch = useDispatch();
+
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
@@ -174,13 +174,25 @@ const KeepPage: React.FC = () => {
           {isLogin ? (
             cartItem.length > 0 ? (
               <>
-                <AllDeleteBtn
-                  width="s"
-                  bgColor="active"
-                  onClick={handleAllDelete}
-                >
-                  전체삭제
-                </AllDeleteBtn>
+                <AllSection>
+                  <div>
+                    <input
+                      type="checkbox"
+                      checked={cartItem.length > 0 ? allChecked : false}
+                      onChange={(e) => handleAllCheck(e.target.checked)}
+                    />
+                    <label className="a11y-hidden">
+                      장바구니 아이템 전체 체크 박스
+                    </label>
+                  </div>
+                  <AllDeleteBtn
+                    width="s"
+                    bgColor="active"
+                    onClick={handleAllDelete}
+                  >
+                    전체삭제
+                  </AllDeleteBtn>
+                </AllSection>
                 <ClacPrice>
                   <li>
                     총상품금액
