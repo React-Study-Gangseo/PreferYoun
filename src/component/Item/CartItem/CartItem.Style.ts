@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { ButtonStyle } from "component/common/Button/Button";
 export const KeepProduct = styled.tr`
   width: 100%;
-  position: relative;
+  /* position: relative; */
   & td {
     & input[type="checkbox"] {
       appearance: none;
@@ -46,7 +46,7 @@ export const KeepProduct = styled.tr`
 `;
 export const KeepProductMobile = styled.tr`
   width: 100%;
-  position: relative;
+  /* position: relative; */
   & td {
     & input[type="checkbox"] {
       appearance: none;
@@ -93,20 +93,24 @@ export const KeepProductMobile = styled.tr`
 
 export const KeepProductImg = styled.img`
   max-width: 10rem;
+  aspect-ratio: 1/1;
   max-height: 10rem;
   border-radius: 0.625rem;
-  margin: 0 2.25rem 0 2.5rem;
+  width: 100%;
+  object-fit: cover;
   @media (max-width: 896px) {
     max-width: 10rem;
-    max-height: 5rem;
-    margin: 0 auto;
+    width: 80%;
+    aspect-ratio: 1/1;
+    /* max-height: 5rem; */
+    object-fit: cover;
   }
 `;
 
 export const KeepProductInfo = styled.div`
   width: 100%;
-  padding-top: 0.3125rem;
   display: flex;
+  margin-left: 10px;
   & div {
     text-align: left;
 
@@ -133,10 +137,9 @@ export const KeepProductInfo = styled.div`
     flex-direction: column;
     & div {
       width: 170px;
-      margin: 0 auto;
-      padding: 0 10px;
+      margin: 5px auto 0;
       & p {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
     }
   }
@@ -222,6 +225,6 @@ export const OrderBtnS = styled(ButtonStyle)`
 
 export const DeleteBtn = styled.button`
   position: absolute;
-  top: -43px;
-  right: 2px;
+  top: -66px;
+  right: 4px;
 `;
