@@ -222,6 +222,6 @@ export const OrderBtnS = styled(ButtonStyle)`
 
 export const DeleteBtn = styled.button`
   position: absolute;
-  top: -35px;
-  right: 5px;
+  top: -43px;
+  right: 2px;
 `;
