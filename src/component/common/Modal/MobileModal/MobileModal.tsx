@@ -133,6 +133,7 @@ export default function MobileModal() {
             console.log(res);
 
             navigate("/cart");
+            dispatch(closeModal());
           } catch (error) {
             console.log(error);
           }
