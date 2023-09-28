@@ -186,6 +186,7 @@ export const DecreaseButton = styled.button`
 
 export const Total = styled.div`
   margin: 0 auto;
+  position: relative;
 `;
 
 const Button = styled.button`
@@ -221,6 +222,6 @@ export const OrderBtnS = styled(ButtonStyle)`
 
 export const DeleteBtn = styled.button`
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: -35px;
+  right: 5px;
 `;
