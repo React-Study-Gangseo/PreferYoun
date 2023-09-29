@@ -242,7 +242,7 @@ export const ClacPrice = styled.ul`
     background-repeat: no-repeat;
     background-position: center;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 896px) {
     flex-direction: column;
     padding: 10px;
     & li {
