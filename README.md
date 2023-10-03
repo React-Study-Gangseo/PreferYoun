@@ -1,9 +1,9 @@
 ## 쇼핑몰 제작 개인 프로젝트
 ## Hodu-Market
--리엑트와 타입스크립트로 제작된 SPA 웹 쇼핑몰 입니다.</br>
--반응형으로 제작되어 모바일 및 PC에서도 사용 가능합니다.</br>
--카카오 공유 및 주소 검색 API를 사용해 편의성을 높였습니다.</br>
--react-hook-form 및 Axios, SweetAlert을 사용해 최적화 및 성능을 향상 시켰습니다.
+- 리엑트와 타입스크립트로 제작된 SPA 웹 쇼핑몰 입니다.
+- 반응형으로 제작되어 모바일 및 PC에서도 사용 가능합니다.
+- 카카오 공유 및 주소 검색 API를 사용해 편의성을 높였습니다.
+- react-hook-form 및 Axios, SweetAlert을 사용해 최적화 및 성능을 향상 시켰습니다.
 
 #### 배포 사이트 : https://markethodu.netlify.app/
 - id : seller2(판매자) / buyer2(구매자) 
