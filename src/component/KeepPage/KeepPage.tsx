@@ -15,7 +15,9 @@ import {
 import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
 import { cartData, cartItem } from "types/type";
 import CartItem from "component/Item/CartItem/CartItem";
-
+import { calcPrice, resetPrice } from "redux/TotalPrice";
+import { removeOrderProduct } from "redux/CartOrder";
+import { useDispatch } from "react-redux";
 import { TotalPriceState } from "redux/TotalPrice";
 import { CartOrderState } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +27,7 @@ const KeepPage: React.FC = () => {
   const [cartData, setCartData] = useState<cartData[]>([]);
   const [cartItem, setCartItem] = useState<cartItem[]>([]);
   const [isLogin, setIsLogin] = useState(false);
-
+  const dispatch = useDispatch();
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
@@ -115,7 +117,17 @@ const KeepPage: React.FC = () => {
       const activeItems = cartItem.filter((item) => item.is_active === true);
       console.log(activeItems);
 
-      activeItems.map((item) => handleDeleteItem(item.cart_item_id));
+      activeItems.forEach((item) => {
+        handleDeleteItem(item.cart_item_id);
+        dispatch(
+          calcPrice({
+            key: item.product_id.toString(),
+            price: 0,
+            shipping_fee: 0,
+          })
+        );
+        dispatch(removeOrderProduct(item.product_id?.toString()));
+      });
     }
   };
   const handleDeleteItem = async (cart_item_id: number) => {

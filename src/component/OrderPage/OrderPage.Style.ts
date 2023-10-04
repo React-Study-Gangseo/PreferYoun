@@ -152,6 +152,7 @@ export const OrderInfo = styled.section`
     }
   }
   & ul label {
+    flex-shrink: 0;
     line-height: 40px;
     width: 10.625rem;
   }
@@ -160,7 +161,8 @@ export const Phone = styled.div`
   display: flex;
   gap: 9px;
   align-items: center;
-  width: 100% & input {
+  width: 100%;
+  & input {
     max-width: 6.25rem;
   }
   & input:first-of-type {
@@ -175,14 +177,12 @@ export const Address = styled.div`
   & input {
     width: 100%;
   }
-
   & div {
-    width: 100%;
+    /* width: 100%; */
     margin-right: auto;
     display: flex;
     gap: 12px;
     flex-direction: row-reverse;
-
     & input {
       width: 10.625rem;
       flex-grow: 1;
