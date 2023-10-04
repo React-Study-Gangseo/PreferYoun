@@ -191,6 +191,7 @@ export const Address = styled.div`
 `;
 export const Message = styled.div`
   flex-grow: 1;
+  width: 100%;
   & input {
     width: 100%;
   }
