@@ -56,12 +56,11 @@ export const EditProductAPI = async (Products: UploadProducts) => {
       `/products/${Products.product_id}/`,
       {
         product_name: Products.product_name,
-        image: Products.image,
         price: Products.price,
-        shipping_method: "PARCEL",
+        shipping_method: Products.shipping_method,
         shipping_fee: Products.shipping_fee,
         stock: Products.stock,
-        product_info: "키보드입니다",
+        product_info: Products.product_info,
       }
     );
     return res;
