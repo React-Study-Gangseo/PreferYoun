@@ -2,27 +2,27 @@ import styled from "@emotion/styled";
 import { OutlinedInput, InputAdornment } from "@mui/material";
 import { ButtonStyle } from "component/common/Button/Button";
 
-export const HeaderSection = styled.section`
-  padding-left: 6.25rem;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 5.625rem;
-  box-shadow: 0px 4px 5px 0px #0000001a;
-  & img {
-    width: 5rem;
-  }
-  & h2 {
-    display: inline-block;
-    margin: 0;
-    font-size: 30px;
-    font-weight: 500;
-  }
-`;
+// export const HeaderSection = styled.section`
+//   padding-left: 6.25rem;
+//   display: flex;
+//   gap: 1rem;
+//   align-items: center;
+//   width: 100vw;
+//   position: relative;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   height: 5.625rem;
+//   box-shadow: 0px 4px 5px 0px #0000001a;
+//   & img {
+//     width: 5rem;
+//   }
+//   & h2 {
+//     display: inline-block;
+//     margin: 0;
+//     font-size: 30px;
+//     font-weight: 500;
+//   }
+// `;
 
 export const WarningSection = styled.aside`
   margin-top: 10px;
@@ -53,7 +53,7 @@ export const MainSection = styled.main`
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  width: 110%;
   & h2 {
     font-size: 36px;
     font-weight: 700;

@@ -3,27 +3,27 @@ import Plus from "../../assets/images/icon-plus.svg";
 
 import { ButtonStyle } from "../common/Button/Button";
 
-export const HeaderSection = styled.section`
-  padding-left: 6.25rem;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 5.625rem;
-  box-shadow: 0px 4px 5px 0px #0000001a;
-  & img {
-    width: 5rem;
-  }
-  & h2 {
-    display: inline-block;
-    margin: 0;
-    font-size: 30px;
-    font-weight: 500;
-  }
-`;
+// export const HeaderSection = styled.section`
+//   padding-left: 6.25rem;
+//   display: flex;
+//   gap: 1rem;
+//   align-items: center;
+//   width: 100vw;
+//   position: relative;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   height: 5.625rem;
+//   box-shadow: 0px 4px 5px 0px #0000001a;
+//   & img {
+//     width: 5rem;
+//   }
+//   & h2 {
+//     display: inline-block;
+//     margin: 0;
+//     font-size: 30px;
+//     font-weight: 500;
+//   }
+// `;
 
 export const MainSection = styled.main`
   max-width: 110%;
@@ -31,7 +31,7 @@ export const MainSection = styled.main`
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  width: 110%;
   padding-top: 2.375rem;
   margin-bottom: 96px;
   & h2 {

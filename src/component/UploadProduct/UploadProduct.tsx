@@ -59,19 +59,11 @@ export default function UploadProduct() {
     // setProduct(data.product);
     if (data) {
       setPreviewURL(data.product.image);
-      ImageFile(data.product.image);
+      setProduct(data.product);
       setIsActive(data.product.shipping_method);
     }
   }, [data]);
 
-  const ImageFile = (Url: string) => {
-    let blob = new Blob([Url], { type: "image/jpeg" });
-    let file = new File([blob], "image.jpeg", {
-      type: "image/jpeg",
-      lastModified: Date.now(),
-    });
-    setProduct({ ...data.product, image: file });
-  };
   console.log(product.image);
   const UploadProduct = async () => {
     console.log(product);
@@ -88,6 +80,9 @@ export default function UploadProduct() {
       console.log(product);
       const res = await EditProductAPI(product);
       console.log(res);
+      if (res.status === 200) {
+        navigate("/seller/center");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +95,6 @@ export default function UploadProduct() {
   return (
     <>
       <h1 className="a11y-hidden">판매자 센터 상품 등록</h1>
-
       <MainSection>
         <h2>상품등록</h2>
         <MainContent>
