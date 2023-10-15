@@ -155,6 +155,7 @@ const CartItem: React.FC<{
       cartItem.store_name &&
       cartItem.product_id
     ) {
+      console.log(itemCount);
       dispatch(
         OrderProduct({
           key: cartItem?.product_id?.toString(),
@@ -190,7 +191,7 @@ const CartItem: React.FC<{
         })
       );
     }
-  }, [cartItem]);
+  }, [cartItem, itemCount]);
 
   useEffect(() => {
     if (selectItem && cartItem?.price) {
