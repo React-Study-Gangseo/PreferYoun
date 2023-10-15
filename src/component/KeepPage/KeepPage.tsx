@@ -54,7 +54,7 @@ const KeepPage: React.FC = () => {
       console.log(error);
     }
   };
-
+  console.log(orderCartInfo);
   useEffect(() => {
     FetchKeepList();
     if (storedData) {
@@ -95,6 +95,7 @@ const KeepPage: React.FC = () => {
   const handleOrderList = () => {
     console.log(orderCartInfo);
     const order_kind: string = "cart_order";
+    console.log("product", orderCartInfo);
     navigate("/orderpage", {
       state: {
         productInfo: orderCartInfo,
