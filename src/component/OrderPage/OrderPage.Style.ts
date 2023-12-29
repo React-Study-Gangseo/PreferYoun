@@ -20,6 +20,7 @@ export const TableContainer = styled.div`
 export const OrderList = styled.table`
   width: 100%;
   border-collapse: collapse;
+  white-space: nowrap;
   & thead {
     background: #f2f2f2;
     height: 3.75rem;
@@ -39,6 +40,10 @@ export const OrderList = styled.table`
     display: flex;
     gap: 2.25rem;
     padding: 1.25rem 0 1.125rem 0.5rem;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      gap: 1rem;
+    }
   }
   & td:not(:nth-of-type(1)) {
     text-align: center;
@@ -49,6 +54,9 @@ export const OrderList = styled.table`
     width: 104px;
     height: 104px;
     border-radius: 10px;
+    object-fit: cover;
+    /* @media (max-width: ) {
+    } */
   }
   & td:not(:nth-of-type(1)):not(:nth-of-type(4)) {
     color: #767676;
@@ -120,10 +128,15 @@ export const FormControlLabelStyle = styled(FormControlLabel)`
   top: -11px;
 `;
 export const OrderInfo = styled.section`
+  width: 100%;
   & input {
     width: 334px;
     height: 40px;
     border: 1px solid #c4c4c4;
+    display: flex;
+    @media (max-width: 500px) {
+      width: 100%;
+    }
   }
   & ul {
     margin: 0;
@@ -134,8 +147,12 @@ export const OrderInfo = styled.section`
     font-size: 16px;
     font-weight: 400;
     display: flex;
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
   }
   & ul label {
+    flex-shrink: 0;
     line-height: 40px;
     width: 10.625rem;
   }
@@ -144,8 +161,9 @@ export const Phone = styled.div`
   display: flex;
   gap: 9px;
   align-items: center;
+  width: 100%;
   & input {
-    width: 6.25rem;
+    max-width: 6.25rem;
   }
   & input:first-of-type {
     width: 5rem;
@@ -155,19 +173,25 @@ export const Address = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 50rem;
-  position: relative;
+  flex-grow: 1;
   & input {
     width: 100%;
   }
-  & input:first-of-type {
-    width: 10.625rem;
+  & div {
+    /* width: 100%; */
+    margin-right: auto;
+    display: flex;
+    gap: 12px;
+    flex-direction: row-reverse;
+    & input {
+      width: 10.625rem;
+      flex-grow: 1;
+    }
   }
 `;
 export const Message = styled.div`
-  width: 60.625rem;
-  display: flex;
-  gap: 27px;
+  flex-grow: 1;
+  width: 100%;
   & input {
     width: 100%;
   }
@@ -179,20 +203,34 @@ export const PayInfo = styled.section`
   border-bottom: 2px solid #c4c4c4;
   margin-top: 4.375rem;
   float: left;
+  @media (max-width: 896px) {
+    display: none;
+  }
+`;
+export const MobilePayInfo = styled.section`
+  width: 100%;
+  padding-bottom: 1.125rem;
+  border-bottom: 2px solid #c4c4c4;
+  margin-top: 4.375rem;
+  @media (min-width: 897px) {
+    display: none;
+  }
 `;
 
 export const PayCheck = styled(Radio)``;
 export const FinallyPay = styled.section`
-  float: right;
   margin-top: 4.375rem;
+  float: right;
 `;
 export const FinallyPayWrapper = styled.article`
   border: 3px solid #21bf48;
-  width: 30rem;
+  max-width: 30rem;
+  width: 100%;
   min-height: 25rem;
   margin: 1.125rem 0 200px;
   border-radius: 10px;
   background: #f2f2f2;
+
   & ul {
     margin: 0;
     padding: 34px 30px 25px 30px;
@@ -262,7 +300,16 @@ export const PayBtn = styled(ButtonStyle)`
 export const SearchAddress = styled(ButtonStyle)`
   width: 9.625rem;
   height: 40px;
-  position: absolute;
-  right: 470px;
-  top: 0;
+`;
+
+export const RowLarge = styled.tr`
+  @media (max-width: 500px) {
+    display: none;
+  }
+`;
+export const RowSmall = styled.tr`
+  white-space: nowrap;
+  @media (min-width: 501px) {
+    display: none;
+  }
 `;

@@ -4,31 +4,30 @@ import {
   Wrapper,
   Heading,
   KeepForm,
-  KeepList,
-  FormTop,
+  CartTable,
   ClacPrice,
   OrderBtn,
   EmptyKeepList,
   AllDeleteBtn,
   LoginBtn,
+  AllSection,
 } from "./KeepPage.Style";
 import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
 import { cartData, cartItem } from "types/type";
-import CartItem from "component/CartItem/CartItem";
+import CartItem from "component/Item/CartItem/CartItem";
+import { calcPrice, resetPrice } from "redux/TotalPrice";
+import { removeOrderProduct } from "redux/CartOrder";
+import { useDispatch } from "react-redux";
 import { TotalPriceState } from "redux/TotalPrice";
 import { CartOrderState } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
-import LoginModal from "component/common/Modal/LoginModal";
-import JoinModal from "component/common/Modal/JoinModal";
 
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState<cartData[]>([]);
   const [cartItem, setCartItem] = useState<cartItem[]>([]);
   const [isLogin, setIsLogin] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
-  const [signUp, setSignUp] = useState(false);
-  const [login, setLogin] = useState(false);
+  const dispatch = useDispatch();
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
@@ -45,7 +44,7 @@ const KeepPage: React.FC = () => {
     return state.cartOrder.value;
   });
   const allChecked = cartItem.every((item) => item.is_active);
-
+  console.log(allChecked);
   // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
   const FetchKeepList = async () => {
     try {
@@ -55,7 +54,7 @@ const KeepPage: React.FC = () => {
       console.log(error);
     }
   };
-
+  console.log(cartItem);
   useEffect(() => {
     FetchKeepList();
     if (storedData) {
@@ -94,7 +93,6 @@ const KeepPage: React.FC = () => {
     );
   };
   const handleOrderList = () => {
-    console.log(orderCartInfo);
     const order_kind: string = "cart_order";
     navigate("/orderpage", {
       state: {
@@ -118,13 +116,22 @@ const KeepPage: React.FC = () => {
       const activeItems = cartItem.filter((item) => item.is_active === true);
       console.log(activeItems);
 
-      activeItems.map((item) => handleDeleteItem(item.cart_item_id));
+      activeItems.forEach((item) => {
+        handleDeleteItem(item.cart_item_id);
+        dispatch(
+          calcPrice({
+            key: item.product_id.toString(),
+            price: 0,
+            shipping_fee: 0,
+          })
+        );
+        dispatch(removeOrderProduct(item.product_id?.toString()));
+      });
     }
   };
   const handleDeleteItem = async (cart_item_id: number) => {
     try {
       const res = await DeleteCartItem(cart_item_id);
-      console.log(res);
       if (res.status === 204) {
         FetchKeepList();
       }
@@ -133,8 +140,7 @@ const KeepPage: React.FC = () => {
     }
   };
   const handleLogin = () => {
-    setModalShow(true);
-    setLogin(true);
+    navigate("/login");
   };
 
   return (
@@ -142,44 +148,61 @@ const KeepPage: React.FC = () => {
       <Wrapper>
         <Heading>장바구니</Heading>
         <KeepForm>
-          <FormTop>
-            <li>
-              <input
-                type="checkbox"
-                checked={cartItem.length > 0 ? allChecked : false}
-                onChange={(e) => handleAllCheck(e.target.checked)}
-              />
-              <label className="a11y-hidden">
-                장바구니 아이템 전체 체크 박스
-              </label>
-            </li>
-            <li>상품정보</li>
-            <li>수량</li>
-            <li>상품금액</li>
-          </FormTop>
+          <CartTable>
+            <thead>
+              <tr>
+                <th>
+                  <input
+                    type="checkbox"
+                    checked={cartItem.length > 0 ? allChecked : false}
+                    onChange={(e) => handleAllCheck(e.target.checked)}
+                  />
+                  <label className="a11y-hidden">
+                    장바구니 아이템 전체 체크 박스
+                  </label>
+                </th>
+                <th>상품정보</th>
+                <th>수량</th>
+                <th>상품금액</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr></tr>
+              {cartItem.map((item: cartItem) => (
+                <CartItem
+                  key={item.product_id}
+                  product={item}
+                  isChecked={item.is_active}
+                  onCheckChange={() => handleItemCheck(item.product_id)}
+                  FetchKeepList={FetchKeepList}
+                  handleDeleteItem={handleDeleteItem}
+                />
+              ))}
+              <tr></tr>
+            </tbody>
+          </CartTable>
           {isLogin ? (
             cartItem.length > 0 ? (
               <>
-                <KeepList>
-                  {cartItem.map((item: cartItem) => (
-                    <li key={item.product_id}>
-                      <CartItem
-                        product={item}
-                        isChecked={item.is_active}
-                        onCheckChange={() => handleItemCheck(item.product_id)}
-                        FetchKeepList={FetchKeepList}
-                        handleDeleteItem={handleDeleteItem}
-                      />
-                    </li>
-                  ))}
-                </KeepList>
-                <AllDeleteBtn
-                  width="s"
-                  bgColor="active"
-                  onClick={handleAllDelete}
-                >
-                  전체삭제
-                </AllDeleteBtn>
+                <AllSection>
+                  <div>
+                    <input
+                      type="checkbox"
+                      checked={cartItem.length > 0 ? allChecked : false}
+                      onChange={(e) => handleAllCheck(e.target.checked)}
+                    />
+                    <label className="a11y-hidden">
+                      장바구니 아이템 전체 체크 박스
+                    </label>
+                  </div>
+                  <AllDeleteBtn
+                    width="s"
+                    bgColor="active"
+                    onClick={handleAllDelete}
+                  >
+                    전체삭제
+                  </AllDeleteBtn>
+                </AllSection>
                 <ClacPrice>
                   <li>
                     총상품금액

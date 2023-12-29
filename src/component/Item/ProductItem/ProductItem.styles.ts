@@ -2,6 +2,13 @@ import styled from "@emotion/styled";
 
 export const ProductItemWrapper = styled.article`
   overflow: hidden;
+  position: relative;
+  @media (max-width: 896px) {
+    min-width: 350px;
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #c4c4c4;
+  }
 `;
 
 export const ProductImage = styled.img`
@@ -11,6 +18,10 @@ export const ProductImage = styled.img`
   border: 1px solid #c4c4c4;
   margin-bottom: 1rem;
   object-fit: cover;
+  @media (max-width: 896px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 export const ProductInfoContainer = styled.div`
   display: flex;
@@ -27,6 +38,7 @@ export const ProductName = styled.h3`
   font-size: 1.125rem;
   font-weight: 400;
   line-height: 22px;
+  word-break: keep-all;
 `;
 export const ProductPrice = styled.strong`
   font-size: 1.5rem;

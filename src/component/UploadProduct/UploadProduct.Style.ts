@@ -1,35 +1,28 @@
 import styled from "@emotion/styled";
 import { OutlinedInput, InputAdornment } from "@mui/material";
 import { ButtonStyle } from "component/common/Button/Button";
-export const Wrapper = styled.main`
-  width: 110%;
-  margin: 0 auto;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-`;
 
-export const HeaderSection = styled.section`
-  padding-left: 6.25rem;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 5.625rem;
-  box-shadow: 0px 4px 5px 0px #0000001a;
-  & img {
-    width: 5rem;
-  }
-  & h2 {
-    display: inline-block;
-    margin: 0;
-    font-size: 30px;
-    font-weight: 500;
-  }
-`;
+// export const HeaderSection = styled.section`
+//   padding-left: 6.25rem;
+//   display: flex;
+//   gap: 1rem;
+//   align-items: center;
+//   width: 100vw;
+//   position: relative;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   height: 5.625rem;
+//   box-shadow: 0px 4px 5px 0px #0000001a;
+//   & img {
+//     width: 5rem;
+//   }
+//   & h2 {
+//     display: inline-block;
+//     margin: 0;
+//     font-size: 30px;
+//     font-weight: 500;
+//   }
+// `;
 
 export const WarningSection = styled.aside`
   margin-top: 10px;
@@ -48,10 +41,19 @@ export const WarningSection = styled.aside`
     line-height: normal;
     padding-left: 5px;
   }
+  @media (max-width: 896px) {
+    width: 100%;
+  }
 `;
 export const MainSection = styled.main`
   padding-top: 2.75rem;
   margin-bottom: 96px;
+  max-width: 110%;
+  margin: 0 auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110%;
   & h2 {
     font-size: 36px;
     font-weight: 700;
@@ -69,15 +71,22 @@ export const FormSection = styled.form`
   flex-direction: column;
   width: 100%;
   gap: 2.5rem;
-  & > div {
+  & > div:not(:last-of-type) {
     display: flex;
     gap: 40px;
+    @media (max-width: 896px) {
+      flex-direction: column;
+    }
   }
 `;
-export const MainContent = styled.div`
+export const MainContent = styled.section`
   width: 100%;
   display: flex;
   gap: 5rem;
+  @media (max-width: 896px) {
+    flex-direction: column;
+    gap: 2rem;
+  }
 `;
 
 export const UploadImg = styled.div`
@@ -159,6 +168,10 @@ export const ButtonGroup = styled.div`
       border: 1px solid #c4c4c4;
     }
   }
+  @media (max-width: 896px) {
+    width: 100%;
+    flex-direction: row;
+  }
 `;
 export const ProductImgInput = styled.input`
   display: none;
@@ -172,13 +185,15 @@ export const ProductImg = styled.img`
 `;
 export const EmptyBox = styled.div`
   margin-top: 5px;
-  width: 454px;
+  max-width: 454px;
+  width: 100%;
   aspect-ratio: 1/1;
   border-radius: 10px;
   background: #c4c4c4;
 `;
 export const ProductImgWrapper = styled.div`
-  width: 28.375rem;
+  max-width: 28.375rem;
+  width: 100%;
   aspect-ratio: 1/1;
   margin-bottom: 10px;
   position: relative;
@@ -199,13 +214,16 @@ export const ProductIconWrapper = styled.label`
   display: inline-block;
   cursor: pointer;
   position: absolute;
+  width: 100%;
+  aspect-ratio: 1/1;
 `;
 export const ProductImgIcon = styled.img`
   object-fit: contain;
   border-radius: 10px;
   position: absolute;
-  top: 210px;
-  right: -245px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 export const ShippingBtn = styled.div`
   width: 100%;

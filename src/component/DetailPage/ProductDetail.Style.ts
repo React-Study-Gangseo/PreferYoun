@@ -1,5 +1,14 @@
 import styled from "@emotion/styled";
 import { ButtonStyle } from "component/common/Button/Button";
+
+export const MainSection = styled.main`
+  width: 100%;
+  max-width: 80rem;
+  height: 100%;
+  min-height: 100%;
+  padding-bottom: 11.25rem;
+  /* margin-bottom: 19.6013rem; */
+`;
 export const DetailPageWrapper = styled.section`
   width: 100%;
   height: 100%;
@@ -7,13 +16,27 @@ export const DetailPageWrapper = styled.section`
   display: flex;
   gap: 3.125rem;
   margin-top: 5rem;
+  flex-wrap: wrap;
+  @media (max-width: 896px) {
+    margin: 1.25rem auto 0;
+    gap: 3rem;
+  }
 `;
 export const ProductImg = styled.img`
   width: 37.5rem;
   height: 37.5rem;
+  object-fit: cover;
+  @media (max-width: 896px) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    margin: 0 auto;
+  }
 `;
 export const ProductInfoSection = styled.section`
-  width: 39.375rem;
+  max-width: 39.375rem;
+  width: 100%;
+  position: relative;
   & > span {
     color: #767676;
     font-size: 1.125rem;
@@ -23,7 +46,19 @@ export const ProductInfoSection = styled.section`
     margin: 1rem 0 1.25rem;
   }
 `;
-
+export const ShareBtn = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 100%;
+  box-shadow: 5px 8px 10px 0 #c4c4c4;
+  @media (max-width: 896px) {
+    display: none;
+  }
+`;
 export const Price = styled.p`
   margin-bottom: 11rem;
   & > strong {
@@ -36,6 +71,12 @@ export const Price = styled.p`
     font-size: 1rem;
     border-bottom: 1px solid #c4c4c4;
     padding-bottom: 1.25rem;
+  }
+  @media (max-width: 1421px) {
+    margin-bottom: 4rem;
+  }
+  @media (max-width: 896px) {
+    margin-bottom: 1.25rem;
   }
 `;
 
@@ -51,6 +92,9 @@ export const CountWrap = styled.div`
     flex: 1 1 33%;
     text-align: center;
     line-height: 3.125rem;
+  }
+  @media (max-width: 896px) {
+    display: none;
   }
 `;
 
@@ -96,6 +140,9 @@ export const TotalPriceWrap = styled.div`
     font-size: 36px;
     font-weight: 700;
   }
+  @media (max-width: 896px) {
+    display: none;
+  }
 `;
 
 export const BuyButton = styled(ButtonStyle)`
@@ -113,27 +160,86 @@ export const KeepButton = styled(ButtonStyle)`
   font-weight: 700;
 `;
 
-export const MoreInfo = styled.div`
-  margin-top: 8.75rem;
-  font-size: 1.125rem;
-  font-weight: 500;
-  & > ul {
-    display: flex;
-    height: 60px;
+export const DesktopMoreInfo = styled.div`
+  display: none;
+  @media (min-width: 897px) {
+    display: block;
+    margin-top: 8.75rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    & > ul {
+      display: flex;
+      height: 60px;
+    }
+    & > ul > li {
+      flex: 1 1 25%;
+      text-align: center;
+      line-height: 3.75rem;
+    }
+    & button {
+      width: 100%;
+      height: 100%;
+    }
   }
-  & > ul > li {
-    flex: 1 1 25%;
-    border-bottom: 6px solid #e0e0e0;
-    text-align: center;
-    line-height: 3.75rem;
-  }
-  & button {
-    width: 100%;
-    height: 100%;
+`;
+export const MobileMoreInfo = styled.div`
+  display: none;
+  @media (max-width: 896px) {
+    display: block;
+    margin: 4.75rem 0 300px;
+    font-size: 1.125rem;
+    font-weight: 500;
+    & > ul {
+      display: flex;
+      flex-direction: column;
+      height: 60px;
+    }
+    & > ul > li {
+      flex: 1 1 25%;
+      text-align: center;
+      line-height: 3.75rem;
+    }
+    & button {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
 
 export const BtnGroup = styled.div`
   display: flex;
   gap: 14px;
+  @media (max-width: 896px) {
+    display: none;
+  }
+`;
+
+export const MoreInfoSecion = styled.section`
+  margin: 10px 0 400px;
+  width: 100%;
+  height: 500px;
+  border: 2px solid #e0e0e0;
+  padding: 20px;
+`;
+
+export const MobileMoreInfoSection = styled.section<{ isOpen: boolean }>`
+  background: rgba(255, 255, 255, 0.5);
+  margin-top: -1px;
+  overflow: hidden;
+  border: 1px solid #c4c4c4;
+  /* isOpen prop에 따라 height 값을 조정합니다 */
+  height: ${({ isOpen }) => (isOpen ? "180px" : "0")};
+
+  position: relative;
+  z-index: 10;
+  transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+
+  /* isOpen prop이 true일 때만 box-shadow 속성을 적용합니다 */
+  ${({ isOpen }) =>
+    isOpen &&
+    `
+    transition: height 0.5s ease-in-out, box-shadow .1s linear; 
+    box-shadow :0px; 
+    padding-bottom :20px;
+    height: 230px;`}
 `;

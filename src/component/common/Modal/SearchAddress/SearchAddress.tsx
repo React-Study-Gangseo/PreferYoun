@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
-import { ModalBody, Title } from "./SearchAddress.Style";
+import { ModalBody, Title, CloseBtn } from "./SearchAddress.Style";
 import { closeModal } from "redux/Modal";
 import { useDispatch } from "react-redux";
 import { removeAddress, saveAddress } from "redux/Address";
+import Close from "../../../../assets/images/close-r.svg";
 
 const SearchAddress: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const SearchAddress: React.FC = () => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    console.log(fullAddress);
 
     dispatch(
       saveAddress({
@@ -33,7 +34,9 @@ const SearchAddress: React.FC = () => {
       })
     );
   };
-
+  const handleModalClose = () => {
+    dispatch(closeModal());
+  };
   return (
     <>
       <Title>주소검색</Title>
@@ -50,6 +53,9 @@ const SearchAddress: React.FC = () => {
           onClose={() => dispatch(closeModal())}
         />
       </ModalBody>
+      <CloseBtn onClick={handleModalClose}>
+        <img src={Close} alt="모달닫힘버튼" aria-label="모달닫힘버튼" />
+      </CloseBtn>
     </>
   );
 };

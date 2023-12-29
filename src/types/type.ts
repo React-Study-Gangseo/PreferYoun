@@ -27,7 +27,7 @@ export interface Products {
   shipping_method?: string;
   shipping_fee?: number;
   stock?: number;
-  products_info?: string;
+  product_info?: string;
   quantity?: number;
 }
 
@@ -41,7 +41,7 @@ export interface UploadProducts {
   shipping_method?: string;
   shipping_fee?: number;
   stock?: number;
-  products_info?: string;
+  product_info?: string;
 }
 
 export interface orderdata {

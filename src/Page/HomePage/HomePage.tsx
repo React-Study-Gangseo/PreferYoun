@@ -1,25 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Header from "component/Header/Header";
-import Main from "../component/Main/Main";
-import Footer from "component/Footer/Footer";
+import Main from "../../component/Main/Main";
 import { KeepProductList } from "API/KeepAPI";
-import { useLocation } from "react-router-dom";
 // import useScrollRestoration from "CustomHook/useScrollRestore";
 export default function HomePage() {
-  const location = useLocation();
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
   // useScrollRestoration();
 
-  let type: "home" | "seller" | "buyer";
-  switch (location.pathname) {
-    case "/seller":
-      type = "seller";
-      break;
-    case "/buyer":
-      type = "buyer";
-      break;
-    default:
-      type = "home";
-  }
   const FetchKeepList = async () => {
     try {
       const keepList = await KeepProductList();
@@ -30,16 +17,18 @@ export default function HomePage() {
     }
   };
   useEffect(() => {
-    if (type === "buyer") {
-      FetchKeepList();
+    if (userInfo) {
+      if (userInfo.user_type === "BUYER") {
+        FetchKeepList();
+      }
+    } else {
+      return;
     }
   }, []);
 
   return (
     <>
-      <Header type={type} />
       <Main />
-      <Footer />
     </>
   );
 }

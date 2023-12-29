@@ -91,6 +91,8 @@ const resetCSS = css`
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
   }
   /* HTML5 display-role reset for older browsers */
   article,
@@ -158,6 +160,7 @@ const customStyles = css`
   button {
     font-family: "SUIT-Regular", sans-serif;
     cursor: pointer;
+    color: black;
     padding: 0;
     border: 0;
     background-color: transparent;
@@ -174,6 +177,7 @@ const customStyles = css`
   }
 
   input {
+    color: black;
     border: 0;
     box-sizing: border-box;
     font-family: "SUIT-Regular";
@@ -183,7 +187,8 @@ const customStyles = css`
     }
   }
   #root {
-    width: 80rem;
+    width: 90%;
+    max-width: 80rem;
     min-height: 100%;
     height: 100%;
     margin: 0 auto;
@@ -203,6 +208,10 @@ const customStyles = css`
   .my-icon {
     margin: 20px auto 0;
     border: 0.25rem solid;
+  }
+  .my_swal-container {
+  }
+  .my_swal-content {
   }
 `;
 

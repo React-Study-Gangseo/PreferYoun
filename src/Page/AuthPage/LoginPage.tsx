@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
 import SellerLogin from "component/Auth/Login/SellerLogin/SellerLogin";
 import {
   BtnGroup,
@@ -9,30 +8,25 @@ import {
   LinkGroup,
   SignUp,
   FindPw,
-} from "../../Auth/Login/Login.Style";
-import Logo from "../../../assets/images/Logo-hodu.png";
+  Main,
+} from "component/Auth/Login/Login.Style";
+import Logo from "../../assets/images/Logo-hodu.png";
 import BuyerLogin from "component/Auth/Login/BuyerLogin/BuyerLogin";
 import { AxiosError } from "axios";
-import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { LoginData } from "types/type";
 import { Login } from "API/AuthAPI";
-import { openModal, closeModal } from "redux/Modal";
-import { useNavigate } from "react-router-dom";
-const LoginModal: React.FC = () => {
+import { Link, useNavigate } from "react-router-dom";
+
+const LoginPage: React.FC = () => {
   const [userType, setUserType] = useState("SELLER");
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
   useEffect(() => {
     if (loginSuccess && userType === "SELLER") {
-      console.log(loginSuccess);
-      dispatch(closeModal());
-      navigate("/seller");
+      navigate("/");
     } else if (loginSuccess && userType === "BUYER") {
-      console.log(loginSuccess, userType);
-      dispatch(closeModal());
-      navigate("/buyer");
+      navigate("/");
     }
   }, [loginSuccess, navigate]);
 
@@ -47,11 +41,8 @@ const LoginModal: React.FC = () => {
 
   const handleFormSubmit = async (loginData: LoginData, userType: string) => {
     try {
-      console.log(userType, loginData);
       const response = await Login(loginData, userType);
-      console.log(response);
       if (response && response.status === 200) {
-        console.log("로그인성공", response.data);
         localStorage.setItem("UserInfo", JSON.stringify(response.data));
         setLoginSuccess(true);
       }
@@ -73,18 +64,15 @@ const LoginModal: React.FC = () => {
     }
   };
   const handleOpenLoginModal = () => {
-    dispatch(
-      openModal({
-        modalType: "SignupModal",
-        isOpen: true,
-      })
-    );
+    navigate("/join");
   };
 
   return (
     <>
-      <ModalBody>
-        <LogoImg src={Logo} alt="Hodu 로고" />
+      <Main>
+        <Link to="/">
+          <LogoImg src={Logo} alt="Hodu 로고" />
+        </Link>
         <BtnGroup>
           <BuyerBtn
             id="BUYER"
@@ -94,6 +82,7 @@ const LoginModal: React.FC = () => {
             style={{
               backgroundColor: userType === "BUYER" ? "#fff" : "#F2F2F2",
               borderBottom: userType === "BUYER" ? "none" : "1px solid #767676",
+              color: "black",
             }}
           >
             구매자로그인
@@ -107,6 +96,7 @@ const LoginModal: React.FC = () => {
               backgroundColor: userType === "SELLER" ? "#fff" : "#F2F2F2",
               borderBottom:
                 userType === "SELLER" ? "none" : "1px solid #767676",
+              color: "black",
             }}
           >
             판매자로그인
@@ -121,7 +111,7 @@ const LoginModal: React.FC = () => {
             onSubmit={(data: LoginData) => handleFormSubmit(data, userType)}
           />
         )}
-      </ModalBody>
+      </Main>
       <LinkGroup>
         <SignUp onClick={handleOpenLoginModal}>회원가입</SignUp>
         <FindPw>비밀번호찾기</FindPw>
@@ -130,8 +120,4 @@ const LoginModal: React.FC = () => {
   );
 };
 
-export default LoginModal;
-
-const ModalBody = styled.div`
-  padding: 15px;
-`;
+export default LoginPage;

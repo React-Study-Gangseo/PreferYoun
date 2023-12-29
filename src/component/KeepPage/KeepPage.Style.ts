@@ -3,24 +3,70 @@ import PlusIcon from "../../assets/images/icon-plus-line.svg";
 import MinusIcon from "../../assets/images/icon-minus-line.svg";
 import { ButtonStyle } from "component/common/Button/Button";
 export const Wrapper = styled.main`
-  width: 80rem;
+  width: 100%;
+  max-width: 80rem;
   margin: 3.375rem auto 10rem;
+  @media (max-width: 896px) {
+    margin-top: 10px;
+  }
 `;
 
 export const Heading = styled.h2`
   text-align: center;
   font-size: 2.25rem;
   font-weight: 700;
+  @media (max-width: 896px) {
+    display: none;
+  }
 `;
 
-export const KeepForm = styled.div`
-  margin-top: 3.25rem;
+export const KeepForm = styled.section`
+  margin-top: 1.0625rem;
   width: 100%;
 `;
-
+export const CartTable = styled.table`
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  & thead {
+    background: #f2f2f2;
+    height: 3.75rem;
+    @media (max-width: 896px) {
+      display: none;
+    }
+  }
+  & thead th {
+    vertical-align: middle;
+    font-size: 1.125rem;
+    & input[type="checkbox"] {
+      appearance: none;
+      position: relative;
+      display: block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #21bf48;
+      border-radius: 50%;
+      margin: 0 auto;
+    }
+    & input[type="checkbox"]:checked::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 2px;
+      left: 2.2px;
+      width: 12px;
+      height: 12px;
+      background-color: #21bf48;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+  }
+  & tbody tr {
+    height: 25px;
+  }
+`;
 export const FormTop = styled.ul`
   width: 100%;
-  background: #f2f2f2;
   display: flex;
   list-style: none;
   justify-content: space-between;
@@ -106,7 +152,7 @@ export const TotalPrice = styled.p`
 `;
 export const CountWrap = styled.div`
   display: flex;
-  width: 9.375rem;
+  max-width: 9.375rem;
   height: 3.125rem;
   border-radius: 5px;
   border: 1px solid #c4c4c4;
@@ -137,22 +183,32 @@ export const ClacPrice = styled.ul`
   background: #f2f2f2;
   display: flex;
   width: 100%;
-  height: 9.375rem;
+  max-height: 9.375rem;
+  min-height: 100px;
   align-items: center;
 
   & li {
     text-align: center;
     flex: 1 1 25%;
+    @media (max-width: 500px) {
+      font-size: 0.9rem;
+    }
   }
   & li strong {
     display: block;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 700;
     margin-top: 0.75rem;
+    @media (max-width: 500px) {
+      font-size: 1rem;
+    }
   }
   & li strong > span {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
+    @media (max-width: 500px) {
+      font-size: 0.8rem;
+    }
   }
   & li:first-of-type,
   & li:nth-of-type(2) {
@@ -163,13 +219,18 @@ export const ClacPrice = styled.ul`
   & li:nth-of-type(2)::after {
     content: "";
     display: block;
-    width: 2.125rem;
-    height: 2.125rem;
+    max-width: 2.125rem;
+    min-width: 25px;
+    aspect-ratio: 1 / 1;
     background-color: #fff;
     position: absolute;
     border-radius: 100%;
-    right: -18px;
-    top: 10px;
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+    @media (max-width: 896px) {
+      display: none;
+    }
   }
   & li:first-of-type::after {
     background-image: url(${MinusIcon});
@@ -180,6 +241,24 @@ export const ClacPrice = styled.ul`
     background-image: url(${PlusIcon});
     background-repeat: no-repeat;
     background-position: center;
+  }
+  @media (max-width: 896px) {
+    flex-direction: column;
+    padding: 10px;
+    & li {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      margin: 5px;
+      & strong {
+        margin: 0;
+      }
+    }
+    & li:nth-of-type(3) {
+      border-bottom: 1px solid #767676;
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+    }
   }
 `;
 
@@ -221,4 +300,36 @@ export const AllDeleteBtn = styled(ButtonStyle)`
 export const LoginBtn = styled(ButtonStyle)`
   margin: 10px auto 0;
   font-size: 1.25rem;
+`;
+
+export const AllSection = styled.section`
+  display: flex;
+  padding-left: 10px;
+  & div {
+    @media (min-width: 897px) {
+      display: none;
+    }
+    & input[type="checkbox"] {
+      appearance: none;
+      position: relative;
+      display: block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #21bf48;
+      border-radius: 50%;
+      margin: 0 auto;
+    }
+    & input[type="checkbox"]:checked::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 2px;
+      left: 2.2px;
+      width: 12px;
+      height: 12px;
+      background-color: #21bf48;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+  }
 `;

@@ -1,18 +1,27 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+
 export const HeaderSection = styled.header`
   width: 100vw;
+  /* min-height: 5.625rem; */
   height: 5.625rem;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
   box-shadow: 0px 4px 5px 0px #0000001a;
   & section {
-    width: 80rem;
+    max-width: 80rem;
+    width: 90%;
     height: 100%;
-    margin: 0 auto;
+    margin: auto auto 0;
     display: flex;
     align-items: center;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      gap: 5px;
+      margin: 10px auto;
+      padding-bottom: 10px;
+    }
   }
 `;
 export const HeaderCenterSection = styled.header`
@@ -23,18 +32,27 @@ export const HeaderCenterSection = styled.header`
   transform: translateX(-50%);
   box-shadow: 0px 4px 5px 0px #0000001a;
   & section {
-    width: 90%;
+    max-width: 87.75rem;
+    width: 85%;
     height: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
+    @media (max-width: 500px) {
+      gap: 10px;
+      margin: 10px auto;
+      padding-bottom: 10px;
+    }
   }
 `;
 
 export const Logo = styled(Link)`
-  width: 7.75rem;
+  max-width: 7.75rem;
   height: 2.375rem;
   margin-right: 1.875rem;
+  @media (max-width: 500px) {
+    margin: 0;
+  }
 `;
 
 export const HeaderForm = styled.form`
@@ -53,10 +71,6 @@ export const FormDiv = styled.div`
   min-height: 100%;
   padding: 0.625rem;
   place-items: center;
-`;
-export const SearchSubmit = styled.input`
-  position: relative;
-  left: -5000px;
 `;
 export const HeaderInput = styled.input`
   transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s;
@@ -91,48 +105,15 @@ export const HeaderInput = styled.input`
     color: white;
     cursor: pointer;
   }
+  & + label img {
+    width: 28px;
+    height: 28px;
+  }
 `;
-/* position: relative;
-  height: 2rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  font-size: 1.125rem;
-  color: transparent;
-  border: 2px solid #21bf48;
-  transition: width 300ms;
-  overflow: hidden;
-  background: url(${Search}) no-repeat transparent;
-  background-size: 2.5rem;
-  background-position: 45% 50%;
-  width: 2.5rem;
-  padding: 0.625rem 0.625rem 0.625rem 3.75rem;
-  &:hover {
-    cursor: pointer;
-    border: 2px solid #21bf48;
-    background: url(${Search}) no-repeat transparent;
-    background-size: 2.5rem;
-    background-position: 45% 50%;
-  }
-  &:focus,
-  :not(:placeholder-shown) {
-    max-width: 24.375rem;
-    width: 100%;
-    cursor: text;
-    color: #000000;
-    margin-left: 1.875rem;
-    padding-left: 3.75rem;
-    outline: none;
-    border: 2px solid #21bf48;
-    background-color: transparent;
-    background: url(${Search}) no-repeat transparent;
-    background-size: 2.5rem;
-    background-position: 0.625rem 50%;
-    transition: width 500ms;
-  }
-`; */
+
 export const LogoImage = styled.img`
   width: 100%;
+  height: 38px;
 `;
 export const HeaderNav = styled.nav`
   margin-left: auto;
@@ -146,6 +127,8 @@ export const CartBtn = styled.button`
   & img {
     display: block;
     margin: 0 auto;
+    width: 32px;
+    height: 32px;
   }
 `;
 export const UserBtn = styled.button`
@@ -155,5 +138,7 @@ export const UserBtn = styled.button`
   & img {
     display: block;
     margin: 0 auto;
+    width: 32px;
+    height: 32px;
   }
 `;

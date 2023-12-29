@@ -45,7 +45,6 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
     event.preventDefault();
     if (watch("id")) {
       const checkId: string | undefined = getValues("id");
-      console.log(checkId);
       if (typeof checkId === "string") {
         // checkId가 문자열인지 확인
         try {
@@ -67,7 +66,6 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
         } catch (error) {
           const axiosError = error as AxiosError;
           const responseData = axiosError?.response?.data as any;
-          console.log("아이디 체크 실패", responseData.FAIL_Message);
           if (responseData.FAIL_Message === "이미 사용 중인 아이디입니다.") {
             setError("id", {
               type: "manual",

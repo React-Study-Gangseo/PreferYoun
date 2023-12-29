@@ -8,20 +8,32 @@ import {
   NavList,
   Address,
 } from "./Footer.Style";
-import InstaIcon from "../../assets/images/icon-insta.svg";
-import MetaIcon from "../../assets/images/icon-fb.svg";
-import YtIcon from "../../assets/images/icon-yt.svg";
+import InstaIcon from "../../../assets/images/icon-insta.svg";
+import MetaIcon from "../../../assets/images/icon-fb.svg";
+import YtIcon from "../../../assets/images/icon-yt.svg";
 const Footer: React.FC = () => {
   return (
     <FooterSection>
       <FooterTop>
         <InfoList>
-          <InfoItem>호두샵 소개</InfoItem>
-          <InfoItem>이용약관</InfoItem>
-          <InfoItem>개인정보처리방침</InfoItem>
-          <InfoItem>전자금융거래약관</InfoItem>
-          <InfoItem>청소년보호정책</InfoItem>
-          <InfoItem>제휴문의</InfoItem>
+          <li>
+            <InfoItem to="">호두샵 소개</InfoItem>
+          </li>
+          <li>
+            <InfoItem to="">이용약관</InfoItem>
+          </li>
+          <li>
+            <InfoItem to="">개인정보처리방침</InfoItem>
+          </li>
+          <li>
+            <InfoItem to="">전자금융거래약관</InfoItem>
+          </li>
+          <li>
+            <InfoItem to="">청소년보호정책</InfoItem>
+          </li>
+          <li>
+            <InfoItem to="">제휴문의</InfoItem>
+          </li>
         </InfoList>
         <Nav>
           <NavList>

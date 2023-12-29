@@ -32,7 +32,9 @@ const SellerItem: React.FC<{
           <span>재고 : {product.stock}개</span>
         </ProductInfo>
       </td>
-      <td>{product.price}원</td>
+      <td>
+        {`${new Intl.NumberFormat("ko-KR").format(product.price || 0)}`}원
+      </td>
       <td>
         <Button width="s" bgColor="active" onClick={() => handleEditProduct()}>
           수정
