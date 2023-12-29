@@ -18,7 +18,6 @@ export default function HomePage() {
   };
   useEffect(() => {
     if (userInfo) {
-      console.log("userInfo");
       if (userInfo.user_type === "BUYER") {
         FetchKeepList();
       }
