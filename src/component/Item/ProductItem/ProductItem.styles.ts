@@ -48,3 +48,12 @@ export const ProductPriceUnit = styled.p`
   font-size: 1rem;
   font-weight: 400;
 `;
+export const SoldOutWrapper = styled.div`
+  background-color: #121212;
+`;
+
+export const SoldOutImg = styled.img`
+  position: absolute;
+  width: 100%;
+  aspect-ratio: 1/1;
+`;
