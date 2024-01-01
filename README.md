@@ -1,3 +1,8 @@
+
+# PreferYoun
+# 쇼핑몰 제작 프로젝트
+# Hodu-Market
+
 ## 쇼핑몰 제작 개인 프로젝트
 
 #### 개발기간
@@ -23,7 +28,6 @@
 - 구매자는 장바구니, 상품 주문및 주문 확인이 가능합니다.
 - 판매자는 판매자 센터를 통해 상품 등록, 수정및 삭제가 가능합니다.
 - 모바일과 PC버전 반응형 웹으로 제작되었으며 모바일에서는 하단 Nav Bar가 존재합니다.
-
 
 ## 🛠 테크 스택
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">  <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white">  <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=white">  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">  <img src="https://img.shields.io/badge/KakaoAPI-FFCD00?style=for-the-badge&logo=kakao&logoColor=white">  <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">  <img src="https://img.shields.io/badge/netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white"> <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"> <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"></br>

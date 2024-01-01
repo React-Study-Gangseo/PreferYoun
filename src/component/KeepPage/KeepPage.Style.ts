@@ -228,7 +228,7 @@ export const ClacPrice = styled.ul`
     right: 0;
     top: 50%;
     transform: translate(50%, -50%);
-    @media (max-width: 500px) {
+    @media (max-width: 896px) {
       display: none;
     }
   }

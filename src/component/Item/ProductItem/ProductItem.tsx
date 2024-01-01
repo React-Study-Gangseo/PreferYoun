@@ -1,41 +1,58 @@
-import React from "react";
+import React, { useCallback, memo } from "react";
 import {
   ProductItemWrapper,
   ProductImage,
   ProductPrice,
   ProductPriceUnit,
   ProductInfo,
-  ProductName,
   ProductInfoContainer,
+  ProductName,
+  SoldOutImg,
+  SoldOutWrapper,
 } from "./ProductItem.styles";
 import { Products } from "types/type";
 import { useNavigate } from "react-router-dom";
+import SoldOut from "../../../assets/images/sold-out.png";
 type ProductItemProps = {
   product: Products;
 };
-const ProductItem: React.FC<ProductItemProps> = (product) => {
+
+const numberFormat = new Intl.NumberFormat("ko-KR");
+
+const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const navigate = useNavigate();
-  const handleProductDetail = ({ product_id }: Products) => {
-    console.log(product_id);
-    navigate(`/detailProduct/${product_id}`, {
-      state: {
-        product: product_id,
-      },
-    });
-  };
+
+  const handleProductDetail = useCallback(
+    (product: Products) => {
+      if (product.stock === 0) {
+        return;
+      } else {
+        navigate(`/detailProduct/${product.product_id}`, {
+          state: {
+            product: product.product_id,
+          },
+        });
+      }
+    },
+    [navigate]
+  );
+
   return (
-    <ProductItemWrapper
-      onClick={() => {
-        handleProductDetail(product.product);
-      }}
-    >
-      <ProductImage src={product.product.image} alt="상품 이미지" />
+    <ProductItemWrapper onClick={() => handleProductDetail(product)}>
+      {product.stock === 0 && (
+        <>
+          <SoldOutWrapper>
+            <SoldOutImg src={SoldOut} alt="sold-out" />
+          </SoldOutWrapper>
+        </>
+      )}
+      <ProductImage src={product.image} alt="상품 이미지" />
       <ProductInfoContainer>
-        <ProductInfo>{product.product.store_name}</ProductInfo>
-        <ProductName>{product.product.product_name}</ProductName>
+        <ProductInfo>{product.store_name}</ProductInfo>
+        <ProductName>{product.product_name}</ProductName>
         <ProductPriceUnit>
-          <ProductPrice>{`${new Intl.NumberFormat("ko-KR").format(
-            product.product.price || 0
+          <ProductPrice>{`${numberFormat.format(
+            product.price || 0
           )}`}</ProductPrice>
           원
         </ProductPriceUnit>
@@ -44,4 +61,4 @@ const ProductItem: React.FC<ProductItemProps> = (product) => {
   );
 };
 
-export default ProductItem;
+export default memo(ProductItem);

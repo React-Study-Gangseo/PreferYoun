@@ -44,7 +44,7 @@ const KeepPage: React.FC = () => {
     return state.cartOrder.value;
   });
   const allChecked = cartItem.every((item) => item.is_active);
-
+  console.log(allChecked);
   // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
   const FetchKeepList = async () => {
     try {
@@ -54,7 +54,7 @@ const KeepPage: React.FC = () => {
       console.log(error);
     }
   };
-  console.log(orderCartInfo);
+  console.log(cartItem);
   useEffect(() => {
     FetchKeepList();
     if (storedData) {
@@ -93,9 +93,7 @@ const KeepPage: React.FC = () => {
     );
   };
   const handleOrderList = () => {
-    console.log(orderCartInfo);
     const order_kind: string = "cart_order";
-    console.log("product", orderCartInfo);
     navigate("/orderpage", {
       state: {
         productInfo: orderCartInfo,
@@ -134,7 +132,6 @@ const KeepPage: React.FC = () => {
   const handleDeleteItem = async (cart_item_id: number) => {
     try {
       const res = await DeleteCartItem(cart_item_id);
-      console.log(res);
       if (res.status === 204) {
         FetchKeepList();
       }
