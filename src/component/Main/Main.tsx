@@ -77,7 +77,6 @@ const Main: React.FC = () => {
       console.error(error);
     }
   };
-
   useEffect(() => {
     if (page === 1) observe(target.current);
 
