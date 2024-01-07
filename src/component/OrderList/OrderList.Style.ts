@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { ButtonStyle } from "component/common/Button/Button";
 
 export const Main = styled.main`
   width: 100%;
@@ -15,11 +14,6 @@ export const Heading = styled.h2`
 export const OrderListSection = styled.section`
   width: 100%;
   margin-top: 50px;
-`;
-
-export const LogOutBtn = styled(ButtonStyle)`
-  margin: 0 auto;
-  font-size: 20px;
 `;
 
 export const Item = styled.div`

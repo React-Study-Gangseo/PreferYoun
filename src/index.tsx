@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { RouterProvider } from "react-router-dom";
+import Routers from "Router/Routers";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");
@@ -21,6 +23,7 @@ root.render(
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <GlobalStyle />
+        <RouterProvider router={Routers} />
         <App />
       </PersistGate>
     </Provider>

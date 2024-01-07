@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import PlusIcon from "../../assets/images/icon-plus-line.svg";
 import MinusIcon from "../../assets/images/icon-minus-line.svg";
-import { ButtonStyle } from "component/common/Button/Button";
+
 export const Wrapper = styled.main`
   width: 100%;
   max-width: 80rem;
@@ -262,19 +262,6 @@ export const ClacPrice = styled.ul`
   }
 `;
 
-export const OrderBtn = styled(ButtonStyle)`
-  margin: 2.5rem auto 0;
-  font-size: 24px;
-  font-weight: 700;
-  height: 4.25rem;
-`;
-
-export const OrderBtnS = styled(ButtonStyle)`
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 12px;
-`;
-
 export const EmptyKeepList = styled.section`
   width: 100%;
   height: 100vh;
@@ -290,16 +277,6 @@ export const EmptyKeepList = styled.section`
     font-size: 14px;
     font-weight: 400;
   }
-`;
-
-export const AllDeleteBtn = styled(ButtonStyle)`
-  padding: 10px;
-  margin: 0 0 20px auto;
-`;
-
-export const LoginBtn = styled(ButtonStyle)`
-  margin: 10px auto 0;
-  font-size: 1.25rem;
 `;
 
 export const AllSection = styled.section`

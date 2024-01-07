@@ -8,7 +8,6 @@ import {
   DecreaseButton,
   Total,
   TotalPrice,
-  OrderBtnS,
   DeleteBtn,
   KeepProductMobile,
 } from "./CartItem.Style";
@@ -21,7 +20,7 @@ import { UpdateQuantity } from "API/KeepAPI";
 import { calcPrice, resetPrice } from "redux/TotalPrice";
 import { OrderProduct, removeOrderProduct } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
-
+import Button from "component/common/Button/Button";
 const CartItem: React.FC<{
   product: cartItem;
   isChecked: boolean;
@@ -296,13 +295,14 @@ const CartItem: React.FC<{
                   원
                 </TotalPrice>
               )}
-              <OrderBtnS
-                width="ms"
-                bgColor="active"
+              <Button
+                size="ms"
+                color="primary"
+                variant="contained"
                 onClick={() => handleOrderItem()}
               >
                 주문하기
-              </OrderBtnS>
+              </Button>
               <DeleteBtn onClick={() => handleDelete(product.cart_item_id)}>
                 <img src={DeleteIcon} alt="상품 삭제 버튼" />
               </DeleteBtn>
@@ -375,13 +375,14 @@ const CartItem: React.FC<{
                   원
                 </TotalPrice>
               )}
-              <OrderBtnS
-                width="ms"
-                bgColor="active"
+              <Button
+                size="ms"
+                color="primary"
+                variant="contained"
                 onClick={() => handleOrderItem()}
               >
                 주문하기
-              </OrderBtnS>
+              </Button>
               <DeleteBtn onClick={() => handleDelete(product.cart_item_id)}>
                 <img src={DeleteIcon} alt="상품 삭제 버튼" />
               </DeleteBtn>

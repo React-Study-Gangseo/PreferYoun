@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { OutlinedInput, Radio, FormControlLabel } from "@mui/material";
-import { ButtonStyle } from "component/common/Button/Button";
+
 export const OrderPageTitle = styled.h2`
   text-align: center;
   font-size: 2.25rem;
@@ -273,11 +273,13 @@ export const FinallyPayWrapper = styled.article`
   }
 `;
 export const LastCheck = styled.div`
-  padding: 34px 30px;
+  padding: 24px 30px;
+  text-align: center;
   & div {
     width: 100%;
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
   }
 
   & div label {
@@ -288,19 +290,14 @@ export const LastCheck = styled.div`
     align-self: center;
   }
 `;
-export const PayBtn = styled(ButtonStyle)`
-  width: 13.75rem;
-  height: 4.25rem;
-  color: white;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 1.875rem auto 0 auto;
-`;
-
-export const SearchAddress = styled(ButtonStyle)`
-  width: 9.625rem;
-  height: 40px;
-`;
+// export const PayBtn = styled(ButtonStyle)`
+//   width: 13.75rem;
+//   height: 4.25rem;
+//   color: white;
+//   font-size: 24px;
+//   font-weight: 700;
+//   margin: 1.875rem auto 0 auto;
+// `;
 
 export const RowLarge = styled.tr`
   @media (max-width: 500px) {

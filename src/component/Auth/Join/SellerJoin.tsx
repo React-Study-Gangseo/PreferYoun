@@ -13,8 +13,6 @@ import {
   CheckJoin,
   CheckTerms,
   Terms,
-  JoinBtn,
-  VaildBtn,
 } from "./Join.Style";
 import { TextField, IconButton, InputAdornment, Checkbox } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
@@ -23,6 +21,7 @@ import { CheckCRN, CheckId } from "API/AuthAPI";
 import { AxiosError } from "axios";
 import { FormValue } from "types/type";
 import Swal from "sweetalert2";
+import Button from "component/common/Button/Button";
 
 const label = {
   inputProps: {
@@ -153,15 +152,16 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
                 />
               )}
             />
-            <VaildBtn
-              width="ms"
-              bgColor="active"
-              onClick={(event) => {
+            <Button
+              size="ms"
+              color="primary"
+              variant="contained"
+              onClick={(event: any) => {
                 IdVaild(event);
               }}
             >
               중복체크
-            </VaildBtn>
+            </Button>
             {errors.id && (
               <StyledError role="alert">{errors.id.message}</StyledError>
             )}
@@ -305,15 +305,16 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
                 />
               )}
             />
-            <VaildBtn
-              width="ms"
-              bgColor="active"
-              onClick={(event) => {
+            <Button
+              size="ms"
+              color="primary"
+              variant="contained"
+              onClick={(event: any) => {
                 CRNVaild(event);
               }}
             >
               인증
-            </VaildBtn>
+            </Button>
             {/* {errors.company_registration_number && (
               <StyledError role="alert">
                 {errors.company_registration_number.message}
@@ -356,14 +357,15 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
             동의합니다.
           </Terms>
         </CheckJoin>
-        <JoinBtn
-          width="l"
-          bgColor="active"
+        <Button
+          size="l"
+          color="primary"
+          variant="contained"
           type="submit"
           disabled={checked ? false : true}
         >
           가입하기
-        </JoinBtn>
+        </Button>
       </Form>
     </>
   );

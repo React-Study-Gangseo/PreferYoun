@@ -5,14 +5,14 @@ import {
   SellerProduct,
   MainContent,
   OrderList,
-  TabBtn,
-  UploadBtn,
+  // TabBtn,
+  // UploadBtn,
 } from "./SellerCenterPage.Style";
 import { useNavigate } from "react-router-dom";
 import { GetSellerProduct } from "API/ProductAPI";
 import { Products } from "types/type";
 import SellerItem from "./SellerItem/SellerItem";
-
+import Button from "../../component/common/Button/Button";
 const SellerCenterPage: React.FC = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("ProductsOnSale");
@@ -44,11 +44,16 @@ const SellerCenterPage: React.FC = () => {
         <h2>
           대시보드<span>백엔드글로벌</span>
         </h2>
-        <UploadBtn width="ms" bgColor="active" onClick={handleOnClick}>
+        <Button
+          size="ms"
+          color="primary"
+          variant="contained"
+          onClick={handleOnClick}
+        >
           상품 업로드
-        </UploadBtn>
+        </Button>
         <MainContent>
-          <AsideSection>
+          {/* <AsideSection>
             <ul>
               <li key={1}>
                 <TabBtn
@@ -65,7 +70,7 @@ const SellerCenterPage: React.FC = () => {
                 <TabBtn
                   width="tabMenu"
                   color="black"
-                  onClick={(e) => handleClick(e)}
+                  onClick={(e:any) => handleClick(e)}
                   value="Order"
                   className={isActive === "Order" ? "active" : ""}
                 >
@@ -76,7 +81,7 @@ const SellerCenterPage: React.FC = () => {
                 <TabBtn
                   width="tabMenu"
                   color="black"
-                  onClick={(e) => handleClick(e)}
+                  onClick={(e:any) => handleClick(e)}
                   value="QA"
                   className={isActive === "QA" ? "active" : ""}
                 >
@@ -87,7 +92,7 @@ const SellerCenterPage: React.FC = () => {
                 <TabBtn
                   width="tabMenu"
                   color="black"
-                  onClick={(e) => handleClick(e)}
+                  onClick={(e:any) => handleClick(e)}
                   value="Statistics"
                   className={isActive === "Statistics" ? "active" : ""}
                 >
@@ -98,7 +103,7 @@ const SellerCenterPage: React.FC = () => {
                 <TabBtn
                   width="tabMenu"
                   color="black"
-                  onClick={(e) => handleClick(e)}
+                  onClick={(e:any) => handleClick(e)}
                   value="SetStore"
                   className={isActive === "SetStore" ? "active" : ""}
                 >
@@ -106,7 +111,7 @@ const SellerCenterPage: React.FC = () => {
                 </TabBtn>
               </li>
             </ul>
-          </AsideSection>
+          </AsideSection> */}
           <SellerProduct>
             {isActive === "ProductsOnSale" && (
               <OrderList>

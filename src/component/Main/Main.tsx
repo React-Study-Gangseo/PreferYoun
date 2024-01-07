@@ -21,7 +21,7 @@ import { searchData } from "redux/Search";
 import { useSelector } from "react-redux";
 import BannerSection from "./Banner/Banner";
 import TopBtnIcon from "../../assets/images/arrow_top.svg";
-
+import { ScrollRestoration, useMatches, Location } from "react-router-dom";
 // 매직 넘버 제거
 const SCROLL_Y_THRESHOLD = 800;
 const TARGET_HEIGHT = 30;
@@ -71,6 +71,7 @@ const Main: React.FC = () => {
   const fetchProduct = async (page: number) => {
     try {
       const response = await GetFullProduct(page);
+      console.log(response);
       dispatch({ type: "SET_PRODUCTS", payload: response.data.results });
       dispatch({ type: "SET_COUNT", payload: response.data.count });
     } catch (error) {
@@ -117,6 +118,18 @@ const Main: React.FC = () => {
     };
   }, []);
 
+  let getKey = React.useCallback(
+    (location: Location, matches: ReturnType<typeof useMatches>) => {
+      let match = matches.find((m) => (m.handle as any)?.scrollMode);
+      if ((match?.handle as any)?.scrollMode === "pathname") {
+        return location.pathname;
+      }
+
+      return location.key;
+    },
+    []
+  );
+
   return (
     <MainSection>
       <BannerSection />
@@ -132,6 +145,7 @@ const Main: React.FC = () => {
               </li>
             ))}
           </ProductList>
+          {/* <ScrollRestoration getKey={getKey} /> */}
         </Suspense>
         <ButtonContainer>
           {showButton && (

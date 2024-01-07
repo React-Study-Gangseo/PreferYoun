@@ -7,8 +7,6 @@ import {
   DecreaseButton,
   IncreaseButton,
   BtnGroup,
-  BuyButton,
-  KeepButton,
 } from "./MobileModal.Style";
 import { Products, orderdata } from "types/type";
 import { useDispatch } from "react-redux";
@@ -16,6 +14,7 @@ import { closeModal, openModal } from "redux/Modal";
 import Swal from "sweetalert2";
 import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";
+import Button from "component/common/Button/Button";
 
 export default function MobileModal() {
   const navigate = useNavigate();
@@ -236,22 +235,22 @@ export default function MobileModal() {
         </p>
       </TotalPriceWrap>
       <BtnGroup>
-        <BuyButton
-          width="l"
-          bgColor={userType === "BUYER" ? "active" : "dark"}
+        <Button
+          size="l"
+          color={userType === "BUYER" ? "primary" : "secondary"}
           onClick={handleBuyProduct}
           disabled={userType === "BUYER" ? false : true}
         >
           바로구매
-        </BuyButton>
-        <KeepButton
-          width="ms"
+        </Button>
+        <Button
+          size="ms"
           onClick={handleKeepProduct}
-          bgColor="dark"
+          color="secondary"
           disabled={userType === "BUYER" ? false : true}
         >
           장바구니
-        </KeepButton>
+        </Button>
       </BtnGroup>
     </>
   );

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-
+import { IconButton } from "@mui/material";
 export const HeaderSection = styled.header`
   width: 100vw;
   /* min-height: 5.625rem; */
@@ -120,7 +120,7 @@ export const HeaderNav = styled.nav`
   display: flex;
   gap: 26px;
 `;
-export const CartBtn = styled.button`
+export const CartBtn = styled(IconButton)`
   margin-top: auto;
   display: flex;
   flex-direction: column;
@@ -130,8 +130,11 @@ export const CartBtn = styled.button`
     width: 32px;
     height: 32px;
   }
+  & span {
+    font-size: 0.8rem;
+  }
 `;
-export const UserBtn = styled.button`
+export const UserBtn = styled(IconButton)`
   margin-top: auto;
   display: flex;
   flex-direction: column;
@@ -140,5 +143,8 @@ export const UserBtn = styled.button`
     margin: 0 auto;
     width: 32px;
     height: 32px;
+  }
+  & span {
+    font-size: 0.8rem;
   }
 `;

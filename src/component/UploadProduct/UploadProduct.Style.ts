@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { OutlinedInput, InputAdornment } from "@mui/material";
-import { ButtonStyle } from "component/common/Button/Button";
 
 // export const HeaderSection = styled.section`
 //   padding-left: 6.25rem;
@@ -239,10 +238,10 @@ export const ShippingBtn = styled.div`
   }
 `;
 
-export const MethodBtn = styled(ButtonStyle)`
-  &:active,
-  &.active {
-    background-color: #21bf48;
-    color: white;
-  }
-`;
+// export const MethodBtn = styled(ButtonStyle)`
+//   &:active,
+//   &.active {
+//     background-color: #21bf48;
+//     color: white;
+//   }
+// `;

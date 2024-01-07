@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Main, Heading, OrderListSection, LogOutBtn } from "./OrderList.Style";
+import { Main, Heading, OrderListSection } from "./OrderList.Style";
 import { GetOrderList } from "API/OrderAPI";
 import { OrderedData } from "types/type";
 import OrderedItem from "component/Item/OrderedItem/OrderedItem";
 import { Logout } from "API/AuthAPI";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
+import Button from "../../component/common/Button/Button";
 export default function OrderList() {
   const [orderedItem, setOrderedItem] = useState<OrderedData[]>([]);
   const storedData = localStorage.getItem("UserInfo");
@@ -59,9 +59,16 @@ export default function OrderList() {
           ))}
         </ul>
       </OrderListSection>
-      <LogOutBtn width="ms" bgColor="active" onClick={handleLogOut}>
+      <Button
+        size="l"
+        color="primary"
+        variant="contained"
+        onClick={handleLogOut}
+        padding="0px 20px"
+        fontSize="30px"
+      >
         로그아웃
-      </LogOutBtn>
+      </Button>
     </Main>
   );
 }

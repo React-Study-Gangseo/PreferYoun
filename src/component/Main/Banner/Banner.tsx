@@ -69,6 +69,7 @@ const BannerSection: React.FC = () => {
             src={img}
             alt="상품사진 배너 이미지"
             className={currentIndex === index ? "active" : "inactive"}
+            loading="lazy"
           />
         ))}
       </BannerImages>

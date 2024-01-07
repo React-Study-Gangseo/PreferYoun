@@ -5,8 +5,6 @@ import {
   OrderedIItemWrapper,
   OrderedDate,
   BtnGroup,
-  KeepBtn,
-  DetailBtn,
   MoreInfoSection,
   TotalPrice,
   OrderNumber,
@@ -14,6 +12,7 @@ import {
 import Swal from "sweetalert2";
 import { AddKeepProduct } from "API/KeepAPI";
 import { useNavigate } from "react-router-dom";
+import Button from "component/common/Button/Button";
 const OrderedItem: React.FC<{
   ListItem: OrderedData;
 }> = ({ ListItem }) => {
@@ -143,21 +142,23 @@ const OrderedItem: React.FC<{
             </div>
           </div>
           <BtnGroup>
-            <DetailBtn
-              color="black"
-              width="s"
+            <Button
+              variant="outlined"
+              size="ms"
               onClick={() => handleTabClick()}
-              style={{ borderBottom: "1px solid #767676" }}
+              fontSize="1rem"
             >
               상세보기
-            </DetailBtn>
-            <KeepBtn
-              width="s"
-              bgColor="active"
+            </Button>
+            <Button
+              size="ms"
+              color="primary"
+              variant="contained"
               onClick={() => handleKeepProduct(index)}
+              padding="0px 20px"
             >
               장바구니 담기
-            </KeepBtn>
+            </Button>
           </BtnGroup>
         </OrderedIItemWrapper>
       ))}

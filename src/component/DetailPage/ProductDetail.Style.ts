@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ButtonStyle } from "component/common/Button/Button";
+import { IconButton } from "@mui/material";
 
 export const MainSection = styled.main`
   width: 100%;
@@ -24,7 +24,7 @@ export const DetailPageWrapper = styled.section`
 `;
 export const ProductImg = styled.img`
   width: 37.5rem;
-  height: 37.5rem;
+  aspect-ratio: 1/1;
   object-fit: cover;
   @media (max-width: 896px) {
     width: 100%;
@@ -46,7 +46,7 @@ export const ProductInfoSection = styled.section`
     margin: 1rem 0 1.25rem;
   }
 `;
-export const ShareBtn = styled.button`
+export const ShareBtn = styled(IconButton)`
   position: absolute;
   right: 10px;
   top: 10px;
@@ -54,7 +54,6 @@ export const ShareBtn = styled.button`
   height: 60px;
   padding: 10px;
   border-radius: 100%;
-  box-shadow: 5px 8px 10px 0 #c4c4c4;
   @media (max-width: 896px) {
     display: none;
   }
@@ -143,21 +142,6 @@ export const TotalPriceWrap = styled.div`
   @media (max-width: 896px) {
     display: none;
   }
-`;
-
-export const BuyButton = styled(ButtonStyle)`
-  width: 416px;
-  height: 60px;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 22px;
-`;
-
-export const KeepButton = styled(ButtonStyle)`
-  width: 200px;
-  height: 60px;
-  font-size: 1.125rem;
-  font-weight: 700;
 `;
 
 export const DesktopMoreInfo = styled.div`
