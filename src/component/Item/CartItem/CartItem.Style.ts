@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { ButtonStyle } from "component/common/Button/Button";
 export const KeepProduct = styled.tr`
   width: 100%;
   /* position: relative; */
@@ -213,16 +212,6 @@ export const OrderBtn = styled(Button)`
   margin: 2.5rem auto 0;
   font-size: 24px;
   font-weight: 700;
-`;
-
-export const OrderBtnS = styled(ButtonStyle)`
-  height: 40px;
-  width: 8.125rem;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 12px;
-  margin: 0 auto;
 `;
 
 export const DeleteBtn = styled.button`

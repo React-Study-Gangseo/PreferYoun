@@ -19,9 +19,7 @@ import {
   LastCheck,
   OrdererInfoForm,
   OrderPageTitle,
-  PayBtn,
   Wrapper,
-  SearchAddress,
   FormControlLabelStyle,
   AddressInfo,
   MobilePayInfo,
@@ -42,6 +40,7 @@ import { CartOrder, CartOneOrder, OrderDirect } from "API/OrderAPI";
 import { useDispatch } from "react-redux";
 import { openModal } from "redux/Modal";
 import { RootState } from "redux/store";
+import Button from "../../component/common/Button/Button";
 const label = {
   inputProps: {
     "aria-label": "최종 금액 확인 체크",
@@ -446,14 +445,15 @@ const OrderPage: React.FC = () => {
               <label>배송주소</label>
               <Address>
                 <div>
-                  <SearchAddress
-                    width="s"
-                    bgColor="active"
-                    type="button"
+                  <Button
+                    size="ms"
+                    color="primary"
+                    variant="contained"
                     onClick={handleSearchAddress}
+                    padding="0px 0px"
                   >
                     우편번호 조회
-                  </SearchAddress>
+                  </Button>
                   <input
                     id="address"
                     value={address.firstAddress}
@@ -607,14 +607,16 @@ const OrderPage: React.FC = () => {
                 />
                 <p>주문 내용을 확인하였으며, 정보 제공에 동의합니다.</p>
               </div>
-              <PayBtn
-                width="ms"
-                bgColor={lastCheck ? "active" : "inactive"}
+              <Button
+                size="l"
+                variant="contained"
+                color={lastCheck ? "primary" : "secondary"}
                 disabled={lastCheck ? false : true}
                 type="submit"
+                fontSize="24px"
               >
                 결제하기
-              </PayBtn>
+              </Button>
             </LastCheck>
           </FinallyPayWrapper>
         </FinallyPay>

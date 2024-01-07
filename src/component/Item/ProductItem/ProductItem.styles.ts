@@ -54,6 +54,7 @@ export const SoldOutWrapper = styled.div`
 
 export const SoldOutImg = styled.img`
   position: absolute;
-  width: 100%;
+  width: 23.75rem;
   aspect-ratio: 1/1;
+  object-fit: cover;
 `;

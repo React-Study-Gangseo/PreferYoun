@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ButtonStyle } from "component/common/Button/Button";
+
 export const OrderedIItemWrapper = styled.article`
   width: 100%;
   margin-bottom: 20px;
@@ -58,25 +58,6 @@ export const BtnGroup = styled.section`
   }
 `;
 
-export const DetailBtn = styled(ButtonStyle)`
-  padding: 0px 20px;
-  flex-grow: 0.4;
-  height: 30px;
-  border: 1px solid #767676;
-  line-height: 100%;
-  @media (min-width: 896px) {
-    width: 100%;
-  }
-`;
-export const KeepBtn = styled(ButtonStyle)`
-  padding: 0px 20px;
-  flex-grow: 0.4;
-  height: 30px;
-  line-height: 100%;
-  @media (min-width: 896px) {
-    width: 100%;
-  }
-`;
 export const MoreInfoSection = styled.section`
   width: 100%;
   height: auto;

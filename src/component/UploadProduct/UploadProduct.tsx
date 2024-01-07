@@ -15,7 +15,6 @@ import {
   ProductIconWrapper,
   ProductImgIcon,
   ShippingBtn,
-  MethodBtn,
   Sufix,
   NameSufix,
 } from "./UploadProduct.Style";
@@ -159,28 +158,26 @@ export default function UploadProduct() {
                   />
                 </div>
                 <h5>배송방법</h5>
-                <ShippingBtn>
-                  <MethodBtn
-                    type="button"
-                    width="ms"
-                    color="black"
+                {/* <ShippingBtn>
+                  <Button
+                    size="ms"
+                    variant="outlined"
                     value="PARCEL"
-                    onClick={(e) => handleMethod(e)}
+                    onClick={(e: any) => handleMethod(e)}
                     className={isActive === "PARCEL" ? "active" : ""}
                   >
                     택배, 소포, 등기
-                  </MethodBtn>
-                  <MethodBtn
-                    type="button"
-                    width="ms"
-                    color="black"
+                  </Button>
+                  <Button
+                    size="ms"
+                    variant="outlined"
                     value="DELIVERY"
-                    onClick={(e) => handleMethod(e)}
+                    onClick={(e: any) => handleMethod(e)}
                     className={isActive === "DELIVERY" ? "active" : ""}
                   >
                     직접배송(화물배달)
-                  </MethodBtn>
-                </ShippingBtn>
+                  </Button>
+                </ShippingBtn> */}
                 <div>
                   <label>기본 배송비</label>
                   <Input
@@ -227,15 +224,25 @@ export default function UploadProduct() {
               </div>
             </UploadProductDetail>
             <ButtonGroup>
-              <Button width="ms" color="black" border="active">
+              <Button size="ms" variant="outlined">
                 취소
               </Button>
               {data ? (
-                <Button width="ms" bgColor="active" onClick={EditProduct}>
+                <Button
+                  size="ms"
+                  variant="contained"
+                  color="primary"
+                  onClick={EditProduct}
+                >
                   수정하기
                 </Button>
               ) : (
-                <Button width="ms" bgColor="active" onClick={UploadProduct}>
+                <Button
+                  size="ms"
+                  color="primary"
+                  variant="contained"
+                  onClick={UploadProduct}
+                >
                   저장하기
                 </Button>
               )}

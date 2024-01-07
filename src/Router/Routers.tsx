@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import HomePage from "../Page/HomePage/HomePage";
 import SellerCenterPage from "../Page/SellerCenterPage/SellerCenterPage";
 import UploadPage from "../Page/UploadPage/UploadPage";
@@ -19,89 +19,162 @@ import JoinPage from "Page/AuthPage/JoinPage";
 import SearchPage from "Page/SearchPage/SearchPage";
 export interface RouterProps {}
 
-const Routers: React.FC<RouterProps> = () => {
-  return (
-    <>
+// const Routers: React.FC<RouterProps> = () => {
+//   return (
+//     <>
+//       <>
+//         <PC>
+//           <Router>
+//             <ScrollToTop />
+//             <Routes>
+//               <Route path="/login" element={<LoginPage />} />
+//               <Route path="/join" element={<JoinPage />} />
+//               <Route
+//                 path="*"
+//                 element={
+//                   <>
+//                     <Header />
+//                     <Routes>
+//                       <Route path="/" element={<HomePage />} />
+//                       <Route
+//                         path="/seller/center"
+//                         element={<SellerCenterPage />}
+//                       />
+//                       <Route
+//                         path="/seller/center/upload"
+//                         element={<UploadPage />}
+//                       />
+//                       <Route path="/detailProduct/:product_name">
+//                         <Route index element={<DetailPage />} />
+//                       </Route>
+//                       <Route path="/orderpage" element={<OrderPage />} />
+//                       <Route path="/cart" element={<CartPage />} />
+//                       <Route path="/mypage" element={<MyPage />} />
+//                     </Routes>
+//                     <Footer />
+//                   </>
+//                 }
+//               />
+//             </Routes>
+//             <GlobalModal />
+//           </Router>
+//         </PC>
+//       </>
+//       <>
+//         <Mobile>
+//           <Router>
+//             <ScrollToTop />
+//             <Routes>
+//               <Route path="/login" element={<LoginPage />} />
+//               <Route path="/join" element={<JoinPage />} />
+//               <Route path="/search" element={<SearchPage />} />
+//               <Route
+//                 path="*"
+//                 element={
+//                   <>
+//                     <MobileHeader />
+//                     <Routes>
+//                       <Route path="/" element={<HomePage />} />
+//                       <Route
+//                         path="/seller/center"
+//                         element={<SellerCenterPage />}
+//                       />
+//                       <Route
+//                         path="/seller/center/upload"
+//                         element={<UploadPage />}
+//                       />
+//                       <Route path="/detailProduct/:product_name">
+//                         <Route index element={<DetailPage />} />
+//                       </Route>
+//                       <Route path="/orderpage" element={<OrderPage />} />
+//                       <Route path="/cart" element={<CartPage />} />
+//                       <Route path="/mypage" element={<MyPage />} />
+//                     </Routes>
+//                     <Footer />
+//                     <Navigation />
+//                   </>
+//                 }
+//               />
+//             </Routes>
+//             <GlobalModal />
+//           </Router>
+//         </Mobile>
+//       </>
+//     </>
+//   );
+// };
+
+// export default Routers;
+
+const Routers = createBrowserRouter([
+  {
+    path: "/",
+    element: (
       <>
-        <PC>
-          <Router>
+        <>
+          <PC>
             <ScrollToTop />
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/join" element={<JoinPage />} />
-              <Route
-                path="*"
-                element={
-                  <>
-                    <Header />
-                    <Routes>
-                      <Route path="/" element={<HomePage />} />
-                      <Route
-                        path="/seller/center"
-                        element={<SellerCenterPage />}
-                      />
-                      <Route
-                        path="/seller/center/upload"
-                        element={<UploadPage />}
-                      />
-                      <Route path="/detailProduct/:product_name">
-                        <Route index element={<DetailPage />} />
-                      </Route>
-                      <Route path="/orderpage" element={<OrderPage />} />
-                      <Route path="/cart" element={<CartPage />} />
-                      <Route path="/mypage" element={<MyPage />} />
-                    </Routes>
-                    <Footer />
-                  </>
-                }
-              />
-            </Routes>
+            <Header />
+            <Outlet />
+            <Footer />
             <GlobalModal />
-          </Router>
-        </PC>
-      </>
-      <>
-        <Mobile>
-          <Router>
+          </PC>
+        </>
+        <>
+          <Mobile>
             <ScrollToTop />
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/join" element={<JoinPage />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route
-                path="*"
-                element={
-                  <>
-                    <MobileHeader />
-                    <Routes>
-                      <Route path="/" element={<HomePage />} />
-                      <Route
-                        path="/seller/center"
-                        element={<SellerCenterPage />}
-                      />
-                      <Route
-                        path="/seller/center/upload"
-                        element={<UploadPage />}
-                      />
-                      <Route path="/detailProduct/:product_name">
-                        <Route index element={<DetailPage />} />
-                      </Route>
-                      <Route path="/orderpage" element={<OrderPage />} />
-                      <Route path="/cart" element={<CartPage />} />
-                      <Route path="/mypage" element={<MyPage />} />
-                    </Routes>
-                    <Footer />
-                    <Navigation />
-                  </>
-                }
-              />
-            </Routes>
+            <MobileHeader />
+            <Outlet />
+            <Footer />
+            <Navigation />
             <GlobalModal />
-          </Router>
-        </Mobile>
+          </Mobile>
+        </>
       </>
-    </>
-  );
-};
+    ),
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "detailProduct/:product_name",
+        element: <DetailPage />,
+      },
+      {
+        path: "cart",
+        element: <CartPage />,
+      },
+      {
+        path: "mypage",
+        element: <MyPage />,
+      },
+      {
+        path: "orderpage",
+        element: <OrderPage />,
+      },
+      {
+        path: "sellercenter",
+        element: <SellerCenterPage />,
+      },
+      {
+        path: "upload",
+        element: <UploadPage />,
+      },
+      {
+        path: "search",
+        element: <SearchPage />,
+      },
+    ],
+  },
+  {
+    path: "login",
+    element: <LoginPage />,
+  },
+  {
+    path: "join",
+    element: <JoinPage />,
+  },
+]);
 
 export default Routers;

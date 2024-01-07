@@ -37,7 +37,7 @@ export default function MoreProductInfo({ Productinfo }: Props) {
     <>
       <>
         <DesktopMoreInfo>
-          <ul>
+          {/* <ul>
             <li>
               <Button
                 width="tab"
@@ -78,7 +78,7 @@ export default function MoreProductInfo({ Productinfo }: Props) {
                 반품/교환정보
               </Button>
             </li>
-          </ul>
+          </ul> */}
 
           {activeTab === "tab1" && (
             <MoreInfoSecion>
@@ -106,7 +106,7 @@ export default function MoreProductInfo({ Productinfo }: Props) {
         </DesktopMoreInfo>
       </>
       <>
-        <MobileMoreInfo>
+        {/* <MobileMoreInfo>
           <ul>
             <li>
               <Button
@@ -173,7 +173,7 @@ export default function MoreProductInfo({ Productinfo }: Props) {
               </MobileMoreInfoSection>
             </li>
           </ul>
-        </MobileMoreInfo>
+        </MobileMoreInfo> */}
       </>
     </>
   );

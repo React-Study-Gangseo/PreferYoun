@@ -17,8 +17,11 @@ declare module "@mui/material/styles" {
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#21BF48",
-      dark: "#767676",
+      main: "#21bf48",
+    },
+    secondary: {
+      main: "#767676",
+      dark: "#C4C4C4",
     },
     inActive: "#C4C4C4",
     tabActive: "#ffffff",
@@ -62,10 +65,10 @@ const theme = createTheme({
         root: {
           fontFamily: "SUIT-Regular, sans-serif",
           cursor: "pointer",
-          color: "black",
+          // color: "black",
           padding: 0,
           border: 0,
-          backgroundColor: "transparent",
+          // backgroundColor: "transparent",
         },
         containedPrimary: {
           color: "white",
@@ -74,12 +77,6 @@ const theme = createTheme({
         outlinedPrimary: {
           color: "#767676",
           border: "1px solid #c4c4c4",
-        },
-        sizeLarge: {
-          height: "60px",
-        },
-        sizeMedium: {
-          height: "56px",
         },
       },
     },
@@ -93,6 +90,16 @@ const theme = createTheme({
           "&:focus": {
             outline: "none",
           },
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: "#000000", // 기본 색상을 파란색으로 설정
+          // "&:hover": {
+          //   backgroundColor: "rgba(0, 0, 255, 0.1)",
+          // },
         },
       },
     },

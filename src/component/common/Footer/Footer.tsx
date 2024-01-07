@@ -7,6 +7,7 @@ import {
   Nav,
   NavList,
   Address,
+  SocialBtn,
 } from "./Footer.Style";
 import InstaIcon from "../../../assets/images/icon-insta.svg";
 import MetaIcon from "../../../assets/images/icon-fb.svg";
@@ -38,19 +39,19 @@ const Footer: React.FC = () => {
         <Nav>
           <NavList>
             <li>
-              <button aria-label="인스타그램">
+              <SocialBtn aria-label="인스타그램" color="secondary">
                 <img src={InstaIcon} alt="인스타그램 아이콘" />
-              </button>
+              </SocialBtn>
             </li>
             <li>
-              <button aria-label="페이스북">
+              <SocialBtn aria-label="페이스북">
                 <img src={MetaIcon} alt="페이스북 아이콘" />
-              </button>
+              </SocialBtn>
             </li>
             <li>
-              <button aria-label="유튜브">
+              <SocialBtn aria-label="유튜브">
                 <img src={YtIcon} alt="유튜브 아이콘" />
-              </button>
+              </SocialBtn>
             </li>
           </NavList>
         </Nav>

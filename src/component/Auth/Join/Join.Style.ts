@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { ButtonStyle } from "../../common/Button/Button";
 
 export const JoinSection = styled.section`
   background: white;
@@ -50,14 +49,6 @@ export const Form = styled.form`
   margin: 0 auto;
 `;
 
-export const VaildBtn = styled(ButtonStyle)`
-  width: 7.625rem;
-  height: 3.6rem;
-  font-size: 1rem;
-  border-radius: 5px;
-  border-radius: 10px;
-  margin-bottom: auto;
-`;
 export const InputWrap = styled.div`
   margin-bottom: 1.4rem;
 `;
@@ -131,10 +122,6 @@ export const Terms = styled.p`
   line-height: normal;
 `;
 
-export const JoinBtn = styled(ButtonStyle)`
-  margin: 34px auto;
-  padding: 10px;
-`;
 export const Main = styled.main`
   width: 100%;
   margin-top: 80px;

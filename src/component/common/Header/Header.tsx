@@ -137,11 +137,11 @@ const Header: React.FC<HeaderProps> = () => {
         <HeaderNav>
           <CartBtn onClick={handleMoveCart}>
             <img src={Cart} alt="쇼핑카트 아이콘" />
-            장바구니
+            <span>장바구니</span>
           </CartBtn>
           <UserBtn onClick={handleOpenLoginModal}>
             <img src={User} alt="로그인용 유저 아이콘" />
-            로그인
+            <span>로그인</span>
           </UserBtn>
         </HeaderNav>
       </>
@@ -169,9 +169,14 @@ const Header: React.FC<HeaderProps> = () => {
         <HeaderNav>
           <UserBtn onClick={handleMoveMyPage}>
             <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
-            마이페이지
+            <span>마이페이지</span>
           </UserBtn>
-          <Button width="ms" bgColor="active" onClick={handleCenterBtn}>
+          <Button
+            size="ms"
+            variant="contained"
+            color="primary"
+            onClick={handleCenterBtn}
+          >
             <CenterImg src={SellerCenter} alt="판매자 센터 아이콘" />
             판매자 센터
           </Button>
@@ -201,11 +206,11 @@ const Header: React.FC<HeaderProps> = () => {
         <HeaderNav>
           <CartBtn onClick={handleMoveCart}>
             <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
-            장바구니
+            <span>장바구니</span>
           </CartBtn>
           <UserBtn onClick={handleMoveMyPage}>
             <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
-            마이페이지
+            <span>마이페이지</span>
           </UserBtn>
         </HeaderNav>
       </>

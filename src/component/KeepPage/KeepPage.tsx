@@ -6,10 +6,7 @@ import {
   KeepForm,
   CartTable,
   ClacPrice,
-  OrderBtn,
   EmptyKeepList,
-  AllDeleteBtn,
-  LoginBtn,
   AllSection,
 } from "./KeepPage.Style";
 import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
@@ -21,17 +18,19 @@ import { useDispatch } from "react-redux";
 import { TotalPriceState } from "redux/TotalPrice";
 import { CartOrderState } from "redux/CartOrder";
 import { useNavigate } from "react-router-dom";
-
+import Button from "../../component/common/Button/Button";
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState<cartData[]>([]);
   const [cartItem, setCartItem] = useState<cartItem[]>([]);
   const [isLogin, setIsLogin] = useState(false);
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const token = userInfo?.token ? userInfo.token : "";
   const dispatch = useDispatch();
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
-  const storedData = localStorage.getItem("UserInfo");
   const totalShippingFee = useSelector(
     (state: { totalPrice: TotalPriceState }) => {
       return state.totalPrice.value.reduce(
@@ -48,13 +47,14 @@ const KeepPage: React.FC = () => {
   // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
   const FetchKeepList = async () => {
     try {
-      const keepList = await KeepProductList();
-      setCartData([keepList.data]);
+      if (token) {
+        const keepList = await KeepProductList();
+        setCartData([keepList.data]);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(cartItem);
   useEffect(() => {
     FetchKeepList();
     if (storedData) {
@@ -195,13 +195,14 @@ const KeepPage: React.FC = () => {
                       장바구니 아이템 전체 체크 박스
                     </label>
                   </div>
-                  <AllDeleteBtn
-                    width="s"
-                    bgColor="active"
+                  <Button
+                    size="s"
+                    color="primary"
+                    variant="contained"
                     onClick={handleAllDelete}
                   >
                     전체삭제
-                  </AllDeleteBtn>
+                  </Button>
                 </AllSection>
                 <ClacPrice>
                   <li>
@@ -234,13 +235,14 @@ const KeepPage: React.FC = () => {
                     </strong>
                   </li>
                 </ClacPrice>
-                <OrderBtn
-                  width="l"
-                  bgColor="active"
+                <Button
+                  size="l"
+                  color="primary"
+                  variant="contained"
                   onClick={() => handleOrderList()}
                 >
                   주문하기
-                </OrderBtn>
+                </Button>
               </>
             ) : (
               <EmptyKeepList>
@@ -253,9 +255,14 @@ const KeepPage: React.FC = () => {
               <p>
                 로그인을 하시면, 장바구니에 보관된 상품을 확인하실 수 있습니다.
               </p>
-              <LoginBtn width="ms" bgColor="active" onClick={handleLogin}>
+              <Button
+                size="ms"
+                color="primary"
+                variant="contained"
+                onClick={handleLogin}
+              >
                 로그인
-              </LoginBtn>
+              </Button>
             </EmptyKeepList>
           )}
         </KeepForm>

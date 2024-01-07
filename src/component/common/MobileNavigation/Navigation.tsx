@@ -8,7 +8,6 @@ import {
   ButtonContainer,
   CenterImg,
   Center,
-  BuyBtn,
   BuyBtnLi,
 } from "./Navigation.Style";
 import HomeIcon from "../../../assets/images/home-icon.svg";
@@ -22,6 +21,8 @@ import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
 import Share from "../../../assets/images/share-icon.svg";
 import { useDispatch } from "react-redux";
 import { openModal } from "redux/Modal";
+import Button from "../Button/Button";
+
 export default function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -141,9 +142,14 @@ export default function Navigation() {
                 </button>
               </li>
               <BuyBtnLi>
-                <BuyBtn bgColor="active" onClick={handleCountQuantity}>
+                <Button
+                  size="ms"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleCountQuantity}
+                >
                   구매하기
-                </BuyBtn>
+                </Button>
               </BuyBtnLi>
             </>
           ) : (

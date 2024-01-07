@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 export const FooterSection = styled.footer`
   display: flex;
@@ -23,7 +24,7 @@ export const InfoList = styled.ul`
   width: 100%;
   display: flex;
   gap: 1.125rem;
-  line-height: 2rem;
+  line-height: 3rem;
   & li:not(:last-of-type)::after {
     content: "";
     border-right: 1px solid black;
@@ -52,4 +53,10 @@ export const Address = styled.address`
   flex-direction: column;
   width: 85vw;
   margin: 3.8125rem auto 0;
+`;
+
+export const SocialBtn = styled(IconButton)`
+  & img:hover {
+    transform: scale(1.1);
+  }
 `;

@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { ButtonStyle } from "component/common/Button/Button";
 const ModalDiv = styled.div`
   position: fixed;
   bottom: 0;
@@ -99,21 +98,6 @@ const DecreaseButton = styled.button`
   border-right: 1px solid #c4c4c4;
 `;
 
-const BuyButton = styled(ButtonStyle)`
-  width: 416px;
-  height: 60px;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 22px;
-`;
-
-const KeepButton = styled(ButtonStyle)`
-  width: 200px;
-  height: 60px;
-  font-size: 1.125rem;
-  font-weight: 700;
-  padding: 5px 0;
-`;
 const BtnGroup = styled.div`
   display: flex;
   gap: 14px;
@@ -127,6 +111,4 @@ export {
   IncreaseButton,
   DecreaseButton,
   BtnGroup,
-  KeepButton,
-  BuyButton,
 };

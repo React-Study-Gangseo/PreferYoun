@@ -6,8 +6,6 @@ import {
   ProductImg,
   ProductInfoSection,
   CountWrap,
-  BuyButton,
-  KeepButton,
   DecreaseButton,
   IncreaseButton,
   TotalPriceWrap,
@@ -19,11 +17,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";
 import Swal from "sweetalert2";
-import ShareIcon from "../../assets/images/share-icon-Large.svg";
+import ShareIcon from "@mui/icons-material/Share";
 import MoreProductInfo from "./MoreInfo/MoreProductInfo";
-
+import Button from "component/common/Button/Button";
 const ProductDetail: React.FC = () => {
   const location = useLocation();
+  console.log(location);
   const pathname = location.pathname;
   const productId = Number(pathname.slice(15));
   const product = location.state;
@@ -109,6 +108,7 @@ const ProductDetail: React.FC = () => {
       setPostCartData((prevState) => ({ ...prevState, quantity: count }));
     }
   }, [count]);
+
   const handleBuyProduct = () => {
     if (productInfo?.stock) {
       navigate("/orderpage", {
@@ -264,8 +264,12 @@ const ProductDetail: React.FC = () => {
         <ProductInfoSection>
           <span>{productInfo?.store_name}</span>
           <h3>{productInfo?.product_name}</h3>
-          <ShareBtn aria-label="공유하기 버튼" onClick={kakaoButton}>
-            <img src={ShareIcon} alt="공유하기 아이콘" />
+          <ShareBtn
+            color="secondary"
+            aria-label="공유하기 버튼"
+            onClick={kakaoButton}
+          >
+            <ShareIcon fontSize="large" />
           </ShareBtn>
           <Price>
             {productInfo?.price && (
@@ -316,16 +320,25 @@ const ProductDetail: React.FC = () => {
             </p>
           </TotalPriceWrap>
           <BtnGroup>
-            <BuyButton
-              width="l"
-              bgColor={userType === "BUYER" ? "active" : "dark"}
+            <Button
+              size="m"
+              color={userType === "BUYER" ? "primary" : "secondary"}
+              variant="contained"
               onClick={handleBuyProduct}
+              fontSize="20px"
             >
               바로구매
-            </BuyButton>
-            <KeepButton width="ms" onClick={handleKeepProduct} bgColor="dark">
+            </Button>
+            <Button
+              size="ms"
+              onClick={handleKeepProduct}
+              color="secondary"
+              variant="contained"
+              padding=" 30px 40px"
+              fontSize="20px"
+            >
               장바구니
-            </KeepButton>
+            </Button>
           </BtnGroup>
         </ProductInfoSection>
       </DetailPageWrapper>

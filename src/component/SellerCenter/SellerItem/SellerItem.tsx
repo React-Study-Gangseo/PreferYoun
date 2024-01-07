@@ -36,16 +36,19 @@ const SellerItem: React.FC<{
         {`${new Intl.NumberFormat("ko-KR").format(product.price || 0)}`}원
       </td>
       <td>
-        <Button width="s" bgColor="active" onClick={() => handleEditProduct()}>
+        <Button
+          size="s"
+          color="primary"
+          variant="contained"
+          onClick={() => handleEditProduct()}
+        >
           수정
         </Button>
       </td>
       <td>
         <Button
-          width="s"
-          bgColor="tabActive"
-          color="black"
-          border="active"
+          size="s"
+          variant="outlined"
           onClick={() => {
             if (product.product_id !== undefined) {
               handleDeleteProduct(product.product_id);

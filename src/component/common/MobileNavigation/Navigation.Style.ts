@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { ButtonStyle } from "../Button/Button";
+
 const NavWrapper = styled.nav`
   position: fixed;
   width: 100%;
@@ -108,12 +108,7 @@ const Center = styled.div`
     line-height: 50px;
   }
 `;
-const BuyBtn = styled(ButtonStyle)`
-  min-width: 300px;
-  width: 100%;
-  padding: 0 10px;
-  font-size: 20px;
-`;
+
 const BuyBtnLi = styled.li`
   flex-grow: 0.5;
 `;
@@ -133,6 +128,5 @@ export {
   MoreLi,
   CenterImg,
   Center,
-  BuyBtn,
   BuyBtnLi,
 };
