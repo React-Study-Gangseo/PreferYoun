@@ -300,6 +300,7 @@ const CartItem: React.FC<{
                 color="primary"
                 variant="contained"
                 onClick={() => handleOrderItem()}
+                margin="0 auto"
               >
                 주문하기
               </Button>
@@ -380,6 +381,7 @@ const CartItem: React.FC<{
                 color="primary"
                 variant="contained"
                 onClick={() => handleOrderItem()}
+                margin="0 auto"
               >
                 주문하기
               </Button>

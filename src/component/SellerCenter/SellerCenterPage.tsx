@@ -13,11 +13,14 @@ import { GetSellerProduct } from "API/ProductAPI";
 import { Products } from "types/type";
 import SellerItem from "./SellerItem/SellerItem";
 import Button from "../../component/common/Button/Button";
+import TabButton from "component/common/Button/TabButton";
 const SellerCenterPage: React.FC = () => {
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState("ProductsOnSale");
+  const [activeTab, setActiveTab] = useState(0);
   const [sellerProducts, setSellerProducts] = useState<Products[]>([]);
-
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setActiveTab(newValue);
+  };
   const handleOnClick = () => {
     navigate("/seller/center/upload");
   };
@@ -33,9 +36,8 @@ const SellerCenterPage: React.FC = () => {
     getSellerProduct();
   }, []);
 
-  function handleClick(e: any) {
-    setIsActive(e.target.value);
-  }
+
+  const tabLabels = ["판매중인 상품", "주문/배송", "문의/리뷰", "통계", "스토어 설정"];
   return (
     <>
       <h1 className="a11y-hidden">판매자 센터</h1>
@@ -53,67 +55,17 @@ const SellerCenterPage: React.FC = () => {
           상품 업로드
         </Button>
         <MainContent>
-          {/* <AsideSection>
-            <ul>
-              <li key={1}>
-                <TabBtn
-                  width="tabMenu"
-                  color="black"
-                  onClick={(e) => handleClick(e)}
-                  value="ProductsOnSale"
-                  className={isActive === "ProductsOnSale" ? "active" : ""}
-                >
-                  {`판매중인 상품(${sellerProducts.length})`}
-                </TabBtn>
-              </li>
-              <li key={2}>
-                <TabBtn
-                  width="tabMenu"
-                  color="black"
-                  onClick={(e:any) => handleClick(e)}
-                  value="Order"
-                  className={isActive === "Order" ? "active" : ""}
-                >
-                  주문/배송
-                </TabBtn>
-              </li>
-              <li key={3}>
-                <TabBtn
-                  width="tabMenu"
-                  color="black"
-                  onClick={(e:any) => handleClick(e)}
-                  value="QA"
-                  className={isActive === "QA" ? "active" : ""}
-                >
-                  문의/리뷰
-                </TabBtn>
-              </li>
-              <li key={4}>
-                <TabBtn
-                  width="tabMenu"
-                  color="black"
-                  onClick={(e:any) => handleClick(e)}
-                  value="Statistics"
-                  className={isActive === "Statistics" ? "active" : ""}
-                >
-                  통계
-                </TabBtn>
-              </li>
-              <li key={5}>
-                <TabBtn
-                  width="tabMenu"
-                  color="black"
-                  onClick={(e:any) => handleClick(e)}
-                  value="SetStore"
-                  className={isActive === "SetStore" ? "active" : ""}
-                >
-                  스토어 설정
-                </TabBtn>
-              </li>
-            </ul>
-          </AsideSection> */}
+          <AsideSection>
+          <TabButton
+              value={activeTab}
+              onChange={handleTabChange} 
+              labels={tabLabels} 
+              orientation="vertical" />
+              {/* {`판매중인 상품(${sellerProducts.length})`} */}
+            {/* </TabButton> */}
+          </AsideSection>
           <SellerProduct>
-            {isActive === "ProductsOnSale" && (
+            {activeTab === 0 && (
               <OrderList>
                 <thead>
                   <tr>
@@ -135,16 +87,16 @@ const SellerCenterPage: React.FC = () => {
                 </tbody>
               </OrderList>
             )}
-            {isActive === "Order" && (
+            {activeTab === 1 && (
               <SellerProduct>여기에 주문 배송 내용을 넣으세요.</SellerProduct>
             )}
-            {isActive === "QA" && (
+            {activeTab === 2 && (
               <SellerProduct>여기에 Q/A 내용을 넣으세요.</SellerProduct>
             )}
-            {isActive === "Statistics" && (
+            {activeTab === 3 && (
               <SellerProduct>여기에 통계 내용을 넣으세요.</SellerProduct>
             )}
-            {isActive === "SetStore" && (
+            {activeTab === 4 && (
               <SellerProduct>여기에 스토어 설정 내용을 넣으세요.</SellerProduct>
             )}
           </SellerProduct>

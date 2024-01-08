@@ -145,25 +145,13 @@ export const TotalPriceWrap = styled.div`
 `;
 
 export const DesktopMoreInfo = styled.div`
+  width: 100%;
   display: none;
   @media (min-width: 897px) {
     display: block;
     margin-top: 8.75rem;
     font-size: 1.125rem;
     font-weight: 500;
-    & > ul {
-      display: flex;
-      height: 60px;
-    }
-    & > ul > li {
-      flex: 1 1 25%;
-      text-align: center;
-      line-height: 3.75rem;
-    }
-    & button {
-      width: 100%;
-      height: 100%;
-    }
   }
 `;
 export const MobileMoreInfo = styled.div`

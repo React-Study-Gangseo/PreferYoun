@@ -326,6 +326,7 @@ const ProductDetail: React.FC = () => {
               variant="contained"
               onClick={handleBuyProduct}
               fontSize="20px"
+              padding=" 0 40px"
             >
               바로구매
             </Button>
@@ -334,7 +335,7 @@ const ProductDetail: React.FC = () => {
               onClick={handleKeepProduct}
               color="secondary"
               variant="contained"
-              padding=" 30px 40px"
+              padding=" 0 40px"
               fontSize="20px"
             >
               장바구니
