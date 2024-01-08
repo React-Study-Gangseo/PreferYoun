@@ -154,11 +154,11 @@ const Routers = createBrowserRouter([
         element: <OrderPage />,
       },
       {
-        path: "sellercenter",
+        path: "seller/center",
         element: <SellerCenterPage />,
       },
       {
-        path: "upload",
+        path: "seller/center/upload",
         element: <UploadPage />,
       },
       {

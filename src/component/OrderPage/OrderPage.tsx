@@ -614,6 +614,7 @@ const OrderPage: React.FC = () => {
                 disabled={lastCheck ? false : true}
                 type="submit"
                 fontSize="24px"
+                margin="0 auto"
               >
                 결제하기
               </Button>

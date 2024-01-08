@@ -195,14 +195,15 @@ const KeepPage: React.FC = () => {
                       장바구니 아이템 전체 체크 박스
                     </label>
                   </div>
-                  <Button
-                    size="s"
-                    color="primary"
-                    variant="contained"
-                    onClick={handleAllDelete}
-                  >
-                    전체삭제
-                  </Button>
+                    <Button
+                      size="s"
+                      color="primary"
+                      variant="contained"
+                      onClick={handleAllDelete}
+                      margin="10px 0 10px auto"
+                    >
+                      전체삭제
+                    </Button>
                 </AllSection>
                 <ClacPrice>
                   <li>
@@ -240,6 +241,7 @@ const KeepPage: React.FC = () => {
                   color="primary"
                   variant="contained"
                   onClick={() => handleOrderList()}
+                  margin="30px auto 20px auto"
                 >
                   주문하기
                 </Button>

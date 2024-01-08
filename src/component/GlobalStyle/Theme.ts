@@ -68,6 +68,8 @@ const theme = createTheme({
           // color: "black",
           padding: 0,
           border: 0,
+          display: "block",
+          textAlign: "center",
           // backgroundColor: "transparent",
         },
         containedPrimary: {
