@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { TotalPriceState } from "redux/TotalPrice";
+import { TotalPriceState } from "../../redux/TotalPrice";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   OrderList,
@@ -38,8 +38,8 @@ import {
 import { orderdata, Products } from "types/type";
 import { CartOrder, CartOneOrder, OrderDirect } from "API/OrderAPI";
 import { useDispatch } from "react-redux";
-import { openModal } from "redux/Modal";
-import { RootState } from "redux/store";
+import { openModal } from "../../redux/Modal";
+import { RootState } from "../../redux/store";
 import Button from "../../component/common/Button/Button";
 const label = {
   inputProps: {
