@@ -10,7 +10,7 @@ import {
 } from "./MobileModal.Style";
 import { Products, orderdata } from "types/type";
 import { useDispatch } from "react-redux";
-import { closeModal, openModal } from "redux/Modal";
+import { closeModal, openModal } from "../../../../redux/Modal";
 import Swal from "sweetalert2";
 import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";

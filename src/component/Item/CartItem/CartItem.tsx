@@ -17,8 +17,8 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import DeleteIcon from "../../../assets/images/icon-delete.svg";
 import { UpdateQuantity } from "API/KeepAPI";
-import { calcPrice, resetPrice } from "redux/TotalPrice";
-import { OrderProduct, removeOrderProduct } from "redux/CartOrder";
+import { calcPrice, resetPrice } from "../../../redux/TotalPrice";
+import { OrderProduct, removeOrderProduct } from "../../../redux/CartOrder";
 import { useNavigate } from "react-router-dom";
 import Button from "component/common/Button/Button";
 const CartItem: React.FC<{

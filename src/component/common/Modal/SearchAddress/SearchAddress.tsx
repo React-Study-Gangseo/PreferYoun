@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
 import { ModalBody, Title, CloseBtn } from "./SearchAddress.Style";
-import { closeModal } from "redux/Modal";
+import { closeModal } from "../../../../redux/Modal";
 import { useDispatch } from "react-redux";
-import { removeAddress, saveAddress } from "redux/Address";
+import { removeAddress, saveAddress } from "../../../../redux/Address";
 import Close from "../../../../assets/images/close-r.svg";
 
 const SearchAddress: React.FC = () => {

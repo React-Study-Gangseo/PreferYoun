@@ -12,11 +12,11 @@ import {
 import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
 import { cartData, cartItem } from "types/type";
 import CartItem from "component/Item/CartItem/CartItem";
-import { calcPrice, resetPrice } from "redux/TotalPrice";
-import { removeOrderProduct } from "redux/CartOrder";
+import { calcPrice, resetPrice } from "../../redux/TotalPrice";
+import { removeOrderProduct } from "../../redux/CartOrder";
 import { useDispatch } from "react-redux";
-import { TotalPriceState } from "redux/TotalPrice";
-import { CartOrderState } from "redux/CartOrder";
+import { TotalPriceState } from "../../redux/TotalPrice";
+import { CartOrderState } from "../../redux/CartOrder";
 import { useNavigate } from "react-router-dom";
 import Button from "../../component/common/Button/Button";
 const KeepPage: React.FC = () => {

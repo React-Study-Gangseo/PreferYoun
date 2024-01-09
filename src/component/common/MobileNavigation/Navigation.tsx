@@ -20,7 +20,7 @@ import User from "../../../assets/images/icon-user.svg";
 import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
 import Share from "../../../assets/images/share-icon.svg";
 import { useDispatch } from "react-redux";
-import { openModal } from "redux/Modal";
+import { openModal } from "../../../redux/Modal";
 import Button from "../Button/Button";
 
 export default function Navigation() {

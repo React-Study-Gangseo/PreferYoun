@@ -10,7 +10,7 @@ import { TextField } from "@mui/material";
 import HoduLogo from "../../../assets/images/Logo-hodu.png";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
-import { setSearchData } from "redux/Search";
+import { setSearchData } from "../../../redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search from "../../../assets/images/search.svg";
 import { SearchAPI } from "../../../API/ProductAPI";
