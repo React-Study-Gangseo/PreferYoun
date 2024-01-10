@@ -1,6 +1,6 @@
 import React from "react";
 import  Tab  from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs'
+import Tabs from '@mui/material/Tabs';
 import { Box } from "@mui/material";
 
 interface TabPanelProps {

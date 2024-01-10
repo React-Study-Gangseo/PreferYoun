@@ -5,12 +5,10 @@ import {
   Price,
   ProductImg,
   ProductInfoSection,
-  CountWrap,
-  DecreaseButton,
-  IncreaseButton,
   TotalPriceWrap,
   BtnGroup,
   ShareBtn,
+  CountWrap,
 } from "./ProductDetail.Style";
 import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,6 +18,9 @@ import Swal from "sweetalert2";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreProductInfo from "./MoreInfo/MoreProductInfo";
 import Button from "component/common/Button/Button";
+import CountButton from "component/common/Button/CountButton";
+import kakaoButton from "CustomHook/KakaoShare";
+
 const ProductDetail: React.FC = () => {
   const location = useLocation();
   console.log(location);
@@ -38,39 +39,16 @@ const ProductDetail: React.FC = () => {
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
 
-  const FetchDetailProduct = async (data: { product: number }) => {
-    try {
-      const res = await DetailProduct(data.product);
-      const {
-        product_name,
-        seller,
-        store_name,
-        image,
-        price,
-        shipping_method,
-        shipping_fee,
-        stock,
-        product_info,
-      } = res.data;
-      const updatedProductInfo: Products = {
-        product_name,
-        seller,
-        store_name,
-        image,
-        price,
-        shipping_method,
-        shipping_fee,
-        stock,
-        product_info,
-      };
-      setProductInfo(updatedProductInfo);
-      localStorage.setItem("ProductInfo", JSON.stringify(res.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    FetchDetailProduct({ product: productId });
+    (async () => {
+      try {
+        const res = await DetailProduct(productId);
+        setProductInfo(res.data);
+        localStorage.setItem("ProductInfo", JSON.stringify(res.data));
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   }, []);
 
   const handleMinusCount = () => {
@@ -207,56 +185,10 @@ const ProductDetail: React.FC = () => {
       });
     }
   };
-  const initializeKakao = () => {
-    //@ts-ignore
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      //@ts-ignore
-      window.Kakao.init("0a8f716c5157a42141e742f8d1dc57aa");
-    }
+  const handleKakaoShare = () => {
+    if(productInfo)kakaoButton(productInfo);
+    else return null;
   };
-
-  function kakaoButton() {
-    initializeKakao();
-    //@ts-ignore
-    if (!window.Kakao) {
-      return;
-    }
-    //@ts-ignore
-    const kakao = window.Kakao;
-    const ProductData = localStorage.getItem("ProductInfo");
-    const productInfo = ProductData ? JSON.parse(ProductData) : null;
-    kakao.Share.sendDefault({
-      objectType: "commerce",
-      content: {
-        title: "호두 마켓에서 당신의 삶을 채워 보세요",
-        imageUrl: productInfo?.image,
-        link: {
-          mobileWebUrl: "https://markethodu.netlify.app",
-          webUrl: "https://markethodu.netlify.app",
-        },
-      },
-      commerce: {
-        productName: productInfo.product_name,
-        regularPrice: productInfo.price,
-      },
-      buttons: [
-        {
-          title: "구매하기",
-          link: {
-            mobileWebUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
-            webUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
-          },
-        },
-        {
-          title: "공유하기",
-          link: {
-            mobileWebUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
-            webUrl: `https://markethodu.netlify.app/detailProduct/${productInfo.product_id}`,
-          },
-        },
-      ],
-    });
-  }
   return (
     <MainSection>
       <DetailPageWrapper>
@@ -267,7 +199,7 @@ const ProductDetail: React.FC = () => {
           <ShareBtn
             color="secondary"
             aria-label="공유하기 버튼"
-            onClick={kakaoButton}
+            onClick={handleKakaoShare}
           >
             <ShareIcon fontSize="large" />
           </ShareBtn>
@@ -299,9 +231,11 @@ const ProductDetail: React.FC = () => {
             </span>
           )}
           <CountWrap>
-            <DecreaseButton onClick={handleMinusCount}>-</DecreaseButton>
-            <div>{count}</div>
-            <IncreaseButton onClick={handlePlusCount}>+</IncreaseButton>
+            <CountButton 
+                handleMinusItemCount={handleMinusCount} 
+                handlePlusItemCount={handlePlusCount} >
+                {count}
+            </CountButton>
           </CountWrap>
           <TotalPriceWrap>
             <p>총 상품 금액</p>

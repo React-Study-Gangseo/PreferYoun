@@ -38,28 +38,6 @@ export const CartTable = styled.table`
   & thead th {
     vertical-align: middle;
     font-size: 1.125rem;
-    & input[type="checkbox"] {
-      appearance: none;
-      position: relative;
-      display: block;
-      width: 20px;
-      height: 20px;
-      border: 2px solid #21bf48;
-      border-radius: 50%;
-      margin: 0 auto;
-    }
-    & input[type="checkbox"]:checked::before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 2px;
-      left: 2.2px;
-      width: 12px;
-      height: 12px;
-      background-color: #21bf48;
-      border-radius: 50%;
-      box-sizing: border-box;
-    }
   }
   & tbody tr {
     height: 25px;
@@ -73,27 +51,6 @@ export const FormTop = styled.ul`
   padding: 1.1875rem 8.1875rem 1.125rem 1.875rem;
   margin-bottom: 2.1875rem;
   font-size: 1.125rem;
-  & input[type="checkbox"] {
-    appearance: none;
-    position: relative;
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #21bf48;
-    border-radius: 50%;
-  }
-  & input[type="checkbox"]:checked::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 2px;
-    left: 2.2px;
-    width: 12px;
-    height: 12px;
-    background-color: #21bf48;
-    border-radius: 50%;
-    box-sizing: border-box;
-  }
   & li:nth-of-type(2) {
     margin-right: 80px;
   }

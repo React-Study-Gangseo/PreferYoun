@@ -65,20 +65,19 @@ const theme = createTheme({
         root: {
           fontFamily: "SUIT-Regular, sans-serif",
           cursor: "pointer",
-          // color: "black",
           padding: 0,
           border: 0,
           display: "block",
           textAlign: "center",
-          // backgroundColor: "transparent",
+          boxSizing:"border-box",
         },
         containedPrimary: {
           color: "white",
           fontSize: "16px",
         },
         outlinedPrimary: {
-          color: "#767676",
           border: "1px solid #c4c4c4",
+          color: "black",
         },
       },
     },
@@ -105,6 +104,7 @@ const theme = createTheme({
         },
       },
     },
+    
     MuiListItemText: {
       styleOverrides: {
         primary: {

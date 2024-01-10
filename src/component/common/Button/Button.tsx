@@ -20,7 +20,7 @@ myButton.defaultProps = {
 };
 
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, SxProps> = {
-  m: { width: 480, height: 60, padding: "19px 170px" },
+  m: { width: 480, height: 60 },
   l: { width: 220, height: 68 },
   ms: { width: 154, height: 60},
   s: { width: 80, heigth: 40 },

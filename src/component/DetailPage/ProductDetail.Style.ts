@@ -80,31 +80,11 @@ export const Price = styled.p`
 `;
 
 export const CountWrap = styled.div`
-  display: flex;
-  width: 9.375rem;
-  height: 3.125rem;
-  border-radius: 5px;
-  border: 1px solid #c4c4c4;
   margin: 1.875rem 0;
-  & > div,
-  & > button {
-    flex: 1 1 33%;
-    text-align: center;
-    line-height: 3.125rem;
-  }
+  float: left;
   @media (max-width: 896px) {
     display: none;
   }
-`;
-
-export const IncreaseButton = styled.button`
-  border-radius: 0 5px 5px 0;
-  border-left: 1px solid #c4c4c4;
-`;
-
-export const DecreaseButton = styled.button`
-  border-radius: 5px 0 0 5px;
-  border-right: 1px solid #c4c4c4;
 `;
 
 export const TotalPriceWrap = styled.div`

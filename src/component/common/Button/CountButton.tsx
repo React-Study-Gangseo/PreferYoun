@@ -1,25 +1,19 @@
 import React, { ReactNode, FC } from "react";
 import styled from "@emotion/styled";
 type CountProps = {
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleMinusItemCount: () => void;
+  handlePlusItemCount: () => void;
   children?: ReactNode;
-  disabled?: boolean;
 };
 
-const CountButton: FC<CountProps> = ({ children, onClick, disabled }) => {
+const CountButton: FC<CountProps> = ({ children, handleMinusItemCount, handlePlusItemCount}) => {
   return (
     <CountWrap>
-      <DecreaseButton
-      // onClick={handleMinusCount}
-      // disabled={userType === "BUYER" ? false : true}
-      >
+      <DecreaseButton onClick={handleMinusItemCount}>
         -
       </DecreaseButton>
       <div>{children}</div>
-      <IncreaseButton
-      //   onClick={handlePlusCount}
-      //   disabled={userType === "BUYER" ? false : true}
-      >
+      <IncreaseButton onClick={handlePlusItemCount}>
         +
       </IncreaseButton>
     </CountWrap>
@@ -32,12 +26,23 @@ export const CountWrap = styled.div`
   height: 3.125rem;
   border-radius: 5px;
   border: 1px solid #c4c4c4;
-  margin: 1.875rem 0;
+  margin: 0 auto;
   & > div,
   & > button {
     flex: 1 1 33%;
     text-align: center;
     line-height: 3.125rem;
+  }
+  @media (max-width: 896px) {
+    width: 70px;
+    height: 30px;
+    margin-bottom: 15px;
+    & > div,
+    & > button {
+      flex: 1 1 33%;
+      text-align: center;
+      line-height: 30px;
+    }
   }
 `;
 

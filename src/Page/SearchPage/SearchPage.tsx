@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSearchData } from "../../redux/Search";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Search from "../../assets/images/search.svg";
 import { SearchAPI } from "../../API/ProductAPI";
 import { Main, Form, SearchBtn } from "./SearchPage.Style";
 import { TextField } from "@mui/material";
-type Props = {};
 
 export default function SearchPage() {
   const [inputValue, setInputValue] = useState("");
