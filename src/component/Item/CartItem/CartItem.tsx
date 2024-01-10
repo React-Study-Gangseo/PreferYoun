@@ -3,9 +3,6 @@ import {
   KeepProduct,
   KeepProductImg,
   KeepProductInfo,
-  CountWrap,
-  IncreaseButton,
-  DecreaseButton,
   Total,
   TotalPrice,
   DeleteBtn,
@@ -21,6 +18,9 @@ import { calcPrice, resetPrice } from "../../../redux/TotalPrice";
 import { OrderProduct, removeOrderProduct } from "../../../redux/CartOrder";
 import { useNavigate } from "react-router-dom";
 import Button from "component/common/Button/Button";
+import CheckBox from "component/common/CheckBox/CheckBox";
+import CountButton from "component/common/Button/CountButton";
+
 const CartItem: React.FC<{
   product: cartItem;
   isChecked: boolean;
@@ -125,6 +125,7 @@ const CartItem: React.FC<{
   }, [isChecked]);
 
   const handleItemCheck = (checked: boolean) => {
+    console.log("🚀 ~ handleItemCheck ~ checked:", checked)
     if (checked) {
       setSelectItem(true);
     } else {
@@ -231,15 +232,13 @@ const CartItem: React.FC<{
 
   return (
     <>
-      <>
+      <> 
         <KeepProduct>
           <td>
-            <input
-              type="checkbox"
-              checked={!!selectItem}
-              onChange={(e) => handleItemCheck(e.target.checked)}
-            />
-            <label className="a11y-hidden">장바구니 아이템 체크박스</label>
+              <CheckBox
+                checked={!!selectItem}
+                onChange={(checked) => handleItemCheck(checked)}
+              />
           </td>
           <td>
             <KeepProductInfo>
@@ -279,11 +278,11 @@ const CartItem: React.FC<{
             </KeepProductInfo>
           </td>
           <td>
-            <CountWrap>
-              <DecreaseButton onClick={handleMinusItemCount}>-</DecreaseButton>
-              <div>{itemCount}</div>
-              <IncreaseButton onClick={handlePlusItemCount}>+</IncreaseButton>
-            </CountWrap>
+            <CountButton 
+              handleMinusItemCount={handleMinusItemCount} 
+              handlePlusItemCount={handlePlusItemCount} >
+              {itemCount}
+            </CountButton>
           </td>
           <td>
             <Total>
@@ -361,13 +360,11 @@ const CartItem: React.FC<{
           <td></td>
           <td>
             <Total>
-              <CountWrap>
-                <DecreaseButton onClick={handleMinusItemCount}>
-                  -
-                </DecreaseButton>
-                <div>{itemCount}</div>
-                <IncreaseButton onClick={handlePlusItemCount}>+</IncreaseButton>
-              </CountWrap>
+            <CountButton 
+              handleMinusItemCount={handleMinusItemCount} 
+              handlePlusItemCount={handlePlusItemCount} >
+              {itemCount}
+            </CountButton>
               {cartItem?.price && (
                 <TotalPrice>
                   {new Intl.NumberFormat("ko-KR").format(

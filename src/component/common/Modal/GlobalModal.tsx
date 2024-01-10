@@ -3,7 +3,7 @@ import { css, keyframes } from "@emotion/react";
 import SearchAddressModal from "./SearchAddress/SearchAddress";
 import MobileModal from "../Modal/MobileModal/MobileModal";
 import { useSelector } from "react-redux";
-import { closeModal, selectModal } from "../../../redux/Modal";
+import { selectModal } from "../../../redux/Modal";
 import styled from "@emotion/styled";
 import { createPortal } from "react-dom";
 import { useDispatch } from "react-redux";

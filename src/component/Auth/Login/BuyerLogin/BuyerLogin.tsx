@@ -6,7 +6,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { InputWrap } from "component/Auth/Join/Join.Style";
 import { LoginData } from "../../../../types/type";
-
+import Button from "../../../common/Button/Button"
 const BuyerLogin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const {
     handleSubmit,
@@ -84,7 +84,7 @@ const BuyerLogin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               )}
             />
           </InputWrap>
-          <JoinBtn type="submit">로그인</JoinBtn>
+          <Button variant="contained" size="m" type="submit" fontSize="23px">로그인</Button>
         </Form>
       </LoginSection>
     </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { LoginSection, JoinBtn, Form } from "../Login.Style";
 import { useForm, Controller } from "react-hook-form";
 import { TextField, IconButton, InputAdornment } from "@mui/material";
@@ -6,7 +6,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { InputWrap } from "component/Auth/Join/Join.Style";
 import { LoginData } from "../../../../types/type";
-
+import Button from "../../../common/Button/Button"
 const SellerLogin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const {
     handleSubmit,
@@ -84,7 +84,7 @@ const SellerLogin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
               )}
             />
           </InputWrap>
-          <JoinBtn type="submit">로그인</JoinBtn>
+          <Button size="m" variant="contained" type="submit" fontSize="22px">로그인</Button>
         </Form>
       </LoginSection>
     </>

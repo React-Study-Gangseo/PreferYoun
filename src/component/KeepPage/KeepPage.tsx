@@ -19,6 +19,7 @@ import { TotalPriceState } from "../../redux/TotalPrice";
 import { CartOrderState } from "../../redux/CartOrder";
 import { useNavigate } from "react-router-dom";
 import Button from "../../component/common/Button/Button";
+import CheckBox from "component/common/CheckBox/CheckBox";
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState<cartData[]>([]);
@@ -152,11 +153,9 @@ const KeepPage: React.FC = () => {
             <thead>
               <tr>
                 <th>
-                  <input
-                    type="checkbox"
+                <CheckBox 
                     checked={cartItem.length > 0 ? allChecked : false}
-                    onChange={(e) => handleAllCheck(e.target.checked)}
-                  />
+                    onChange={(checked) => handleAllCheck(checked)}/>
                   <label className="a11y-hidden">
                     장바구니 아이템 전체 체크 박스
                   </label>
@@ -186,14 +185,9 @@ const KeepPage: React.FC = () => {
               <>
                 <AllSection>
                   <div>
-                    <input
-                      type="checkbox"
-                      checked={cartItem.length > 0 ? allChecked : false}
-                      onChange={(e) => handleAllCheck(e.target.checked)}
-                    />
-                    <label className="a11y-hidden">
-                      장바구니 아이템 전체 체크 박스
-                    </label>
+                    <CheckBox 
+                    checked={cartItem.length > 0 ? allChecked : false}
+                    onChange={(checked) => handleAllCheck(checked)}/>
                   </div>
                     <Button
                       size="s"
@@ -242,6 +236,7 @@ const KeepPage: React.FC = () => {
                   variant="contained"
                   onClick={() => handleOrderList()}
                   margin="30px auto 20px auto"
+                  fontSize="24px"
                 >
                   주문하기
                 </Button>
@@ -262,6 +257,7 @@ const KeepPage: React.FC = () => {
                 color="primary"
                 variant="contained"
                 onClick={handleLogin}
+                margin="30px auto"
               >
                 로그인
               </Button>

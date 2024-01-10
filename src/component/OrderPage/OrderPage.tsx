@@ -309,6 +309,7 @@ const OrderPage: React.FC = () => {
               <label>이름</label>
               <input
                 id="name"
+                type="text"
                 value={ordererInfo.ordererName}
                 onChange={(e) =>
                   setOrdererInfo({
@@ -362,6 +363,7 @@ const OrderPage: React.FC = () => {
               <label>이메일</label>
               <input
                 id="email"
+                type="text"
                 value={ordererInfo.ordererMail}
                 onChange={(e) =>
                   setOrdererInfo({

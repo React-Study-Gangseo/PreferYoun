@@ -270,6 +270,7 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
           variant="contained"
           type="submit"
           disabled={checked ? false : true}
+          margin="10px auto"
         >
           가입하기
         </Button>
