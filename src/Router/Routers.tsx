@@ -113,7 +113,7 @@ const Routers = createBrowserRouter([
       <>
         <>
           <PC>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             <Header />
             <Outlet />
             <Footer />
@@ -122,7 +122,7 @@ const Routers = createBrowserRouter([
         </>
         <>
           <Mobile>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             <MobileHeader />
             <Outlet />
             <Footer />

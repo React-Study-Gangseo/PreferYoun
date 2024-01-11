@@ -118,17 +118,17 @@ const Main: React.FC = () => {
     };
   }, []);
 
-  let getKey = React.useCallback(
-    (location: Location, matches: ReturnType<typeof useMatches>) => {
-      let match = matches.find((m) => (m.handle as any)?.scrollMode);
-      if ((match?.handle as any)?.scrollMode === "pathname") {
-        return location.pathname;
-      }
+  // let getKey = React.useCallback(
+  //   (location: Location, matches: ReturnType<typeof useMatches>) => {
+  //     let match = matches.find((m) => (m.handle as any)?.scrollMode);
+  //     if ((match?.handle as any)?.scrollMode === "pathname") {
+  //       return location.pathname;
+  //     }
 
-      return location.key;
-    },
-    []
-  );
+  //     return location.key;
+  //   },
+  //   []
+  // );
 
   return (
     <MainSection>

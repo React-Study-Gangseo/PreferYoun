@@ -14,7 +14,7 @@ export const OrderedIItemWrapper = styled.article`
       max-width: 280px;
       width: 30%;
       aspect-ratio: 1/1;
-      object-fit: contain;
+      object-fit: cover;
     }
     & div {
       padding: 20px;

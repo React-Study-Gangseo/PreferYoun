@@ -10,7 +10,6 @@ export default function HomePage() {
   const FetchKeepList = async () => {
     try {
       const keepList = await KeepProductList();
-      console.log(keepList);
       localStorage.setItem("userCart", JSON.stringify(keepList.data.results));
     } catch (error) {
       console.log(error);
