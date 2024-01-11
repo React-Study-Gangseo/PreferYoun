@@ -4,40 +4,37 @@ import { Button, SxProps } from "@mui/material";
 interface ButtonProps {
   children?: ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  variant?: "text" | "outlined" | "contained";
-  size?: "l" | "m" | "ms" | "s";
-  color?: "primary" | "secondary" | "success" | "error" | "info" | "warning";
-  disabled?: boolean;
-  type?: "submit" | "button";
+  variant?: "outlined" | "contained";
+  size?: "ms";
+  color?: "primary";
+  type?: "button";
   padding?: string;
   fontSize?: string;
   margin?: string;
-  startIcon?: ReactNode;
+  value?: string;
+  className?: string;
 }
 
-myButton.defaultProps = {
-  variant: "contained",
+ShippingButton.defaultProps = {
+  variant: "outlined",
   type: "button",
 };
 
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, SxProps> = {
-  m: { width: 480, height: 60 },
-  l: { width: 220, height: 68 },
   ms: { width: 154, height: 60},
-  s: { width: 80, heigth: 40 },
 };
-export default function myButton({
+export default function ShippingButton({
   children,
   onClick,
   variant,
-  size = "m",
+  size = "ms",
   color,
-  disabled,
   type,
   padding,
   fontSize,
   margin,
-  startIcon,
+  value,
+  className,
 }: ButtonProps) {
   return (
     <Button
@@ -45,14 +42,14 @@ export default function myButton({
       color={color}
       variant={variant}
       onClick={onClick}
-      startIcon={startIcon}
       sx={{
         ...sizeStyles[size],
         padding: padding,
         fontSize: fontSize,
         margin: margin,
-        ...(disabled ? { backgroundColor: "#C4C4C4" } : {}),
       }}
+      value={value}
+      className={className}
     >
       {children}
     </Button>

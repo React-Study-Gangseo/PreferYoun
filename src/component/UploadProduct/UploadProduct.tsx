@@ -13,8 +13,8 @@ import {
   ProductImgInput,
   ProductImgWrapper,
   ProductIconWrapper,
-  ProductImgIcon,
   ShippingBtn,
+  ProductImgIcon,
   Sufix,
   NameSufix,
 } from "./UploadProduct.Style";
@@ -25,6 +25,8 @@ import { UploadProducts } from "types/type";
 import MDEditor from "@uiw/react-md-editor";
 import Warning from "./Warning/Warning";
 import { useLocation, useNavigate } from "react-router-dom";
+import ShippingButton from "component/common/Button/ShipingButton";
+
 export default function UploadProduct() {
   const fileInputRef = useRef<any>();
   const [previewURL, setPreviewURL] = useState("");
@@ -158,26 +160,24 @@ export default function UploadProduct() {
                   />
                 </div>
                 <h5>배송방법</h5>
-                {/* <ShippingBtn>
-                  <Button
+                <ShippingBtn>
+                  <ShippingButton
                     size="ms"
-                    variant="outlined"
+                    variant={isActive === "PARCEL" ? "contained" : "outlined"}
                     value="PARCEL"
                     onClick={(e: any) => handleMethod(e)}
-                    className={isActive === "PARCEL" ? "active" : ""}
                   >
                     택배, 소포, 등기
-                  </Button>
-                  <Button
+                  </ShippingButton>
+                  <ShippingButton
                     size="ms"
-                    variant="outlined"
+                    variant={isActive === "DELIVERY" ? "contained" : "outlined"}
                     value="DELIVERY"
                     onClick={(e: any) => handleMethod(e)}
-                    className={isActive === "DELIVERY" ? "active" : ""}
                   >
                     직접배송(화물배달)
-                  </Button>
-                </ShippingBtn> */}
+                  </ShippingButton>
+                </ShippingBtn> 
                 <div>
                   <label>기본 배송비</label>
                   <Input
@@ -224,7 +224,7 @@ export default function UploadProduct() {
               </div>
             </UploadProductDetail>
             <ButtonGroup>
-              <Button size="ms" variant="outlined">
+              <Button size="ms" variant="outlined" onClick={()=>navigate(-1)}>
                 취소
               </Button>
               {data ? (

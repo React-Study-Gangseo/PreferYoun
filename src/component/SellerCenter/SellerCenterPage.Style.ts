@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import Plus from "../../assets/images/icon-plus.svg";
 
 // export const HeaderSection = styled.section`
 //   padding-left: 6.25rem;
@@ -45,21 +44,8 @@ export const MainSection = styled.main`
   & > button {
     position: relative;
     float: right;
-    display: block;
     margin-bottom: 2.375rem;
-    width: 168px;
-    height: 54px;
-    text-align: right;
-    &::before {
-      content: "";
-      width: 2rem;
-      aspect-ratio: 1/1;
-      background: url(${Plus}) no-repeat center center;
-      display: block;
-      position: absolute;
-      left: 20px;
-      top: 11px;
-    }
+    display: flex;
   }
 `;
 

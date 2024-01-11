@@ -14,10 +14,10 @@ interface TabPanelProps {
 export default function TabButton({value, onChange, labels, orientation}: TabPanelProps) {
     return (
         <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
+            <Box sx={{ borderBottom: (orientation === "vertical") ? 0 : 2, borderColor: 'divider'}}>
                 <Tabs value={value} onChange={onChange} aria-label="basic tabs" orientation={orientation}>
                     {labels.map((label, index) => (  
-                        <Tab key={index} label={label} sx={{ flexBasis: '25%' }}/>
+                        <Tab key={index} label={label} sx={{ fontSize: "20px", flexBasis: '25%', borderBottom: (value === index && orientation === undefined) ? '6px solid currentColor' : 'none'}}/>
                     ))}
                 </Tabs>
             </Box>
