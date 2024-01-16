@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ConfirmModalProps } from "../component/common/Modal/ConfirmModal/ConfirmModal";
 
 export interface ModalState {
   modalType: string;
   isOpen: boolean;
+  modalProps: ConfirmModalProps | null;
 }
 
 const initialState: ModalState = {
   modalType: "",
   isOpen: false,
+  modalProps: null,
 };
 
 export const modalSlice = createSlice({
@@ -16,11 +19,16 @@ export const modalSlice = createSlice({
   reducers: {
     openModal: (
       state: ModalState,
-      actions: PayloadAction<{ modalType: string; isOpen: boolean }>
+      actions: PayloadAction<{
+        modalType: string;
+        isOpen: boolean;
+        modalProps?: ConfirmModalProps;
+      }>
     ) => {
-      const { modalType } = actions.payload;
+      const { modalType, modalProps } = actions.payload;
       state.modalType = modalType;
       state.isOpen = true;
+      state.modalProps = modalProps || null;
     },
     closeModal: (state) => {
       state.isOpen = false;

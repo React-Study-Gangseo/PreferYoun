@@ -23,6 +23,7 @@
     "@types/redux-persist": "^4.3.1",
     "@uiw/react-md-editor": "^4.0.3",
     "axios": "^1.6.5",
+    "dialog-polyfill": "^0.5.6",
     "media-query": "^1.0.0",
     "react": "^18.2.0",
     "react-daum-postcode": "^3.1.3",

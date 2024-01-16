@@ -14,15 +14,7 @@ export const LogoImg = styled.img`
   display: block;
   margin: 1.25rem auto 2.5rem auto;
 `;
-export const ButtonGroup = styled.div`
-  max-width: 34.5rem;
-  margin: 0 auto;
-  padding: 0;
-  display: flex;
-  border-radius: 10px 10px 0 0;
-  border: 1px solid #767676;
-  border-bottom: none;
-`;
+
 const Button = styled.button`
   display: block;
   text-decoration: none;
@@ -31,17 +23,6 @@ const Button = styled.button`
   width: 50%;
   text-align: center;
   cursor: pointer;
-`;
-export const BuyerBtn = styled(Button)`
-  border-radius: 10px 0 0 0;
-  border-right: 1px solid #767676;
-  width: 49.9%;
-  margin-left: auto;
-`;
-export const SellerBtn = styled(Button)`
-  border-radius: 0 10px 0 0;
-  width: 49.9%;
-  margin-right: auto;
 `;
 
 export const Form = styled.form`

@@ -78,11 +78,7 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   };
 
   const handleChange = () => {
-    if (!checked) {
-      setChecked(true);
-    } else {
-      setChecked(false);
-    }
+    setChecked((prevChecked) => !prevChecked);
   };
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -94,7 +90,6 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   ) => {
     event.preventDefault();
   };
-
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -269,7 +264,7 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
           color="primary"
           variant="contained"
           type="submit"
-          disabled={checked ? false : true}
+          disabled={!checked || Object.keys(errors).length > 0}
           margin="10px auto"
         >
           가입하기

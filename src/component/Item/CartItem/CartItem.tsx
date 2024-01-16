@@ -10,7 +10,6 @@ import {
 } from "./CartItem.Style";
 import { Products, cartItem } from "types/type";
 import { DetailProduct } from "API/ProductAPI";
-import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import DeleteIcon from "../../../assets/images/icon-delete.svg";
 import { UpdateQuantity } from "API/KeepAPI";
@@ -20,7 +19,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "component/common/Button/Button";
 import CheckBox from "component/common/CheckBox/CheckBox";
 import CountButton from "component/common/Button/CountButton";
-
+import { openModal } from "../../../redux/Modal";
+import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
 const CartItem: React.FC<{
   product: cartItem;
   isChecked: boolean;
@@ -58,28 +58,24 @@ const CartItem: React.FC<{
 
   useEffect(() => {
     if (itemCount < 1) {
-      Swal.fire({
-        text: "최소 선택 수량은 1개입니다.",
-        icon: "warning",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "확인버튼",
-        customClass: {
-          icon: "my-icon",
-        },
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          isOpen: true,
+          modalProps: ModalSetting.UnderStockModal,
+        })
+      );
       setItemCount(1);
 
       return;
     } else if (cartItem?.stock && itemCount > cartItem?.stock) {
-      Swal.fire({
-        text: "최대 수량입니다. ",
-        icon: "warning",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "확인버튼",
-        customClass: {
-          icon: "my-icon",
-        },
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          isOpen: true,
+          modalProps: ModalSetting.OverStockModal,
+        })
+      );
       setItemCount(cartItem.stock);
 
       return;
@@ -125,7 +121,7 @@ const CartItem: React.FC<{
   }, [isChecked]);
 
   const handleItemCheck = (checked: boolean) => {
-    console.log("🚀 ~ handleItemCheck ~ checked:", checked)
+    console.log("🚀 ~ handleItemCheck ~ checked:", checked);
     if (checked) {
       setSelectItem(true);
     } else {
@@ -135,6 +131,13 @@ const CartItem: React.FC<{
     onCheckChange(); // 체크박스 상태가 변경될 때마다 부모에게 알림
   };
   const handleDelete = (cart_item_id: number) => {
+    dispatch(
+      openModal({
+        modalType: "ConfirmModal",
+        isOpen: true,
+        modalProps: ModalSetting.DeleteModal,
+      })
+    );
     handleDeleteItem(cart_item_id);
     dispatch(
       calcPrice({
@@ -232,13 +235,13 @@ const CartItem: React.FC<{
 
   return (
     <>
-      <> 
+      <>
         <KeepProduct>
           <td>
-              <CheckBox
-                checked={!!selectItem}
-                onChange={(checked) => handleItemCheck(checked)}
-              />
+            <CheckBox
+              checked={!!selectItem}
+              onChange={(checked) => handleItemCheck(checked)}
+            />
           </td>
           <td>
             <KeepProductInfo>
@@ -278,9 +281,10 @@ const CartItem: React.FC<{
             </KeepProductInfo>
           </td>
           <td>
-            <CountButton 
-              handleMinusItemCount={handleMinusItemCount} 
-              handlePlusItemCount={handlePlusItemCount} >
+            <CountButton
+              handleMinusItemCount={handleMinusItemCount}
+              handlePlusItemCount={handlePlusItemCount}
+            >
               {itemCount}
             </CountButton>
           </td>
@@ -360,11 +364,12 @@ const CartItem: React.FC<{
           <td></td>
           <td>
             <Total>
-            <CountButton 
-              handleMinusItemCount={handleMinusItemCount} 
-              handlePlusItemCount={handlePlusItemCount} >
-              {itemCount}
-            </CountButton>
+              <CountButton
+                handleMinusItemCount={handleMinusItemCount}
+                handlePlusItemCount={handlePlusItemCount}
+              >
+                {itemCount}
+              </CountButton>
               {cartItem?.price && (
                 <TotalPrice>
                   {new Intl.NumberFormat("ko-KR").format(

@@ -21,7 +21,7 @@ ShippingButton.defaultProps = {
 };
 
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, SxProps> = {
-  ms: { width: 154, height: 60},
+  ms: { width: 154, height: 60 },
 };
 export default function ShippingButton({
   children,

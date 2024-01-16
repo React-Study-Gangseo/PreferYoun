@@ -1,33 +1,66 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { css, keyframes } from "@emotion/react";
 import SearchAddressModal from "./SearchAddress/SearchAddress";
 import MobileModal from "../Modal/MobileModal/MobileModal";
+import ConfirmModal from "./ConfirmModal/ConfirmModal";
 import { useSelector } from "react-redux";
 import { selectModal } from "../../../redux/Modal";
 import styled from "@emotion/styled";
 import { createPortal } from "react-dom";
+import dialogPolyfill from "dialog-polyfill";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { closeModal } from "../../../redux/Modal";
+import { Logout } from "API/AuthAPI";
+type ModalType = keyof typeof MODAL_TYPES;
 
 const MODAL_TYPES = {
   MobileModal: "MobileModal",
   SearchAddressModal: "SearchAddressModal",
+  ConfirmModal: "ConfirmModal",
 };
 
-const MODAL_COMPONENTS = [
-  {
-    type: MODAL_TYPES.SearchAddressModal,
-    component: <SearchAddressModal />,
-  },
-  {
-    type: MODAL_TYPES.MobileModal,
-    component: <MobileModal />,
-  },
-];
-
 export default function GlobalModal() {
-  const { modalType, isOpen } = useSelector(selectModal);
-  const dispatch = useDispatch();
+  const { modalType, isOpen }: { modalType: ModalType; isOpen: boolean } =
+    useSelector(selectModal);
   const modalRoot = document.getElementById("modal");
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const navigate = useNavigate();
+  const path = useLocation().pathname;
+  const storedData = localStorage.getItem("UserInfo");
+  const dispatch = useDispatch();
+
+  const MODAL_COMPONENTS = {
+    [MODAL_TYPES.SearchAddressModal]: SearchAddressModal,
+    [MODAL_TYPES.MobileModal]: MobileModal,
+    [MODAL_TYPES.ConfirmModal]: (
+      props: React.ComponentProps<typeof ConfirmModal>
+    ) => <ConfirmModal {...props} handleAgree={handleAgree} />,
+  };
+  const handleAgree = async () => {
+    if (path === "/mypage") {
+      const response = await Logout();
+      if (response.status === 200) {
+        localStorage.removeItem("UserInfo");
+        navigate("/");
+      } else {
+        console.log("통신에러");
+      }
+    } else if (path.startsWith("/detailProduct")) {
+      navigate("/cart");
+      if (!storedData) {
+        navigate("/login");
+      }
+    }
+    dispatch(closeModal());
+  };
+
+  useEffect(() => {
+    if (dialogRef.current && !dialogRef.current.showModal) {
+      dialogPolyfill.registerDialog(dialogRef.current);
+    }
+  }, []);
+
   useEffect(() => {
     if (!modalRoot) return;
 
@@ -48,22 +81,15 @@ export default function GlobalModal() {
     return null;
   }
 
-  const findModal = MODAL_COMPONENTS.find((modal) => {
-    return modal.type === modalType;
-  });
-  const renderModal = () => {
-    return findModal?.component;
-  };
+  const ModalComponent = MODAL_COMPONENTS[modalType];
+
   if (!isOpen) return null;
 
   return createPortal(
     <ModalWrapper>
-      <StyledModalContainer
-        isSearchAddress={modalType === MODAL_TYPES.SearchAddressModal}
-        isMobileModal={modalType === MODAL_TYPES.MobileModal}
-      >
-        {renderModal()}
-      </StyledModalContainer>
+      <StyledDialog open={isOpen} ref={dialogRef} modalType={modalType}>
+        {ModalComponent ? <ModalComponent /> : null}
+      </StyledDialog>
     </ModalWrapper>,
     modalRoot
   );
@@ -77,6 +103,7 @@ const slideUp = keyframes`
     transform: translateY(0);
   }
 `;
+
 const ModalWrapper = styled.div`
   position: fixed;
   bottom: 0;
@@ -88,42 +115,73 @@ const ModalWrapper = styled.div`
   width: 100vw;
 `;
 
-const StyledModalContainer = styled.article<{
-  isSearchAddress: boolean;
-  isMobileModal: boolean;
-}>`
+const getModalStyles = (modalType: string) => {
+  switch (modalType) {
+    case MODAL_TYPES.SearchAddressModal:
+      return {
+        position: "relative",
+        width: "500px",
+        height: "auto",
+        padding: "30px 0 0",
+      };
+    case MODAL_TYPES.MobileModal:
+      return {
+        position: "absolute",
+        bottom: "-50px",
+        width: "100%",
+        padding: "16px 26px 10px",
+        transform: "translateY(100%)",
+        transition: "transform 1s ease",
+      };
+    case MODAL_TYPES.ConfirmModal:
+      return {
+        position: "relative",
+        width: "400px",
+        height: "auto",
+        padding: "30px 0 30px",
+      };
+    default:
+      return {};
+  }
+};
+
+const StyledDialog = styled("dialog", {
+  shouldForwardProp: (prop) => prop !== "open" && prop !== "modalType",
+})<{ modalType: string }>`
+  display: block;
   z-index: 9999;
   background-color: white;
-  position: ${({ isMobileModal }) => (isMobileModal ? "absolute" : "relative")};
-  bottom: ${({ isMobileModal }) => (isMobileModal ? "-50px" : "0")};
-  width: ${({ isSearchAddress }) => (isSearchAddress ? "500px" : "800px")};
-  width: ${({ isMobileModal }) => (isMobileModal ? "100%" : "500px")};
-  height: ${({ isSearchAddress }) => (isSearchAddress ? "500px" : "auto")};
-  padding: ${({ isSearchAddress }) =>
-    isSearchAddress ? "30px 0 0" : "16px 26px 10px"};
-  padding: ${({ isMobileModal }) =>
-    isMobileModal ? "16px 26px 10px" : "30px 0 0"};
+  ${({ modalType }) => {
+    const modalStyles = getModalStyles(modalType);
+    return `
+      position: ${modalStyles.position};
+      bottom: ${modalStyles.bottom};
+      width: ${modalStyles.width};
+      height: ${modalStyles.height};
+      padding: ${modalStyles.padding};
+    `;
+  }};
+  top: ${(props) => {
+    switch (props.modalType) {
+      case MODAL_TYPES.SearchAddressModal:
+        return "15%";
+      case MODAL_TYPES.MobileModal:
+        return "50%";
+      case MODAL_TYPES.ConfirmModal:
+        return "40%";
+      default:
+        return "50%";
+    }
+  }};
   margin: 3.125rem auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   overflow: hidden;
-  animation: ${({ isMobileModal }) =>
-    isMobileModal
+  border: none;
+  animation: ${({ modalType }) =>
+    modalType === MODAL_TYPES.MobileModal
       ? css`
           ${slideUp} 0.5s ease
         `
       : "none"};
-  /* transform: ${({ isMobileModal }) =>
-    isMobileModal ? "translateY(0)" : "translateY(100%)"};
-  transition: transform 1s ease; */
 `;
-
-// const StyledModalContainer = styled.article`
-//   background-color: white;
-//   position: relative;
-//   width: 800px;
-//   margin: 3.125rem auto;
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//   border-radius: 5px;
-//   overflow: hidden;
-// `;

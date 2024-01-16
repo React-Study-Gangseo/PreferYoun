@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import DaumPostcodeEmbed, { Address } from "react-daum-postcode";
 import { ModalBody, Title, CloseBtn } from "./SearchAddress.Style";
 import { closeModal } from "../../../../redux/Modal";

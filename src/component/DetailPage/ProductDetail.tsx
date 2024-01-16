@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   MainSection,
   DetailPageWrapper,
@@ -14,20 +14,21 @@ import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";
-import Swal from "sweetalert2";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreProductInfo from "./MoreInfo/MoreProductInfo";
 import Button from "component/common/Button/Button";
 import CountButton from "component/common/Button/CountButton";
 import kakaoButton from "CustomHook/KakaoShare";
+import { openModal } from "../../redux/Modal";
+import { useDispatch } from "react-redux";
+import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
 
 const ProductDetail: React.FC = () => {
   const location = useLocation();
-  console.log(location);
-  const pathname = location.pathname;
-  const productId = Number(pathname.slice(15));
+  const productId = Number(location.pathname.slice(15));
   const product = location.state;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [productInfo, setProductInfo] = useState<Products>();
   const [postCartData, setPostCartData] = useState<orderdata>({
     product_id: productId,
@@ -35,9 +36,18 @@ const ProductDetail: React.FC = () => {
     check: true,
   });
   const [count, setCount] = useState(1);
-  const storedData = localStorage.getItem("UserInfo");
-  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const userInfo = localStorage.getItem("UserInfo")
+    ? JSON.parse(localStorage.getItem("UserInfo")!)
+    : null;
   const userType = userInfo ? userInfo.user_type : null;
+
+  const handleMinusCount = useCallback(() => {
+    setCount((prevCount) => prevCount - 1);
+  }, []);
+
+  const handlePlusCount = useCallback(() => {
+    setCount((prevCount) => prevCount + 1);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -49,72 +59,68 @@ const ProductDetail: React.FC = () => {
         console.log(error);
       }
     })();
-  }, []);
+  }, [productId]);
 
-  const handleMinusCount = () => {
-    setCount((prevCount) => prevCount - 1);
-  };
-  const handlePlusCount = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
   useEffect(() => {
     if (count < 1) {
-      Swal.fire({
-        text: "최소 선택 수량은 1개입니다.",
-        icon: "warning",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "확인버튼",
-        customClass: {
-          icon: "my-icon",
-        },
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          isOpen: true,
+          modalProps: ModalSetting.UnderStockModal,
+        })
+      );
       setCount(1);
       return;
     } else if (productInfo?.stock && count > productInfo?.stock) {
-      Swal.fire({
-        text: "최대 수량입니다. ",
-        icon: "warning",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "확인버튼",
-        customClass: {
-          icon: "my-icon",
-        },
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          isOpen: true,
+          modalProps: ModalSetting.OverStockModal,
+        })
+      );
       setCount(productInfo.stock);
       return;
     } else {
       setPostCartData((prevState) => ({ ...prevState, quantity: count }));
     }
-  }, [count]);
+  }, [count, productInfo?.stock]);
 
-  const handleBuyProduct = () => {
-    if (productInfo?.stock) {
+  const handleBuyProduct = useCallback(() => {
+    if (productInfo?.stock && !userInfo) {
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          isOpen: true,
+          modalProps: ModalSetting.LoginModal,
+        })
+      );
+    } else if (productInfo?.stock) {
       navigate("/orderpage", {
         state: {
           order_kind: "direct_order",
           productInfo: {
             ...productInfo,
             quantity: count,
-            product_id: product.product,
+            product_id: product?.product,
           },
         },
       });
     } else {
-      Swal.fire({
-        text: "해당 상품은 현재 품절 상태 입니다.",
-        icon: "warning",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "확인버튼",
-        customClass: {
-          icon: "my-icon",
-        },
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          isOpen: true,
+          modalProps: ModalSetting.SoldOutModal,
+        })
+      );
     }
-  };
-  const handleKeepProduct = async () => {
+  }, [count, dispatch, navigate, productInfo, userInfo]);
+
+  const handleKeepProduct = useCallback(async () => {
     if (productInfo?.stock) {
-      const storedData = localStorage.getItem("UserInfo");
-      if (storedData && productInfo?.stock) {
+      if (userInfo && productInfo?.stock) {
         const storedCart = localStorage.getItem("userCart");
         const userCart = storedCart ? JSON.parse(storedCart) : null;
         let isItemInCart = false;
@@ -127,68 +133,53 @@ const ProductDetail: React.FC = () => {
 
         if (isItemInCart) {
           setPostCartData((prevState) => ({ ...prevState, check: false }));
-          Swal.fire({
-            text: "해당상품은 이미 장바구니에 있습니다. 장바구니로 이동하시겠습니까?",
-            confirmButtonColor: "#21bf48",
-            confirmButtonAriaLabel: "확인버튼",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              navigate("/cart");
-            }
-          });
+          dispatch(
+            openModal({
+              modalType: "ConfirmModal",
+              isOpen: true,
+              modalProps: ModalSetting.GoCartModal,
+            })
+          );
         } else {
           try {
-            const res = await AddKeepProduct(postCartData);
-            console.log(res);
-
+            await AddKeepProduct(postCartData);
             navigate("/cart");
           } catch (error) {
             console.log(error);
           }
         }
-      } else if (storedData) {
-        Swal.fire({
-          text: "해당 상품은 현재 품절 상태 입니다.",
-          icon: "warning",
-          confirmButtonColor: "#21bf48",
-          confirmButtonAriaLabel: "확인버튼",
-          customClass: {
-            icon: "my-icon",
-          },
-        });
+      } else if (userInfo) {
+        dispatch(
+          openModal({
+            modalType: "ConfirmModal",
+            isOpen: true,
+            modalProps: ModalSetting.SoldOutModal,
+          })
+        );
       } else {
-        Swal.fire({
-          title: "로그인 후 이용 가능한 기능입니다.",
-          text: "로그인 하시겠습니까?",
-          icon: "warning",
-          confirmButtonColor: "#21bf48",
-          confirmButtonAriaLabel: "로그인하러가기",
-          confirmButtonText: "로그인하러가기",
-          customClass: {
-            icon: "my-icon",
-          },
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/login");
-          }
-        });
+        dispatch(
+          openModal({
+            modalType: "ConfirmModal",
+            isOpen: true,
+            modalProps: ModalSetting.LoginModal,
+          })
+        );
       }
     } else {
-      Swal.fire({
-        text: "해당 상품은 현재 품절 상태 입니다.",
-        icon: "warning",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "확인버튼",
-        customClass: {
-          icon: "my-icon",
-        },
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          isOpen: true,
+          modalProps: ModalSetting.SoldOutModal,
+        })
+      );
     }
-  };
-  const handleKakaoShare = () => {
-    if(productInfo)kakaoButton(productInfo);
-    else return null;
-  };
+  }, [productId, userInfo, navigate, postCartData, productInfo, dispatch]);
+
+  const handleKakaoShare = useCallback(() => {
+    if (productInfo) kakaoButton(productInfo);
+  }, [productInfo]);
+
   return (
     <MainSection>
       <DetailPageWrapper>
@@ -211,30 +202,23 @@ const ProductDetail: React.FC = () => {
             )}
             원
           </Price>
-          {productInfo?.shipping_method === "PARCEL" ? (
-            <span>
-              택배배송 /{" "}
-              {productInfo?.shipping_fee === 0
-                ? "무료배송"
-                : `${new Intl.NumberFormat("ko-KR").format(
-                    productInfo?.shipping_fee || 0
-                  )}원`}
-            </span>
-          ) : (
-            <span>
-              직접배송 /{" "}
-              {productInfo?.shipping_fee === 0
-                ? "무료배송"
-                : `${new Intl.NumberFormat("ko-KR").format(
-                    productInfo?.shipping_fee || 0
-                  )}원`}
-            </span>
-          )}
+          <span>
+            {productInfo?.shipping_method === "PARCEL"
+              ? "택배배송"
+              : "직접배송"}{" "}
+            /{" "}
+            {productInfo?.shipping_fee === 0
+              ? "무료배송"
+              : `${new Intl.NumberFormat("ko-KR").format(
+                  productInfo?.shipping_fee || 0
+                )}원`}
+          </span>
           <CountWrap>
-            <CountButton 
-                handleMinusItemCount={handleMinusCount} 
-                handlePlusItemCount={handlePlusCount} >
-                {count}
+            <CountButton
+              handleMinusItemCount={handleMinusCount}
+              handlePlusItemCount={handlePlusCount}
+            >
+              {count}
             </CountButton>
           </CountWrap>
           <TotalPriceWrap>
