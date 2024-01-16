@@ -448,11 +448,11 @@ const OrderPage: React.FC = () => {
               <Address>
                 <div>
                   <Button
-                    size="ms"
+                    size="ss"
                     color="primary"
                     variant="contained"
                     onClick={handleSearchAddress}
-                    padding="0px 0px"
+                    padding="5px 0px"
                   >
                     우편번호 조회
                   </Button>

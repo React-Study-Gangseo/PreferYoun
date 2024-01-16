@@ -53,7 +53,6 @@ const OrderedItem: React.FC<{
 
     fetchOrderedItems();
   }, [order_items]);
-  console.log(orderedItems);
   const checkStockAndAddToCart = async (index: number, postCartData: any) => {
     const storedData = localStorage.getItem("UserInfo");
     if (storedData && orderedItems[index]?.stock) {
@@ -65,13 +64,10 @@ const OrderedItem: React.FC<{
             setPostCartData((prevState) => ({ ...prevState, check: false }));
           }
         });
-        console.log(postCartData);
         const res = await AddKeepProduct(postCartData);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
-      // navigate("/cart");
     } else if (storedData) {
       Swal.fire({
         text: "해당 상품은 현재 품절 상태 입니다.",
@@ -99,17 +95,7 @@ const OrderedItem: React.FC<{
     }
   };
 
-  // const handleKeepProduct = async (index: number) => {
-  //   console.log(index, orderedItems[index].product_id);
-  //   setPostCartData((prevState) => ({
-  //     ...prevState,
-  //     product_id: orderedItems[index].product_id,
-  //   }));
-
-  //   await checkStockAndAddToCart(index);
-  // };
   const handleKeepProduct = async (index: number) => {
-    console.log(index, orderedItems[index].product_id);
     const updatedPostCartData = {
       ...postCartData,
       product_id: orderedItems[index].product_id,

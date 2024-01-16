@@ -14,7 +14,7 @@ import { Products } from "types/type";
 import SellerItem from "./SellerItem/SellerItem";
 import Button from "../../component/common/Button/Button";
 import TabButton from "component/common/Button/TabButton";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const SellerCenterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -38,12 +38,16 @@ const SellerCenterPage: React.FC = () => {
     getSellerProduct();
   }, []);
 
-
-  const tabLabels = [`판매중인 상품 (${sellerProducts.length})`, "주문/배송", "문의/리뷰", "통계", "스토어 설정"];
+  const tabLabels = [
+    `판매중인 상품 (${sellerProducts.length})`,
+    "주문/배송",
+    "문의/리뷰",
+    "통계",
+    "스토어 설정",
+  ];
   return (
     <>
       <h1 className="a11y-hidden">판매자 센터</h1>
-
       <MainSection>
         <h2>
           대시보드<span>백엔드글로벌</span>
@@ -53,20 +57,19 @@ const SellerCenterPage: React.FC = () => {
           color="primary"
           variant="contained"
           onClick={handleOnClick}
-          startIcon={<AddCircleOutlineIcon style={{ fontSize: 30 }}/>}
+          startIcon={<AddCircleOutlineIcon style={{ fontSize: 30 }} />}
           fontSize="20px"
         >
           상품 업로드
         </Button>
         <MainContent>
           <AsideSection>
-          <TabButton
+            <TabButton
               value={activeTab}
-              onChange={handleTabChange} 
-              labels={tabLabels} 
-              orientation="vertical" />
-              {/* {`판매중인 상품(${sellerProducts.length})`} */}
-            {/* </TabButton> */}
+              onChange={handleTabChange}
+              labels={tabLabels}
+              orientation="vertical"
+            />
           </AsideSection>
           <SellerProduct>
             {activeTab === 0 && (

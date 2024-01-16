@@ -12,14 +12,16 @@ import {
 import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
 import { cartData, cartItem } from "types/type";
 import CartItem from "component/Item/CartItem/CartItem";
-import { calcPrice, resetPrice } from "../../redux/TotalPrice";
+import { calcPrice } from "../../redux/TotalPrice";
 import { removeOrderProduct } from "../../redux/CartOrder";
 import { useDispatch } from "react-redux";
 import { TotalPriceState } from "../../redux/TotalPrice";
 import { CartOrderState } from "../../redux/CartOrder";
 import { useNavigate } from "react-router-dom";
-import Button from "../../component/common/Button/Button";
+import Button from "../common/Button/Button";
 import CheckBox from "component/common/CheckBox/CheckBox";
+import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
+import { openModal } from "../../redux/Modal";
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState<cartData[]>([]);
@@ -44,7 +46,6 @@ const KeepPage: React.FC = () => {
     return state.cartOrder.value;
   });
   const allChecked = cartItem.every((item) => item.is_active);
-  console.log(allChecked);
   // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
   const FetchKeepList = async () => {
     try {
@@ -104,6 +105,13 @@ const KeepPage: React.FC = () => {
   };
 
   const handleAllDelete = async () => {
+    dispatch(
+      openModal({
+        modalType: "ConfirmModal",
+        isOpen: true,
+        modalProps: ModalSetting.DeleteModal,
+      })
+    );
     if (allChecked) {
       try {
         const res = await DeleteAllCart();
@@ -153,9 +161,10 @@ const KeepPage: React.FC = () => {
             <thead>
               <tr>
                 <th>
-                <CheckBox 
+                  <CheckBox
                     checked={cartItem.length > 0 ? allChecked : false}
-                    onChange={(checked) => handleAllCheck(checked)}/>
+                    onChange={(checked) => handleAllCheck(checked)}
+                  />
                   <label className="a11y-hidden">
                     장바구니 아이템 전체 체크 박스
                   </label>
@@ -185,19 +194,20 @@ const KeepPage: React.FC = () => {
               <>
                 <AllSection>
                   <div>
-                    <CheckBox 
-                    checked={cartItem.length > 0 ? allChecked : false}
-                    onChange={(checked) => handleAllCheck(checked)}/>
+                    <CheckBox
+                      checked={cartItem.length > 0 ? allChecked : false}
+                      onChange={(checked) => handleAllCheck(checked)}
+                    />
                   </div>
-                    <Button
-                      size="s"
-                      color="primary"
-                      variant="contained"
-                      onClick={handleAllDelete}
-                      margin="10px 0 10px auto"
-                    >
-                      전체삭제
-                    </Button>
+                  <Button
+                    size="s"
+                    color="primary"
+                    variant="contained"
+                    onClick={handleAllDelete}
+                    margin="10px 0 10px auto"
+                  >
+                    전체삭제
+                  </Button>
                 </AllSection>
                 <ClacPrice>
                   <li>

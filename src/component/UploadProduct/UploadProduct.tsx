@@ -177,7 +177,7 @@ export default function UploadProduct() {
                   >
                     직접배송(화물배달)
                   </ShippingButton>
-                </ShippingBtn> 
+                </ShippingBtn>
                 <div>
                   <label>기본 배송비</label>
                   <Input
@@ -224,7 +224,7 @@ export default function UploadProduct() {
               </div>
             </UploadProductDetail>
             <ButtonGroup>
-              <Button size="ms" variant="outlined" onClick={()=>navigate(-1)}>
+              <Button size="ms" variant="outlined" onClick={() => navigate(-1)}>
                 취소
               </Button>
               {data ? (

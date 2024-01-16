@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { OrderedData, Products } from "types/type";
 import { DetailProduct } from "API/ProductAPI";
-import { Item } from "component/OrderList/OrderList.Style";
+import { Item } from "component/MyPage/OrderList/OrderList.Style";
 
 const OrderedItem: React.FC<{
   index: number;
