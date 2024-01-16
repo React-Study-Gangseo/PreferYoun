@@ -27,3 +27,163 @@
 ## 🛠 테크 스택
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">  <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white">  <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=white">  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">  <img src="https://img.shields.io/badge/KakaoAPI-FFCD00?style=for-the-badge&logo=kakao&logoColor=white">  <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">  <img src="https://img.shields.io/badge/netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white"> <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"> <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"></br>
 그 외 - REST API (제주코딩베이스캠프 제공)
+
+##폴더 구조
+PreferYoun
+├─ src
+│  ├─ @types
+│  │  ├─ custom.d.ts
+│  │  ├─ global.d.ts
+│  │  └─ styled.d.ts
+│  ├─ API
+│  │  ├─ api.ts
+│  │  ├─ AuthAPI.ts
+│  │  ├─ instance.ts
+│  │  ├─ KeepAPI.ts
+│  │  ├─ OrderAPI.ts
+│  │  └─ ProductAPI.ts
+│  ├─ App.test.tsx
+│  ├─ App.tsx
+│  ├─ assets
+│  │  ├─ images
+│  │  └─ MokImg
+│  ├─ component
+│  │  ├─ Auth
+│  │  │  ├─ Join
+│  │  │  │  ├─ BuyerJoin.tsx
+│  │  │  │  ├─ Join.Style.ts
+│  │  │  │  └─ SellerJoin.tsx
+│  │  │  └─ Login
+│  │  │     ├─ BuyerLogin
+│  │  │     │  └─ BuyerLogin.tsx
+│  │  │     ├─ Login.Style.ts
+│  │  │     └─ SellerLogin
+│  │  │        └─ SellerLogin.tsx
+│  │  ├─ CartPage
+│  │  │  ├─ KeepPage.Style.ts
+│  │  │  └─ KeepPage.tsx
+│  │  ├─ common
+│  │  │  ├─ Button
+│  │  │  │  ├─ AuthButton.tsx
+│  │  │  │  ├─ Button.tsx
+│  │  │  │  ├─ CountButton.tsx
+│  │  │  │  ├─ ShipingButton.tsx
+│  │  │  │  └─ TabButton.tsx
+│  │  │  ├─ CheckBox
+│  │  │  │  └─ CheckBox.tsx
+│  │  │  ├─ Footer
+│  │  │  │  ├─ Footer.Style.ts
+│  │  │  │  └─ Footer.tsx
+│  │  │  ├─ Header
+│  │  │  │  ├─ Header.Style.ts
+│  │  │  │  ├─ Header.tsx
+│  │  │  │  └─ MobileHeader.tsx
+│  │  │  ├─ MobileNavigation
+│  │  │  │  ├─ Navigation.Style.ts
+│  │  │  │  └─ Navigation.tsx
+│  │  │  └─ Modal
+│  │  │     ├─ ConfirmModal
+│  │  │     │  ├─ ConfirmModal.tsx
+│  │  │     │  └─ ModalSetting.ts
+│  │  │     ├─ GlobalModal.tsx
+│  │  │     ├─ MobileModal
+│  │  │     │  ├─ MobileModal.Style.ts
+│  │  │     │  └─ MobileModal.tsx
+│  │  │     └─ SearchAddress
+│  │  │        ├─ SearchAddress.Style.ts
+│  │  │        └─ SearchAddress.tsx
+│  │  ├─ DetailPage
+│  │  │  ├─ MoreInfo
+│  │  │  │  └─ MoreProductInfo.tsx
+│  │  │  ├─ ProductDetail.Style.ts
+│  │  │  └─ ProductDetail.tsx
+│  │  ├─ Item
+│  │  │  ├─ CartItem
+│  │  │  │  ├─ CartItem.Style.ts
+│  │  │  │  └─ CartItem.tsx
+│  │  │  ├─ MoblieProductItem
+│  │  │  │  ├─ MobileProductItem.tsx
+│  │  │  │  └─ MobileProductItme.Style.ts
+│  │  │  ├─ OrderedItem
+│  │  │  │  ├─ OrderedItem.Style.ts
+│  │  │  │  └─ OrderedItem.tsx
+│  │  │  └─ ProductItem
+│  │  │     ├─ ProductItem.styles.ts
+│  │  │     └─ ProductItem.tsx
+│  │  ├─ Layout
+│  │  │  └─ Layout.tsx
+│  │  ├─ Main
+│  │  │  ├─ Banner
+│  │  │  │  ├─ Banner.Style.ts
+│  │  │  │  └─ Banner.tsx
+│  │  │  ├─ Main.Style.ts
+│  │  │  └─ Main.tsx
+│  │  ├─ MediaQuery
+│  │  │  └─ MediaQuery.tsx
+│  │  ├─ MyPage
+│  │  │  ├─ OrderedItem
+│  │  │  │  └─ OrderedItem.tsx
+│  │  │  └─ OrderList
+│  │  │     ├─ OrderList.Style.ts
+│  │  │     └─ OrderList.tsx
+│  │  ├─ OrderPage
+│  │  │  ├─ OrderPage.Style.ts
+│  │  │  └─ OrderPage.tsx
+│  │  ├─ ProductDetail
+│  │  │  └─ ProductDetail.tsx
+│  │  ├─ SellerCenter
+│  │  │  ├─ SellerCenterPage.Style.ts
+│  │  │  ├─ SellerCenterPage.tsx
+│  │  │  └─ SellerItem
+│  │  │     └─ SellerItem.tsx
+│  │  └─ UploadProduct
+│  │     ├─ UploadProduct.Style.ts
+│  │     ├─ UploadProduct.tsx
+│  │     └─ Warning
+│  │        └─ Warning.tsx
+│  ├─ CustomHook
+│  │  ├─ InfiniteScroll.tsx
+│  │  ├─ KakaoShare.ts
+│  │  ├─ ScrollTop.ts
+│  │  ├─ test.ts
+│  │  └─ useScrollRestore.ts
+│  ├─ GlobalStyle
+│  │  ├─ GlobalStyle.tsx
+│  │  └─ Theme.ts
+│  ├─ index.tsx
+│  ├─ Page
+│  │  ├─ AuthPage
+│  │  │  ├─ JoinPage.tsx
+│  │  │  └─ LoginPage.tsx
+│  │  ├─ CartPage
+│  │  │  └─ CartPage.tsx
+│  │  ├─ DetailPage
+│  │  │  └─ DetailPage.tsx
+│  │  ├─ HomePage
+│  │  │  └─ HomePage.tsx
+│  │  ├─ MyPage
+│  │  │  └─ MyPage.tsx
+│  │  ├─ OrderPage
+│  │  │  └─ OrderPage.tsx
+│  │  ├─ SearchPage
+│  │  │  ├─ SearchPage.Style.ts
+│  │  │  └─ SearchPage.tsx
+│  │  ├─ SellerCenterPage
+│  │  │  └─ SellerCenterPage.tsx
+│  │  └─ UploadPage
+│  │     └─ UploadPage.tsx
+│  ├─ redux
+│  │  ├─ Address.ts
+│  │  ├─ Auth.ts
+│  │  ├─ CartOrder.ts
+│  │  ├─ Modal.ts
+│  │  ├─ Search.ts
+│  │  ├─ store.ts
+│  │  └─ TotalPrice.ts
+│  ├─ Router
+│  │  └─ Routers.tsx
+│  ├─ setupTests.tsx
+│  └─ types
+│     └─ type.ts
+├─ tsconfig.json
+└─ yarn.lock
