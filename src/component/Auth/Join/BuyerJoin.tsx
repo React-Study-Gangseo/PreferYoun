@@ -1,32 +1,25 @@
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import {
-  JoinSection,
-  InputWrap,
-  PhoneWrap,
-  Form,
-  EmailWrap,
-  CheckPw,
-  NameWrap,
-  StyledError,
-  CheckJoin,
-  CheckTerms,
-  Terms,
-} from "./Join.Style";
-import { TextField, IconButton, InputAdornment, Checkbox } from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useForm } from "react-hook-form";
+import { Checkbox } from "@mui/material";
 import { CheckId } from "API/AuthAPI";
 import { AxiosError } from "axios";
 import { FormValue } from "types/type";
 import Swal from "sweetalert2";
 import Button from "component/common/Button/Button";
+import { RuleSettings } from "component/common/TextField/Rules";
+import InputWrapper from "component/common/TextField/AuthInput";
+import { JoinSection, Form, CheckJoin, CheckTerms, Terms } from "./Join.Style";
 const label = {
   inputProps: {
     "aria-label": "동의 체크",
   },
 };
-const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
+
+type BuyerJoinProps = {
+  onSubmit: (data: FormValue) => void;
+};
+
+const BuyerJoin: React.FC<BuyerJoinProps> = ({ onSubmit }) => {
   const {
     watch,
     handleSubmit,
@@ -36,15 +29,22 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
     control,
     formState: { errors },
   } = useForm<FormValue>({ mode: "onChange" });
+
   const passwordValue = watch("password", "");
   const [checked, setChecked] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = () => {
+    setChecked((prevChecked) => !prevChecked);
+  };
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const IdVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (watch("id")) {
       const checkId: string | undefined = getValues("id");
       if (typeof checkId === "string") {
-        // checkId가 문자열인지 확인
         try {
           const response = await CheckId(checkId);
 
@@ -77,14 +77,6 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
     }
   };
 
-  const handleChange = () => {
-    setChecked((prevChecked) => !prevChecked);
-  };
-
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -94,155 +86,58 @@ const BuyerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <JoinSection>
-          <EmailWrap>
-            <Controller
-              control={control}
-              name="id"
-              defaultValue=""
-              rules={{
-                required: true,
-                pattern: /^[A-Za-z0-9]{1,20}$/,
-              }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  type="text"
-                  fullWidth
-                  label="아이디"
-                  error={error !== undefined}
-                />
-              )}
-            />
-            <Button
-              size="ms"
-              variant="contained"
-              color="primary"
-              onClick={(event: any) => {
-                IdVaild(event);
-              }}
-            >
-              중복체크
-            </Button>
-            {errors.id && (
-              <StyledError role="alert">{errors.id.message}</StyledError>
-            )}
-          </EmailWrap>
-          <InputWrap>
-            <Controller
-              control={control}
-              name="password"
-              defaultValue=""
-              rules={{
-                required: true,
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*\d).{8,}$/,
-                  message: "비밀번호 형식이 올바르지 않습니다",
-                },
-              }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  type={showPassword ? "text" : "password"}
-                  fullWidth
-                  label="비밀번호"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="비밀번호 확인 아이콘"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  error={error !== undefined}
-                  helperText={error ? error.message : null}
-                />
-              )}
-            />
-          </InputWrap>
-          <CheckPw>
-            <Controller
-              control={control}
-              name="password2"
-              defaultValue=""
-              rules={{
-                required: "비밀번호 중복 확인은 필수 입니다.",
-                validate: (value) =>
-                  value === passwordValue || "비밀번호가 일치 하지 않습니다.",
-              }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  type={showPassword ? "text" : "password"}
-                  fullWidth
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="비밀번호 확인 아이콘"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  label="비밀번호 중복 확인"
-                  error={error !== undefined}
-                />
-              )}
-            />
-          </CheckPw>
-          <NameWrap>
-            <Controller
-              control={control}
-              name="name"
-              defaultValue=""
-              rules={{
-                required: "필수 항목 입니다.",
-              }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  type="text"
-                  fullWidth
-                  label="이름"
-                  error={error !== undefined}
-                  helperText={error ? error.message : null}
-                />
-              )}
-            />
-          </NameWrap>
-          <PhoneWrap>
-            <Controller
-              name="Phone"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "필수 항목입니다",
-                pattern: {
-                  value: /^[0-9]{3}[0-9]{4}[0-9]{4}$/,
-                  message: "전화번호 형식이 올바르지 않습니다 (000-0000-0000)",
-                },
-              }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  label="전화번호"
-                  fullWidth
-                  error={!!error}
-                  helperText={error ? error.message : null}
-                />
-              )}
-            />
-          </PhoneWrap>
+          <InputWrapper
+            control={control}
+            name="id"
+            defaultValue=""
+            rules={RuleSettings.IDRule}
+            label="아이디"
+            error={errors.id}
+            isValid={true}
+            onButtonClick={(event) => IdVaild(event)}
+          />
+          <InputWrapper
+            control={control}
+            name="password"
+            defaultValue=""
+            rules={RuleSettings.PasswordRule}
+            label="비밀번호"
+            showPassword={showPassword}
+            handleClickShowPassword={handleClickShowPassword}
+            handleMouseDownPassword={handleMouseDownPassword}
+            error={errors.password}
+          />
+          <InputWrapper
+            control={control}
+            name="password2"
+            defaultValue=""
+            rules={{
+              required: "비밀번호 중복 확인은 필수 입니다.",
+              validate: (value: string) =>
+                value === passwordValue || "비밀번호가 일치 하지 않습니다.",
+            }}
+            label="비밀번호 중복 확인"
+            showPassword={showPassword}
+            handleClickShowPassword={handleClickShowPassword}
+            handleMouseDownPassword={handleMouseDownPassword}
+            error={errors.password2}
+          />
+          <InputWrapper
+            control={control}
+            name="name"
+            defaultValue=""
+            rules={RuleSettings.NameRule}
+            label="이름"
+            error={errors.name}
+          />
+          <InputWrapper
+            control={control}
+            name="Phone"
+            defaultValue=""
+            rules={RuleSettings.PhoneNumberRule}
+            label="전화번호"
+            error={errors.Phone}
+          />
         </JoinSection>
         <CheckJoin>
           <Checkbox

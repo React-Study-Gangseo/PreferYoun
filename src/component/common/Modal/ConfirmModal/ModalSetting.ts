@@ -31,4 +31,8 @@ export const ModalSetting = {
     content: "선택 가능한 최소 수량은 1개 입니다.",
     ConfirmChildren: "확인",
   },
+  IDValidModal: {
+    content: "사용가능한 아이디입니다.",
+    ConfirmChildren: "확인",
+  },
 };
