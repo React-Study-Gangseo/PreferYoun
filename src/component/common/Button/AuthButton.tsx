@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 interface UserTypeBtnProps {
   children?: ReactNode;
@@ -39,13 +40,15 @@ export default function AuthButton({
   userType,
   handleUserType,
 }: UserTypeBtnProps) {
+  const location = useLocation();
+
   return (
     <ButtonGroup>
       <UserTypeBtn id="BUYER" onClick={handleUserType} userType={userType}>
-        구매자로그인
+        {location.pathname === "/login" ? "구매자로그인" : "구매자 회원가입"}
       </UserTypeBtn>
       <UserTypeBtn id="SELLER" onClick={handleUserType} userType={userType}>
-        판매자로그인
+        {location.pathname === "/login" ? "판매자로그인" : "판매자 회원가입"}
       </UserTypeBtn>
     </ButtonGroup>
   );

@@ -15,16 +15,6 @@ export const LogoImg = styled.img`
   margin: 1.25rem auto 2.5rem auto;
 `;
 
-const Button = styled.button`
-  display: block;
-  text-decoration: none;
-  padding: 15px;
-  font-size: 20px;
-  width: 50%;
-  text-align: center;
-  cursor: pointer;
-`;
-
 export const Form = styled.form`
   max-width: 34.5rem;
   margin: 0 auto;
@@ -33,58 +23,7 @@ export const Form = styled.form`
 export const InputWrap = styled.div`
   margin-bottom: 1.4rem;
 `;
-export const EmailWrap = styled(InputWrap)`
-  position: relative;
-  display: flex;
-  gap: 0.75rem;
-  & button {
-    margin-top: auto;
-    padding: 10px;
-  }
-`;
-export const CheckPw = styled(InputWrap)`
-  margin-bottom: 1.25rem;
-`;
-export const NameWrap = styled(InputWrap)``;
-export const PhoneWrap = styled(InputWrap)`
-  display: flex;
-  gap: 0.75rem;
-  width: 100%;
-  flex: 1;
-  margin: 0.75rem 0 0.75rem 0;
 
-  & > select,
-  & > input {
-    flex: 1 1 33%;
-    height: 3.375rem;
-    border-radius: 5px;
-    border: 1px solid #c4c4c4;
-  }
-  & > select {
-    font-size: 1.125rem;
-    height: 3.375rem;
-    /* flex-grow: 1; */
-  }
-  & > select > option {
-    text-align: center;
-  }
-`;
-export const CRNumber = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 12px;
-  margin-bottom: 0.75rem;
-  & button {
-    margin-bottom: auto;
-  }
-`;
-export const StyledError = styled.small`
-  font-size: 12px;
-  color: red;
-  position: absolute;
-  bottom: -18px;
-  left: 5px;
-`;
 export const CheckTerms = styled.a`
   font-weight: bold;
   text-decoration: underline;
