@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { JoinSection, Form, CheckJoin, CheckTerms, Terms } from "./Join.Style";
 import { Checkbox } from "@mui/material";
-import { CheckCRN, CheckId } from "API/AuthAPI";
-import { AxiosError } from "axios";
 import { FormValue } from "types/type";
-import Swal from "sweetalert2";
 import Button from "component/common/Button/Button";
 import InputWrapper from "component/common/TextField/AuthInput";
 import { RuleSettings } from "component/common/TextField/Rules";
-
+import { useIdValidation, useCRNValidation } from "CustomHook/Valid";
 const label = {
   inputProps: {
     "aria-label": "동의 체크",
@@ -29,78 +26,19 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const [checked, setChecked] = useState(false);
   const passwordValue = watch("password", "");
   const [showPassword, setShowPassword] = useState(false);
-
+  const { IdValid } = useIdValidation({
+    watch,
+    getValues,
+    clearErrors,
+    setError,
+  });
+  const { CRNValid } = useCRNValidation({
+    watch,
+    getValues,
+    clearErrors,
+    setError,
+  });
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const CRNVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (watch("company_registration_number")) {
-      const checkCRN: string | undefined = getValues(
-        "company_registration_number"
-      );
-      if (typeof checkCRN === "string") {
-        try {
-          const response = await CheckCRN(checkCRN);
-
-          if (response?.data.Success === "사용 가능한 사업자등록번호입니다.") {
-            alert("사용 가능한 사업자등록번호입니다.");
-            clearErrors();
-          }
-        } catch (error) {
-          console.log("check");
-          const axiosError = error as AxiosError; // 타입 단언
-          const responseData = axiosError?.response?.data as any;
-          console.log("사업자등록번호 체크 실패", responseData);
-          if (
-            responseData.FAIL_Message === "이미 등록된 사업자등록번호입니다."
-          ) {
-            setError("company_registration_number", {
-              type: "manual",
-              message: "* 이미 등록된 사업자등록번호입니다.",
-            });
-          }
-        }
-      } else {
-        console.log("checkCRN is not defined");
-      }
-    }
-  };
-  const IdVaild = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (watch("id")) {
-      const checkId: string | undefined = getValues("id");
-      if (typeof checkId === "string") {
-        try {
-          const response = await CheckId(checkId);
-
-          if (response?.data.Success === "멋진 아이디네요 :)") {
-            Swal.fire({
-              title: "Success",
-              text: "멋진아이디네요:)",
-              icon: "success",
-              confirmButtonColor: "#21bf48",
-              confirmButtonAriaLabel: "확인버튼",
-              customClass: {
-                icon: "my-icon",
-              },
-            });
-            clearErrors();
-          }
-        } catch (error) {
-          const axiosError = error as AxiosError;
-          const responseData = axiosError?.response?.data as any;
-          if (responseData.FAIL_Message === "이미 사용 중인 아이디입니다.") {
-            setError("id", {
-              type: "manual",
-              message: "* 이미 가입된 아이디 입니다.",
-            });
-          }
-        }
-      } else {
-        console.log("checkID is not defined");
-      }
-    }
-  };
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -124,7 +62,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
             label="아이디"
             error={errors.id}
             isValid={true}
-            onButtonClick={(event) => IdVaild(event)}
+            onButtonClick={(event) => IdValid(event)}
           />
           <InputWrapper
             control={control}
@@ -176,7 +114,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
             label="사업자등록번호"
             error={errors.company_registration_number}
             isValid={true}
-            onButtonClick={(event) => CRNVaild(event)}
+            onButtonClick={(event) => CRNValid(event)}
           />
           <InputWrapper
             control={control}
@@ -207,7 +145,7 @@ const SellerJoin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
           color="primary"
           variant="contained"
           type="submit"
-          disabled={checked ? false : true}
+          disabled={!checked}
           margin="10px auto"
         >
           가입하기

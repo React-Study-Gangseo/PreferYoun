@@ -56,6 +56,7 @@ export default function OrderList() {
         onClick={handleLogOut}
         padding="0px 20px"
         fontSize="30px"
+        margin="20px auto"
       >
         로그아웃
       </Button>
