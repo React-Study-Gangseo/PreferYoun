@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SellerLogin from "component/Auth/Login/SellerLogin/SellerLogin";
 import {
-  // BtnGroup,
-  // BuyerBtn,
-  // SellerBtn,
   LogoImg,
   LinkGroup,
   SignUp,
@@ -20,11 +17,9 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthButton from "component/common/Button/AuthButton";
 
 const LoginPage: React.FC = () => {
-  // const [userType, setUserType] = useState("SELLER");
   const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [userType, setUserType] = useState<"SELLER" | "BUYER">("SELLER");
-  console.log("🚀 ~ userType:", userType);
   useEffect(() => {
     if (loginSuccess && userType === "SELLER") {
       navigate("/");

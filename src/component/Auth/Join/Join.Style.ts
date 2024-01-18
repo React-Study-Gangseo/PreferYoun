@@ -20,10 +20,6 @@ export const Form = styled.form`
   margin: 0 auto;
 `;
 
-export const InputWrap = styled.div`
-  margin-bottom: 1.4rem;
-`;
-
 export const CheckTerms = styled.a`
   font-weight: bold;
   text-decoration: underline;

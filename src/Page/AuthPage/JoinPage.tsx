@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import SellerJoin from "component/Auth/Join/SellerJoin";
 import BuyerJoin from "component/Auth/Join/BuyerJoin";
 import Logo from "../../assets/images/Logo-hodu.png";
@@ -30,7 +29,6 @@ const JoinPage: React.FC = () => {
   }, [JoinSuccess]);
 
   const handleFormSubmit = async (data: FormValue) => {
-    console.log("check");
     if (userType === "SELLER") {
       try {
         const response = await Seller_Join(data);

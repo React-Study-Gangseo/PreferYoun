@@ -14,33 +14,10 @@ export const LogoImg = styled.img`
   margin: 1.25rem auto 4.375rem auto;
 `;
 
-const Button = styled.button`
-  display: block;
-  text-decoration: none;
-  padding: 0.9375rem;
-  font-size: 1.25rem;
-  width: 50%;
-  text-align: center;
-  cursor: pointer;
-`;
-
 export const Form = styled.form`
   padding: 34px 35px 36px 35px;
 `;
-export const Input = styled.input`
-  width: 100%;
-  height: 3.75rem;
-  border: none;
-  border-bottom: 1px solid #c4c4c4;
-  margin-bottom: 6px;
-`;
-export const JoinBtn = styled(Button)`
-  width: 100%;
-  margin: 2.25rem auto 0;
-  background-color: #21bf48;
-  color: white;
-  border-radius: 10px;
-`;
+
 export const LinkGroup = styled.div`
   width: 100%;
   text-align: center;
