@@ -158,7 +158,6 @@ const CartItem: React.FC<{
       cartItem.store_name &&
       cartItem.product_id
     ) {
-      console.log(itemCount);
       dispatch(
         OrderProduct({
           key: cartItem?.product_id?.toString(),
@@ -317,12 +316,10 @@ const CartItem: React.FC<{
       <>
         <KeepProductMobile>
           <td>
-            <input
-              type="checkbox"
+            <CheckBox
               checked={!!selectItem}
-              onChange={(e) => handleItemCheck(e.target.checked)}
+              onChange={(checked) => handleItemCheck(checked)}
             />
-            <label className="a11y-hidden">장바구니 아이템 체크박스</label>
           </td>
           <td>
             <KeepProductInfo>

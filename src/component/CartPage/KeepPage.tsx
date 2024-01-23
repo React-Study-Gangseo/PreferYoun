@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import {
   Wrapper,
@@ -22,15 +22,16 @@ import Button from "../common/Button/Button";
 import CheckBox from "component/common/CheckBox/CheckBox";
 import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
 import { openModal } from "../../redux/Modal";
+
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [cartData, setCartData] = useState<cartData[]>([]);
-  const [cartItem, setCartItem] = useState<cartItem[]>([]);
-  const [isLogin, setIsLogin] = useState(false);
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const token = userInfo?.token ? userInfo.token : "";
-  const dispatch = useDispatch();
+  const [cartItem, setCartItem] = useState<cartItem[]>([]);
+  const [isLogin, setIsLogin] = useState(false);
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
@@ -46,8 +47,8 @@ const KeepPage: React.FC = () => {
     return state.cartOrder.value;
   });
   const allChecked = cartItem.every((item) => item.is_active);
-  // Record<K, T>는 TypeScript의 유틸리티 타입 중 하나로, 모든 속성의 키가 K 타입이고 값이 T 타입인 객체
-  const FetchKeepList = async () => {
+
+  const FetchKeepList = useCallback(async () => {
     try {
       if (token) {
         const keepList = await KeepProductList();
@@ -56,24 +57,14 @@ const KeepPage: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [token]);
+
   useEffect(() => {
     FetchKeepList();
     if (storedData) {
       setIsLogin(true);
     }
-  }, []);
-
-  // useEffect(() => {
-  //   const checkedObj = cartItem.reduce<Record<string, boolean>>((acc, item) => {
-  //     acc[item.product_id] = true;
-  //     return acc;
-  //   }, {});
-  //   setSelectedItems(checkedObj);
-  //   // setCartItem((prevCartItem) =>
-  //   //   prevCartItem.map((item) => ({ ...item, is_active: true }))
-  //   // );
-  // }, [cartItem]);
+  }, [FetchKeepList, storedData]);
 
   useEffect(() => {
     cartData.map((data: cartData) =>
@@ -81,20 +72,24 @@ const KeepPage: React.FC = () => {
     );
   }, [cartData]);
 
-  const handleAllCheck = (checked: boolean) => {
-    cartItem.map((item) =>
-      item.is_active !== checked ? handleItemCheck(item.product_id) : item
-    );
-  };
+  const handleAllCheck = useCallback(
+    (checked: boolean) => {
+      cartItem.map((item) =>
+        item.is_active !== checked ? handleItemCheck(item.product_id) : item
+      );
+    },
+    [cartItem]
+  );
 
-  const handleItemCheck = (id: number) => {
+  const handleItemCheck = useCallback((id: number) => {
     setCartItem((prevCartItems) =>
       prevCartItems.map((item) =>
         item.product_id === id ? { ...item, is_active: !item.is_active } : item
       )
     );
-  };
-  const handleOrderList = () => {
+  }, []);
+
+  const handleOrderList = useCallback(() => {
     const order_kind: string = "cart_order";
     navigate("/orderpage", {
       state: {
@@ -102,9 +97,22 @@ const KeepPage: React.FC = () => {
         order_kind: order_kind,
       },
     });
-  };
+  }, [navigate, orderCartInfo]);
 
-  const handleAllDelete = async () => {
+  const handleDeleteItem = useCallback(
+    async (cart_item_id: number) => {
+      try {
+        const res = await DeleteCartItem(cart_item_id);
+        if (res.status === 204) {
+          FetchKeepList();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [FetchKeepList]
+  );
+  const handleAllDelete = useCallback(async () => {
     dispatch(
       openModal({
         modalType: "ConfirmModal",
@@ -123,7 +131,6 @@ const KeepPage: React.FC = () => {
       }
     } else {
       const activeItems = cartItem.filter((item) => item.is_active === true);
-      console.log(activeItems);
 
       activeItems.forEach((item) => {
         handleDeleteItem(item.cart_item_id);
@@ -137,26 +144,43 @@ const KeepPage: React.FC = () => {
         dispatch(removeOrderProduct(item.product_id?.toString()));
       });
     }
-  };
-  const handleDeleteItem = async (cart_item_id: number) => {
-    try {
-      const res = await DeleteCartItem(cart_item_id);
-      if (res.status === 204) {
-        FetchKeepList();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleLogin = () => {
+  }, [
+    allChecked,
+    cartItem,
+    dispatch,
+    FetchKeepList,
+    handleDeleteItem,
+    navigate,
+  ]);
+
+  const handleLogin = useCallback(() => {
     navigate("/login");
-  };
+  }, [navigate]);
 
   return (
     <>
       <Wrapper>
         <Heading>장바구니</Heading>
         <KeepForm>
+          {isLogin && (
+            <AllSection>
+              <div>
+                <CheckBox
+                  checked={cartItem.length > 0 ? allChecked : false}
+                  onChange={(checked) => handleAllCheck(checked)}
+                />
+              </div>
+              <Button
+                size="s"
+                color="primary"
+                variant="contained"
+                onClick={handleAllDelete}
+                margin="10px 0 10px auto"
+              >
+                전체삭제
+              </Button>
+            </AllSection>
+          )}
           <CartTable>
             <thead>
               <tr>
@@ -175,7 +199,6 @@ const KeepPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              <tr></tr>
               {cartItem.map((item: cartItem) => (
                 <CartItem
                   key={item.product_id}
@@ -186,29 +209,11 @@ const KeepPage: React.FC = () => {
                   handleDeleteItem={handleDeleteItem}
                 />
               ))}
-              <tr></tr>
             </tbody>
           </CartTable>
           {isLogin ? (
             cartItem.length > 0 ? (
               <>
-                <AllSection>
-                  <div>
-                    <CheckBox
-                      checked={cartItem.length > 0 ? allChecked : false}
-                      onChange={(checked) => handleAllCheck(checked)}
-                    />
-                  </div>
-                  <Button
-                    size="s"
-                    color="primary"
-                    variant="contained"
-                    onClick={handleAllDelete}
-                    margin="10px 0 10px auto"
-                  >
-                    전체삭제
-                  </Button>
-                </AllSection>
                 <ClacPrice>
                   <li>
                     총상품금액
@@ -244,7 +249,7 @@ const KeepPage: React.FC = () => {
                   size="l"
                   color="primary"
                   variant="contained"
-                  onClick={() => handleOrderList()}
+                  onClick={handleOrderList}
                   margin="30px auto 20px auto"
                   fontSize="24px"
                 >
@@ -268,6 +273,7 @@ const KeepPage: React.FC = () => {
                 variant="contained"
                 onClick={handleLogin}
                 margin="30px auto"
+                fontSize="24px"
               >
                 로그인
               </Button>
@@ -278,4 +284,5 @@ const KeepPage: React.FC = () => {
     </>
   );
 };
+
 export default KeepPage;

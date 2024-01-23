@@ -22,7 +22,7 @@ const BuyerJoin: React.FC<BuyerJoinProps> = ({ onSubmit }) => {
     watch,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
     getValues,
     clearErrors,
     setError,
@@ -31,6 +31,7 @@ const BuyerJoin: React.FC<BuyerJoinProps> = ({ onSubmit }) => {
   const passwordValue = watch("password", "");
   const [checked, setChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const { IdValid } = useIdValidation({
     watch,
     getValues,
@@ -42,6 +43,7 @@ const BuyerJoin: React.FC<BuyerJoinProps> = ({ onSubmit }) => {
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -83,8 +85,8 @@ const BuyerJoin: React.FC<BuyerJoinProps> = ({ onSubmit }) => {
                 value === passwordValue || "비밀번호가 일치 하지 않습니다.",
             }}
             label="비밀번호 중복 확인"
-            showPassword={showPassword}
-            handleClickShowPassword={handleClickShowPassword}
+            showPassword={showPassword2}
+            handleClickShowPassword={handleClickShowPassword2}
             handleMouseDownPassword={handleMouseDownPassword}
             error={errors.password2}
           />
@@ -125,7 +127,7 @@ const BuyerJoin: React.FC<BuyerJoinProps> = ({ onSubmit }) => {
           color="primary"
           variant="contained"
           type="submit"
-          disabled={!checked || Object.keys(errors).length > 0}
+          disabled={!checked || !isValid}
           margin="10px auto"
         >
           가입하기

@@ -15,7 +15,7 @@ export const Banner = styled.article`
   width: 100vw;
   height: 31.25rem;
   background: #f2f2f2;
-  margin-bottom: 5rem;
+  margin-bottom: 2.25rem;
   position: relative;
   left: 50%;
   transform: translateX(-50%);

@@ -5,7 +5,7 @@ interface ButtonProps {
   children?: ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   variant?: "text" | "outlined" | "contained";
-  size?: "l" | "m" | "ms" | "s" | "ss";
+  size?: "l" | "m" | "ms" | "s" | "ss" | "ll";
   color?: "primary" | "secondary" | "success" | "error" | "info" | "warning";
   disabled?: boolean;
   type?: "submit" | "button";
@@ -22,10 +22,11 @@ myButton.defaultProps = {
 
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, SxProps> = {
   m: { width: 480, height: 60 },
-  l: { width: 220, height: 68 },
+  l: { width: 220, height: 50 },
   ms: { width: 154, height: 60 },
   s: { width: 80, heigth: 40 },
   ss: { width: 154, heigth: 40 },
+  ll: { width: 300, height: 50 },
 };
 export default function myButton({
   children,

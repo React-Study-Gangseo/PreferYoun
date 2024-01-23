@@ -71,6 +71,7 @@ export default function MobileModal() {
   useEffect(() => {
     FetchDetailProduct({ product: productId });
   }, []);
+
   useEffect(() => {
     if (count < 1) {
       Swal.fire({
@@ -234,7 +235,7 @@ export default function MobileModal() {
           원
         </p>
       </TotalPriceWrap>
-      <BtnGroup>
+      {/* <BtnGroup>
         <Button
           size="l"
           color={userType === "BUYER" ? "primary" : "secondary"}
@@ -251,7 +252,7 @@ export default function MobileModal() {
         >
           장바구니
         </Button>
-      </BtnGroup>
+      </BtnGroup> */}
     </>
   );
 }

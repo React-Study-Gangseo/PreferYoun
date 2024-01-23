@@ -17,6 +17,7 @@ import Navigation from "component/common/MobileNavigation/Navigation";
 import LoginPage from "Page/AuthPage/LoginPage";
 import JoinPage from "Page/AuthPage/JoinPage";
 import SearchPage from "Page/SearchPage/SearchPage";
+import ErrorPage from "Page/404Page/ErrorPage";
 export interface RouterProps {}
 
 // const Routers: React.FC<RouterProps> = () => {
@@ -132,6 +133,7 @@ const Routers = createBrowserRouter([
         </>
       </>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
