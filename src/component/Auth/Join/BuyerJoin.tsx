@@ -118,7 +118,6 @@ const BuyerJoin: React.FC<BuyerJoinProps> = ({ onSubmit }) => {
           <Terms>
             호두샵의 <CheckTerms>이용약관</CheckTerms> 및
             <CheckTerms> 개인정보처리방침</CheckTerms>에 대한 내용을 확인 하였고
-            <br />
             동의합니다.
           </Terms>
         </CheckJoin>

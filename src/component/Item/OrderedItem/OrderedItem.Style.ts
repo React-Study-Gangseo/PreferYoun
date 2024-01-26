@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 
-export const OrderedIItemWrapper = styled.article`
+export const OrderedItemWrapper = styled.article`
   width: 100%;
   margin-bottom: 20px;
   border: 1px solid #c4c4c4;
-  padding: 5px 10px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
   & > div {
@@ -15,6 +15,7 @@ export const OrderedIItemWrapper = styled.article`
       width: 30%;
       aspect-ratio: 1/1;
       object-fit: cover;
+      border-radius: 10px;
     }
     & div {
       padding: 20px;
@@ -24,6 +25,9 @@ export const OrderedIItemWrapper = styled.article`
       & span:first-of-type::after {
         content: "/";
       }
+    }
+    @media (max-width: 897px) {
+      padding: 0px 14px;
     }
   }
   @media (min-width: 896px) {
@@ -55,6 +59,7 @@ export const BtnGroup = styled.section`
     justify-content: space-around;
     height: 150px;
     flex-shrink: 0;
+    padding-left: 40px;
   }
 `;
 

@@ -43,7 +43,12 @@ const SellerLogin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
             handleMouseDownPassword={handleMouseDownPassword}
             error={errors.password}
           />
-          <Button size="m" variant="contained" type="submit" fontSize="22px">
+          <Button
+            size="login"
+            variant="contained"
+            type="submit"
+            fontSize="22px"
+          >
             로그인
           </Button>
         </Form>

@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { IconButton } from "@mui/material";
+
 export const KeepProduct = styled.tr`
   width: 100%;
   & td {
@@ -113,33 +115,41 @@ export const Total = styled.div`
   position: relative;
 `;
 
-const Button = styled.button`
-  display: block;
-  padding: 15px;
-  font-size: 20px;
-  width: 50%;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.5s ease;
-`;
-
-export const OrderBtn = styled(Button)`
-  width: 13.75rem;
-  height: 4.25rem;
-  border-radius: 5px;
-  background: #21bf48;
-  color: white;
-  margin: 2.5rem auto 0;
-  font-size: 24px;
-  font-weight: 700;
-`;
-
-export const DeleteBtn = styled.button`
+export const DeleteBtn = styled(IconButton)`
   position: absolute;
   top: -66px;
   right: 4px;
   @media (min-width: 897px) {
     top: -40px;
     right: 10px;
+  }
+  & img {
+    width: 1.375rem;
+    aspect-ratio: 1/1;
+  }
+`;
+export const CountWrap = styled.div`
+  display: flex;
+  width: 9.375rem;
+  height: 3.125rem;
+  border-radius: 5px;
+  border: 1px solid #c4c4c4;
+  margin: 0 auto;
+  & > div,
+  & > button {
+    flex: 1 1 33%;
+    text-align: center;
+    line-height: 3.125rem;
+  }
+  @media (max-width: 896px) {
+    width: 70px;
+    height: 30px;
+    margin-bottom: 15px;
+    & > div,
+    & > button {
+      flex: 1 1 33%;
+      text-align: center;
+      line-height: 30px;
+    }
   }
 `;

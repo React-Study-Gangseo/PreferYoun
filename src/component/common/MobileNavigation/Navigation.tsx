@@ -46,7 +46,6 @@ export default function Navigation() {
     dispatch(
       openModal({
         modalType: "MobileModal",
-        isOpen: true,
       })
     );
   };
