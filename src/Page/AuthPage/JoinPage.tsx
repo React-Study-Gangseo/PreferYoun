@@ -55,7 +55,7 @@ const JoinPage: React.FC = () => {
 
   return (
     <>
-      <Main>
+      <Main userType={userType}>
         <Link to="/">
           <LogoImg src={Logo} alt="Hodu 로고" />
         </Link>

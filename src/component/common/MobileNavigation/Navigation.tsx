@@ -14,14 +14,13 @@ import HomeIcon from "../../../assets/images/home-icon.svg";
 import TopBtnIcon from "../../../assets/images/arrow_top.svg";
 import Search from "../../../assets/images/search-black.svg";
 import Cart from "../../../assets/images/icon-shopping-cart.svg";
-import OnCart from "../../../assets/images/icon-shopping-cart-2.svg";
 import OnUser from "../../../assets/images/icon-user-2.svg";
 import User from "../../../assets/images/icon-user.svg";
 import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
 import Share from "../../../assets/images/share-icon.svg";
-import { useDispatch } from "react-redux";
 import { openModal } from "../../../redux/Modal";
 import Button from "../Button/Button";
+import { useDispatch } from "react-redux";
 
 export default function Navigation() {
   const location = useLocation();
@@ -31,6 +30,7 @@ export default function Navigation() {
   const pathname = location.pathname;
   const isCartPage = pathname === "/cart";
   const isMyPage = pathname === "/mypage";
+  const isDetailPage = pathname.startsWith("/detailProduct/");
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
@@ -46,7 +46,6 @@ export default function Navigation() {
     dispatch(
       openModal({
         modalType: "MobileModal",
-        isOpen: true,
       })
     );
   };
@@ -119,6 +118,7 @@ export default function Navigation() {
       window.removeEventListener("scroll", showButtonClick);
     };
   }, []);
+
   return (
     <>
       <NavWrapper>
@@ -130,7 +130,7 @@ export default function Navigation() {
           )}
         </ButtonContainer>
         <NavList>
-          {pathname.startsWith("/detailProduct/") ? (
+          {isDetailPage && (
             <>
               <li>
                 <button onClick={kakaoButton}>
@@ -143,16 +143,33 @@ export default function Navigation() {
               </li>
               <BuyBtnLi>
                 <Button
-                  size="ms"
+                  size="ll"
                   color="primary"
                   variant="contained"
                   onClick={handleCountQuantity}
+                  margin="auto auto"
                 >
                   구매하기
                 </Button>
               </BuyBtnLi>
             </>
-          ) : (
+          )}
+          {isCartPage && (
+            <>
+              <BuyBtnLi>
+                <Button
+                  size="ll"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleCountQuantity}
+                  margin="auto auto"
+                >
+                  전체 구매하기
+                </Button>
+              </BuyBtnLi>
+            </>
+          )}
+          {!isDetailPage && !isCartPage && (
             <>
               <li>
                 <Link to="/">
@@ -180,10 +197,7 @@ export default function Navigation() {
               ) : (
                 <li>
                   <Link to="/cart">
-                    <img
-                      src={isCartPage ? OnCart : Cart}
-                      alt="쇼핑카트 아이콘"
-                    />
+                    <img src={Cart} alt="쇼핑카트 아이콘" />
                   </Link>
                 </li>
               )}

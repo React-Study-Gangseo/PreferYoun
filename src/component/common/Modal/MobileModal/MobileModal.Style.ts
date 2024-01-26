@@ -1,16 +1,5 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-const ModalDiv = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100%;
-  /* z-index: 999; */
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 390px;
-`;
 
 const slideUp = keyframes`
   from {
@@ -103,7 +92,6 @@ const BtnGroup = styled.div`
   gap: 14px;
 `;
 export {
-  ModalDiv,
   ModalWrapArticle,
   ModalLineSpan,
   CountWrap,

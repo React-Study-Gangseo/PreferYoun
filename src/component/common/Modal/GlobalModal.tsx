@@ -12,17 +12,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../../redux/Modal";
 import { Logout } from "API/AuthAPI";
-type ModalType = keyof typeof MODAL_TYPES;
 
-const MODAL_TYPES = {
+type ModalType = string;
+
+const MODAL_TYPES: Record<ModalType, string> = {
   MobileModal: "MobileModal",
   SearchAddressModal: "SearchAddressModal",
   ConfirmModal: "ConfirmModal",
 };
 
 export default function GlobalModal() {
-  const { modalType, isOpen }: { modalType: ModalType; isOpen: boolean } =
-    useSelector(selectModal);
+  const modals = useSelector(selectModal);
   const modalRoot = document.getElementById("modal");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ export default function GlobalModal() {
     }
     dispatch(closeModal());
   };
-
+  console.log(modals);
   useEffect(() => {
     if (dialogRef.current && !dialogRef.current.showModal) {
       dialogPolyfill.registerDialog(dialogRef.current);
@@ -64,7 +64,7 @@ export default function GlobalModal() {
   useEffect(() => {
     if (!modalRoot) return;
 
-    if (isOpen) {
+    if (modals.length > 0) {
       document.body.style.cssText = `
         position: fixed;
         top: -${window.scrollY}px;
@@ -75,22 +75,23 @@ export default function GlobalModal() {
       document.body.style.cssText = "";
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     }
-  }, [modalRoot, isOpen]);
+  }, [modalRoot, modals]);
 
   if (!modalRoot) {
     return null;
   }
 
-  const ModalComponent = MODAL_COMPONENTS[modalType];
-
-  if (!isOpen) return null;
-
   return createPortal(
-    <ModalWrapper>
-      <StyledDialog open={isOpen} ref={dialogRef} modalType={modalType}>
-        {ModalComponent ? <ModalComponent /> : null}
-      </StyledDialog>
-    </ModalWrapper>,
+    modals.map((modal: any, index: number) => {
+      const ModalComponent = MODAL_COMPONENTS[modal.modalType];
+      return (
+        <ModalWrapper key={index}>
+          <StyledDialog open={true} ref={dialogRef} modalType={modal.modalType}>
+            {ModalComponent ? <ModalComponent {...modal.modalProps} /> : null}
+          </StyledDialog>
+        </ModalWrapper>
+      );
+    }),
     modalRoot
   );
 }
@@ -120,9 +121,11 @@ const getModalStyles = (modalType: string) => {
     case MODAL_TYPES.SearchAddressModal:
       return {
         position: "relative",
-        width: "500px",
+        maxWidth: "500px",
+        width: "90%",
         height: "auto",
         padding: "30px 0 0",
+        borderRadius: "5px",
       };
     case MODAL_TYPES.MobileModal:
       return {
@@ -132,6 +135,8 @@ const getModalStyles = (modalType: string) => {
         padding: "16px 26px 10px",
         transform: "translateY(100%)",
         transition: "transform 1s ease",
+        boxSizing: "border-box",
+        borderRadius: "15px 15px 0px 0px",
       };
     case MODAL_TYPES.ConfirmModal:
       return {
@@ -139,6 +144,7 @@ const getModalStyles = (modalType: string) => {
         width: "400px",
         height: "auto",
         padding: "30px 0 30px",
+        borderRadius: "5px",
       };
     default:
       return {};
@@ -159,23 +165,31 @@ const StyledDialog = styled("dialog", {
       width: ${modalStyles.width};
       height: ${modalStyles.height};
       padding: ${modalStyles.padding};
+      box-sizing: ${modalStyles.boxSizing};
+      border-radius: ${modalStyles.borderRadius};
+      max-width: ${modalStyles.maxWidth};
     `;
   }};
   top: ${(props) => {
     switch (props.modalType) {
       case MODAL_TYPES.SearchAddressModal:
         return "15%";
-      case MODAL_TYPES.MobileModal:
-        return "50%";
       case MODAL_TYPES.ConfirmModal:
         return "40%";
       default:
-        return "50%";
+        return "auto";
     }
   }};
-  margin: 3.125rem auto;
+  bottom: ${(props) => {
+    switch (props.modalType) {
+      case MODAL_TYPES.MobileModal:
+        return "0";
+      default:
+        return "auto";
+    }
+  }};
+  margin: 3.125rem auto 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
   overflow: hidden;
   border: none;
   animation: ${({ modalType }) =>

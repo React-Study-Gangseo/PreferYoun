@@ -23,6 +23,7 @@ const NavList = styled.ul`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 0 0 0 14px;
 `;
 const MoreLi = styled.li`
   margin: 200px 0 50px;

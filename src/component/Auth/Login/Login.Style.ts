@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Button from "../../common/Button/Button";
 
 export const LoginSection = styled.section`
   background: white;
@@ -12,6 +13,9 @@ export const LoginSection = styled.section`
 export const LogoImg = styled.img`
   display: block;
   margin: 1.25rem auto 4.375rem auto;
+  @media (max-width: 897px) {
+    width: 200px;
+  }
 `;
 
 export const Form = styled.form`
@@ -40,3 +44,9 @@ export const Main = styled.main`
   width: 100%;
   margin-top: 80px;
 `;
+
+// export const LoginButton = styled(Button)`
+//   @media (max-width: 897px) {
+//     width: 100%;
+//   }
+// `;

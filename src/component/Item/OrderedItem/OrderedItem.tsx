@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { OrderedData, Products, orderdata } from "types/type";
 import { DetailProduct } from "API/ProductAPI";
 import {
-  OrderedIItemWrapper,
+  OrderedItemWrapper,
   OrderedDate,
   BtnGroup,
   MoreInfoSection,
@@ -118,7 +118,7 @@ const OrderedItem: React.FC<{
       <OrderedDate>{created_at?.replace("T", " ").slice(0, -16)}</OrderedDate>
       {order_number && <OrderNumber>주문번호: {order_number}</OrderNumber>}
       {orderedItems.map((item, index) => (
-        <OrderedIItemWrapper key={index}>
+        <OrderedItemWrapper key={index}>
           <div>
             <img src={item?.image} alt="주문한 상품 대표 이미지" />
             <div>
@@ -146,7 +146,7 @@ const OrderedItem: React.FC<{
               장바구니 담기
             </Button>
           </BtnGroup>
-        </OrderedIItemWrapper>
+        </OrderedItemWrapper>
       ))}
       {orderedItems.length > 1 && (
         <TotalPrice>전체 금액: {total_price}</TotalPrice>

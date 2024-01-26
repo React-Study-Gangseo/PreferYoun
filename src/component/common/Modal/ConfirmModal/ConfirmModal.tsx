@@ -7,22 +7,30 @@ import { closeModal, selectModal } from "../../../../redux/Modal";
 export interface ConfirmModalProps {
   YesChildren?: ReactNode;
   NoChildren?: ReactNode;
+  ConfirmChildren?: ReactNode;
   content?: ReactNode;
   handleDisagree?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   handleAgree?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const ConfirmModal: React.FC<ConfirmModalProps> = ({ handleAgree }) => {
+const ConfirmModal: React.FC<ConfirmModalProps> = ({
+  YesChildren,
+  NoChildren,
+  ConfirmChildren,
+  content,
+  handleAgree,
+}) => {
   const dispatch = useDispatch();
   const { modalProps } = useSelector(selectModal);
+  console.log("🚀 ~ modalProps:", modalProps);
   const handleDisagree = () => {
     dispatch(closeModal());
   };
   return (
     <>
-      <ModalContent>{modalProps.content} </ModalContent>
+      <ModalContent>{content} </ModalContent>
       <ButtonMenu>
-        {modalProps.ConfirmChildren ? (
+        {ConfirmChildren ? (
           <Button
             size="s"
             variant="contained"
@@ -30,7 +38,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ handleAgree }) => {
             onClick={handleDisagree}
             fontSize="18px"
           >
-            {modalProps.ConfirmChildren}
+            {ConfirmChildren}
           </Button>
         ) : (
           <>
@@ -41,7 +49,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ handleAgree }) => {
               onClick={handleDisagree}
               fontSize="18px"
             >
-              {modalProps.NoChildren}
+              {NoChildren}
             </Button>
             <Button
               size="s"
@@ -50,7 +58,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ handleAgree }) => {
               onClick={handleAgree}
               fontSize="18px"
             >
-              {modalProps.YesChildren}
+              {YesChildren}
             </Button>
           </>
         )}

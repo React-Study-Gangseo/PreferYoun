@@ -8,7 +8,6 @@ import {
   ProductInfoContainer,
   ProductName,
   SoldOutImg,
-  SoldOutWrapper,
 } from "./ProductItem.styles";
 import { Products } from "types/type";
 import { useNavigate } from "react-router-dom";
@@ -41,9 +40,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
     <ProductItemWrapper onClick={() => handleProductDetail(product)}>
       {product.stock === 0 && (
         <>
-          <SoldOutWrapper>
-            <SoldOutImg src={SoldOut} alt="sold-out" />
-          </SoldOutWrapper>
+          <SoldOutImg src={SoldOut} alt="sold-out" />
         </>
       )}
       <ProductImage src={product.image} alt="상품 이미지" />

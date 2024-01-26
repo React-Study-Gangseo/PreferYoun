@@ -42,98 +42,9 @@ export const CartTable = styled.table`
   & tbody tr {
     height: 25px;
   }
-`;
-export const FormTop = styled.ul`
-  width: 100%;
-  display: flex;
-  list-style: none;
-  justify-content: space-between;
-  padding: 1.1875rem 8.1875rem 1.125rem 1.875rem;
-  margin-bottom: 2.1875rem;
-  font-size: 1.125rem;
-  & li:nth-of-type(2) {
-    margin-right: 80px;
-  }
-`;
-
-export const KeepList = styled.ul`
-  margin-bottom: 5rem;
-
-  & li {
-    margin-bottom: 0.625rem;
-  }
-`;
-
-export const KeepProduct = styled.article`
-  width: 100%;
-  border: 2px solid #e0e0e0;
-  border-radius: 0.625rem;
-  display: flex;
-  padding: 1.25rem 6.25rem 1.25rem 1.875rem;
-`;
-
-export const KeepProductImg = styled.img`
-  width: 10rem;
-  height: 10rem;
-  border-radius: 0.625rem;
-  margin: 0 2.25rem 0 2.5rem;
-`;
-
-export const KeepProductInfo = styled.div`
-  width: 26.125rem;
-  padding-top: 0.3125rem;
-  & > span {
-    font-size: 14px;
-    font-weight: 400;
-    color: #767676;
-  }
-
-  & h3 {
-    font-size: 18px;
-    font-weight: 400;
-    margin: 0.625rem 0 0.625rem 0;
-  }
-
-  & p {
-    margin: 0 0 3.5rem 0;
-    font-size: 1rem;
-    font-weight: 700;
-  }
-`;
-export const TotalPrice = styled.p`
-  font-size: 18px;
-  font-weight: 700;
-  color: #eb5757;
-  margin-bottom: 1.625rem;
-  text-align: center;
-`;
-export const CountWrap = styled.div`
-  display: flex;
-  max-width: 9.375rem;
-  height: 3.125rem;
-  border-radius: 5px;
-  border: 1px solid #c4c4c4;
-  margin: auto 0;
-  & > div,
-  & > button {
-    flex: 1 1 33%;
-    text-align: center;
-    line-height: 3.125rem;
-  }
-`;
-
-export const IncreaseButton = styled.button`
-  border-radius: 0 5px 5px 0;
-  border-left: 1px solid #c4c4c4;
-`;
-
-export const DecreaseButton = styled.button`
-  border-radius: 5px 0 0 5px;
-  border-right: 1px solid #c4c4c4;
-`;
-
-export const Total = styled.div`
-  margin: auto 0 auto auto;
+  /* @media (max-width: 896px) {
+    display: none;
+  } */
 `;
 
 export const ClacPrice = styled.ul`
@@ -239,31 +150,10 @@ export const EmptyKeepList = styled.section`
 export const AllSection = styled.section`
   display: flex;
   padding-left: 10px;
+  /* margin-bottom: -40px; */
   & div {
     @media (min-width: 897px) {
       display: none;
-    }
-    & input[type="checkbox"] {
-      appearance: none;
-      position: relative;
-      display: block;
-      width: 20px;
-      height: 20px;
-      border: 2px solid #21bf48;
-      border-radius: 50%;
-      margin: 0 auto;
-    }
-    & input[type="checkbox"]:checked::before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 2px;
-      left: 2.2px;
-      width: 12px;
-      height: 12px;
-      background-color: #21bf48;
-      border-radius: 50%;
-      box-sizing: border-box;
     }
   }
 `;

@@ -66,7 +66,6 @@ const ProductDetail: React.FC = () => {
       dispatch(
         openModal({
           modalType: "ConfirmModal",
-          isOpen: true,
           modalProps: ModalSetting.UnderStockModal,
         })
       );
@@ -76,7 +75,6 @@ const ProductDetail: React.FC = () => {
       dispatch(
         openModal({
           modalType: "ConfirmModal",
-          isOpen: true,
           modalProps: ModalSetting.OverStockModal,
         })
       );
@@ -92,7 +90,6 @@ const ProductDetail: React.FC = () => {
       dispatch(
         openModal({
           modalType: "ConfirmModal",
-          isOpen: true,
           modalProps: ModalSetting.LoginModal,
         })
       );
@@ -111,7 +108,6 @@ const ProductDetail: React.FC = () => {
       dispatch(
         openModal({
           modalType: "ConfirmModal",
-          isOpen: true,
           modalProps: ModalSetting.SoldOutModal,
         })
       );
@@ -136,7 +132,6 @@ const ProductDetail: React.FC = () => {
           dispatch(
             openModal({
               modalType: "ConfirmModal",
-              isOpen: true,
               modalProps: ModalSetting.GoCartModal,
             })
           );
@@ -152,7 +147,6 @@ const ProductDetail: React.FC = () => {
         dispatch(
           openModal({
             modalType: "ConfirmModal",
-            isOpen: true,
             modalProps: ModalSetting.SoldOutModal,
           })
         );
@@ -160,7 +154,6 @@ const ProductDetail: React.FC = () => {
         dispatch(
           openModal({
             modalType: "ConfirmModal",
-            isOpen: true,
             modalProps: ModalSetting.LoginModal,
           })
         );
@@ -169,7 +162,6 @@ const ProductDetail: React.FC = () => {
       dispatch(
         openModal({
           modalType: "ConfirmModal",
-          isOpen: true,
           modalProps: ModalSetting.SoldOutModal,
         })
       );
