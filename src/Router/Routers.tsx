@@ -163,10 +163,6 @@ const Routers = createBrowserRouter([
         path: "seller/center/upload",
         element: <UploadPage />,
       },
-      {
-        path: "search",
-        element: <SearchPage />,
-      },
     ],
   },
   {
@@ -176,6 +172,10 @@ const Routers = createBrowserRouter([
   {
     path: "join",
     element: <JoinPage />,
+  },
+  {
+    path: "search",
+    element: <SearchPage />,
   },
 ]);
 
