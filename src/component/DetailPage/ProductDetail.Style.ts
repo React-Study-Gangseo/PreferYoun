@@ -23,7 +23,7 @@ export const DetailPageWrapper = styled.section`
   }
 `;
 export const ProductImg = styled.img`
-  width: 37.5rem;
+  max-width: 37.5rem;
   aspect-ratio: 1/1;
   object-fit: cover;
   @media (max-width: 896px) {
@@ -205,4 +205,11 @@ export const MobileMoreInfoSection = styled.section<{ isOpen: boolean }>`
     box-shadow :0px; 
     padding-bottom :20px;
     height: 230px;`}
+`;
+
+export const MobileTabButton = styled.button<{ active: boolean }>`
+  width: 320px;
+  border-bottom: 6px solid ${({ active }) => (active ? "#21bf48" : "#767676")};
+  color: black;
+  font-size: 1.4rem;
 `;
