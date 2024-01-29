@@ -176,6 +176,7 @@ const Header: React.FC<HeaderProps> = () => {
             variant="contained"
             color="primary"
             onClick={handleCenterBtn}
+            padding="10px 20px"
           >
             <CenterImg src={SellerCenter} alt="판매자 센터 아이콘" />
             판매자 센터

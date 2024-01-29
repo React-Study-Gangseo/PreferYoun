@@ -21,12 +21,12 @@ myButton.defaultProps = {
 };
 
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, SxProps> = {
-  m: { width: 480, height: 60 },
+  m: { maxWidth: 480, height: 60, width: "100%" },
   l: { width: 220, height: 60 },
-  ms: { width: 154, height: 60 },
+  ms: { maxWidth: 154, height: 60, width: "100%" },
   s: { width: 80, heigth: 40 },
   ss: { width: 154, heigth: 40 },
-  ll: { width: 300, height: 50 },
+  ll: { minWidth: 300, height: 50, width: "100%" },
   login: { width: "100%", height: 60 },
 };
 export default function myButton({

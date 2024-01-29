@@ -1,4 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
+import UploadIcon from "../../assets/images/icon-img.png";
+import Button from "component/common/Button/Button";
+import { EditProductAPI, PostProduct } from "API/ProductAPI";
+import { UploadProducts } from "types/type";
+import MDEditor from "@uiw/react-md-editor";
+import Warning from "./Warning/Warning";
+import { useLocation, useNavigate } from "react-router-dom";
+import ShippingButton from "component/common/Button/ShipingButton";
 import {
   MainSection,
   FormSection,
@@ -18,19 +26,10 @@ import {
   Sufix,
   NameSufix,
 } from "./UploadProduct.Style";
-import UploadIcon from "../../assets/images/icon-img.png";
-import Button from "component/common/Button/Button";
-import { EditProductAPI, PostProduct } from "API/ProductAPI";
-import { UploadProducts } from "types/type";
-import MDEditor from "@uiw/react-md-editor";
-import Warning from "./Warning/Warning";
-import { useLocation, useNavigate } from "react-router-dom";
-import ShippingButton from "component/common/Button/ShipingButton";
 
 export default function UploadProduct() {
   const fileInputRef = useRef<any>();
   const [previewURL, setPreviewURL] = useState("");
-  const [isActive, setIsActive] = useState("");
   const [inputCount, setInputCount] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,12 +40,13 @@ export default function UploadProduct() {
     shipping_fee: 0,
     stock: 0,
     image: undefined,
-    product_info: "",
+    shipping_method: "",
+    product_info: " ",
   });
+
   const handleUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       let file = e.target.files[0];
-      console.log(file);
       setProduct({ ...product, image: file });
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -61,16 +61,12 @@ export default function UploadProduct() {
     if (data) {
       setPreviewURL(data.product.image);
       setProduct(data.product);
-      setIsActive(data.product.shipping_method);
     }
   }, [data]);
 
-  console.log(product.image);
   const UploadProduct = async () => {
-    console.log(product);
     try {
-      const uploadProduct = await PostProduct(product);
-      console.log(uploadProduct);
+      await PostProduct(product);
       navigate("/seller/center");
     } catch (err) {
       console.log(err);
@@ -78,7 +74,6 @@ export default function UploadProduct() {
   };
   const EditProduct = async () => {
     try {
-      console.log(product);
       const res = await EditProductAPI(product);
       console.log(res);
       if (res.status === 200) {
@@ -88,11 +83,12 @@ export default function UploadProduct() {
       console.log(error);
     }
   };
-  const handleMethod = (e: any) => {
-    setIsActive(e.target.value);
-    setProduct({ ...product, shipping_method: e.target.value });
+  const handleMethod = (value: string) => {
+    setProduct((prevState) => ({
+      ...prevState,
+      shipping_method: value,
+    }));
   };
-
   return (
     <>
       <h1 className="a11y-hidden">판매자 센터 상품 등록</h1>
@@ -163,17 +159,25 @@ export default function UploadProduct() {
                 <ShippingBtn>
                   <ShippingButton
                     size="ms"
-                    variant={isActive === "PARCEL" ? "contained" : "outlined"}
+                    variant={
+                      product.shipping_method === "PARCEL"
+                        ? "contained"
+                        : "outlined"
+                    }
                     value="PARCEL"
-                    onClick={(e: any) => handleMethod(e)}
+                    onClick={() => handleMethod("PARCEL")}
                   >
                     택배, 소포, 등기
                   </ShippingButton>
                   <ShippingButton
                     size="ms"
-                    variant={isActive === "DELIVERY" ? "contained" : "outlined"}
+                    variant={
+                      product.shipping_method === "DELIVERY"
+                        ? "contained"
+                        : "outlined"
+                    }
                     value="DELIVERY"
-                    onClick={(e: any) => handleMethod(e)}
+                    onClick={() => handleMethod("DELIVERY")}
                   >
                     직접배송(화물배달)
                   </ShippingButton>
