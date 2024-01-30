@@ -13,7 +13,7 @@
 - react-hook-form 및 Axios, SweetAlert을 사용해 최적화 및 성능을 향상 시켰습니다.
 
 #### 배포 사이트 : https://markethodu.netlify.app/
-- id : seller2(판매자) / buyer2(구매자) 
+- Id : seller2(판매자) / buyer2(구매자) 
 - Password : hodu0910
   
 ## 서비스 이용 방법
