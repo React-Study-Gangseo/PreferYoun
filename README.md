@@ -1,5 +1,9 @@
 ## 쇼핑몰 제작 개인 프로젝트
 
+#### 배포 사이트 : https://markethodu.netlify.app/
+- Id : seller2(판매자) / buyer2(구매자) 
+- Password : hodu0910
+
 #### 개발기간
 - 23.07.15 ~ 23.09.10 (배포)
 #### 리펙토링기간
@@ -12,10 +16,6 @@
 - 카카오 공유 및 주소 검색 API를 사용해 편의성을 높였습니다.
 - react-hook-form 및 Axios, SweetAlert을 사용해 최적화 및 성능을 향상 시켰습니다.
 
-#### 배포 사이트 : https://markethodu.netlify.app/
-- Id : seller2(판매자) / buyer2(구매자) 
-- Password : hodu0910
-  
 ## 서비스 이용 방법
 
 - 구매자/판매자로 서비스를 이용하실 수 있습니다.
@@ -27,5 +27,11 @@
 ## 🛠 테크 스택
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">  <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white">  <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=white">  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">  <img src="https://img.shields.io/badge/KakaoAPI-FFCD00?style=for-the-badge&logo=kakao&logoColor=white">  <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">  <img src="https://img.shields.io/badge/netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white"> <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"> <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"></br>
 그 외 - REST API (제주코딩베이스캠프 제공)
+
+## 리펙토링
+
+- 반응형 디자인 및 접근성 개선 (모바일 전용 Bottom Navigation, Header 및 컴포넌트의 레이아웃 변경)
+- Router 버전 업에 의한 Router 코드 변경
+- 모달의 개선 및 Redux 관리의 개선
 
 ##폴더 구조
