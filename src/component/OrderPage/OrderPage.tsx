@@ -213,7 +213,6 @@ const OrderPage: React.FC = () => {
     dispatch(
       openModal({
         modalType: "SearchAddressModal",
-        isOpen: true,
       })
     );
   };
@@ -457,7 +456,7 @@ const OrderPage: React.FC = () => {
                     우편번호 조회
                   </Button>
                   <input
-                    id="address"
+                    id="address1"
                     value={address.firstAddress}
                     onChange={(e) =>
                       setAddress({
@@ -468,7 +467,7 @@ const OrderPage: React.FC = () => {
                   />
                 </div>
                 <input
-                  id="address"
+                  id="address2"
                   value={address.secondAddress}
                   onChange={(e) =>
                     setAddress({
@@ -478,7 +477,7 @@ const OrderPage: React.FC = () => {
                   }
                 />
                 <input
-                  id="address"
+                  id="address3"
                   placeholder="상세주소"
                   value={address.thirdAddress}
                   onChange={(e) =>

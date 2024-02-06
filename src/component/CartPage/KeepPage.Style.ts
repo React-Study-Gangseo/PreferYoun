@@ -47,7 +47,7 @@ export const CartTable = styled.table`
   } */
 `;
 
-export const ClacPrice = styled.ul`
+export const CalcPrice = styled.ul`
   background: #f2f2f2;
   display: flex;
   width: 100%;

@@ -11,7 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { GetSellerProduct } from "API/ProductAPI";
 import { Products } from "types/type";
-import SellerItem from "./SellerItem/SellerItem";
+import SellerItem from "../Item/SellerItem/SellerItem";
 import Button from "../../component/common/Button/Button";
 import TabButton from "component/common/Button/TabButton";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -80,6 +80,14 @@ const SellerCenterPage: React.FC = () => {
                     <th>판매가격</th>
                     <th>수정</th>
                     <th>삭제</th>
+                  </tr>
+                </thead>
+                <thead>
+                  <tr>
+                    <th>상품정보</th>
+                    <th>판매가격</th>
+                    <th></th>
+                    <th>수정/삭제</th>
                   </tr>
                 </thead>
                 <tbody>

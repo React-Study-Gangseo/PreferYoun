@@ -57,7 +57,6 @@ export default function UploadProduct() {
     }
   };
   useEffect(() => {
-    // setProduct(data.product);
     if (data) {
       setPreviewURL(data.product.image);
       setProduct(data.product);
@@ -103,6 +102,7 @@ export default function UploadProduct() {
                 {!previewURL && (
                   <ProductIconWrapper>
                     <ProductImgInput
+                      aria-label="상품 이미지 업로드"
                       type="file"
                       accept="image/jpeg,image/jpg,image/png,image/gif"
                       onChange={handleUploadImg}

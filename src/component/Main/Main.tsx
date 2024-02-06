@@ -84,6 +84,7 @@ const Main: React.FC = () => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     if (page === 1) observe(target.current);
 
@@ -140,11 +141,7 @@ const Main: React.FC = () => {
     dispatch({ type: "SET_SORT_TYPE", payload: type });
   };
 
-  // useEffect(() => {
-  //   // sortType에 따른 상품 목록 정렬 로직
-  //   // ...
-  // }, [sortType]);
-  const getSortedProducts = () => {
+  const getSortedProducts = (products: Products[]) => {
     const compare = (a: any, b: any) => {
       if (state.sortType === "latest") {
         return (
@@ -159,7 +156,7 @@ const Main: React.FC = () => {
       }
     };
 
-    const sortedList = [...state.products].sort(compare);
+    const sortedList = [...products].sort(compare);
 
     return sortedList;
   };
@@ -171,15 +168,11 @@ const Main: React.FC = () => {
         <ProductSortList onSort={handleSort} />
         <Suspense fallback={<div>Loading...</div>}>
           <ProductList>
-            {/* {(state.searchProducts?.length > 0
-              ? state.searchProducts
-              : state.products
-            )?.map((item) => (
-              <li key={Number(item.product_id)}>
-                <ProductItem product={item} />
-              </li>
-            ))} */}
-            {getSortedProducts().map((item) => (
+            {getSortedProducts(
+              state.searchProducts?.length > 0
+                ? state.searchProducts
+                : state.products
+            ).map((item) => (
               <li key={Number(item.product_id)}>
                 <ProductItem product={item} />
               </li>

@@ -10,6 +10,7 @@ import {
   CartBtn,
   UserBtn,
   HeaderCenterSection,
+  MypageMenu,
 } from "./Header.Style";
 import HoduLogo from "../../../assets/images/Logo-hodu.png";
 import Cart from "../../../assets/images/icon-shopping-cart.svg";
@@ -24,7 +25,8 @@ import { setSearchData } from "../../../redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search from "../../../assets/images/search.svg";
 import { SearchAPI } from "../../../API/ProductAPI";
-import Swal from "sweetalert2";
+import { openModal } from "../../../redux/Modal";
+import { ModalSetting } from "../Modal/ConfirmModal/ModalSetting";
 
 interface HeaderProps {
   type?: "home" | "seller" | "buyer" | "seller_center";
@@ -39,6 +41,9 @@ const Header: React.FC<HeaderProps> = () => {
   const isMyPage = pathname === "/mypage";
   const [inputValue, setInputValue] = useState("");
   const [type, setType] = useState("home");
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const userType = userInfo ? userInfo.user_type : null;
   const handleCenterBtn = () => {
     navigate("/seller/center");
   };
@@ -49,20 +54,12 @@ const Header: React.FC<HeaderProps> = () => {
     if (userInfo) {
       navigate("/mypage");
     } else {
-      Swal.fire({
-        text: "로그인 후 이용하실 수 있는 기능 입니다.",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "로그인 하러가기",
-        confirmButtonText: "로그인 하러가기",
-        icon: "warning",
-        customClass: {
-          icon: "my-icon",
-        },
-      }).then((result) => {
-        if (result.isConfirmed) {
-          handleOpenLoginModal();
-        }
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          modalProps: ModalSetting.LoginModal,
+        })
+      );
     }
   };
   const handleOpenLoginModal = () => {
@@ -71,26 +68,42 @@ const Header: React.FC<HeaderProps> = () => {
   const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
-  const search = async (e: React.KeyboardEvent) => {
+  const search = async (
+    e: React.KeyboardEvent,
+    value: string,
+    page: number = 1,
+    accumulatedResults: any[] = []
+  ) => {
     if (e.key === "Enter") {
       try {
-        const res = await SearchAPI(inputValue);
-        dispatch(setSearchData({ value: res.data.results }));
+        const res = await SearchAPI(inputValue, page);
+        accumulatedResults.push(...res.data.results);
+
+        if (res.data.next) {
+          await search(e, value, page + 1, accumulatedResults);
+        } else {
+          dispatch(setSearchData({ value: accumulatedResults }));
+        }
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }
     }
   };
+
   const onClickHome = () => {
     setInputValue("");
     dispatch(setSearchData({ value: [] }));
   };
   const handleIconClick = () => {
-    search({ key: "Enter" } as React.KeyboardEvent);
+    if (inputValue)
+      search({ key: "Enter" } as React.KeyboardEvent, inputValue, 1, []);
   };
-  const storedData = localStorage.getItem("UserInfo");
-  const userInfo = storedData ? JSON.parse(storedData) : null;
-  const userType = userInfo ? userInfo.user_type : null;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      search(e, inputValue, 1, []);
+    }
+  };
   useEffect(() => {
     if (userType) {
       if (userType === "BUYER") {
@@ -109,6 +122,12 @@ const Header: React.FC<HeaderProps> = () => {
     }
   }, [pathname, type, userType]);
 
+  const [isMenuVisible, setMenuVisible] = useState(false);
+
+  const handleButtonClick = () => {
+    setMenuVisible(!isMenuVisible);
+  };
+
   const UI: { [key: string]: JSX.Element } = {
     home: (
       <>
@@ -119,7 +138,7 @@ const Header: React.FC<HeaderProps> = () => {
             onClick={() => onClickHome()}
           />
         </Logo>
-        <HeaderForm onSubmit={(e) => e.preventDefault()}>
+        <HeaderForm onSubmit={(e) => e.preventDefault()} id="search-form">
           <FormDiv>
             <HeaderInput
               type="text"
@@ -127,7 +146,7 @@ const Header: React.FC<HeaderProps> = () => {
               id="search-box"
               value={inputValue}
               onInput={handleData}
-              onKeyDown={search}
+              onKeyDown={handleKeyDown}
             />
             <label htmlFor="search-box" onClick={handleIconClick}>
               <img src={Search} alt="검색창 아이콘" />
@@ -151,7 +170,7 @@ const Header: React.FC<HeaderProps> = () => {
         <Logo to="/" onClick={() => onClickHome()}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
-        <HeaderForm onSubmit={(e) => e.preventDefault()}>
+        <HeaderForm onSubmit={(e) => e.preventDefault()} id="search-form">
           <FormDiv>
             <HeaderInput
               type="text"
@@ -159,7 +178,7 @@ const Header: React.FC<HeaderProps> = () => {
               id="search-box"
               value={inputValue}
               onInput={handleData}
-              onKeyDown={search}
+              onKeyDown={handleKeyDown}
             />
             <label htmlFor="search-box" onClick={handleIconClick}>
               <img src={Search} alt="검색창 아이콘" />
@@ -189,7 +208,7 @@ const Header: React.FC<HeaderProps> = () => {
         <Logo to="/" onClick={() => onClickHome()}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
-        <HeaderForm onSubmit={(e) => e.preventDefault()}>
+        <HeaderForm onSubmit={(e) => e.preventDefault()} id="search-form">
           <FormDiv>
             <HeaderInput
               type="text"
@@ -197,7 +216,7 @@ const Header: React.FC<HeaderProps> = () => {
               id="search-box"
               value={inputValue}
               onInput={handleData}
-              onKeyDown={search}
+              onKeyDown={handleKeyDown}
             />
             <label htmlFor="search-box" onClick={handleIconClick}>
               <img src={Search} alt="검색창 아이콘" />
@@ -209,11 +228,35 @@ const Header: React.FC<HeaderProps> = () => {
             <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
             <span>장바구니</span>
           </CartBtn>
-          <UserBtn onClick={handleMoveMyPage}>
+          <UserBtn onClick={handleButtonClick}>
             <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
             <span>마이페이지</span>
           </UserBtn>
         </HeaderNav>
+        {isMenuVisible && (
+          <MypageMenu>
+            <ul>
+              <li>
+                <button
+                  onClick={() => {
+                    /* 마이페이지 이동 로직 */
+                  }}
+                >
+                  마이페이지
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    /* 로그아웃 로직 */
+                  }}
+                >
+                  로그아웃
+                </button>
+              </li>
+            </ul>
+          </MypageMenu>
+        )}
       </>
     ),
     seller_center: (
@@ -245,5 +288,6 @@ export default Header;
 
 const CenterImg = styled.img`
   width: 2rem;
+  aspect-ratio: 1/1;
   margin-right: 0.5rem;
 `;

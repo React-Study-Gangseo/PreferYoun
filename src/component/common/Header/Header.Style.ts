@@ -119,6 +119,7 @@ export const HeaderNav = styled.nav`
   margin-left: auto;
   display: flex;
   gap: 26px;
+  position: relative;
 `;
 export const CartBtn = styled(IconButton)`
   margin-top: auto;
@@ -147,4 +148,15 @@ export const UserBtn = styled(IconButton)`
   & span {
     font-size: 0.8rem;
   }
+`;
+
+export const MypageMenu = styled.article`
+  position: absolute;
+  z-index: 99;
+  background-color: #fff;
+  width: 8.125rem;
+  height: 6.875rem;
+  box-shadow: 0px 0px 6px 0px #00000040;
+  right: 340px;
+  bottom: -100px;
 `;

@@ -3,6 +3,7 @@ import { IconButton } from "@mui/material";
 
 export const KeepProduct = styled.tr`
   width: 100%;
+  position: relative;
   & td {
     text-align: center;
     vertical-align: middle;
@@ -24,7 +25,7 @@ export const KeepProduct = styled.tr`
 `;
 export const KeepProductMobile = styled.tr`
   width: 100%;
-  /* position: relative; */
+  position: relative;
   & td {
     text-align: center;
     vertical-align: middle;
@@ -36,10 +37,14 @@ export const KeepProductMobile = styled.tr`
       border-radius: 10px 0 0 10px;
       padding-left: 5px;
     }
+    &:nth-of-type(2) {
+      width: calc(100% * 2 / 6);
+    }
     &:last-of-type {
       border-right: 2px solid #e0e0e0;
       border-radius: 0 10px 10px 0;
       padding-right: 5px;
+      width: calc(100% * 3 / 6);
     }
   }
   @media (min-width: 897px) {
@@ -55,11 +60,10 @@ export const KeepProductImg = styled.img`
   width: 100%;
   object-fit: cover;
   @media (max-width: 896px) {
-    max-width: 10rem;
-    width: 80%;
+    width: 60%;
     aspect-ratio: 1/1;
-    /* max-height: 5rem; */
     object-fit: cover;
+    margin-bottom: 10px;
   }
 `;
 
@@ -91,11 +95,11 @@ export const KeepProductInfo = styled.div`
     }
   }
   @media (max-width: 896px) {
+    width: 80%;
     flex-direction: column;
     gap: 0;
     & div {
       width: 170px;
-      margin: 5px auto 0;
       & p {
         margin-bottom: 10px;
       }
@@ -112,17 +116,17 @@ export const TotalPrice = styled.p`
 
 export const Total = styled.div`
   margin: 0 auto;
-  position: relative;
+  /* position: relative; */
 `;
 
 export const DeleteBtn = styled(IconButton)`
   position: absolute;
-  top: -66px;
-  right: 4px;
-  @media (min-width: 897px) {
-    top: -40px;
-    right: 10px;
-  }
+  top: 3px;
+  right: 3px;
+  /* @media (min-width: 897px) {
+    top: 3px;
+    right: 3px;
+  } */
   & img {
     width: 1.375rem;
     aspect-ratio: 1/1;
@@ -142,9 +146,10 @@ export const CountWrap = styled.div`
     line-height: 3.125rem;
   }
   @media (max-width: 896px) {
-    width: 70px;
+    width: 80px;
     height: 30px;
-    margin-bottom: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     & > div,
     & > button {
       flex: 1 1 33%;

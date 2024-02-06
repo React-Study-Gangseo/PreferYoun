@@ -14,6 +14,7 @@ export const ProductItemWrapper = styled.article`
 export const ProductImage = styled.img`
   width: 23.75rem;
   height: 23.75rem;
+  aspect-ratio: 1/1;
   border-radius: 10px;
   border: 1px solid #c4c4c4;
   margin-bottom: 1rem;

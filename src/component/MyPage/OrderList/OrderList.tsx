@@ -31,7 +31,6 @@ export default function OrderList() {
     dispatch(
       openModal({
         modalType: "ConfirmModal",
-        isOpen: true,
         modalProps: ModalSetting.LogOutModal,
       })
     );
