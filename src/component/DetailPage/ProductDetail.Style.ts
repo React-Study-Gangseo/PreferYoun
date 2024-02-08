@@ -4,10 +4,9 @@ import { IconButton } from "@mui/material";
 export const MainSection = styled.main`
   width: 100%;
   max-width: 80rem;
-  height: 100%;
+  height: auto;
   min-height: 100%;
   padding-bottom: 11.25rem;
-  /* margin-bottom: 19.6013rem; */
 `;
 export const DetailPageWrapper = styled.section`
   width: 100%;
@@ -16,14 +15,25 @@ export const DetailPageWrapper = styled.section`
   display: flex;
   gap: 3.125rem;
   margin-top: 5rem;
-  flex-wrap: wrap;
   @media (max-width: 896px) {
     margin: 1.25rem auto 0;
     gap: 3rem;
+    flex-direction: column;
+    flex-shrink: 1;
   }
 `;
+export const ImgBox = styled.div`
+  width: 37.5rem;
+  aspect-ratio: 1 / 1;
+  flex-basis: 100%;
+  @media (max-width: 896px) {
+    width: 100%;
+  }
+`;
+
 export const ProductImg = styled.img`
-  max-width: 37.5rem;
+  width: 100%;
+  height: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
   @media (max-width: 896px) {
@@ -34,7 +44,8 @@ export const ProductImg = styled.img`
   }
 `;
 export const ProductInfoSection = styled.section`
-  max-width: 39.375rem;
+  width: 100%;
+  flex-basis: 100%;
   width: 100%;
   position: relative;
   & > span {
@@ -44,6 +55,9 @@ export const ProductInfoSection = styled.section`
   & > h3 {
     font-size: 2.25rem;
     margin: 1rem 0 1.25rem;
+  }
+  @media (max-width: 896px) {
+    width: 100%;
   }
 `;
 export const ShareBtn = styled(IconButton)`

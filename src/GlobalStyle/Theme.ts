@@ -69,7 +69,7 @@ const theme = createTheme({
           border: 0,
           display: "block",
           textAlign: "center",
-          boxSizing:"border-box",
+          boxSizing: "border-box",
         },
         containedPrimary: {
           color: "white",
@@ -104,7 +104,6 @@ const theme = createTheme({
         },
       },
     },
-    
     MuiListItemText: {
       styleOverrides: {
         primary: {

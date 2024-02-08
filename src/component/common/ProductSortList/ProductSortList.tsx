@@ -10,12 +10,6 @@ import { InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 export interface ProductSortListProps {
   onSort: (type: string) => void;
 }
-const options = [
-  { value: "latest", label: "최신순" },
-  { value: "alphabetical", label: "가나다순" },
-  { value: "highPrice", label: "높은가격순" },
-  { value: "lowPrice", label: "낮은가격순" },
-];
 
 const ProductSortList: React.FC<ProductSortListProps> = ({ onSort }) => {
   const [selectedSortType, setSelectedSortType] = useState("latest");
@@ -69,6 +63,7 @@ const ProductSortList: React.FC<ProductSortListProps> = ({ onSort }) => {
           <InputLabel id="demo-select-small-label">정렬</InputLabel>
           <Select
             labelId="demo-select-small-label"
+            name="sortType"
             id="demo-select-small"
             value={selectedSortType}
             label="정렬"

@@ -5,7 +5,7 @@ import {
   Heading,
   KeepForm,
   CartTable,
-  ClacPrice,
+  CalcPrice,
   EmptyKeepList,
   AllSection,
 } from "./KeepPage.Style";
@@ -46,6 +46,7 @@ const KeepPage: React.FC = () => {
   const orderCartInfo = useSelector((state: { cartOrder: CartOrderState }) => {
     return state.cartOrder.value;
   });
+
   const allChecked = cartItem.every((item) => item.is_active);
 
   const FetchKeepList = useCallback(async () => {
@@ -116,7 +117,6 @@ const KeepPage: React.FC = () => {
     dispatch(
       openModal({
         modalType: "ConfirmModal",
-        isOpen: true,
         modalProps: ModalSetting.DeleteModal,
       })
     );
@@ -168,11 +168,12 @@ const KeepPage: React.FC = () => {
                 <CheckBox
                   checked={cartItem.length > 0 ? allChecked : false}
                   onChange={(checked) => handleAllCheck(checked)}
+                  id="all-check-box"
                 />
               </div>
               <Button
                 size="s"
-                color="primary"
+                color="secondary"
                 variant="contained"
                 onClick={handleAllDelete}
                 margin="10px 0 10px auto"
@@ -188,10 +189,8 @@ const KeepPage: React.FC = () => {
                   <CheckBox
                     checked={cartItem.length > 0 ? allChecked : false}
                     onChange={(checked) => handleAllCheck(checked)}
+                    id="mobile-all-check-box"
                   />
-                  <label className="a11y-hidden">
-                    장바구니 아이템 전체 체크 박스
-                  </label>
                 </th>
                 <th>상품정보</th>
                 <th>수량</th>
@@ -214,7 +213,7 @@ const KeepPage: React.FC = () => {
           {isLogin ? (
             cartItem.length > 0 ? (
               <>
-                <ClacPrice>
+                <CalcPrice>
                   <li>
                     총상품금액
                     <strong>
@@ -244,7 +243,7 @@ const KeepPage: React.FC = () => {
                       <span>원</span>
                     </strong>
                   </li>
-                </ClacPrice>
+                </CalcPrice>
                 <Button
                   size="l"
                   color="primary"

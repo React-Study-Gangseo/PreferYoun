@@ -70,10 +70,9 @@ export const EditProductAPI = async (Products: UploadProducts) => {
   }
 };
 
-export const SearchAPI = async (keyword: string) => {
+export const SearchAPI = async (keyword: string, page: number) => {
   try {
-    console.log(keyword);
-    const res = await instance.get(`/products/?search=${keyword}`);
+    const res = await instance.get(`/products/?page=${page}&search=${keyword}`);
     return res;
   } catch (err) {
     throw err;

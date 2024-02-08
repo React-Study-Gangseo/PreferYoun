@@ -229,6 +229,7 @@ const CartItem: React.FC<CartItemProps> = React.memo(
               <CheckBox
                 checked={!!selectItem}
                 onChange={(checked) => handleItemCheck(checked)}
+                id={`check-box-${cartItem?.product_id}`}
               />
             </td>
             <td>
@@ -289,11 +290,12 @@ const CartItem: React.FC<CartItemProps> = React.memo(
                   </TotalPrice>
                 )}
                 <Button
-                  size="ms"
+                  size="ss"
                   color="primary"
                   variant="contained"
                   onClick={() => handleOrderItem()}
                   margin="0 auto"
+                  padding="10px"
                 >
                   주문하기
                 </Button>
@@ -310,6 +312,7 @@ const CartItem: React.FC<CartItemProps> = React.memo(
               <CheckBox
                 checked={!!selectItem}
                 onChange={(checked) => handleItemCheck(checked)}
+                id={`check-box-${cartItem?.product_id}-mobile`}
               />
             </td>
             <td>
@@ -369,11 +372,12 @@ const CartItem: React.FC<CartItemProps> = React.memo(
                   </TotalPrice>
                 )}
                 <Button
-                  size="ms"
+                  size="s"
                   color="primary"
                   variant="contained"
                   onClick={() => handleOrderItem()}
                   margin="0 auto"
+                  padding="10px"
                 >
                   주문하기
                 </Button>

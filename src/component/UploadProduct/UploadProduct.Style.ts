@@ -1,28 +1,6 @@
 import styled from "@emotion/styled";
 import { OutlinedInput, InputAdornment } from "@mui/material";
 
-// export const HeaderSection = styled.section`
-//   padding-left: 6.25rem;
-//   display: flex;
-//   gap: 1rem;
-//   align-items: center;
-//   width: 100vw;
-//   position: relative;
-//   left: 50%;
-//   transform: translateX(-50%);
-//   height: 5.625rem;
-//   box-shadow: 0px 4px 5px 0px #0000001a;
-//   & img {
-//     width: 5rem;
-//   }
-//   & h2 {
-//     display: inline-block;
-//     margin: 0;
-//     font-size: 30px;
-//     font-weight: 500;
-//   }
-// `;
-
 export const WarningSection = styled.aside`
   margin-top: 10px;
   width: 20rem;
@@ -62,6 +40,9 @@ export const MainSection = styled.main`
     color: #eb5757;
     font-size: 16px;
     font-weight: 500;
+  }
+  @media (max-width: 896px) {
+    padding: 30px 10px;
   }
 `;
 export const FormSection = styled.form`
@@ -161,12 +142,8 @@ export const ButtonGroup = styled.div`
   margin: 10px 0 8.5rem auto;
   display: flex;
   gap: 14px;
-  & button:not(:nth-of-type(2)) {
-    border: 1px solid #c4c4c4;
-    &:hover:not(:nth-of-type(2)) {
-      border: 1px solid #c4c4c4;
-    }
-  }
+  width: 100%;
+  justify-content: end;
   @media (max-width: 896px) {
     width: 100%;
     flex-direction: row;
@@ -208,6 +185,7 @@ export const ImgWrapper = styled.div`
   aspect-ratio: 1/1;
   border-radius: 10px;
   background: #c4c4c4;
+  overflow: hidden;
 `;
 export const ProductIconWrapper = styled.label`
   display: inline-block;
@@ -237,7 +215,19 @@ export const ShippingBtn = styled.div`
     }
   }
 `;
-
+export const DesktopWarning = styled.small`
+  @media (max-width: 896px) {
+    display: none;
+    & + article {
+      display: none;
+    }
+  }
+`;
+export const MobileWarning = styled.small`
+  @media (min-width: 897px) {
+    display: none;
+  }
+`;
 // export const MethodBtn = styled(ButtonStyle)`
 //   &:active,
 //   &.active {

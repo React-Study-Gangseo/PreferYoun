@@ -3,6 +3,7 @@ import { css, keyframes } from "@emotion/react";
 import SearchAddressModal from "./SearchAddress/SearchAddress";
 import MobileModal from "../Modal/MobileModal/MobileModal";
 import ConfirmModal from "./ConfirmModal/ConfirmModal";
+import PriceModal from "../Modal/MobileModal/MobileCartModal";
 import { useSelector } from "react-redux";
 import { selectModal } from "../../../redux/Modal";
 import styled from "@emotion/styled";
@@ -19,6 +20,7 @@ const MODAL_TYPES: Record<ModalType, string> = {
   MobileModal: "MobileModal",
   SearchAddressModal: "SearchAddressModal",
   ConfirmModal: "ConfirmModal",
+  PriceModal: "PriceModal",
 };
 
 export default function GlobalModal() {
@@ -36,6 +38,7 @@ export default function GlobalModal() {
     [MODAL_TYPES.ConfirmModal]: (
       props: React.ComponentProps<typeof ConfirmModal>
     ) => <ConfirmModal {...props} handleAgree={handleAgree} />,
+    [MODAL_TYPES.PriceModal]: PriceModal,
   };
   const handleAgree = async () => {
     if (path === "/mypage") {
@@ -54,7 +57,7 @@ export default function GlobalModal() {
     }
     dispatch(closeModal());
   };
-  console.log(modals);
+
   useEffect(() => {
     if (dialogRef.current && !dialogRef.current.showModal) {
       dialogPolyfill.registerDialog(dialogRef.current);
@@ -85,7 +88,7 @@ export default function GlobalModal() {
     modals.map((modal: any, index: number) => {
       const ModalComponent = MODAL_COMPONENTS[modal.modalType];
       return (
-        <ModalWrapper key={index}>
+        <ModalWrapper key={index} modalType={modal.modalType}>
           <StyledDialog open={true} ref={dialogRef} modalType={modal.modalType}>
             {ModalComponent ? <ModalComponent {...modal.modalProps} /> : null}
           </StyledDialog>
@@ -105,13 +108,20 @@ const slideUp = keyframes`
   }
 `;
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.div<{ modalType: string }>`
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   height: 100%;
-  z-index: 999;
+  z-index: ${(props) => {
+    switch (props.modalType) {
+      case MODAL_TYPES.PriceModal:
+        return "99";
+      default:
+        return "999";
+    }
+  }};
   background-color: rgba(0, 0, 0, 0.3);
   width: 100vw;
 `;
@@ -138,6 +148,17 @@ const getModalStyles = (modalType: string) => {
         boxSizing: "border-box",
         borderRadius: "15px 15px 0px 0px",
       };
+    case MODAL_TYPES.PriceModal:
+      return {
+        position: "absolute",
+        bottom: "-50px",
+        width: "100%",
+        padding: "40px 26px 10px",
+        transform: "translateY(100%)",
+        transition: "transform 1s ease",
+        boxSizing: "border-box",
+        borderRadius: "15px 15px 0px 0px",
+      };
     case MODAL_TYPES.ConfirmModal:
       return {
         position: "relative",
@@ -155,7 +176,6 @@ const StyledDialog = styled("dialog", {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "modalType",
 })<{ modalType: string }>`
   display: block;
-  z-index: 9999;
   background-color: white;
   ${({ modalType }) => {
     const modalStyles = getModalStyles(modalType);
@@ -184,10 +204,21 @@ const StyledDialog = styled("dialog", {
     switch (props.modalType) {
       case MODAL_TYPES.MobileModal:
         return "0";
+      case MODAL_TYPES.PriceModal:
+        return "60px";
       default:
         return "auto";
     }
   }};
+  /* z-index: ${(props) => {
+    switch (props.modalType) {
+      case MODAL_TYPES.PriceModal:
+        return "90";
+      default:
+        return "9999";
+    }
+  }}; */
+  z-index: 9999;
   margin: 3.125rem auto 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;

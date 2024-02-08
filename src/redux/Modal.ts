@@ -25,7 +25,6 @@ export const modalSlice = createSlice({
     ) => {
       const { modalType, modalProps } = actions.payload;
       state.modals.push({ modalType, modalProps: modalProps || null });
-      console.log("🚀 ~ modalType:", modalType);
     },
     closeModal: (state) => {
       state.modals.pop();

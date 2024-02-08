@@ -9,6 +9,7 @@ import {
   BtnGroup,
   ShareBtn,
   CountWrap,
+  ImgBox,
 } from "./ProductDetail.Style";
 import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -175,7 +176,9 @@ const ProductDetail: React.FC = () => {
   return (
     <MainSection>
       <DetailPageWrapper>
-        <ProductImg src={productInfo?.image} alt="상품 사진" />
+        <ImgBox>
+          <ProductImg src={productInfo?.image} alt="상품 사진" />
+        </ImgBox>
         <ProductInfoSection>
           <span>{productInfo?.store_name}</span>
           <h3>{productInfo?.product_name}</h3>
