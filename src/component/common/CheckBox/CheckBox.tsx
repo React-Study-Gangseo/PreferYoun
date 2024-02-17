@@ -17,6 +17,7 @@ export default function CheckBox({ checked, onChange, id }: CheckBoxProps) {
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         name={id}
+        id={id || "check-box-undefined"}
       />
       <label className="a11y-hidden" htmlFor={id}>
         {`체크박스-${id}`}

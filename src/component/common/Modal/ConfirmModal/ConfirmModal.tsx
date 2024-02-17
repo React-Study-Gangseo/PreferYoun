@@ -2,8 +2,7 @@ import React, { ReactNode } from "react";
 import Button from "component/common/Button/Button";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
-import { closeModal } from "../../../../redux/Modal";
-import { useNavigate } from "react-router-dom";
+import { closeModal, userChoice } from "../../../../redux/Modal";
 
 export interface ConfirmModalProps {
   YesChildren?: ReactNode;
@@ -19,17 +18,19 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   NoChildren,
   ConfirmChildren,
   content,
-  handleAgree,
 }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const handleDisagree = () => {
     dispatch(closeModal());
-    navigate("/");
   };
+  const handleAgree = () => {
+    dispatch(userChoice(true));
+  };
+
   return (
     <>
-      <ModalContent>{content} </ModalContent>
+      <ModalContent>{content}</ModalContent>
       <ButtonMenu>
         {ConfirmChildren ? (
           <Button

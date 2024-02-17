@@ -7,7 +7,7 @@ import {
   BtnGroup,
 } from "./MobileModal.Style";
 import { Products, orderdata } from "types/type";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../../../../redux/Modal";
 import { DetailProduct } from "API/ProductAPI";
 import { AddKeepProduct } from "API/KeepAPI";
@@ -31,6 +31,10 @@ export default function MobileModal() {
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
   const [count, setCount] = useState(1);
+  const modals = useSelector((state: any) => state.modal.modals);
+
+  const currentModalChoice =
+    modals.length > 0 ? modals[modals.length - 1].modalChoice : undefined;
   const handleMinusCount = () => {
     setCount((prevCount) => prevCount - 1);
   };
@@ -94,6 +98,7 @@ export default function MobileModal() {
       setPostCartData((prevState) => ({ ...prevState, quantity: count }));
     }
   }, [count]);
+
   const handleKeepProduct = async () => {
     if (productInfo?.stock) {
       const storedData = localStorage.getItem("UserInfo");
@@ -118,10 +123,9 @@ export default function MobileModal() {
           );
         } else {
           try {
-            const res = await AddKeepProduct(postCartData);
-            console.log(res);
-            navigate("/cart");
+            await AddKeepProduct(postCartData);
             dispatch(closeModal());
+            navigate("/cart");
           } catch (error) {
             console.log(error);
           }
@@ -143,6 +147,13 @@ export default function MobileModal() {
       );
     }
   };
+
+  useEffect(() => {
+    if (currentModalChoice) {
+      dispatch(closeModal());
+      navigate("/cart");
+    }
+  }, [currentModalChoice]);
 
   const handleBuyProduct = () => {
     if (productInfo?.stock) {

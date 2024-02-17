@@ -69,6 +69,9 @@ export default function Navigation() {
       })
     );
   };
+  useEffect(() => {
+    dispatch(closeModal());
+  }, [pathname]);
   const handleTotalPrice = () => {
     setIsTotalPrice(!isTotalPrice);
     if (isTotalPrice) {
@@ -174,7 +177,7 @@ export default function Navigation() {
         <NavList>
           {isDetailPage && (
             <>
-              <li>
+              <li style={{ width: "80px" }}>
                 <button onClick={kakaoButton}>
                   <img
                     src={Share}

@@ -114,7 +114,7 @@ const Routers = createBrowserRouter([
       <>
         <>
           <PC>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             <Header />
             <Outlet />
             <Footer />

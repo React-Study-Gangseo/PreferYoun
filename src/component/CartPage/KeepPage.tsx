@@ -150,7 +150,7 @@ const KeepPage: React.FC = () => {
     dispatch,
     FetchKeepList,
     handleDeleteItem,
-    navigate,
+    // navigate,
   ]);
 
   const handleLogin = useCallback(() => {
@@ -198,7 +198,7 @@ const KeepPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {cartItem.map((item: cartItem) => (
+              {cartItem.map((item: cartItem, index) => (
                 <CartItem
                   key={item.product_id}
                   product={item}
@@ -206,6 +206,7 @@ const KeepPage: React.FC = () => {
                   onCheckChange={() => handleItemCheck(item.product_id)}
                   FetchKeepList={FetchKeepList}
                   handleDeleteItem={handleDeleteItem}
+                  index={index}
                 />
               ))}
             </tbody>

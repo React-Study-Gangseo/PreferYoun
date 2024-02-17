@@ -8,6 +8,7 @@ export const MainSection = styled.main`
   transform: translateX(-50%);
   width: 110%;
   padding-top: 2.375rem;
+  /* padding: 2.375rem 76.737px 0; */
   margin-bottom: 96px;
   & h2 {
     padding-top: 0.375rem;
@@ -24,6 +25,9 @@ export const MainSection = styled.main`
     float: right;
     margin-bottom: 2.375rem;
     display: flex;
+  }
+  @media (max-width: 1653px) and (min-width: 897px) {
+    width: 98%;
   }
   @media (max-width: 896px) {
     padding: 2.375rem 10px 0;

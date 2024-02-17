@@ -49,6 +49,7 @@ export default function MoreProductInfo({ Productinfo }: Props) {
             value={activeTab}
             onChange={handleTabChange}
             labels={tabLabels}
+            orientation="horizontal"
           />
 
           {activeTab === 0 && (

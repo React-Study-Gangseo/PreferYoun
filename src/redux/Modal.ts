@@ -5,6 +5,7 @@ export interface ModalState {
   modals: {
     modalType: string;
     modalProps: ConfirmModalProps | null;
+    modalChoice?: boolean;
   }[];
 }
 
@@ -24,7 +25,15 @@ export const modalSlice = createSlice({
       }>
     ) => {
       const { modalType, modalProps } = actions.payload;
-      state.modals.push({ modalType, modalProps: modalProps || null });
+      state.modals.push({
+        modalType,
+        modalProps: modalProps || null,
+      });
+    },
+    userChoice: (state, action) => {
+      if (state.modals.length > 0) {
+        state.modals[state.modals.length - 1].modalChoice = action.payload;
+      }
     },
     closeModal: (state) => {
       state.modals.pop();
@@ -32,6 +41,6 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openModal, closeModal, userChoice } = modalSlice.actions;
 export const selectModal = (state: any) => state.modal.modals;
 export default modalSlice.reducer;
