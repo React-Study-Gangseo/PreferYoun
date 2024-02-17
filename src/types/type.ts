@@ -81,10 +81,10 @@ export interface OrderedData {
   order_number?: number;
   order_items?: number[];
   order_quantity?: number[];
-  receiver?: String;
-  receiver_phone_number?: String;
-  address?: String;
-  address_message?: String;
-  payment_method?: String;
+  receiver?: string;
+  receiver_phone_number?: string;
+  address?: string;
+  address_message?: string;
+  payment_method?: string;
   total_price?: number;
 }

@@ -20,8 +20,8 @@ import MoreProductInfo from "./MoreInfo/MoreProductInfo";
 import Button from "component/common/Button/Button";
 import CountButton from "component/common/Button/CountButton";
 import kakaoButton from "CustomHook/KakaoShare";
-import { openModal } from "../../redux/Modal";
-import { useDispatch } from "react-redux";
+import { closeModal, openModal } from "../../redux/Modal";
+import { useDispatch, useSelector } from "react-redux";
 import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
 
 const ProductDetail: React.FC = () => {
@@ -41,6 +41,7 @@ const ProductDetail: React.FC = () => {
     ? JSON.parse(localStorage.getItem("UserInfo")!)
     : null;
   const userType = userInfo ? userInfo.user_type : null;
+  const modals = useSelector((state: any) => state.modal.modals);
 
   const handleMinusCount = useCallback(() => {
     setCount((prevCount) => prevCount - 1);
@@ -85,6 +86,16 @@ const ProductDetail: React.FC = () => {
       setPostCartData((prevState) => ({ ...prevState, quantity: count }));
     }
   }, [count, productInfo?.stock]);
+
+  useEffect(() => {
+    const currentModalChoice =
+      modals.length > 0 ? modals[modals.length - 1].modalChoice : undefined;
+
+    if (currentModalChoice) {
+      navigate("/cart");
+      dispatch(closeModal());
+    }
+  }, [modals]);
 
   const handleBuyProduct = useCallback(() => {
     if (productInfo?.stock && !userInfo) {
@@ -239,7 +250,7 @@ const ProductDetail: React.FC = () => {
               variant="contained"
               onClick={handleBuyProduct}
               fontSize="20px"
-              padding=" 0 40px"
+              padding="10px 40px"
             >
               바로구매
             </Button>
@@ -248,7 +259,7 @@ const ProductDetail: React.FC = () => {
               onClick={handleKeepProduct}
               color="secondary"
               variant="contained"
-              padding=" 0 40px"
+              padding="5px 40px"
               fontSize="20px"
             >
               장바구니

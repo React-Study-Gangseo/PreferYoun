@@ -9,10 +9,6 @@ import { selectModal } from "../../../redux/Modal";
 import styled from "@emotion/styled";
 import { createPortal } from "react-dom";
 import dialogPolyfill from "dialog-polyfill";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../../../redux/Modal";
-import { Logout } from "API/AuthAPI";
 
 type ModalType = string;
 
@@ -27,35 +23,15 @@ export default function GlobalModal() {
   const modals = useSelector(selectModal);
   const modalRoot = document.getElementById("modal");
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const navigate = useNavigate();
-  const path = useLocation().pathname;
-  const storedData = localStorage.getItem("UserInfo");
-  const dispatch = useDispatch();
+  const scrollY = useRef(0);
 
   const MODAL_COMPONENTS = {
     [MODAL_TYPES.SearchAddressModal]: SearchAddressModal,
     [MODAL_TYPES.MobileModal]: MobileModal,
     [MODAL_TYPES.ConfirmModal]: (
       props: React.ComponentProps<typeof ConfirmModal>
-    ) => <ConfirmModal {...props} handleAgree={handleAgree} />,
+    ) => <ConfirmModal {...props} />,
     [MODAL_TYPES.PriceModal]: PriceModal,
-  };
-  const handleAgree = async () => {
-    if (path === "/mypage") {
-      const response = await Logout();
-      if (response.status === 200) {
-        localStorage.removeItem("UserInfo");
-        navigate("/");
-      } else {
-        console.log("통신에러");
-      }
-    } else if (path.startsWith("/detailProduct")) {
-      navigate("/cart");
-      if (!storedData) {
-        navigate("/login");
-      }
-    }
-    dispatch(closeModal());
   };
 
   useEffect(() => {
@@ -68,15 +44,15 @@ export default function GlobalModal() {
     if (!modalRoot) return;
 
     if (modals.length > 0) {
+      scrollY.current = window.scrollY;
       document.body.style.cssText = `
-        position: fixed;
-        top: -${window.scrollY}px;
-        overflow-y: scroll;
-        width: 100%;`;
+      position: fixed;
+      top: -${scrollY.current}px;
+      overflow-y: scroll;
+      width: 100%;`;
     } else {
-      const scrollY = document.body.style.top;
       document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+      window.scrollTo(0, scrollY.current);
     }
   }, [modalRoot, modals]);
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   KeepProduct,
@@ -16,7 +16,7 @@ import { DetailProduct } from "API/ProductAPI";
 import { UpdateQuantity } from "API/KeepAPI";
 import { calcPrice, resetPrice } from "../../../redux/TotalPrice";
 import { OrderProduct, removeOrderProduct } from "../../../redux/CartOrder";
-import { openModal } from "../../../redux/Modal";
+import { closeModal, openModal } from "../../../redux/Modal";
 import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
 import Button from "component/common/Button/Button";
 import CheckBox from "component/common/CheckBox/CheckBox";
@@ -29,15 +29,25 @@ type CartItemProps = {
   onCheckChange(): void;
   FetchKeepList(): void;
   handleDeleteItem(id: number): void;
+  index: number;
 };
 
 const CartItem: React.FC<CartItemProps> = React.memo(
-  ({ product, isChecked, onCheckChange, FetchKeepList, handleDeleteItem }) => {
+  ({
+    product,
+    isChecked,
+    onCheckChange,
+    FetchKeepList,
+    handleDeleteItem,
+    index,
+  }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [cartItem, setCartItem] = useState<Products | undefined>();
     const [itemCount, setItemCount] = useState<number>(product.quantity);
     const [selectItem, setSelectItem] = useState<boolean>(false);
+    const modals = useSelector((state: any) => state.modal.modals);
+    let delete_id = useRef<number | null>(null);
 
     const KeepProductDetail = useCallback(async (product_id: number) => {
       try {
@@ -117,13 +127,22 @@ const CartItem: React.FC<CartItemProps> = React.memo(
 
     const handleDelete = useCallback(
       (cart_item_id: number) => {
+        delete_id.current = cart_item_id;
         dispatch(
           openModal({
             modalType: "ConfirmModal",
             modalProps: ModalSetting.DeleteModal,
           })
         );
-        handleDeleteItem(cart_item_id);
+      },
+      [dispatch]
+    );
+    useEffect(() => {
+      const currentModalChoice =
+        modals.length > 0 ? modals[modals.length - 1].modalChoice : undefined;
+
+      if (currentModalChoice && delete_id.current !== null) {
+        handleDeleteItem(delete_id.current);
         dispatch(
           calcPrice({
             key: product.product_id?.toString(),
@@ -133,9 +152,11 @@ const CartItem: React.FC<CartItemProps> = React.memo(
         );
         dispatch(removeOrderProduct(product.product_id?.toString()));
         FetchKeepList();
-      },
-      [dispatch, handleDeleteItem, product.product_id, FetchKeepList]
-    );
+        dispatch(closeModal());
+      } else if (currentModalChoice === false) {
+        dispatch(closeModal());
+      }
+    }, [modals]);
 
     const handleOrderItem = useCallback(() => {
       const order_kind = "cart_one_order";
@@ -229,7 +250,7 @@ const CartItem: React.FC<CartItemProps> = React.memo(
               <CheckBox
                 checked={!!selectItem}
                 onChange={(checked) => handleItemCheck(checked)}
-                id={`check-box-${cartItem?.product_id}`}
+                id={`check-box-${index}`}
               />
             </td>
             <td>
@@ -312,7 +333,7 @@ const CartItem: React.FC<CartItemProps> = React.memo(
               <CheckBox
                 checked={!!selectItem}
                 onChange={(checked) => handleItemCheck(checked)}
-                id={`check-box-${cartItem?.product_id}-mobile`}
+                id={`check-box-${index}-mobile`}
               />
             </td>
             <td>
