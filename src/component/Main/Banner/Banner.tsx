@@ -10,6 +10,7 @@ import {
   RightButton,
   Dot,
 } from "./Banner.Style";
+import LazyImage from "./LazyImage";
 
 const BannerSection: React.FC = () => {
   const [bannerImg, setBannerImg] = useState<string[]>([]);
@@ -34,15 +35,16 @@ const BannerSection: React.FC = () => {
 
   useEffect(() => {
     const updateRandomIndex = () => {
-      let randomIndex;
-      do {
-        randomIndex = Math.floor(Math.random() * 5); // 1~10까지의 랜덤 정수
-      } while (randomIndex === currentIndex);
-
-      setCurrentIndex(randomIndex);
+      setCurrentIndex((prevIndex) => {
+        let newIndex;
+        do {
+          newIndex = Math.floor(Math.random() * 5);
+        } while (newIndex === prevIndex);
+        return newIndex;
+      });
     };
 
-    const intervalId = setInterval(updateRandomIndex, 4000);
+    const intervalId = setInterval(updateRandomIndex, 5000);
 
     return () => clearInterval(intervalId);
   }, []); // 의존성 배열에서 currentIndex 제거
@@ -63,12 +65,11 @@ const BannerSection: React.FC = () => {
     <Banner>
       <BannerImages>
         {bannerImg.map((img, index) => (
-          <img
+          <LazyImage
             key={selectedIds[index]} // 고유한 id를 key로 사용
             src={img}
             alt="상품사진 배너 이미지"
             className={currentIndex === index ? "active" : "inactive"}
-            loading="lazy"
           />
         ))}
       </BannerImages>
