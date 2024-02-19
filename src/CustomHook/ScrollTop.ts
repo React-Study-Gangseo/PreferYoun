@@ -30,10 +30,10 @@ const ScrollToTop = () => {
       window.scrollTo(0, 0);
     }
 
-    // return () => {
-    //   // 페이지를 벗어날 때 세션스토리지의 Position 항목 제거
-    //   sessionStorage.removeItem("Position");
-    // };
+    return () => {
+      // 페이지를 벗어날 때 세션스토리지의 Position 항목 제거
+      sessionStorage.removeItem("Position");
+    };
   }, [location]);
 
   return null;

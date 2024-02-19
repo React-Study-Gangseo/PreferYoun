@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
-
 import SellerJoin from "component/Auth/Join/SellerJoin";
 import BuyerJoin from "component/Auth/Join/BuyerJoin";
 import Logo from "../../assets/images/Logo-hodu.png";
-import {
-  SellerBtn,
-  BuyerBtn,
-  LogoImg,
-  ButtonGroup,
-  Main,
-} from "component/Auth/Join/Join.Style";
+import { LogoImg, Main } from "component/Auth/Join/Join.Style";
 import { FormValue } from "types/type";
 import { Seller_Join, Join } from "API/AuthAPI";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import AuthButton from "component/common/Button/AuthButton";
+
 const JoinPage: React.FC = () => {
-  const [userType, setUserType] = useState("SELLER");
+  const [userType, setUserType] = useState<"SELLER" | "BUYER">("SELLER");
   const [JoinSuccess, setJoinSuccess] = useState(false);
   const navigate = useNavigate();
+
   const handleUserType = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.id === "BUYER"
       ? setUserType("BUYER")
@@ -33,7 +29,6 @@ const JoinPage: React.FC = () => {
   }, [JoinSuccess]);
 
   const handleFormSubmit = async (data: FormValue) => {
-    console.log("check");
     if (userType === "SELLER") {
       try {
         const response = await Seller_Join(data);
@@ -60,39 +55,11 @@ const JoinPage: React.FC = () => {
 
   return (
     <>
-      <Main>
+      <Main userType={userType}>
         <Link to="/">
           <LogoImg src={Logo} alt="Hodu 로고" />
         </Link>
-        <ButtonGroup>
-          <BuyerBtn
-            id="BUYER"
-            onClick={(e) => {
-              handleUserType(e);
-            }}
-            style={{
-              backgroundColor: userType === "BUYER" ? "#fff" : "#F2F2F2",
-              borderBottom: userType === "BUYER" ? "none" : "1px solid #767676",
-              color: "black",
-            }}
-          >
-            구매자 회원가입
-          </BuyerBtn>
-          <SellerBtn
-            id="SELLER"
-            onClick={(e) => {
-              handleUserType(e);
-            }}
-            style={{
-              backgroundColor: userType === "SELLER" ? "#fff" : "#F2F2F2",
-              borderBottom:
-                userType === "SELLER" ? "none" : "1px solid #767676",
-              color: "black",
-            }}
-          >
-            판매자 회원가입
-          </SellerBtn>
-        </ButtonGroup>
+        <AuthButton handleUserType={handleUserType} userType={userType} />
         {userType === "SELLER" ? (
           <SellerJoin onSubmit={(data: FormValue) => handleFormSubmit(data)} />
         ) : (

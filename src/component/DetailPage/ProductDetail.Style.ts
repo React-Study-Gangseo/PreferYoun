@@ -1,13 +1,12 @@
 import styled from "@emotion/styled";
-import { ButtonStyle } from "component/common/Button/Button";
+import { IconButton } from "@mui/material";
 
 export const MainSection = styled.main`
   width: 100%;
   max-width: 80rem;
-  height: 100%;
+  height: auto;
   min-height: 100%;
   padding-bottom: 11.25rem;
-  /* margin-bottom: 19.6013rem; */
 `;
 export const DetailPageWrapper = styled.section`
   width: 100%;
@@ -16,15 +15,26 @@ export const DetailPageWrapper = styled.section`
   display: flex;
   gap: 3.125rem;
   margin-top: 5rem;
-  flex-wrap: wrap;
   @media (max-width: 896px) {
     margin: 1.25rem auto 0;
     gap: 3rem;
+    flex-direction: column;
+    flex-shrink: 1;
   }
 `;
-export const ProductImg = styled.img`
+export const ImgBox = styled.div`
   width: 37.5rem;
-  height: 37.5rem;
+  aspect-ratio: 1 / 1;
+  flex-basis: 100%;
+  @media (max-width: 896px) {
+    width: 100%;
+  }
+`;
+
+export const ProductImg = styled.img`
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
   object-fit: cover;
   @media (max-width: 896px) {
     width: 100%;
@@ -34,7 +44,8 @@ export const ProductImg = styled.img`
   }
 `;
 export const ProductInfoSection = styled.section`
-  max-width: 39.375rem;
+  width: 100%;
+  flex-basis: 100%;
   width: 100%;
   position: relative;
   & > span {
@@ -45,8 +56,11 @@ export const ProductInfoSection = styled.section`
     font-size: 2.25rem;
     margin: 1rem 0 1.25rem;
   }
+  @media (max-width: 896px) {
+    width: 100%;
+  }
 `;
-export const ShareBtn = styled.button`
+export const ShareBtn = styled(IconButton)`
   position: absolute;
   right: 10px;
   top: 10px;
@@ -54,7 +68,6 @@ export const ShareBtn = styled.button`
   height: 60px;
   padding: 10px;
   border-radius: 100%;
-  box-shadow: 5px 8px 10px 0 #c4c4c4;
   @media (max-width: 896px) {
     display: none;
   }
@@ -87,6 +100,7 @@ export const CountWrap = styled.div`
   border-radius: 5px;
   border: 1px solid #c4c4c4;
   margin: 1.875rem 0;
+  float: left;
   & > div,
   & > button {
     flex: 1 1 33%;
@@ -96,16 +110,6 @@ export const CountWrap = styled.div`
   @media (max-width: 896px) {
     display: none;
   }
-`;
-
-export const IncreaseButton = styled.button`
-  border-radius: 0 5px 5px 0;
-  border-left: 1px solid #c4c4c4;
-`;
-
-export const DecreaseButton = styled.button`
-  border-radius: 5px 0 0 5px;
-  border-right: 1px solid #c4c4c4;
 `;
 
 export const TotalPriceWrap = styled.div`
@@ -145,41 +149,14 @@ export const TotalPriceWrap = styled.div`
   }
 `;
 
-export const BuyButton = styled(ButtonStyle)`
-  width: 416px;
-  height: 60px;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 22px;
-`;
-
-export const KeepButton = styled(ButtonStyle)`
-  width: 200px;
-  height: 60px;
-  font-size: 1.125rem;
-  font-weight: 700;
-`;
-
 export const DesktopMoreInfo = styled.div`
+  width: 100%;
   display: none;
   @media (min-width: 897px) {
     display: block;
     margin-top: 8.75rem;
     font-size: 1.125rem;
     font-weight: 500;
-    & > ul {
-      display: flex;
-      height: 60px;
-    }
-    & > ul > li {
-      flex: 1 1 25%;
-      text-align: center;
-      line-height: 3.75rem;
-    }
-    & button {
-      width: 100%;
-      height: 100%;
-    }
   }
 `;
 export const MobileMoreInfo = styled.div`
@@ -242,4 +219,11 @@ export const MobileMoreInfoSection = styled.section<{ isOpen: boolean }>`
     box-shadow :0px; 
     padding-bottom :20px;
     height: 230px;`}
+`;
+
+export const MobileTabButton = styled.button<{ active: boolean }>`
+  width: 320px;
+  border-bottom: 6px solid ${({ active }) => (active ? "#21bf48" : "#767676")};
+  color: black;
+  font-size: 1.4rem;
 `;

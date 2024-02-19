@@ -1,4 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
+import UploadIcon from "../../assets/images/icon-img.png";
+import Button from "component/common/Button/Button";
+import { EditProductAPI, PostProduct } from "API/ProductAPI";
+import { UploadProducts } from "types/type";
+import MDEditor from "@uiw/react-md-editor";
+import Warning from "./Warning/Warning";
+import { useLocation, useNavigate } from "react-router-dom";
+import ShippingButton from "component/common/Button/ShipingButton";
 import {
   MainSection,
   FormSection,
@@ -13,23 +21,15 @@ import {
   ProductImgInput,
   ProductImgWrapper,
   ProductIconWrapper,
-  ProductImgIcon,
   ShippingBtn,
-  MethodBtn,
+  ProductImgIcon,
   Sufix,
   NameSufix,
 } from "./UploadProduct.Style";
-import UploadIcon from "../../assets/images/icon-img.png";
-import Button from "component/common/Button/Button";
-import { EditProductAPI, PostProduct } from "API/ProductAPI";
-import { UploadProducts } from "types/type";
-import MDEditor from "@uiw/react-md-editor";
-import Warning from "./Warning/Warning";
-import { useLocation, useNavigate } from "react-router-dom";
+
 export default function UploadProduct() {
   const fileInputRef = useRef<any>();
   const [previewURL, setPreviewURL] = useState("");
-  const [isActive, setIsActive] = useState("");
   const [inputCount, setInputCount] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,12 +40,13 @@ export default function UploadProduct() {
     shipping_fee: 0,
     stock: 0,
     image: undefined,
-    product_info: "",
+    shipping_method: "",
+    product_info: " ",
   });
+
   const handleUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       let file = e.target.files[0];
-      console.log(file);
       setProduct({ ...product, image: file });
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -56,20 +57,15 @@ export default function UploadProduct() {
     }
   };
   useEffect(() => {
-    // setProduct(data.product);
     if (data) {
       setPreviewURL(data.product.image);
       setProduct(data.product);
-      setIsActive(data.product.shipping_method);
     }
   }, [data]);
 
-  console.log(product.image);
   const UploadProduct = async () => {
-    console.log(product);
     try {
-      const uploadProduct = await PostProduct(product);
-      console.log(uploadProduct);
+      await PostProduct(product);
       navigate("/seller/center");
     } catch (err) {
       console.log(err);
@@ -77,7 +73,6 @@ export default function UploadProduct() {
   };
   const EditProduct = async () => {
     try {
-      console.log(product);
       const res = await EditProductAPI(product);
       console.log(res);
       if (res.status === 200) {
@@ -87,11 +82,12 @@ export default function UploadProduct() {
       console.log(error);
     }
   };
-  const handleMethod = (e: any) => {
-    setIsActive(e.target.value);
-    setProduct({ ...product, shipping_method: e.target.value });
+  const handleMethod = (value: string) => {
+    setProduct((prevState) => ({
+      ...prevState,
+      shipping_method: value,
+    }));
   };
-
   return (
     <>
       <h1 className="a11y-hidden">판매자 센터 상품 등록</h1>
@@ -106,6 +102,7 @@ export default function UploadProduct() {
                 {!previewURL && (
                   <ProductIconWrapper>
                     <ProductImgInput
+                      aria-label="상품 이미지 업로드"
                       type="file"
                       accept="image/jpeg,image/jpg,image/png,image/gif"
                       onChange={handleUploadImg}
@@ -160,26 +157,30 @@ export default function UploadProduct() {
                 </div>
                 <h5>배송방법</h5>
                 <ShippingBtn>
-                  <MethodBtn
-                    type="button"
-                    width="ms"
-                    color="black"
+                  <ShippingButton
+                    size="ms"
+                    variant={
+                      product.shipping_method === "PARCEL"
+                        ? "contained"
+                        : "outlined"
+                    }
                     value="PARCEL"
-                    onClick={(e) => handleMethod(e)}
-                    className={isActive === "PARCEL" ? "active" : ""}
+                    onClick={() => handleMethod("PARCEL")}
                   >
                     택배, 소포, 등기
-                  </MethodBtn>
-                  <MethodBtn
-                    type="button"
-                    width="ms"
-                    color="black"
+                  </ShippingButton>
+                  <ShippingButton
+                    size="ms"
+                    variant={
+                      product.shipping_method === "DELIVERY"
+                        ? "contained"
+                        : "outlined"
+                    }
                     value="DELIVERY"
-                    onClick={(e) => handleMethod(e)}
-                    className={isActive === "DELIVERY" ? "active" : ""}
+                    onClick={() => handleMethod("DELIVERY")}
                   >
                     직접배송(화물배달)
-                  </MethodBtn>
+                  </ShippingButton>
                 </ShippingBtn>
                 <div>
                   <label>기본 배송비</label>
@@ -227,15 +228,25 @@ export default function UploadProduct() {
               </div>
             </UploadProductDetail>
             <ButtonGroup>
-              <Button width="ms" color="black" border="active">
+              <Button size="ms" variant="outlined" onClick={() => navigate(-1)}>
                 취소
               </Button>
               {data ? (
-                <Button width="ms" bgColor="active" onClick={EditProduct}>
+                <Button
+                  size="ms"
+                  variant="contained"
+                  color="primary"
+                  onClick={EditProduct}
+                >
                   수정하기
                 </Button>
               ) : (
-                <Button width="ms" bgColor="active" onClick={UploadProduct}>
+                <Button
+                  size="ms"
+                  color="primary"
+                  variant="contained"
+                  onClick={UploadProduct}
+                >
                   저장하기
                 </Button>
               )}

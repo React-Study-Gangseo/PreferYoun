@@ -14,6 +14,7 @@ export const ProductItemWrapper = styled.article`
 export const ProductImage = styled.img`
   width: 23.75rem;
   height: 23.75rem;
+  aspect-ratio: 1/1;
   border-radius: 10px;
   border: 1px solid #c4c4c4;
   margin-bottom: 1rem;
@@ -48,12 +49,13 @@ export const ProductPriceUnit = styled.p`
   font-size: 1rem;
   font-weight: 400;
 `;
-export const SoldOutWrapper = styled.div`
-  background-color: #121212;
-`;
-
 export const SoldOutImg = styled.img`
   position: absolute;
-  width: 100%;
+  width: 23.75rem;
   aspect-ratio: 1/1;
+  object-fit: cover;
+  @media (max-width: 896px) {
+    width: 150px;
+    height: 150px;
+  }
 `;

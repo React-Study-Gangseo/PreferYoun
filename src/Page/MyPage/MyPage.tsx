@@ -1,5 +1,5 @@
 import React from "react";
-import OrderList from "component/OrderList/OrderList";
+import OrderList from "component/MyPage/OrderList/OrderList";
 
 export default function MyPage() {
   return (

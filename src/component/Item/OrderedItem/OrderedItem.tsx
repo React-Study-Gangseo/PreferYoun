@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { OrderedData, Products, orderdata } from "types/type";
 import { DetailProduct } from "API/ProductAPI";
 import {
-  OrderedIItemWrapper,
+  OrderedItemWrapper,
   OrderedDate,
   BtnGroup,
-  KeepBtn,
-  DetailBtn,
   MoreInfoSection,
   TotalPrice,
   OrderNumber,
@@ -14,6 +12,7 @@ import {
 import Swal from "sweetalert2";
 import { AddKeepProduct } from "API/KeepAPI";
 import { useNavigate } from "react-router-dom";
+import Button from "component/common/Button/Button";
 const OrderedItem: React.FC<{
   ListItem: OrderedData;
 }> = ({ ListItem }) => {
@@ -54,7 +53,6 @@ const OrderedItem: React.FC<{
 
     fetchOrderedItems();
   }, [order_items]);
-  console.log(orderedItems);
   const checkStockAndAddToCart = async (index: number, postCartData: any) => {
     const storedData = localStorage.getItem("UserInfo");
     if (storedData && orderedItems[index]?.stock) {
@@ -66,13 +64,10 @@ const OrderedItem: React.FC<{
             setPostCartData((prevState) => ({ ...prevState, check: false }));
           }
         });
-        console.log(postCartData);
         const res = await AddKeepProduct(postCartData);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
-      // navigate("/cart");
     } else if (storedData) {
       Swal.fire({
         text: "해당 상품은 현재 품절 상태 입니다.",
@@ -100,17 +95,7 @@ const OrderedItem: React.FC<{
     }
   };
 
-  // const handleKeepProduct = async (index: number) => {
-  //   console.log(index, orderedItems[index].product_id);
-  //   setPostCartData((prevState) => ({
-  //     ...prevState,
-  //     product_id: orderedItems[index].product_id,
-  //   }));
-
-  //   await checkStockAndAddToCart(index);
-  // };
   const handleKeepProduct = async (index: number) => {
-    console.log(index, orderedItems[index].product_id);
     const updatedPostCartData = {
       ...postCartData,
       product_id: orderedItems[index].product_id,
@@ -133,7 +118,7 @@ const OrderedItem: React.FC<{
       <OrderedDate>{created_at?.replace("T", " ").slice(0, -16)}</OrderedDate>
       {order_number && <OrderNumber>주문번호: {order_number}</OrderNumber>}
       {orderedItems.map((item, index) => (
-        <OrderedIItemWrapper key={index}>
+        <OrderedItemWrapper key={index}>
           <div>
             <img src={item?.image} alt="주문한 상품 대표 이미지" />
             <div>
@@ -143,23 +128,25 @@ const OrderedItem: React.FC<{
             </div>
           </div>
           <BtnGroup>
-            <DetailBtn
-              color="black"
-              width="s"
+            <Button
+              variant="outlined"
+              size="ms"
               onClick={() => handleTabClick()}
-              style={{ borderBottom: "1px solid #767676" }}
+              fontSize="1rem"
             >
               상세보기
-            </DetailBtn>
-            <KeepBtn
-              width="s"
-              bgColor="active"
+            </Button>
+            <Button
+              size="ms"
+              color="primary"
+              variant="contained"
               onClick={() => handleKeepProduct(index)}
+              padding="0px 20px"
             >
               장바구니 담기
-            </KeepBtn>
+            </Button>
           </BtnGroup>
-        </OrderedIItemWrapper>
+        </OrderedItemWrapper>
       ))}
       {orderedItems.length > 1 && (
         <TotalPrice>전체 금액: {total_price}</TotalPrice>

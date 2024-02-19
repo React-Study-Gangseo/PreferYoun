@@ -1,45 +1,38 @@
 import React, { ReactNode, FC } from "react";
 import styled from "@emotion/styled";
 type CountProps = {
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleMinusItemCount: () => void;
+  handlePlusItemCount: () => void;
   children?: ReactNode;
-  disabled?: boolean;
 };
 
-const CountButton: FC<CountProps> = ({ children, onClick, disabled }) => {
+const CountButton: FC<CountProps> = ({
+  children,
+  handleMinusItemCount,
+  handlePlusItemCount,
+}) => {
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const userType = userInfo ? userInfo.user_type : null;
   return (
-    <CountWrap>
+    <>
       <DecreaseButton
-      // onClick={handleMinusCount}
-      // disabled={userType === "BUYER" ? false : true}
+        onClick={handleMinusItemCount}
+        disabled={userType === "BUYER" ? false : true}
       >
         -
       </DecreaseButton>
       <div>{children}</div>
       <IncreaseButton
-      //   onClick={handlePlusCount}
-      //   disabled={userType === "BUYER" ? false : true}
+        onClick={handlePlusItemCount}
+        disabled={userType === "BUYER" ? false : true}
       >
         +
       </IncreaseButton>
-    </CountWrap>
+    </>
   );
 };
 export default CountButton;
-export const CountWrap = styled.div`
-  display: flex;
-  width: 9.375rem;
-  height: 3.125rem;
-  border-radius: 5px;
-  border: 1px solid #c4c4c4;
-  margin: 1.875rem 0;
-  & > div,
-  & > button {
-    flex: 1 1 33%;
-    text-align: center;
-    line-height: 3.125rem;
-  }
-`;
 
 export const IncreaseButton = styled.button`
   border-radius: 0 5px 5px 0;

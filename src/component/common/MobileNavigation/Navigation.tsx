@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   NavWrapper,
@@ -8,20 +8,26 @@ import {
   ButtonContainer,
   CenterImg,
   Center,
-  BuyBtn,
   BuyBtnLi,
+  CartBuy,
+  PriceLi,
 } from "./Navigation.Style";
 import HomeIcon from "../../../assets/images/home-icon.svg";
 import TopBtnIcon from "../../../assets/images/arrow_top.svg";
 import Search from "../../../assets/images/search-black.svg";
+import More from "../../../assets/images/icon-up-arrow.svg";
+import CloseMore from "../../../assets/images/icon-down-arrow.svg";
 import Cart from "../../../assets/images/icon-shopping-cart.svg";
-import OnCart from "../../../assets/images/icon-shopping-cart-2.svg";
-import OnUser from "../../../assets/images/icon-user-2.svg";
 import User from "../../../assets/images/icon-user.svg";
+import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
 import Share from "../../../assets/images/share-icon.svg";
-import { useDispatch } from "react-redux";
-import { openModal } from "redux/Modal";
+import { closeModal, openModal } from "../../../redux/Modal";
+import Button from "../Button/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { CartOrderState } from "../../../redux/CartOrder";
+import { TotalPriceState } from "../../../redux/TotalPrice";
+
 export default function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,11 +35,28 @@ export default function Navigation() {
   const [showButton, setShowButton] = useState(false);
   const pathname = location.pathname;
   const isCartPage = pathname === "/cart";
-  const isMyPage = pathname === "/mypage";
+  const isCenter = pathname === "/seller/center";
+  const isDetailPage = pathname.startsWith("/detailProduct/");
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
+  const [isTotalPrice, setIsTotalPrice] = useState(false);
+  const orderCartInfo = useSelector((state: { cartOrder: CartOrderState }) => {
+    return state.cartOrder.value;
+  });
 
+  const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
+    return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
+  });
+
+  const totalShippingFee = useSelector(
+    (state: { totalPrice: TotalPriceState }) => {
+      return state.totalPrice.value.reduce(
+        (sum, item) => sum + item.shipping_fee,
+        0
+      );
+    }
+  );
   const handleMoveMyPage = () => {
     if (userInfo) {
       navigate("/mypage");
@@ -45,9 +68,23 @@ export default function Navigation() {
     dispatch(
       openModal({
         modalType: "MobileModal",
-        isOpen: true,
       })
     );
+  };
+  useEffect(() => {
+    dispatch(closeModal());
+  }, [pathname]);
+  const handleTotalPrice = () => {
+    setIsTotalPrice(!isTotalPrice);
+    if (isTotalPrice) {
+      dispatch(closeModal());
+    } else {
+      dispatch(
+        openModal({
+          modalType: "PriceModal",
+        })
+      );
+    }
   };
   const initializeKakao = () => {
     //@ts-ignore
@@ -118,6 +155,17 @@ export default function Navigation() {
       window.removeEventListener("scroll", showButtonClick);
     };
   }, []);
+
+  const handleOrder = useCallback(() => {
+    const order_kind: string = "cart_order";
+    navigate("/orderpage", {
+      state: {
+        productInfo: orderCartInfo,
+        order_kind: order_kind,
+      },
+    });
+  }, [navigate, orderCartInfo]);
+
   return (
     <>
       <NavWrapper>
@@ -129,9 +177,9 @@ export default function Navigation() {
           )}
         </ButtonContainer>
         <NavList>
-          {pathname.startsWith("/detailProduct/") ? (
+          {isDetailPage && (
             <>
-              <li>
+              <li style={{ width: "80px" }}>
                 <button onClick={kakaoButton}>
                   <img
                     src={Share}
@@ -141,27 +189,74 @@ export default function Navigation() {
                 </button>
               </li>
               <BuyBtnLi>
-                <BuyBtn bgColor="active" onClick={handleCountQuantity}>
+                <Button
+                  size="ll"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleCountQuantity}
+                  margin="auto auto"
+                >
                   구매하기
-                </BuyBtn>
+                </Button>
               </BuyBtnLi>
             </>
-          ) : (
+          )}
+          {isCartPage && (
+            <>
+              <li>
+                <PriceLi>
+                  <p>{`합계: ${new Intl.NumberFormat("ko-KR").format(
+                    totalPrice + totalShippingFee
+                  )} 원`}</p>
+                  <button onClick={handleTotalPrice}>
+                    <img src={!isTotalPrice ? More : CloseMore} alt="더보기" />
+                  </button>
+                </PriceLi>
+              </li>
+              <li>
+                <CartBuy>
+                  <Button
+                    size="ll"
+                    color="primary"
+                    variant="contained"
+                    onClick={handleOrder}
+                    margin="auto 20px auto auto"
+                    fontSize="18px"
+                  >
+                    {`전체 구매하기 (${orderCartInfo.length})`}
+                  </Button>
+                </CartBuy>
+              </li>
+            </>
+          )}
+          {!isDetailPage && !isCartPage && (
             <>
               <li>
                 <Link to="/">
                   <img src={HomeIcon} alt="홈 아이콘" />
                 </Link>
+                {pathname === "/" && <span>HOME</span>}
               </li>
               <li>
                 <Link to="/search">
                   <img src={Search} alt="검색창 아이콘" />
                 </Link>
               </li>
+              {!isCenter ? null : (
+                <li>
+                  <Link to="/seller/center/upload">
+                    <AddCircleOutline
+                      style={{ fontSize: 30 }}
+                      aria-label="업로드 아이콘"
+                    />
+                  </Link>
+                </li>
+              )}
               <li>
                 <button onClick={handleMoveMyPage}>
-                  <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
+                  <img src={User} alt="마이페이지 아이콘" />
                 </button>
+                {pathname === "/mypage" && <span>mypage</span>}
               </li>
               {userType === "SELLER" ? (
                 <li>
@@ -169,16 +264,15 @@ export default function Navigation() {
                     <Link to="/seller/center">
                       <CenterImg src={SellerCenter} alt="판매자 센터 아이콘" />
                     </Link>
+                    {pathname === "/seller/center" && <span>center</span>}
                   </Center>
                 </li>
               ) : (
                 <li>
                   <Link to="/cart">
-                    <img
-                      src={isCartPage ? OnCart : Cart}
-                      alt="쇼핑카트 아이콘"
-                    />
+                    <img src={Cart} alt="쇼핑카트 아이콘" />
                   </Link>
+                  {pathname === "/cart" && <span>cart</span>}
                 </li>
               )}
             </>

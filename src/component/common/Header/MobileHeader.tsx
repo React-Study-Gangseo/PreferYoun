@@ -10,8 +10,8 @@ import { TextField } from "@mui/material";
 import HoduLogo from "../../../assets/images/Logo-hodu.png";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
-import { setSearchData } from "redux/Search";
-import { useNavigate, useLocation } from "react-router-dom";
+import { setSearchData } from "../../../redux/Search";
+import { useLocation } from "react-router-dom";
 import Search from "../../../assets/images/search.svg";
 import { SearchAPI } from "../../../API/ProductAPI";
 
@@ -26,21 +26,34 @@ interface HeaderProps {
 }
 
 const MobileHeader: React.FC<HeaderProps> = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
   const dispatch = useDispatch();
+  const storedData = localStorage.getItem("UserInfo");
+  const userInfo = storedData ? JSON.parse(storedData) : null;
+  const userType = userInfo ? userInfo.user_type : null;
   const [inputValue, setInputValue] = useState("");
   const [type, setType] = useState("home");
 
   const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
-  const search = async (e: React.KeyboardEvent) => {
+  const search = async (
+    e: React.KeyboardEvent,
+    value: string,
+    page: number = 1,
+    accumulatedResults: any[] = []
+  ) => {
     if (e.key === "Enter") {
       try {
-        const res = await SearchAPI(inputValue);
-        dispatch(setSearchData({ value: res.data.results }));
+        const res = await SearchAPI(inputValue, page);
+        accumulatedResults.push(...res.data.results);
+
+        if (res.data.next) {
+          await search(e, value, page + 1, accumulatedResults);
+        } else {
+          dispatch(setSearchData({ value: accumulatedResults }));
+        }
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }
@@ -50,12 +63,17 @@ const MobileHeader: React.FC<HeaderProps> = () => {
     setInputValue("");
     dispatch(setSearchData({ value: [] }));
   };
-  const handleIconClick = (e: React.MouseEvent) => {
-    search({ key: "Enter" } as React.KeyboardEvent);
+  const handleIconClick = () => {
+    if (inputValue)
+      search({ key: "Enter" } as React.KeyboardEvent, inputValue, 1, []);
   };
-  const storedData = localStorage.getItem("UserInfo");
-  const userInfo = storedData ? JSON.parse(storedData) : null;
-  const userType = userInfo ? userInfo.user_type : null;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      search(e, inputValue, 1, []);
+    }
+  };
+
   useEffect(() => {
     if (userType) {
       if (pathname.startsWith("/detailProduct")) {
@@ -96,7 +114,7 @@ const MobileHeader: React.FC<HeaderProps> = () => {
             onClick={() => onClickHome()}
           />
         </Logo>
-        <Form onSubmit={(e) => e.preventDefault()}>
+        <Form onSubmit={(e) => e.preventDefault()} id="search-form">
           <TextField
             id="outlined-basic"
             variant="outlined"
@@ -104,13 +122,13 @@ const MobileHeader: React.FC<HeaderProps> = () => {
             placeholder="키워드를 검색하세요"
             value={inputValue}
             onInput={handleData}
-            onKeyDown={search}
+            onKeyDown={handleKeyDown}
             fullWidth
             size="small"
             style={{ fontSize: "16px" }}
+            aria-label="상품검색"
           />
-          <label className="a11y-hidden">상품검색</label>
-          <SearchBtn onClick={(e) => handleIconClick(e)} type="submit">
+          <SearchBtn onClick={() => handleIconClick()} type="submit">
             <img src={Search} alt="검색창 아이콘" />
           </SearchBtn>
         </Form>
@@ -121,7 +139,7 @@ const MobileHeader: React.FC<HeaderProps> = () => {
         <Logo to="/" onClick={() => onClickHome()}>
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
-        <Form onSubmit={(e) => e.preventDefault()}>
+        <Form onSubmit={(e) => e.preventDefault()} id="search-form">
           <TextField
             id="outlined-basic"
             variant="outlined"
@@ -129,13 +147,13 @@ const MobileHeader: React.FC<HeaderProps> = () => {
             placeholder="키워드를 검색하세요"
             value={inputValue}
             onInput={handleData}
-            onKeyDown={search}
+            onKeyDown={handleKeyDown}
             fullWidth
             size="small"
             style={{ fontSize: "16px" }}
+            aria-label="상품검색"
           />
-          <label className="a11y-hidden">상품검색</label>
-          <SearchBtn onClick={(e) => handleIconClick(e)} type="submit">
+          <SearchBtn onClick={() => handleIconClick()} type="submit">
             <img src={Search} alt="검색창 아이콘" />
           </SearchBtn>
         </Form>
@@ -147,7 +165,7 @@ const MobileHeader: React.FC<HeaderProps> = () => {
           <LogoImage src={HoduLogo} alt="호두마켓 로고" />
         </Logo>
 
-        <Form onSubmit={(e) => e.preventDefault()}>
+        <Form onSubmit={(e) => e.preventDefault()} id="search-form">
           <TextField
             id="outlined-basic"
             variant="outlined"
@@ -155,13 +173,13 @@ const MobileHeader: React.FC<HeaderProps> = () => {
             placeholder="키워드를 검색하세요"
             value={inputValue}
             onInput={handleData}
-            onKeyDown={search}
+            onKeyDown={handleKeyDown}
             fullWidth
             size="small"
             style={{ fontSize: "20px" }}
+            aria-label="상품검색"
           />
-          <label className="a11y-hidden">상품검색</label>
-          <SearchBtn onClick={(e) => handleIconClick(e)} type="submit">
+          <SearchBtn onClick={() => handleIconClick()} type="submit">
             <img src={Search} alt="검색창 아이콘" />
           </SearchBtn>
         </Form>

@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import { ButtonStyle } from "../Button/Button";
+
 const NavWrapper = styled.nav`
   position: fixed;
   width: 100%;
@@ -23,26 +22,23 @@ const NavList = styled.ul`
   display: flex;
   justify-content: space-around;
   align-items: center;
-`;
-const MoreLi = styled.li`
-  margin: 200px 0 50px;
-`;
-const NavLink = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: #767676;
-
-  &.active {
-    color: #286140;
+  width: 100%;
+  & li {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    & img {
+      width: 28px;
+      height: 28px;
+    }
+    & span {
+      font-size: 14px;
+      margin-top: 3px;
+    }
   }
 `;
 
-const StyledNavText = styled.p`
-  margin-top: 4px;
-  font-size: 10px;
-`;
 const ButtonContainer = styled.div`
   position: absolute;
   top: -68px;
@@ -65,74 +61,58 @@ const TopIcon = styled.img`
   width: 30px;
   height: 30px;
 `;
-const HeaderRightBtn = styled.button`
-  border: 0;
-  padding: 10px;
-  padding-right: 0;
-  background-color: transparent;
-`;
-const HeaderTitle = styled(Link)`
-  font-size: 30px;
-  font-style: italic;
-  font-weight: 600;
-  padding: 30px 0 0 5px;
-`;
 
-const LogoGroup = styled.div`
-  display: flex;
-  gap: 5px;
-`;
-
-const HeaderSearchInp = styled.input`
-  width: 300px;
-  background-color: #f2f2f2;
-  border: 0;
-  border-radius: 32px;
-  padding: 7px 16px;
-  font-size: 14px;
-  box-sizing: border-box;
-  &:focus {
-    outline: 0;
-  }
-  &::placeholder {
-    color: #c4c4c4;
-  }
-`;
 const Center = styled.div`
   background-color: #26b744;
-  width: 100%;
-  padding: 0 10px;
+  width: 50px;
+  min-height: 48px;
+  margin: 0 auto;
   border-radius: 10px;
   & a {
     color: white;
-    line-height: 50px;
+  }
+  & span {
+    color: #fff;
+    margin-top: 3px;
   }
 `;
-const BuyBtn = styled(ButtonStyle)`
-  min-width: 300px;
-  width: 100%;
-  padding: 0 10px;
-  font-size: 20px;
-`;
+
 const BuyBtnLi = styled.li`
   flex-grow: 0.5;
+  margin-right: 15px;
 `;
-
+const CartBuy = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`;
+const PriceLi = styled.div`
+  display: flex;
+  padding-left: 5px;
+  justify-content: end;
+  align-items: center;
+  gap: 3px;
+  & p {
+    line-height: normal;
+    font-size: 14px;
+  }
+  & button {
+    width: 22px;
+    height: 22px;
+  }
+  & button img {
+    width: 22px;
+    height: 22px;
+  }
+`;
 export {
   NavWrapper,
   NavList,
-  NavLink,
-  StyledNavText,
   ScrollButton,
   TopIcon,
   ButtonContainer,
-  HeaderRightBtn,
-  HeaderTitle,
-  LogoGroup,
-  HeaderSearchInp,
-  MoreLi,
   CenterImg,
   Center,
-  BuyBtn,
   BuyBtnLi,
+  CartBuy,
+  PriceLi,
 };

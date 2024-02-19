@@ -4,21 +4,25 @@ import {
   MobileMoreInfo,
   MoreInfoSecion,
   MobileMoreInfoSection,
+  MobileTabButton,
 } from "../ProductDetail.Style";
-import Button from "component/common/Button/Button";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import TabButton from "../../common/Button/TabButton"; // TabButton 컴포넌트를 import 합니다.
+import MDEditor from "@uiw/react-md-editor";
+
 interface Props {
   Productinfo: string;
 }
+
 type OpenTabsState = {
   [key: string]: boolean;
 };
+
 export default function MoreProductInfo({ Productinfo }: Props) {
-  const [activeTab, setActiveTab] = useState("tab1");
-  const handleTabClick = (tabId: string) => {
-    setActiveTab(tabId);
+  const [activeTab, setActiveTab] = useState(0);
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setActiveTab(newValue);
   };
+
   const initialTabsState: OpenTabsState = {
     tab1: false,
     tab2: false,
@@ -30,75 +34,48 @@ export default function MoreProductInfo({ Productinfo }: Props) {
   useEffect(() => {
     setOpenTabs({ tab1: true, tab2: false, tab3: false, tab4: false });
   }, []);
+
   const toggleHandler = (id: string) => {
     setOpenTabs({ ...initialTabsState, [id]: !openTabs[id] });
   };
+
+  const tabLabels = ["상세보기", "리뷰", "Q & A", "반품/교환정보"];
+
   return (
     <>
       <>
         <DesktopMoreInfo>
-          <ul>
-            <li>
-              <Button
-                width="tab"
-                color="black"
-                bgColor={activeTab === "tab1" ? "tabActive" : undefined}
-                onClick={() => handleTabClick("tab1")}
-              >
-                상세보기
-              </Button>
-            </li>
-            <li>
-              <Button
-                width="tab"
-                color="black"
-                bgColor={activeTab === "tab2" ? "tabActive" : undefined}
-                onClick={() => handleTabClick("tab2")}
-              >
-                리뷰
-              </Button>
-            </li>
-            <li>
-              <Button
-                width="tab"
-                color="black"
-                bgColor={activeTab === "tab3" ? "tabActive" : undefined}
-                onClick={() => handleTabClick("tab3")}
-              >
-                Q & A
-              </Button>
-            </li>
-            <li>
-              <Button
-                width="tab"
-                color="black"
-                bgColor={activeTab === "tab4" ? "tabActive" : undefined}
-                onClick={() => handleTabClick("tab4")}
-              >
-                반품/교환정보
-              </Button>
-            </li>
-          </ul>
+          <TabButton
+            value={activeTab}
+            onChange={handleTabChange}
+            labels={tabLabels}
+            orientation="horizontal"
+          />
 
-          {activeTab === "tab1" && (
+          {activeTab === 0 && (
             <MoreInfoSecion>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {Productinfo === undefined
-                  ? "여기에 상세 정보 내용을 넣으세요"
-                  : Productinfo}
-              </ReactMarkdown>
+              {Productinfo === undefined ? (
+                "여기에 상세 정보 내용을 넣으세요"
+              ) : (
+                <div className="markdownDiv" data-color-mode="light">
+                  <MDEditor.Markdown
+                    style={{ padding: 10 }}
+                    source={Productinfo}
+                  />
+                </div>
+              )}
             </MoreInfoSecion>
           )}
 
-          {activeTab === "tab2" && (
+          {activeTab === 1 && (
             <MoreInfoSecion>여기에 리뷰 내용을 넣으세요.</MoreInfoSecion>
           )}
 
-          {activeTab === "tab3" && (
+          {activeTab === 2 && (
             <MoreInfoSecion>여기에 Q/A 내용을 넣으세요.</MoreInfoSecion>
           )}
 
-          {activeTab === "tab4" && (
+          {activeTab === 3 && (
             <MoreInfoSecion>
               여기에 반품/교환정보 내용을 넣으세요.
             </MoreInfoSecion>
@@ -109,33 +86,34 @@ export default function MoreProductInfo({ Productinfo }: Props) {
         <MobileMoreInfo>
           <ul>
             <li>
-              <Button
-                width="tab"
-                color="black"
-                bgColor={openTabs.tab1 ? "tabActive" : undefined}
+              <MobileTabButton
+                active={openTabs.tab1}
                 onClick={() => toggleHandler("tab1")}
               >
                 상세보기
-              </Button>
+              </MobileTabButton>
             </li>
             <li>
               <MobileMoreInfoSection isOpen={openTabs.tab1}>
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {Productinfo === undefined
-                    ? "여기에 상세 정보 내용을 넣으세요"
-                    : Productinfo}
-                </ReactMarkdown>
+                {Productinfo === undefined ? (
+                  "여기에 상세 정보 내용을 넣으세요"
+                ) : (
+                  <div className="markdownDiv" data-color-mode="light">
+                    <MDEditor.Markdown
+                      style={{ padding: 10 }}
+                      source={Productinfo}
+                    />
+                  </div>
+                )}
               </MobileMoreInfoSection>
             </li>
             <li>
-              <Button
-                width="tab"
-                color="black"
-                bgColor={openTabs.tab2 ? "tabActive" : undefined}
+              <MobileTabButton
+                active={openTabs.tab2}
                 onClick={() => toggleHandler("tab2")}
               >
                 리뷰
-              </Button>
+              </MobileTabButton>
             </li>
             <li>
               <MobileMoreInfoSection isOpen={openTabs.tab2}>
@@ -143,14 +121,12 @@ export default function MoreProductInfo({ Productinfo }: Props) {
               </MobileMoreInfoSection>
             </li>
             <li>
-              <Button
-                width="tab"
-                color="black"
-                bgColor={openTabs.tab3 ? "tabActive" : undefined}
+              <MobileTabButton
+                active={openTabs.tab3}
                 onClick={() => toggleHandler("tab3")}
               >
                 Q & A
-              </Button>
+              </MobileTabButton>
             </li>
             <li>
               <MobileMoreInfoSection isOpen={openTabs.tab3}>
@@ -158,14 +134,12 @@ export default function MoreProductInfo({ Productinfo }: Props) {
               </MobileMoreInfoSection>
             </li>
             <li>
-              <Button
-                width="tab"
-                color="black"
-                bgColor={openTabs.tab4 ? "tabActive" : undefined}
+              <MobileTabButton
+                active={openTabs.tab4}
                 onClick={() => toggleHandler("tab4")}
               >
                 반품/교환정보
-              </Button>
+              </MobileTabButton>
             </li>
             <li>
               <MobileMoreInfoSection isOpen={openTabs.tab4}>

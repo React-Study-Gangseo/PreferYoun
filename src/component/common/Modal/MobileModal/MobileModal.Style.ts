@@ -1,17 +1,5 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { ButtonStyle } from "component/common/Button/Button";
-const ModalDiv = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100%;
-  /* z-index: 999; */
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 390px;
-`;
 
 const slideUp = keyframes`
   from {
@@ -99,27 +87,11 @@ const DecreaseButton = styled.button`
   border-right: 1px solid #c4c4c4;
 `;
 
-const BuyButton = styled(ButtonStyle)`
-  width: 416px;
-  height: 60px;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 22px;
-`;
-
-const KeepButton = styled(ButtonStyle)`
-  width: 200px;
-  height: 60px;
-  font-size: 1.125rem;
-  font-weight: 700;
-  padding: 5px 0;
-`;
 const BtnGroup = styled.div`
   display: flex;
   gap: 14px;
 `;
 export {
-  ModalDiv,
   ModalWrapArticle,
   ModalLineSpan,
   CountWrap,
@@ -127,6 +99,4 @@ export {
   IncreaseButton,
   DecreaseButton,
   BtnGroup,
-  KeepButton,
-  BuyButton,
 };

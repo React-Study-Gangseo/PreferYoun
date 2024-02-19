@@ -28,6 +28,8 @@ accessInstance.interceptors.request.use((config) => {
 
   if (userInfo && userInfo.token) {
     config.headers.Authorization = `JWT ${userInfo.token}`;
+  } else {
+    console.log("구매자 로그인 상태가 아닙니다.");
   }
 
   return config;

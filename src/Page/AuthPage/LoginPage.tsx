@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SellerLogin from "component/Auth/Login/SellerLogin/SellerLogin";
 import {
-  BtnGroup,
-  BuyerBtn,
-  SellerBtn,
   LogoImg,
   LinkGroup,
   SignUp,
@@ -17,11 +14,12 @@ import Swal from "sweetalert2";
 import { LoginData } from "types/type";
 import { Login } from "API/AuthAPI";
 import { Link, useNavigate } from "react-router-dom";
+import AuthButton from "component/common/Button/AuthButton";
 
 const LoginPage: React.FC = () => {
-  const [userType, setUserType] = useState("SELLER");
   const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [userType, setUserType] = useState<"SELLER" | "BUYER">("SELLER");
   useEffect(() => {
     if (loginSuccess && userType === "SELLER") {
       navigate("/");
@@ -38,7 +36,6 @@ const LoginPage: React.FC = () => {
       setUserType("SELLER");
     }
   };
-
   const handleFormSubmit = async (loginData: LoginData, userType: string) => {
     try {
       const response = await Login(loginData, userType);
@@ -73,35 +70,7 @@ const LoginPage: React.FC = () => {
         <Link to="/">
           <LogoImg src={Logo} alt="Hodu 로고" />
         </Link>
-        <BtnGroup>
-          <BuyerBtn
-            id="BUYER"
-            onClick={(e) => {
-              handleUserType(e);
-            }}
-            style={{
-              backgroundColor: userType === "BUYER" ? "#fff" : "#F2F2F2",
-              borderBottom: userType === "BUYER" ? "none" : "1px solid #767676",
-              color: "black",
-            }}
-          >
-            구매자로그인
-          </BuyerBtn>
-          <SellerBtn
-            id="SELLER"
-            onClick={(e) => {
-              handleUserType(e);
-            }}
-            style={{
-              backgroundColor: userType === "SELLER" ? "#fff" : "#F2F2F2",
-              borderBottom:
-                userType === "SELLER" ? "none" : "1px solid #767676",
-              color: "black",
-            }}
-          >
-            판매자로그인
-          </SellerBtn>
-        </BtnGroup>
+        <AuthButton handleUserType={handleUserType} userType={userType} />
         {userType === "SELLER" ? (
           <SellerLogin
             onSubmit={(data: LoginData) => handleFormSubmit(data, userType)}

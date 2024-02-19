@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { OutlinedInput, Radio, FormControlLabel } from "@mui/material";
-import { ButtonStyle } from "component/common/Button/Button";
+
 export const OrderPageTitle = styled.h2`
   text-align: center;
   font-size: 2.25rem;
@@ -20,7 +20,8 @@ export const TableContainer = styled.div`
 export const OrderList = styled.table`
   width: 100%;
   border-collapse: collapse;
-  white-space: nowrap;
+  white-space: break-spaces;
+  word-break: keep-all;
   & thead {
     background: #f2f2f2;
     height: 3.75rem;
@@ -28,10 +29,16 @@ export const OrderList = styled.table`
   & th:nth-of-type(1) {
     width: calc(100% * 3 / 6);
     vertical-align: middle;
+    @media (max-width: 896px) {
+      width: calc(100% * 2 / 6);
+    }
   }
   & th:not(:nth-of-type(1)) {
     width: calc(100% * 1 / 6);
     vertical-align: middle;
+    @media (max-width: 896px) {
+      width: calc(100% * 1 / 10);
+    }
   }
   & tr:not(tfoot tr) {
     border-bottom: 1px solid #c4c4c4;
@@ -273,11 +280,17 @@ export const FinallyPayWrapper = styled.article`
   }
 `;
 export const LastCheck = styled.div`
-  padding: 34px 30px;
+  padding: 24px 30px;
+  text-align: center;
   & div {
     width: 100%;
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
+  }
+  & div p {
+    word-break: keep-all;
+    white-space: break-spaces;
   }
 
   & div label {
@@ -287,19 +300,6 @@ export const LastCheck = styled.div`
     line-height: 100%;
     align-self: center;
   }
-`;
-export const PayBtn = styled(ButtonStyle)`
-  width: 13.75rem;
-  height: 4.25rem;
-  color: white;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 1.875rem auto 0 auto;
-`;
-
-export const SearchAddress = styled(ButtonStyle)`
-  width: 9.625rem;
-  height: 40px;
 `;
 
 export const RowLarge = styled.tr`

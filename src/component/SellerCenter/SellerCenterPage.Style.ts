@@ -1,29 +1,4 @@
 import styled from "@emotion/styled";
-import Plus from "../../assets/images/icon-plus.svg";
-
-import { ButtonStyle } from "../common/Button/Button";
-
-// export const HeaderSection = styled.section`
-//   padding-left: 6.25rem;
-//   display: flex;
-//   gap: 1rem;
-//   align-items: center;
-//   width: 100vw;
-//   position: relative;
-//   left: 50%;
-//   transform: translateX(-50%);
-//   height: 5.625rem;
-//   box-shadow: 0px 4px 5px 0px #0000001a;
-//   & img {
-//     width: 5rem;
-//   }
-//   & h2 {
-//     display: inline-block;
-//     margin: 0;
-//     font-size: 30px;
-//     font-weight: 500;
-//   }
-// `;
 
 export const MainSection = styled.main`
   max-width: 110%;
@@ -33,6 +8,7 @@ export const MainSection = styled.main`
   transform: translateX(-50%);
   width: 110%;
   padding-top: 2.375rem;
+  /* padding: 2.375rem 76.737px 0; */
   margin-bottom: 96px;
   & h2 {
     padding-top: 0.375rem;
@@ -47,20 +23,19 @@ export const MainSection = styled.main`
   & > button {
     position: relative;
     float: right;
-    display: block;
     margin-bottom: 2.375rem;
-    width: 168px;
-    height: 54px;
-    text-align: right;
-    &::before {
-      content: "";
-      width: 2rem;
-      aspect-ratio: 1/1;
-      background: url(${Plus}) no-repeat center center;
-      display: block;
-      position: absolute;
-      left: 20px;
-      top: 11px;
+    display: flex;
+  }
+  @media (max-width: 1653px) and (min-width: 897px) {
+    width: 98%;
+  }
+  @media (max-width: 896px) {
+    padding: 2.375rem 10px 0;
+    & h2 {
+      margin-bottom: 50px;
+    }
+    & > button {
+      display: none;
     }
   }
 `;
@@ -79,24 +54,7 @@ export const AsideSection = styled.aside`
     }
   }
 `;
-export const TabBtn = styled(ButtonStyle)`
-  text-align: left;
-  font-size: 1.1rem;
-  font-weight: 500;
-  line-height: 20.03px;
-  &:active,
-  &.active {
-    background-color: #21bf48;
-    color: white;
-  }
-  @media (max-width: 896px) {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #c4c4c4;
-    border-radius: 0;
-    text-align: center;
-  }
-`;
+
 export const MainContent = styled.section`
   width: 100%;
   display: flex;
@@ -148,6 +106,7 @@ export const OrderList = styled.table`
   }
   & td:not(:nth-of-type(1)):not(:nth-of-type(4)) {
     color: #767676;
+    word-break: keep-all;
   }
   & td:last-of-type {
     font-size: 18px;
@@ -167,17 +126,38 @@ export const OrderList = styled.table`
       border: 1px solid #dbdbdb;
     }
   }
+
+  @media (min-width: 897px) {
+    & thead:last-of-type {
+      display: none;
+    }
+  }
+  @media (max-width: 896px) {
+    & thead:first-of-type {
+      display: none;
+    }
+  }
+  & td:last-of-type {
+    padding-right: 8px;
+  }
 `;
 
 export const ProductInfo = styled.article`
   height: 100%;
   padding: 16px 0 17px 30px;
-  & img {
+  & > div {
     width: 4.375rem;
-    aspect-ratio: 1/1;
+    height: 4.375rem;
     border-radius: 100px;
     float: left;
     margin-right: 30px;
+    overflow: hidden;
+    & > img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+    }
   }
   & span {
     margin-left: 0;
@@ -189,6 +169,9 @@ export const ProductInfo = styled.article`
   & h3 {
     margin: 0.625rem 0;
   }
+  @media (max-width: 896px) {
+    & > div {
+      float: none;
+    }
+  }
 `;
-
-export const UploadBtn = styled(ButtonStyle)``;
