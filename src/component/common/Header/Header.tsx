@@ -25,8 +25,10 @@ import { setSearchData } from "../../../redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search from "../../../assets/images/search.svg";
 import { SearchAPI } from "../../../API/ProductAPI";
-import { openModal } from "../../../redux/Modal";
+import { openModal, closeModal } from "../../../redux/Modal";
 import { ModalSetting } from "../Modal/ConfirmModal/ModalSetting";
+import { useSelector } from "react-redux";
+import { Logout } from "API/AuthAPI";
 
 interface HeaderProps {
   type?: "home" | "seller" | "buyer" | "seller_center";
@@ -44,12 +46,8 @@ const Header: React.FC<HeaderProps> = () => {
   const storedData = localStorage.getItem("UserInfo");
   const userInfo = storedData ? JSON.parse(storedData) : null;
   const userType = userInfo ? userInfo.user_type : null;
-  const handleCenterBtn = () => {
-    navigate("/seller/center");
-  };
-  const handleMoveCart = () => {
-    navigate("/cart");
-  };
+  const modals = useSelector((state: any) => state.modal.modals);
+  const [isMenuVisible, setMenuVisible] = useState(false);
   const handleMoveMyPage = () => {
     if (userInfo) {
       navigate("/mypage");
@@ -61,9 +59,6 @@ const Header: React.FC<HeaderProps> = () => {
         })
       );
     }
-  };
-  const handleOpenLoginModal = () => {
-    navigate("/login");
   };
   const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -120,13 +115,41 @@ const Header: React.FC<HeaderProps> = () => {
     } else {
       setType("home");
     }
+    setMenuVisible(false);
   }, [pathname, type, userType]);
-
-  const [isMenuVisible, setMenuVisible] = useState(false);
 
   const handleButtonClick = () => {
     setMenuVisible(!isMenuVisible);
   };
+
+  const handleLogOut = () => {
+    dispatch(
+      openModal({
+        modalType: "ConfirmModal",
+        modalProps: ModalSetting.LogOutModal,
+      })
+    );
+  };
+  const handleAgree = async () => {
+    const response = await Logout();
+    if (response.status === 200) {
+      localStorage.removeItem("UserInfo");
+      localStorage.removeItem("userCart");
+      localStorage.removeItem("ProductInfo");
+      navigate("/");
+    } else {
+      console.log("통신에러");
+    }
+    dispatch(closeModal());
+  };
+
+  useEffect(() => {
+    const currentModalChoice =
+      modals.length > 0 ? modals[modals.length - 1].modalChoice : undefined;
+    if (currentModalChoice && modals[0].modalProps.title === "LogOut") {
+      handleAgree();
+    }
+  }, [modals]);
 
   const UI: { [key: string]: JSX.Element } = {
     home: (
@@ -154,11 +177,11 @@ const Header: React.FC<HeaderProps> = () => {
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
-          <CartBtn onClick={handleMoveCart}>
+          <CartBtn onClick={() => navigate("/cart")}>
             <img src={Cart} alt="쇼핑카트 아이콘" />
             <span>장바구니</span>
           </CartBtn>
-          <UserBtn onClick={handleOpenLoginModal}>
+          <UserBtn onClick={() => navigate("/login")}>
             <img src={User} alt="로그인용 유저 아이콘" />
             <span>로그인</span>
           </UserBtn>
@@ -194,8 +217,9 @@ const Header: React.FC<HeaderProps> = () => {
             size="ms"
             variant="contained"
             color="primary"
-            onClick={handleCenterBtn}
+            onClick={() => navigate("/seller/center")}
             padding="10px 20px"
+            margin="auto 0"
           >
             <CenterImg src={SellerCenter} alt="판매자 센터 아이콘" />
             판매자 센터
@@ -224,7 +248,7 @@ const Header: React.FC<HeaderProps> = () => {
           </FormDiv>
         </HeaderForm>
         <HeaderNav>
-          <CartBtn onClick={handleMoveCart}>
+          <CartBtn onClick={() => navigate("/cart")}>
             <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
             <span>장바구니</span>
           </CartBtn>
@@ -232,31 +256,25 @@ const Header: React.FC<HeaderProps> = () => {
             <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
             <span>마이페이지</span>
           </UserBtn>
+          {isMenuVisible && (
+            <MypageMenu>
+              <ul>
+                <li>
+                  <button
+                    onClick={() => {
+                      navigate("/mypage");
+                    }}
+                  >
+                    마이페이지
+                  </button>
+                </li>
+                <li>
+                  <button onClick={handleLogOut}>로그아웃</button>
+                </li>
+              </ul>
+            </MypageMenu>
+          )}
         </HeaderNav>
-        {isMenuVisible && (
-          <MypageMenu>
-            <ul>
-              <li>
-                <button
-                  onClick={() => {
-                    /* 마이페이지 이동 로직 */
-                  }}
-                >
-                  마이페이지
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    /* 로그아웃 로직 */
-                  }}
-                >
-                  로그아웃
-                </button>
-              </li>
-            </ul>
-          </MypageMenu>
-        )}
       </>
     ),
     seller_center: (

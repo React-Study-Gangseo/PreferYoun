@@ -21,6 +21,7 @@ const MobileCartModal: React.FC<MobileCartModalProps> = () => {
     }
   );
 
+  console.log("🚀 ~ totalPrice ~ totalPrice:", totalPrice);
   const handleModalClose = () => {
     dispatch(closeModal());
   };

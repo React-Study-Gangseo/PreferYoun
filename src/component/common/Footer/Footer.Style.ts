@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
+
 export const FooterSection = styled.footer`
   display: flex;
   background-color: #f2f2f2;
