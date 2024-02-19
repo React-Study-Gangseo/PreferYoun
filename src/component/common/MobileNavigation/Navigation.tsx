@@ -44,9 +44,11 @@ export default function Navigation() {
   const orderCartInfo = useSelector((state: { cartOrder: CartOrderState }) => {
     return state.cartOrder.value;
   });
+
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
+
   const totalShippingFee = useSelector(
     (state: { totalPrice: TotalPriceState }) => {
       return state.totalPrice.value.reduce(

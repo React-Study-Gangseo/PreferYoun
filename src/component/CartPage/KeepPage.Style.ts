@@ -5,6 +5,8 @@ import MinusIcon from "../../assets/images/icon-minus-line.svg";
 export const Wrapper = styled.main`
   width: 100%;
   max-width: 80rem;
+  height: auto;
+  height: 100vh;
   margin: 3.375rem auto 10rem;
   @media (max-width: 896px) {
     margin-top: 10px;

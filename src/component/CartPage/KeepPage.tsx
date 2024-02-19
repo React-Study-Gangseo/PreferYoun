@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../common/Button/Button";
 import CheckBox from "component/common/CheckBox/CheckBox";
 import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
-import { openModal } from "../../redux/Modal";
+import { closeModal, openModal } from "../../redux/Modal";
 
 const KeepPage: React.FC = () => {
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ const KeepPage: React.FC = () => {
   const token = userInfo?.token ? userInfo.token : "";
   const [cartItem, setCartItem] = useState<cartItem[]>([]);
   const [isLogin, setIsLogin] = useState(false);
+  const modals = useSelector((state: any) => state.modal.modals);
   const totalPrice = useSelector((state: { totalPrice: TotalPriceState }) => {
     return state.totalPrice.value.reduce((sum, item) => sum + item.price, 0);
   });
@@ -117,45 +118,55 @@ const KeepPage: React.FC = () => {
     dispatch(
       openModal({
         modalType: "ConfirmModal",
-        modalProps: ModalSetting.DeleteModal,
+        modalProps: ModalSetting.AllDeleteModal,
       })
     );
-    if (allChecked) {
-      try {
-        const res = await DeleteAllCart();
-        if (res.status === 204) {
-          FetchKeepList();
+  }, [allChecked, cartItem, dispatch, FetchKeepList, handleDeleteItem]);
+  useEffect(() => {
+    const currentModalChoice =
+      modals.length > 0 ? modals[modals.length - 1].modalChoice : undefined;
+
+    const deleteItems = async () => {
+      if (allChecked) {
+        try {
+          const res = await DeleteAllCart();
+          if (res.status === 204) {
+            FetchKeepList();
+            cartItem.forEach((item) => {
+              dispatch(
+                calcPrice({
+                  key: item.product_id.toString(),
+                  price: 0,
+                  shipping_fee: 0,
+                })
+              );
+              dispatch(removeOrderProduct(item.product_id?.toString()));
+            });
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+      } else {
+        const activeItems = cartItem.filter((item) => item.is_active === true);
+
+        activeItems.forEach((item) => {
+          handleDeleteItem(item.cart_item_id);
+          dispatch(
+            calcPrice({
+              key: item.product_id.toString(),
+              price: 0,
+              shipping_fee: 0,
+            })
+          );
+          dispatch(removeOrderProduct(item.product_id?.toString()));
+        });
       }
-    } else {
-      const activeItems = cartItem.filter((item) => item.is_active === true);
-
-      activeItems.forEach((item) => {
-        handleDeleteItem(item.cart_item_id);
-        dispatch(
-          calcPrice({
-            key: item.product_id.toString(),
-            price: 0,
-            shipping_fee: 0,
-          })
-        );
-        dispatch(removeOrderProduct(item.product_id?.toString()));
-      });
+    };
+    if (currentModalChoice && modals[0].modalProps.title === "AllDelete") {
+      deleteItems();
+      dispatch(closeModal());
     }
-  }, [
-    allChecked,
-    cartItem,
-    dispatch,
-    FetchKeepList,
-    handleDeleteItem,
-    // navigate,
-  ]);
-
-  const handleLogin = useCallback(() => {
-    navigate("/login");
-  }, [navigate]);
+  }, [modals]);
 
   return (
     <>
@@ -271,7 +282,7 @@ const KeepPage: React.FC = () => {
                 size="ms"
                 color="primary"
                 variant="contained"
-                onClick={handleLogin}
+                onClick={() => navigate("/login")}
                 margin="30px auto"
                 fontSize="24px"
               >
