@@ -85,7 +85,6 @@ const Main: React.FC = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      // 데이터를 불러오기가 완료되면 로딩 상태를 false로 설정합니다.
       setIsLoading(false);
     }
   };
@@ -171,22 +170,6 @@ const Main: React.FC = () => {
       <ProductSection>
         <ProductSortList onSort={handleSort} />
         {/* <Suspense fallback={<Skeleton count={15} />}> */}
-        {/* <ProductList>
-          {isLoading ? (
-            // 로딩 중일 때는 Skeleton 컴포넌트를 렌더링합니다.
-            <Skeleton count={3} />
-          ) : (
-            getSortedProducts(
-              state.searchProducts?.length > 0
-                ? state.searchProducts
-                : state.products
-            ).map((item) => (
-              <li key={Number(item.product_id)}>
-                <ProductItem product={item} />
-              </li>
-            ))
-          )}
-        </ProductList> */}
         <ProductList>
           {getSortedProducts(
             state.searchProducts?.length > 0

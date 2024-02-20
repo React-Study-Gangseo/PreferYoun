@@ -2,52 +2,81 @@ import banner1 from "./animals-2739386_1280.webp";
 import banner2 from "./christmas-2918569_1280.webp";
 import banner3 from "./geeks-2894621_1280.webp";
 import banner4 from "./guitar-3567767_1280.webp";
+import banner1_s from "./animals-2739386_609.webp";
+import banner2_s from "./christmas-2918569_609.webp";
+import banner3_s from "./geeks-2894621_609.webp";
+import banner4_s from "./guitar-3567767_609.webp";
 import banner5 from "./nature-3082832_1280.webp";
-// import banner1 from "./animals-2739386_1280.jpg";
-// import banner2 from "./christmas-2918569_1280.jpg";
-// import banner3 from "./geeks-2894621_1280.jpg";
-// import banner4 from "./guitar-3567767_1280.jpg";
-// import banner5 from "./nature-3082832_1280.jpg";
+import banner5_s from "./nature-3082832_609.webp";
+import banner1_1 from "./animals-2739386_1280.jpg";
+import banner2_1 from "./christmas-2918569_1280.jpg";
+import banner3_1 from "./geeks-2894621_1280.jpg";
+import banner4_1 from "./guitar-3567767_1280.jpg";
+import banner5_1 from "./nature-3082832_1280.jpg";
 
-export const imgList = [
-  // {
-  //   id: 1,
-  //   url: "https://images.unsplash.com/photo-1587731556938-38755b4803a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2978&q=80",
-  // },
-  // {
-  //   id: 2,
-  //   url: "https://images.unsplash.com/photo-1508272849285-ec94ff3855e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-  // },
-  // {
-  //   id: 3,
-  //   url: "https://images.unsplash.com/photo-1543622748-5ee7237e8565?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80",
-  // },
-  // {
-  //   id: 4,
-  //   url: "https://images.unsplash.com/photo-1603917745459-0078218e7c5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
-  // },
-  // {
-  //   id: 5,
-  //   url: "https://images.unsplash.com/photo-1680059439144-aefe88d4c858?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3024&q=80",
-  // },
+export const imgListWEBP = [
   {
-    id: 6,
+    id: 1,
     url: banner1,
   },
   {
-    id: 7,
+    id: 2,
     url: banner2,
   },
   {
-    id: 8,
+    id: 3,
     url: banner3,
   },
   {
-    id: 9,
+    id: 4,
     url: banner4,
   },
   {
-    id: 10,
+    id: 5,
     url: banner5,
+  },
+];
+export const imgListS = [
+  {
+    id: 1,
+    url: banner1_s,
+  },
+  {
+    id: 2,
+    url: banner2_s,
+  },
+  {
+    id: 3,
+    url: banner3_s,
+  },
+  {
+    id: 4,
+    url: banner4_s,
+  },
+  {
+    id: 5,
+    url: banner5_s,
+  },
+];
+export const imgListJPG = [
+  {
+    id: 1,
+    url: banner1_1,
+  },
+  {
+    id: 2,
+    url: banner2_1,
+  },
+  {
+    id: 3,
+    url: banner3_1,
+  },
+  {
+    id: 4,
+    url: banner4_1,
+  },
+  {
+    id: 5,
+    url: banner5_1,
   },
 ];

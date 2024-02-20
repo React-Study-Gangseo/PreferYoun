@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import LeftBanner from "../../../assets/images/icon-swiper-1.svg";
 import RightBanner from "../../../assets/images/icon-swiper-2.svg";
-import { imgList } from "../../../assets/MokImg/BannerImg";
+import {
+  imgListWEBP,
+  imgListJPG,
+  imgListS,
+} from "../../../assets/MokImg/BannerImg";
 import { Banner } from "../Main.Style";
 import {
   BannerImages,
@@ -10,28 +14,24 @@ import {
   RightButton,
   Dot,
 } from "./Banner.Style";
-import LazyImage from "./LazyImage";
+import LazyImage from "./LazyImage"; // 수정
 
 const BannerSection: React.FC = () => {
-  const [bannerImg, setBannerImg] = useState<string[]>([]);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const selectedImages = [];
     const selectedIds = [];
-    const imgListCopy = [...imgList]; // 복사본 생성
+    const imgListCopy = [...imgListWEBP]; // 복사본 생성
 
     for (let i = 0; i < 5; i++) {
       const randomIndex = Math.floor(Math.random() * imgListCopy.length);
-      selectedImages.push(imgListCopy[randomIndex].url);
       selectedIds.push(imgListCopy[randomIndex].id);
       imgListCopy.splice(randomIndex, 1); // 선택된 요소 제거
     }
 
-    setBannerImg(selectedImages);
     setSelectedIds(selectedIds);
-  }, [imgList]);
+  }, [imgListWEBP]);
 
   useEffect(() => {
     const updateRandomIndex = () => {
@@ -51,25 +51,42 @@ const BannerSection: React.FC = () => {
 
   const handlePrevious = useCallback(() => {
     setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? bannerImg.length - 1 : prevIndex - 1
+      prevIndex - 1 < 0 ? selectedIds.length - 1 : prevIndex - 1
     );
-  }, [bannerImg.length]);
+  }, [selectedIds.length]);
 
   const handleNext = useCallback(() => {
     setCurrentIndex((prevIndex) =>
-      prevIndex + 1 === bannerImg.length ? 0 : prevIndex + 1
+      prevIndex + 1 === selectedIds.length ? 0 : prevIndex + 1
     );
-  }, [bannerImg.length]);
+  }, [selectedIds.length]);
 
   return (
     <Banner>
       <BannerImages>
-        {bannerImg.map((img, index) => (
+        {selectedIds.map((id, index) => (
           <LazyImage
-            key={selectedIds[index]} // 고유한 id를 key로 사용
-            src={img}
-            alt="상품사진 배너 이미지"
+            key={id}
+            imageList={[
+              {
+                src: imgListWEBP[index].url, // 수정
+                type: "image/webp",
+                media: "(min-width: 1280px)",
+              },
+              {
+                src: imgListS[index].url, // 수정
+                type: "image/webp",
+                media: "(max-width: 609px)",
+              },
+              {
+                src: imgListJPG[index].url, // 수정
+                type: "image/jpeg",
+                media: "(min-width: 1280px)",
+              },
+            ]}
+            alt={`Banner ${id}`}
             className={currentIndex === index ? "active" : "inactive"}
+            isInitiallyVisible={index === 0}
           />
         ))}
       </BannerImages>
@@ -83,10 +100,10 @@ const BannerSection: React.FC = () => {
         </RightButton>
       </div>
       <BannerIndicator>
-        {bannerImg.length > 1 &&
-          bannerImg.map((_, index) => (
+        {selectedIds.length > 1 &&
+          selectedIds.map((id, index) => (
             <Dot
-              key={selectedIds[index]} // 고유한 id를 key로 사용
+              key={id}
               className={`dot ${currentIndex === index ? "active" : ""}`}
             ></Dot>
           ))}

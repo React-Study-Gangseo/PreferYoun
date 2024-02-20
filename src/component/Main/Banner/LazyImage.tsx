@@ -1,36 +1,49 @@
 import React, { useEffect, useRef } from "react";
 
-interface imageProps {
+interface ImageSource {
   src: string;
-  alt: string;
-  className: string;
+  type: string;
+  media: string;
 }
 
-const LazyImage: React.FC<imageProps> = ({ src, alt, className }) => {
-  const imgRef = useRef<HTMLImageElement>(null);
+interface LazyImageProps {
+  imageList: ImageSource[];
+  alt: string;
+  className: string;
+  isInitiallyVisible?: boolean;
+}
+
+const LazyImage: React.FC<LazyImageProps> = ({
+  imageList,
+  alt,
+  className,
+  isInitiallyVisible = false,
+}) => {
+  const picRef = useRef<HTMLPictureElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const image = entry.target as HTMLImageElement;
-          image.src = image.dataset.src || "";
-          observer.disconnect();
-        }
+    if (picRef.current) {
+      picRef.current.querySelectorAll("source").forEach((source) => {
+        source.srcset = source.dataset.srcset || "";
       });
-    });
-
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
     }
+  }, [imageList, isInitiallyVisible]);
 
-    // cleanup
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  const jpgImage = imageList.find((image) => image.type === "image/jpeg"); // 추가
 
-  return <img ref={imgRef} data-src={src} alt={alt} className={className} />;
+  return (
+    <picture ref={picRef} className={className}>
+      {imageList.map((image, index) => (
+        <source
+          key={index}
+          data-srcset={image.src}
+          media={image.media}
+          type={image.type}
+        />
+      ))}
+      <img src={jpgImage ? jpgImage.src : ""} alt={alt} />
+    </picture>
+  );
 };
 
 export default LazyImage;

@@ -58,24 +58,22 @@ const ProductSortList: React.FC<ProductSortListProps> = ({ onSort }) => {
           </Button>
         </li>
       </List>
-      <div>
-        <FormControlStyle sx={{ m: 1, minWidth: 120 }} size="small">
-          <InputLabel id="demo-select-small-label">정렬</InputLabel>
-          <Select
-            labelId="demo-select-small-label"
-            name="sortType"
-            id="demo-select-small"
-            value={selectedSortType}
-            label="정렬"
-            onChange={handleDropdownChange}
-          >
-            <MenuItem value="latest">최신순</MenuItem>
-            <MenuItem value="alphabetical">가나다순</MenuItem>
-            <MenuItem value="highPrice">높은가격순</MenuItem>
-            <MenuItem value="lowPrice">낮은가격순</MenuItem>
-          </Select>
-        </FormControlStyle>
-      </div>
+      <FormControlStyle sx={{ m: 1, minWidth: 120 }} size="small">
+        <InputLabel id="demo-select-small-label">정렬</InputLabel>
+        <Select
+          labelId="demo-select-small-label"
+          name="sortType"
+          id="demo-select-small"
+          value={selectedSortType}
+          label="정렬"
+          onChange={handleDropdownChange}
+        >
+          <MenuItem value="latest">최신순</MenuItem>
+          <MenuItem value="alphabetical">가나다순</MenuItem>
+          <MenuItem value="highPrice">높은가격순</MenuItem>
+          <MenuItem value="lowPrice">낮은가격순</MenuItem>
+        </Select>
+      </FormControlStyle>
     </ListWrapper>
   );
 };
