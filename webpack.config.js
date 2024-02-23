@@ -60,7 +60,9 @@ module.exports = {
     new FaviconsWebpackPlugin({
       logo: "public/favicon.ico",
     }),
-    new ManifestWebpackPlugin(),
+    new ManifestWebpackPlugin({
+      fileName: "assets-manifest.json",
+    }),
   ],
   mode: "development",
   devServer: {
