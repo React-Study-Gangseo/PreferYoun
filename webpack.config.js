@@ -54,6 +54,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public/index.html"), // public 폴더의 index.html 파일을 템플릿으로 사용합니다.
       publicPath: "/", // 이 부분이 %PUBLIC_URL%에 해당합니다.
+      favicon: "./favicon.ico",
+      manifest: "./manifest.json",
     }),
   ],
   mode: "development",
