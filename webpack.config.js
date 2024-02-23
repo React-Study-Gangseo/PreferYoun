@@ -1,7 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // 이 부분을 추가합니다.
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
-const ManifestWebpackPlugin = require("webpack-manifest-plugin");
+const InterPolateHtmlPlugin = require("interpolate-html-plugin");
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -60,14 +60,15 @@ module.exports = {
     new FaviconsWebpackPlugin({
       logo: "public/favicon.ico",
     }),
-    // new ManifestWebpackPlugin({ manifest: "public/manifest.json" }),
+    new InterPolateHtmlPlugin({
+      PUBLIC_URL: "https://markethodu.netlify.app/",
+    }),
   ],
   mode: "development",
   devServer: {
-    static: [
-      { directory: path.join(__dirname, "public") },
-      { directory: path.join(__dirname, "public") },
-    ],
+    static: {
+      directory: path.join(__dirname, "public"),
+    },
     historyApiFallback: true,
     compress: true,
     port: 8080,

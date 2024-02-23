@@ -25,6 +25,7 @@
     "axios": "^1.6.5",
     "dialog-polyfill": "^0.5.6",
     "favicons-webpack-plugin": "^6.0.1",
+    "interpolate-html-plugin": "^4.0.0",
     "lodash": "^4.17.21",
     "media-query": "^1.0.0",
     "react": "^18.2.0",

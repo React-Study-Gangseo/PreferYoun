@@ -6164,6 +6164,13 @@ internal-slot@^1.0.4, internal-slot@^1.0.5:
     hasown "^2.0.0"
     side-channel "^1.0.4"
 
+interpolate-html-plugin@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/interpolate-html-plugin/-/interpolate-html-plugin-4.0.0.tgz#9de59529b557d1a7984f958eee35ca3a62006a85"
+  integrity sha512-wYEOLd/Ts0C5bo4p7pkX5XicCSYn/5dsGGWnlg2rnW0IzZfJmrdt8UEVcsNmX9t5j3kweLcHrh9J6SVH43q7/Q==
+  dependencies:
+    escape-string-regexp "^1.0.5"
+
 interpret@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-3.1.1.tgz#5be0ceed67ca79c6c4bc5cf0d7ee843dcea110c4"
