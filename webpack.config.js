@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // 이 부분을 추가합니다.
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -54,8 +55,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public/index.html"), // public 폴더의 index.html 파일을 템플릿으로 사용합니다.
       publicPath: "/", // 이 부분이 %PUBLIC_URL%에 해당합니다.
-      favicon: "./favicon.ico",
-      manifest: "./manifest.json",
+    }),
+    new FaviconsWebpackPlugin({
+      logo: "public/favicon.ico",
+      manifest: "public/manifest.json",
     }),
   ],
   mode: "development",
