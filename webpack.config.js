@@ -64,9 +64,10 @@ module.exports = {
   ],
   mode: "development",
   devServer: {
-    static: {
-      directory: path.join(__dirname, "public"),
-    },
+    static: [
+      { directory: path.join(__dirname, "public") },
+      { directory: path.join(__dirname, "public") },
+    ],
     historyApiFallback: true,
     compress: true,
     port: 8080,
