@@ -15,7 +15,7 @@ export const BannerImages = styled.div`
   img {
     position: absolute;
     width: 100%;
-    height: 1005; // 수정
+    height: 100%; // 수정
     object-fit: cover;
     @media (max-width: 896px) {
       height: 100%;
