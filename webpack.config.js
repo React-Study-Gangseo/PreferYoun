@@ -3,11 +3,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"); // 이 부분을 추�
 
 module.exports = {
   entry: "./src/index.tsx",
-  // output: {
-  //   filename: "bundle.js",
-  //   path: path.resolve(__dirname, "dist"),
-  //   publicPath: "/",
-  // },
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
+  },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
