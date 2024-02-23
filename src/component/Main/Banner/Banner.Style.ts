@@ -3,8 +3,11 @@ import styled from "@emotion/styled";
 export const BannerImages = styled.div`
   display: flex;
   overflow: hidden;
+  width: 100%;
+  height: 31.25rem;
   & picture {
     width: 100%;
+    height: 100%;
   }
   picture.inactive {
     display: none;
@@ -12,10 +15,10 @@ export const BannerImages = styled.div`
   img {
     position: absolute;
     width: 100%;
-    height: 31.25rem; // 수정
+    height: 1005; // 수정
     object-fit: cover;
     @media (max-width: 896px) {
-      height: 20rem;
+      height: 100%;
     }
   }
   &.active {
