@@ -1,7 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // 이 부분을 추가합니다.
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
-const ManifestWebpackPlugin = require("webpack-manifest-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -60,7 +60,7 @@ module.exports = {
     new FaviconsWebpackPlugin({
       logo: "public/favicon.ico",
     }),
-    new ManifestWebpackPlugin({
+    new ManifestPlugin({
       fileName: "assets-manifest.json",
     }),
   ],
