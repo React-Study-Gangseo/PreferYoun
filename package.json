@@ -45,7 +45,8 @@
     "styled-reset": "^4.5.2",
     "sweetalert2": "^11.10.2",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack-manifest-plugin": "^5.0.0"
   },
   "scripts": {
     "start": "webpack serve --open",
