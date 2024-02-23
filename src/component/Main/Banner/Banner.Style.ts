@@ -3,6 +3,9 @@ import styled from "@emotion/styled";
 export const BannerImages = styled.div`
   display: flex;
   overflow: hidden;
+  & picture {
+    width: 100%;
+  }
   picture.inactive {
     display: none;
   }
@@ -12,14 +15,14 @@ export const BannerImages = styled.div`
     height: 31.25rem; // 수정
     object-fit: cover;
     @media (max-width: 896px) {
-      height: 20vh; // 수정
+      height: 20rem;
     }
   }
   &.active {
     z-index: 1; // 추가
   }
   @media (max-width: 896px) {
-    height: 20vh; // 수정
+    height: 20rem; // 수정
   }
 `;
 

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { AxiosError } from "axios";
 import Swal from "sweetalert2";
-import { CheckId, CheckCRN } from "API/AuthAPI";
+import { CheckId, CheckCRN } from "../API/AuthAPI";
 import {
   FieldValues,
   UseFormWatch,

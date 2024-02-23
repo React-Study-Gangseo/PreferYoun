@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import SellerLogin from "component/Auth/Login/SellerLogin/SellerLogin";
+import SellerLogin from "../../component/Auth/Login/SellerLogin/SellerLogin";
 import {
   LogoImg,
   LinkGroup,
   SignUp,
   FindPw,
   Main,
-} from "component/Auth/Login/Login.Style";
+} from "../../component/Auth/Login/Login.Style";
 import Logo from "../../assets/images/Logo-hodu.png";
-import BuyerLogin from "component/Auth/Login/BuyerLogin/BuyerLogin";
+import BuyerLogin from "../../component/Auth/Login/BuyerLogin/BuyerLogin";
 import { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { LoginData } from "types/type";
-import { Login } from "API/AuthAPI";
+import { Login } from "../../API/AuthAPI";
 import { Link, useNavigate } from "react-router-dom";
-import AuthButton from "component/common/Button/AuthButton";
+import AuthButton from "../../component/common/Button/AuthButton";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();

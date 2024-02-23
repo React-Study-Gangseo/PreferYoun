@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import SellerJoin from "component/Auth/Join/SellerJoin";
-import BuyerJoin from "component/Auth/Join/BuyerJoin";
+import SellerJoin from "../../component/Auth/Join/SellerJoin";
+import BuyerJoin from "../../component/Auth/Join/BuyerJoin";
 import Logo from "../../assets/images/Logo-hodu.png";
-import { LogoImg, Main } from "component/Auth/Join/Join.Style";
+import { LogoImg, Main } from "../../component/Auth/Join/Join.Style";
 import { FormValue } from "types/type";
-import { Seller_Join, Join } from "API/AuthAPI";
+import { Seller_Join, Join } from "../../API/AuthAPI";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import AuthButton from "component/common/Button/AuthButton";
+import AuthButton from "../../component/common/Button/AuthButton";
 
 const JoinPage: React.FC = () => {
   const [userType, setUserType] = useState<"SELLER" | "BUYER">("SELLER");

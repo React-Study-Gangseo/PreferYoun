@@ -12,15 +12,15 @@ import {
   CountWrap,
 } from "./CartItem.Style";
 import { Products, cartItem } from "types/type";
-import { DetailProduct } from "API/ProductAPI";
-import { UpdateQuantity } from "API/KeepAPI";
+import { DetailProduct } from "../../../API/ProductAPI";
+import { UpdateQuantity } from "../../../API/KeepAPI";
 import { calcPrice, resetPrice } from "../../../redux/TotalPrice";
 import { OrderProduct, removeOrderProduct } from "../../../redux/CartOrder";
 import { closeModal, openModal } from "../../../redux/Modal";
-import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
-import Button from "component/common/Button/Button";
-import CheckBox from "component/common/CheckBox/CheckBox";
-import CountButton from "component/common/Button/CountButton";
+import { ModalSetting } from "../../../component/common/Modal/ConfirmModal/ModalSetting";
+import Button from "../../../component/common/Button/Button";
+import CheckBox from "../../../component/common/CheckBox/CheckBox";
+import CountButton from "../../../component/common/Button/CountButton";
 import DeleteIcon from "../../../assets/images/icon-delete.svg";
 
 type CartItemProps = {

@@ -13,16 +13,16 @@ import {
 } from "./ProductDetail.Style";
 import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
-import { DetailProduct } from "API/ProductAPI";
-import { AddKeepProduct } from "API/KeepAPI";
+import { DetailProduct } from "../../API/ProductAPI";
+import { AddKeepProduct } from "../../API/KeepAPI";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreProductInfo from "./MoreInfo/MoreProductInfo";
-import Button from "component/common/Button/Button";
-import CountButton from "component/common/Button/CountButton";
-import kakaoButton from "CustomHook/KakaoShare";
+import Button from "../../component/common/Button/Button";
+import CountButton from "../../component/common/Button/CountButton";
+import kakaoButton from "../../CustomHook/KakaoShare";
 import { closeModal, openModal } from "../../redux/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
+import { ModalSetting } from "../../component/common/Modal/ConfirmModal/ModalSetting";
 
 const ProductDetail: React.FC = () => {
   const location = useLocation();

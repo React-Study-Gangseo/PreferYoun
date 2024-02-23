@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { OrderedData, Products, orderdata } from "types/type";
-import { DetailProduct } from "API/ProductAPI";
+import { DetailProduct } from "../../../API/ProductAPI";
 import {
   OrderedItemWrapper,
   OrderedDate,
@@ -10,9 +10,9 @@ import {
   OrderNumber,
 } from "./OrderedItem.Style";
 import Swal from "sweetalert2";
-import { AddKeepProduct } from "API/KeepAPI";
+import { AddKeepProduct } from "../../../API/KeepAPI";
 import { useNavigate } from "react-router-dom";
-import Button from "component/common/Button/Button";
+import Button from "../../../component/common/Button/Button";
 const OrderedItem: React.FC<{
   ListItem: OrderedData;
 }> = ({ ListItem }) => {

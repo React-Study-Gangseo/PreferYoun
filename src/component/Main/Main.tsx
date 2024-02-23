@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  Suspense,
-  useReducer,
-} from "react";
+import React, { useEffect, useState, useRef, useReducer } from "react";
 import {
   MainSection,
   ProductList,
@@ -13,16 +7,15 @@ import {
   TopIcon,
   ScrollButton,
 } from "./Main.Style";
-import { GetFullProduct } from "API/ProductAPI";
+import { GetFullProduct } from "../../API/ProductAPI";
 import { Products } from "types/type";
-import useInfiniteScroll from "CustomHook/InfiniteScroll";
-import { searchData } from "redux/Search";
+import useInfiniteScroll from "../../CustomHook/InfiniteScroll";
+import { searchData } from "../../redux/Search";
 import { useSelector } from "react-redux";
 import BannerSection from "./Banner/Banner";
-import Skeleton from "component/Item/Skeleton/Skeleton";
+import Skeleton from "../../component/Item/Skeleton/Skeleton";
 import TopBtnIcon from "../../assets/images/arrow_top.svg";
-import { ScrollRestoration, useMatches, Location } from "react-router-dom";
-import ProductSortList from "component/common/ProductSortList/ProductSortList";
+import ProductSortList from "../../component/common/ProductSortList/ProductSortList";
 const ProductItem = React.lazy(() => import("../Item/ProductItem/ProductItem"));
 // 매직 넘버 제거
 const SCROLL_Y_THRESHOLD = 800;
@@ -128,18 +121,6 @@ const Main: React.FC = () => {
     };
   }, []);
 
-  // let getKey = React.useCallback(
-  //   (location: Location, matches: ReturnType<typeof useMatches>) => {
-  //     let match = matches.find((m) => (m.handle as any)?.scrollMode);
-  //     if ((match?.handle as any)?.scrollMode === "pathname") {
-  //       return location.pathname;
-  //     }
-
-  //     return location.key;
-  //   },
-  //   []
-  // );
-
   const handleSort = (type: string) => {
     dispatch({ type: "SET_SORT_TYPE", payload: type });
   };
@@ -180,7 +161,7 @@ const Main: React.FC = () => {
               <ProductItem product={item} />
             </li>
           ))}
-          {isLoading && <Skeleton count={3} />}
+          {isLoading && <Skeleton count={6} />}
         </ProductList>
         {/* <ScrollRestoration getKey={getKey} /> */}
         {/* </Suspense> */}

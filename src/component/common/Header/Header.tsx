@@ -17,7 +17,7 @@ import Cart from "../../../assets/images/icon-shopping-cart.svg";
 import OnCart from "../../../assets/images/icon-shopping-cart-2.svg";
 import OnUser from "../../../assets/images/icon-user-2.svg";
 import User from "../../../assets/images/icon-user.svg";
-import Button from "component/common/Button/Button";
+import Button from "../../../component/common/Button/Button";
 import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ import { SearchAPI } from "../../../API/ProductAPI";
 import { openModal, closeModal } from "../../../redux/Modal";
 import { ModalSetting } from "../Modal/ConfirmModal/ModalSetting";
 import { useSelector } from "react-redux";
-import { Logout } from "API/AuthAPI";
+import { Logout } from "../../../API/AuthAPI";
 
 interface HeaderProps {
   type?: "home" | "seller" | "buyer" | "seller_center";

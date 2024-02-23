@@ -9,7 +9,7 @@ const initializeKakao = () => {
   }
 };
 
-const kakaoButton = (productInfo:Products) => {
+const kakaoButton = (productInfo: Products) => {
   initializeKakao();
   //@ts-ignore
   if (!window.Kakao) {

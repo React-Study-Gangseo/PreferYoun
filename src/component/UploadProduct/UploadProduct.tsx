@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import UploadIcon from "../../assets/images/icon-img.png";
-import Button from "component/common/Button/Button";
-import { EditProductAPI, PostProduct } from "API/ProductAPI";
+import Button from "../../component/common/Button/Button";
+import { EditProductAPI, PostProduct } from "../../API/ProductAPI";
 import { UploadProducts } from "types/type";
 import MDEditor from "@uiw/react-md-editor";
 import Warning from "./Warning/Warning";
 import { useLocation, useNavigate } from "react-router-dom";
-import ShippingButton from "component/common/Button/ShipingButton";
+import ShippingButton from "../../component/common/Button/ShipingButton";
 import {
   MainSection,
   FormSection,
