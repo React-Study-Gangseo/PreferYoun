@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // 이 부분을 추가합니다.
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -39,7 +40,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|gif|svg|webp)$/,
+        test: /\.(png|jpe?g|gif|svg|webp)$/,
         use: [
           {
             loader: "file-loader",
@@ -60,6 +61,12 @@ module.exports = {
     new FaviconsWebpackPlugin({
       logo: "public/favicon.ico",
     }),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: "./src/assets/MokImg",
+    //     to: "./assets/images/",
+    //   },
+    // ]),
     new WebpackManifestPlugin(),
   ],
   mode: "development",
