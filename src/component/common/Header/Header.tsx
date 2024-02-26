@@ -11,6 +11,7 @@ import {
   UserBtn,
   HeaderCenterSection,
   MypageMenu,
+  UserBtnWrapper,
 } from "./Header.Style";
 import HoduLogo from "../../../assets/images/Logo-hodu.png";
 import Cart from "../../../assets/images/icon-shopping-cart.svg";
@@ -251,28 +252,30 @@ const Header: React.FC<HeaderProps> = () => {
             <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
             <span>장바구니</span>
           </CartBtn>
-          <UserBtn onClick={handleButtonClick}>
-            <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
-            <span>마이페이지</span>
-          </UserBtn>
-          {isMenuVisible && (
-            <MypageMenu>
-              <ul>
-                <li>
-                  <button
-                    onClick={() => {
-                      navigate("/mypage");
-                    }}
-                  >
-                    마이페이지
-                  </button>
-                </li>
-                <li>
-                  <button onClick={handleLogOut}>로그아웃</button>
-                </li>
-              </ul>
-            </MypageMenu>
-          )}
+          <UserBtnWrapper>
+            <UserBtn onClick={handleButtonClick}>
+              <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
+              <span>마이페이지</span>
+            </UserBtn>
+            {isMenuVisible && (
+              <MypageMenu>
+                <ul>
+                  <li>
+                    <button
+                      onClick={() => {
+                        navigate("/mypage");
+                      }}
+                    >
+                      마이페이지
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={handleLogOut}>로그아웃</button>
+                  </li>
+                </ul>
+              </MypageMenu>
+            )}
+          </UserBtnWrapper>
         </HeaderNav>
       </>
     ),

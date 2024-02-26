@@ -33,14 +33,16 @@ const LazyImage: React.FC<LazyImageProps> = ({
 
   return (
     <picture ref={picRef} className={className}>
-      {imageList.map((image, index) => (
-        <source
-          key={index}
-          data-srcset={image.src}
-          media={image.media}
-          type={image.type}
-        />
-      ))}
+      {imageList
+        .filter((image) => image.type !== "image/jpeg")
+        .map((image, index) => (
+          <source
+            key={index}
+            data-srcset={image.src}
+            media={image.media}
+            type={image.type}
+          />
+        ))}
       <img src={jpgImage ? jpgImage.src : ""} alt={alt} />
     </picture>
   );

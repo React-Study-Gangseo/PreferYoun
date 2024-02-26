@@ -139,6 +139,7 @@ export const UserBtn = styled(IconButton)`
   margin-top: auto;
   display: flex;
   flex-direction: column;
+
   & img {
     display: block;
     margin: 0 auto;
@@ -150,14 +151,20 @@ export const UserBtn = styled(IconButton)`
   }
 `;
 
+export const UserBtnWrapper = styled.div`
+  position: relative;
+  width: 4.5rem;
+  height: 4rem;
+`;
+
 export const MypageMenu = styled.article`
   position: absolute;
   background-color: #fff;
   width: 8.125rem;
   height: 6.875rem;
   box-shadow: 0px 0px 6px 0px #00000040;
-  right: 415px;
-  bottom: -110px;
+  right: -30px;
+  bottom: -120px;
   border-radius: 10px;
   padding: 10px;
   & ul {
