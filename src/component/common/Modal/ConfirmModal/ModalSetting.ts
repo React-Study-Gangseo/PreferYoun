@@ -49,4 +49,9 @@ export const ModalSetting = {
     content: "사용가능한 아이디입니다.",
     ConfirmChildren: "확인",
   },
+  LoginFailModal: {
+    title: "Fail",
+    content: "아이디와 비밀번호를 확인해 주세요.",
+    ConfirmChildren: "확인",
+  },
 };

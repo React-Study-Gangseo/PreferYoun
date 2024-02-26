@@ -10,16 +10,19 @@ import {
 import Logo from "../../assets/images/Logo-hodu.png";
 import BuyerLogin from "../../component/Auth/Login/BuyerLogin/BuyerLogin";
 import { AxiosError } from "axios";
-import Swal from "sweetalert2";
 import { LoginData } from "types/type";
 import { Login } from "../../API/AuthAPI";
 import { Link, useNavigate } from "react-router-dom";
 import AuthButton from "../../component/common/Button/AuthButton";
+import { ModalSetting } from "../../component/common/Modal/ConfirmModal/ModalSetting";
+import { openModal } from "../../redux/Modal";
+import { useDispatch } from "react-redux";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [userType, setUserType] = useState<"SELLER" | "BUYER">("SELLER");
+  const dispatch = useDispatch();
   useEffect(() => {
     if (loginSuccess && userType === "SELLER") {
       navigate("/");
@@ -47,16 +50,12 @@ const LoginPage: React.FC = () => {
       const axiosError = error as AxiosError; // 타입 단언
       const responseData = axiosError?.response?.data as any;
       if (responseData) {
-        Swal.fire({
-          title: "로그인 실패!",
-          text: "아이디와 비밀번호를 확인해 주세요",
-          icon: "warning",
-          confirmButtonColor: "#21bf48",
-          confirmButtonAriaLabel: "확인버튼",
-          customClass: {
-            icon: "my-icon",
-          },
-        });
+        dispatch(
+          openModal({
+            modalType: "ConfirmModal",
+            modalProps: ModalSetting.LoginFailModal,
+          })
+        );
       }
     }
   };
