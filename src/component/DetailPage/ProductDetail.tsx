@@ -181,7 +181,9 @@ const ProductDetail: React.FC = () => {
   }, [productId, userInfo, navigate, postCartData, productInfo, dispatch]);
 
   const handleKakaoShare = useCallback(() => {
-    if (productInfo) kakaoButton(productInfo);
+    if (productInfo)
+      alert("현재 크롬 써드 파트 문제로 제한 되어 있는 기능입니다.");
+    // kakaoButton(productInfo);
   }, [productInfo]);
 
   return (

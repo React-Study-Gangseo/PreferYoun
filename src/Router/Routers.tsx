@@ -167,15 +167,30 @@ const Routers = createBrowserRouter([
   },
   {
     path: "login",
-    element: <LoginPage />,
+    element: (
+      <>
+        <LoginPage />
+        <GlobalModal />
+      </>
+    ),
   },
   {
     path: "join",
-    element: <JoinPage />,
+    element: (
+      <>
+        <JoinPage />
+        <GlobalModal />
+      </>
+    ),
   },
   {
     path: "search",
-    element: <SearchPage />,
+    element: (
+      <>
+        <SearchPage />
+        <GlobalModal />
+      </>
+    ),
   },
 ]);
 

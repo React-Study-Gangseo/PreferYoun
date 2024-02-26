@@ -36,7 +36,7 @@ export const useIdValidation = ({
             if (response?.data.Success === "멋진 아이디네요 :)") {
               dispatch(
                 openModal({
-                  modalType: "ComfirmModal",
+                  modalType: "ConfirmModal",
                   modalProps: ModalSetting.IDValidModal,
                 })
               );
