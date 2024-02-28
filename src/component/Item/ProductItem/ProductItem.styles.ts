@@ -19,6 +19,13 @@ export const ProductImage = styled.img`
   border: 1px solid #c4c4c4;
   margin-bottom: 1rem;
   object-fit: cover;
+  &.loading {
+    filter: blur(10px);
+    clip-path: inset(0);
+  }
+  &.loaded {
+    filter: blur(0px);
+  }
   @media (max-width: 896px) {
     width: 150px;
     height: 150px;
@@ -54,6 +61,7 @@ export const SoldOutImg = styled.img`
   width: 23.75rem;
   aspect-ratio: 1/1;
   object-fit: cover;
+  z-index: 9;
   @media (max-width: 896px) {
     width: 150px;
     height: 150px;

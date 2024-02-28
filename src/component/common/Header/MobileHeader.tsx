@@ -240,6 +240,10 @@ const SearchBtn = styled.button`
   position: absolute;
   right: 8px;
   top: 6px;
+  & img {
+    width: 28px;
+    height: 28px;
+  }
 `;
 
 const Form = styled.form`

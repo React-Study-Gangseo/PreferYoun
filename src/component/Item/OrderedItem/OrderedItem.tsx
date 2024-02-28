@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { OrderedData, Products, orderdata } from "types/type";
-import { DetailProduct } from "API/ProductAPI";
+import { DetailProduct } from "../../../API/ProductAPI";
 import {
   OrderedItemWrapper,
   OrderedDate,
@@ -9,21 +9,26 @@ import {
   TotalPrice,
   OrderNumber,
 } from "./OrderedItem.Style";
-import Swal from "sweetalert2";
-import { AddKeepProduct } from "API/KeepAPI";
+import { AddKeepProduct } from "../../../API/KeepAPI";
 import { useNavigate } from "react-router-dom";
-import Button from "component/common/Button/Button";
+import Button from "../../../component/common/Button/Button";
+import { ModalSetting } from "../../../component/common/Modal/ConfirmModal/ModalSetting";
+import { openModal } from "../../../redux/Modal";
+import { useDispatch, useSelector } from "react-redux";
+
 const OrderedItem: React.FC<{
   ListItem: OrderedData;
 }> = ({ ListItem }) => {
   const [orderedItems, setOrderedItems] = useState<Products[]>([]);
   const [showMoreInfo, setShowMoreInfo] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [postCartData, setPostCartData] = useState<orderdata>({
     product_id: 0,
     quantity: 1,
     check: true,
   });
+  const modals = useSelector((state: any) => state.modal.modals);
   const handleTabClick = () => {
     if (!showMoreInfo) {
       setShowMoreInfo(true);
@@ -53,6 +58,7 @@ const OrderedItem: React.FC<{
 
     fetchOrderedItems();
   }, [order_items]);
+
   const checkStockAndAddToCart = async (index: number, postCartData: any) => {
     const storedData = localStorage.getItem("UserInfo");
     if (storedData && orderedItems[index]?.stock) {
@@ -64,36 +70,34 @@ const OrderedItem: React.FC<{
             setPostCartData((prevState) => ({ ...prevState, check: false }));
           }
         });
-        const res = await AddKeepProduct(postCartData);
+        await AddKeepProduct(postCartData);
       } catch (error) {
         console.log(error);
       }
     } else if (storedData) {
-      Swal.fire({
-        text: "해당 상품은 현재 품절 상태 입니다.",
-        icon: "warning",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "확인버튼",
-        customClass: {
-          icon: "my-icon",
-        },
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          modalProps: ModalSetting.SoldOutModal,
+        })
+      );
     } else {
-      Swal.fire({
-        title: "로그인 후 이용 가능한 기능입니다.",
-        text: "로그인 하시겠습니까?",
-        icon: "warning",
-        confirmButtonColor: "#21bf48",
-        confirmButtonAriaLabel: "로그인하러가기",
-        confirmButtonText: "로그인하러가기",
-        customClass: { icon: "my-icon" },
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login");
-        }
-      });
+      dispatch(
+        openModal({
+          modalType: "ConfirmModal",
+          modalProps: ModalSetting.LoginModal,
+        })
+      );
     }
   };
+  useEffect(() => {
+    const currentModalChoice =
+      modals.length > 0 ? modals[modals.length - 1].modalChoice : undefined;
+
+    if (currentModalChoice) {
+      navigate("/login");
+    }
+  }, [modals]);
 
   const handleKeepProduct = async (index: number) => {
     const updatedPostCartData = {

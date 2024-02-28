@@ -13,16 +13,16 @@ import {
 } from "./ProductDetail.Style";
 import { Products, orderdata } from "types/type";
 import { useLocation, useNavigate } from "react-router-dom";
-import { DetailProduct } from "API/ProductAPI";
-import { AddKeepProduct } from "API/KeepAPI";
+import { DetailProduct } from "../../API/ProductAPI";
+import { AddKeepProduct } from "../../API/KeepAPI";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreProductInfo from "./MoreInfo/MoreProductInfo";
-import Button from "component/common/Button/Button";
-import CountButton from "component/common/Button/CountButton";
-import kakaoButton from "CustomHook/KakaoShare";
+import Button from "../../component/common/Button/Button";
+import CountButton from "../../component/common/Button/CountButton";
+import kakaoButton from "../../CustomHook/KakaoShare";
 import { closeModal, openModal } from "../../redux/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
+import { ModalSetting } from "../../component/common/Modal/ConfirmModal/ModalSetting";
 
 const ProductDetail: React.FC = () => {
   const location = useLocation();
@@ -181,7 +181,9 @@ const ProductDetail: React.FC = () => {
   }, [productId, userInfo, navigate, postCartData, productInfo, dispatch]);
 
   const handleKakaoShare = useCallback(() => {
-    if (productInfo) kakaoButton(productInfo);
+    if (productInfo)
+      alert("현재 크롬 써드 파트 문제로 제한 되어 있는 기능입니다.");
+    // kakaoButton(productInfo);
   }, [productInfo]);
 
   return (

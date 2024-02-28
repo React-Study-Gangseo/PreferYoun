@@ -3,8 +3,8 @@ import { LoginSection, Form } from "../Login.Style";
 import { useForm } from "react-hook-form";
 import { LoginData } from "../../../../types/type";
 import Button from "../../../common/Button/Button";
-import InputWrapper from "component/common/TextField/AuthInput";
-import { RuleSettings } from "component/common/TextField/Rules";
+import InputWrapper from "../../../../component/common/TextField/AuthInput";
+import { RuleSettings } from "../../../../component/common/TextField/Rules";
 const BuyerLogin: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const {
     handleSubmit,

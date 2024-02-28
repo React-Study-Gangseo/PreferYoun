@@ -1,7 +1,9 @@
 import React, { useCallback } from "react";
 import { AxiosError } from "axios";
-import Swal from "sweetalert2";
-import { CheckId, CheckCRN } from "API/AuthAPI";
+import { useDispatch } from "react-redux";
+import { ModalSetting } from "../component/common/Modal/ConfirmModal/ModalSetting";
+import { openModal } from "../redux/Modal";
+import { CheckId, CheckCRN } from "../API/AuthAPI";
 import {
   FieldValues,
   UseFormWatch,
@@ -21,6 +23,7 @@ export const useIdValidation = ({
   clearErrors,
   setError,
 }: IUseFormReturn) => {
+  const dispatch = useDispatch();
   const IdValid = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
@@ -31,16 +34,12 @@ export const useIdValidation = ({
             const response = await CheckId(checkId);
 
             if (response?.data.Success === "멋진 아이디네요 :)") {
-              Swal.fire({
-                title: "Success",
-                text: "멋진아이디네요:)",
-                icon: "success",
-                confirmButtonColor: "#21bf48",
-                confirmButtonAriaLabel: "확인버튼",
-                customClass: {
-                  icon: "my-icon",
-                },
-              });
+              dispatch(
+                openModal({
+                  modalType: "ConfirmModal",
+                  modalProps: ModalSetting.IDValidModal,
+                })
+              );
               clearErrors();
             }
           } catch (error) {

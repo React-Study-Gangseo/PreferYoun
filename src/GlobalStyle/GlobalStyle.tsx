@@ -204,14 +204,6 @@ const customStyles = css`
     padding: 0;
     position: absolute;
   }
-  .my-icon {
-    margin: 20px auto 0;
-    border: 0.25rem solid;
-  }
-  .my_swal-container {
-  }
-  .my_swal-content {
-  }
 `;
 
 const GlobalStyles: React.FC = () => (

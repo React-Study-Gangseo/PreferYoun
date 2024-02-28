@@ -9,10 +9,10 @@ import {
 import { Products, orderdata } from "types/type";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../../../../redux/Modal";
-import { DetailProduct } from "API/ProductAPI";
-import { AddKeepProduct } from "API/KeepAPI";
-import Button from "component/common/Button/Button";
-import CountButton from "component/common/Button/CountButton";
+import { DetailProduct } from "../../../../API/ProductAPI";
+import { AddKeepProduct } from "../../../../API/KeepAPI";
+import Button from "../../../../component/common/Button/Button";
+import CountButton from "../../../../component/common/Button/CountButton";
 import { ModalSetting } from "../ConfirmModal/ModalSetting";
 
 export default function MobileModal() {

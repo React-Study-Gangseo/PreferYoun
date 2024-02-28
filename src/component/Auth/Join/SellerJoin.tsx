@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { JoinSection, Form, CheckJoin, CheckTerms, Terms } from "./Join.Style";
 import { Checkbox } from "@mui/material";
 import { FormValue } from "types/type";
-import Button from "component/common/Button/Button";
-import InputWrapper from "component/common/TextField/AuthInput";
-import { RuleSettings } from "component/common/TextField/Rules";
-import { useIdValidation, useCRNValidation } from "CustomHook/Valid";
+import Button from "../../../component/common/Button/Button";
+import InputWrapper from "../../../component/common/TextField/AuthInput";
+import { RuleSettings } from "../../../component/common/TextField/Rules";
+import { useIdValidation, useCRNValidation } from "../../../CustomHook/Valid";
 const label = {
   inputProps: {
     "aria-label": "동의 체크",

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Main, Heading, OrderListSection } from "./OrderList.Style";
-import { GetOrderList } from "API/OrderAPI";
+import { GetOrderList } from "../../../API/OrderAPI";
 import { OrderedData } from "types/type";
-import OrderedItem from "component/Item/OrderedItem/OrderedItem";
+import OrderedItem from "../../../component/Item/OrderedItem/OrderedItem";
 import Button from "../../common/Button/Button";
-import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
+import { ModalSetting } from "../../../component/common/Modal/ConfirmModal/ModalSetting";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, closeModal } from "../../../redux/Modal";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Logout } from "API/AuthAPI";
+import { Logout } from "../../../API/AuthAPI";
 
 export default function OrderList() {
   const [orderedItem, setOrderedItem] = useState<OrderedData[]>([]);

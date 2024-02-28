@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Main from "../../component/Main/Main";
-import { KeepProductList } from "API/KeepAPI";
+import { KeepProductList } from "../../API/KeepAPI";
 
 export default function HomePage() {
   const storedData = localStorage.getItem("UserInfo");

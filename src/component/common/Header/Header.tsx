@@ -11,24 +11,24 @@ import {
   UserBtn,
   HeaderCenterSection,
   MypageMenu,
+  UserBtnWrapper,
 } from "./Header.Style";
 import HoduLogo from "../../../assets/images/Logo-hodu.png";
 import Cart from "../../../assets/images/icon-shopping-cart.svg";
 import OnCart from "../../../assets/images/icon-shopping-cart-2.svg";
 import OnUser from "../../../assets/images/icon-user-2.svg";
 import User from "../../../assets/images/icon-user.svg";
-import Button from "component/common/Button/Button";
+import Button from "../../../component/common/Button/Button";
 import SellerCenter from "../../../assets/images/icon-shopping-bag.svg";
 import styled from "@emotion/styled";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSearchData } from "../../../redux/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Search from "../../../assets/images/search.svg";
 import { SearchAPI } from "../../../API/ProductAPI";
 import { openModal, closeModal } from "../../../redux/Modal";
 import { ModalSetting } from "../Modal/ConfirmModal/ModalSetting";
-import { useSelector } from "react-redux";
-import { Logout } from "API/AuthAPI";
+import { Logout } from "../../../API/AuthAPI";
 
 interface HeaderProps {
   type?: "home" | "seller" | "buyer" | "seller_center";
@@ -252,28 +252,30 @@ const Header: React.FC<HeaderProps> = () => {
             <img src={isCartPage ? OnCart : Cart} alt="쇼핑카트 아이콘" />
             <span>장바구니</span>
           </CartBtn>
-          <UserBtn onClick={handleButtonClick}>
-            <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
-            <span>마이페이지</span>
-          </UserBtn>
-          {isMenuVisible && (
-            <MypageMenu>
-              <ul>
-                <li>
-                  <button
-                    onClick={() => {
-                      navigate("/mypage");
-                    }}
-                  >
-                    마이페이지
-                  </button>
-                </li>
-                <li>
-                  <button onClick={handleLogOut}>로그아웃</button>
-                </li>
-              </ul>
-            </MypageMenu>
-          )}
+          <UserBtnWrapper>
+            <UserBtn onClick={handleButtonClick}>
+              <img src={isMyPage ? OnUser : User} alt="마이페이지 아이콘" />
+              <span>마이페이지</span>
+            </UserBtn>
+            {isMenuVisible && (
+              <MypageMenu>
+                <ul>
+                  <li>
+                    <button
+                      onClick={() => {
+                        navigate("/mypage");
+                      }}
+                    >
+                      마이페이지
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={handleLogOut}>로그아웃</button>
+                  </li>
+                </ul>
+              </MypageMenu>
+            )}
+          </UserBtnWrapper>
         </HeaderNav>
       </>
     ),

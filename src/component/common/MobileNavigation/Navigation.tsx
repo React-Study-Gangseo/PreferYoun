@@ -74,6 +74,7 @@ export default function Navigation() {
   useEffect(() => {
     dispatch(closeModal());
   }, [pathname]);
+
   const handleTotalPrice = () => {
     setIsTotalPrice(!isTotalPrice);
     if (isTotalPrice) {
@@ -95,6 +96,7 @@ export default function Navigation() {
   };
 
   function kakaoButton() {
+    alert("현재 크롬 써드 파트 문제로 제한 되어 있는 기능입니다.");
     initializeKakao();
     //@ts-ignore
     if (!window.Kakao) {
@@ -203,18 +205,18 @@ export default function Navigation() {
           )}
           {isCartPage && (
             <>
-              <li>
-                <PriceLi>
+              <PriceLi>
+                <div>
                   <p>{`합계: ${new Intl.NumberFormat("ko-KR").format(
                     totalPrice + totalShippingFee
                   )} 원`}</p>
                   <button onClick={handleTotalPrice}>
                     <img src={!isTotalPrice ? More : CloseMore} alt="더보기" />
                   </button>
-                </PriceLi>
-              </li>
-              <li>
-                <CartBuy>
+                </div>
+              </PriceLi>
+              <CartBuy>
+                <div>
                   <Button
                     size="ll"
                     color="primary"
@@ -225,8 +227,8 @@ export default function Navigation() {
                   >
                     {`전체 구매하기 (${orderCartInfo.length})`}
                   </Button>
-                </CartBuy>
-              </li>
+                </div>
+              </CartBuy>
             </>
           )}
           {!isDetailPage && !isCartPage && (

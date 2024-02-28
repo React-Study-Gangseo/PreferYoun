@@ -9,9 +9,13 @@ import {
   EmptyKeepList,
   AllSection,
 } from "./KeepPage.Style";
-import { DeleteCartItem, DeleteAllCart, KeepProductList } from "API/KeepAPI";
+import {
+  DeleteCartItem,
+  DeleteAllCart,
+  KeepProductList,
+} from "../../API/KeepAPI";
 import { cartData, cartItem } from "types/type";
-import CartItem from "component/Item/CartItem/CartItem";
+import CartItem from "../../component/Item/CartItem/CartItem";
 import { calcPrice } from "../../redux/TotalPrice";
 import { removeOrderProduct } from "../../redux/CartOrder";
 import { useDispatch } from "react-redux";
@@ -19,8 +23,8 @@ import { TotalPriceState } from "../../redux/TotalPrice";
 import { CartOrderState } from "../../redux/CartOrder";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button/Button";
-import CheckBox from "component/common/CheckBox/CheckBox";
-import { ModalSetting } from "component/common/Modal/ConfirmModal/ModalSetting";
+import CheckBox from "../../component/common/CheckBox/CheckBox";
+import { ModalSetting } from "../../component/common/Modal/ConfirmModal/ModalSetting";
 import { closeModal, openModal } from "../../redux/Modal";
 
 const KeepPage: React.FC = () => {

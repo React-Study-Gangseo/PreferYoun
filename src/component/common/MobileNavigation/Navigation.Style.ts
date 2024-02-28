@@ -81,19 +81,27 @@ const BuyBtnLi = styled.li`
   flex-grow: 0.5;
   margin-right: 15px;
 `;
-const CartBuy = styled.div`
-  width: 90%;
-  margin: 0 auto;
+const CartBuy = styled.li`
+  & div {
+    width: 90%;
+    margin: 0 auto;
+  }
+  flex: 2;
 `;
-const PriceLi = styled.div`
-  display: flex;
-  padding-left: 5px;
-  justify-content: end;
-  align-items: center;
-  gap: 3px;
+const PriceLi = styled.li`
+  flex: 1;
+  & div {
+    display: flex;
+    padding-left: 5px;
+    justify-content: end;
+    align-items: center;
+    gap: 3px;
+  }
   & p {
     line-height: normal;
-    font-size: 14px;
+    font-size: 13px;
+    white-space: break-spaces;
+    word-break: keep-all;
   }
   & button {
     width: 22px;
@@ -104,6 +112,7 @@ const PriceLi = styled.div`
     height: 22px;
   }
 `;
+
 export {
   NavWrapper,
   NavList,

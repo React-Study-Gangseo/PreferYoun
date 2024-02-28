@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Checkbox } from "@mui/material";
 import { FormValue } from "types/type";
-import Button from "component/common/Button/Button";
-import { RuleSettings } from "component/common/TextField/Rules";
-import InputWrapper from "component/common/TextField/AuthInput";
-import { useIdValidation } from "CustomHook/Valid";
+import Button from "../../../component/common/Button/Button";
+import { RuleSettings } from "../../../component/common/TextField/Rules";
+import InputWrapper from "../../../component/common/TextField/AuthInput";
+import { useIdValidation } from "../../../CustomHook/Valid";
 import { JoinSection, Form, CheckJoin, CheckTerms, Terms } from "./Join.Style";
 const label = {
   inputProps: {

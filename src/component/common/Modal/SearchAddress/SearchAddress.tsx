@@ -24,8 +24,6 @@ const SearchAddress: React.FC = () => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    console.log(fullAddress);
-
     dispatch(
       saveAddress({
         address: fullAddress,

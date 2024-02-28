@@ -36,7 +36,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { orderdata, Products } from "types/type";
-import { CartOrder, CartOneOrder, OrderDirect } from "API/OrderAPI";
+import { CartOrder, CartOneOrder, OrderDirect } from "../../API/OrderAPI";
 import { useDispatch } from "react-redux";
 import { openModal } from "../../redux/Modal";
 import { RootState } from "../../redux/store";

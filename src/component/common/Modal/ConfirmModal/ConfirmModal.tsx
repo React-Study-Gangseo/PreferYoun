@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import Button from "component/common/Button/Button";
+import Button from "../../../../component/common/Button/Button";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { closeModal, userChoice } from "../../../../redux/Modal";

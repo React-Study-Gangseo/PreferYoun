@@ -1,7 +1,7 @@
 import React from "react";
 import { ProductInfo } from "../../SellerCenter/SellerCenterPage.Style";
-import Button from "component/common/Button/Button";
-import { DeleteProduct } from "API/ProductAPI";
+import Button from "../../../component/common/Button/Button";
+import { DeleteProduct } from "../../../API/ProductAPI";
 import { Products } from "types/type";
 import { useNavigate } from "react-router-dom";
 import {

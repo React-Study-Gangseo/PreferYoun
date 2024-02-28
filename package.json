@@ -24,6 +24,8 @@
     "@uiw/react-md-editor": "^4.0.3",
     "axios": "^1.6.5",
     "dialog-polyfill": "^0.5.6",
+    "favicons-webpack-plugin": "^6.0.1",
+    "interpolate-html-plugin": "^4.0.0",
     "lodash": "^4.17.21",
     "media-query": "^1.0.0",
     "react": "^18.2.0",
@@ -42,13 +44,13 @@
     "remark-gfm": "^4.0.0",
     "styled-components": "^6.1.8",
     "styled-reset": "^4.5.2",
-    "sweetalert2": "^11.10.2",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack-manifest-plugin": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "webpack serve --open",
+    "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -71,6 +73,15 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.202"
+    "@types/lodash": "^4.14.202",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.10.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.2"
   }
 }

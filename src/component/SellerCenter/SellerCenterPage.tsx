@@ -9,11 +9,11 @@ import {
   // UploadBtn,
 } from "./SellerCenterPage.Style";
 import { useNavigate } from "react-router-dom";
-import { GetSellerProduct } from "API/ProductAPI";
+import { GetSellerProduct } from "../../API/ProductAPI";
 import { Products } from "types/type";
 import SellerItem from "../Item/SellerItem/SellerItem";
 import Button from "../../component/common/Button/Button";
-import TabButton from "component/common/Button/TabButton";
+import TabButton from "../../component/common/Button/TabButton";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const SellerCenterPage: React.FC = () => {

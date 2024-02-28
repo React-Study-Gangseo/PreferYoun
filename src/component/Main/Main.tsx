@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  Suspense,
-  useReducer,
-} from "react";
-import ProductItem from "../Item/ProductItem/ProductItem";
+import React, { useEffect, useState, useRef, useReducer } from "react";
 import {
   MainSection,
   ProductList,
@@ -14,15 +7,16 @@ import {
   TopIcon,
   ScrollButton,
 } from "./Main.Style";
-import { GetFullProduct } from "API/ProductAPI";
+import { GetFullProduct } from "../../API/ProductAPI";
 import { Products } from "types/type";
-import useInfiniteScroll from "CustomHook/InfiniteScroll";
-import { searchData } from "redux/Search";
+import useInfiniteScroll from "../../CustomHook/InfiniteScroll";
+import { searchData } from "../../redux/Search";
 import { useSelector } from "react-redux";
 import BannerSection from "./Banner/Banner";
+import Skeleton from "../../component/Item/Skeleton/Skeleton";
 import TopBtnIcon from "../../assets/images/arrow_top.svg";
-import { ScrollRestoration, useMatches, Location } from "react-router-dom";
-import ProductSortList from "component/common/ProductSortList/ProductSortList";
+import ProductSortList from "../../component/common/ProductSortList/ProductSortList";
+const ProductItem = React.lazy(() => import("../Item/ProductItem/ProductItem"));
 // 매직 넘버 제거
 const SCROLL_Y_THRESHOLD = 800;
 const TARGET_HEIGHT = 30;
@@ -66,7 +60,7 @@ const Main: React.FC = () => {
     sortType: "latest",
   });
   const [page, setPage] = useState(1);
-
+  const [isLoading, setIsLoading] = useState(true);
   const target = useRef(null);
   const [observe, unobserve] = useInfiniteScroll(() => {
     setPage((page) => page + 1);
@@ -76,15 +70,17 @@ const Main: React.FC = () => {
   );
 
   const fetchProduct = async (page: number) => {
+    setIsLoading(true);
     try {
       const response = await GetFullProduct(page);
       dispatch({ type: "SET_PRODUCTS", payload: response.data.results });
       dispatch({ type: "SET_COUNT", payload: response.data.count });
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
   useEffect(() => {
     if (page === 1) observe(target.current);
 
@@ -125,18 +121,6 @@ const Main: React.FC = () => {
     };
   }, []);
 
-  // let getKey = React.useCallback(
-  //   (location: Location, matches: ReturnType<typeof useMatches>) => {
-  //     let match = matches.find((m) => (m.handle as any)?.scrollMode);
-  //     if ((match?.handle as any)?.scrollMode === "pathname") {
-  //       return location.pathname;
-  //     }
-
-  //     return location.key;
-  //   },
-  //   []
-  // );
-
   const handleSort = (type: string) => {
     dispatch({ type: "SET_SORT_TYPE", payload: type });
   };
@@ -166,20 +150,21 @@ const Main: React.FC = () => {
       <BannerSection />
       <ProductSection>
         <ProductSortList onSort={handleSort} />
-        <Suspense fallback={<div>Loading...</div>}>
-          <ProductList>
-            {getSortedProducts(
-              state.searchProducts?.length > 0
-                ? state.searchProducts
-                : state.products
-            ).map((item) => (
-              <li key={Number(item.product_id)}>
-                <ProductItem product={item} />
-              </li>
-            ))}
-          </ProductList>
-          {/* <ScrollRestoration getKey={getKey} /> */}
-        </Suspense>
+        {/* <Suspense fallback={<Skeleton count={15} />}> */}
+        <ProductList>
+          {getSortedProducts(
+            state.searchProducts?.length > 0
+              ? state.searchProducts
+              : state.products
+          ).map((item) => (
+            <li key={Number(item.product_id)}>
+              <ProductItem product={item} />
+            </li>
+          ))}
+          {isLoading && <Skeleton count={6} />}
+        </ProductList>
+        {/* <ScrollRestoration getKey={getKey} /> */}
+        {/* </Suspense> */}
         <ButtonContainer>
           {showButton && (
             <ScrollButton onClick={scrollToTop}>

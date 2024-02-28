@@ -10,7 +10,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import Routers from "Router/Routers";
+import Routers from "./Router/Routers";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");
