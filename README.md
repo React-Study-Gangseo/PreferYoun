@@ -31,11 +31,11 @@
 ## 리펙토링
 
 - 반응형 디자인 및 접근성 개선 (모바일 전용 Bottom Navigation, Header 및 컴포넌트의 레이아웃 변경)
-  <img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/859e8c7d-e9b7-4ea7-9592-f43e6d28d263" width="700" />
+  <img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/859e8c7d-e9b7-4ea7-9592-f43e6d28d263" width="500" />
   1. 모바일 전용 Bottom Navigation 및 Header 적용 전체적인 레이아웃 변경
   2. 검색 창 변경
 - Router 버전 업에 의한 Router 코드 변경
-  <img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/f2e445dc-5a26-4c1b-b464-d03fd6ff2c1c" width="700"/>
+  <img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/f2e445dc-5a26-4c1b-b464-d03fd6ff2c1c" width="500"/>
 - 모달의 개선 및 Redux 관리의 개선
   1. Tag 변경 (Dialog 태그 사용)
   2. 확인 모달 추가 (ModalSetting.ts 파일을 사용해 모달의 전체적인 내용 관리)
