@@ -31,10 +31,66 @@
 ## 리펙토링
 
 - 반응형 디자인 및 접근성 개선 (모바일 전용 Bottom Navigation, Header 및 컴포넌트의 레이아웃 변경)
-- Router 버전 업에 의한 Router 코드 변경
+  <img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/859e8c7d-e9b7-4ea7-9592-f43e6d28d263" width="500" /> </br>
+  1. 모바일 전용 Bottom Navigation 및 Header 적용 전체적인 레이아웃 변경
+  2. 검색 창 변경 <br>
+  
+- Router 버전 업에 의한 Router 코드 변경 <br>
+  <img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/f2e445dc-5a26-4c1b-b464-d03fd6ff2c1c" width="500"/> </br>
+  
 - 모달의 개선 및 Redux 관리의 개선
+  1. Tag 변경 (Dialog 태그 사용)
+  2. 확인 모달 추가 (ModalSetting.ts 파일을 사용해 모달의 전체적인 내용 관리)
+  3. 사용자 선택을 Redux로 관리해 선택에 따른 동작 구현
+  
+## 시연 영상
 
-##폴더 구조
+### 공통
+
+#### 회원가입
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/57abae16-dd61-4f8f-9269-10c607c9b265" width="700"/></br>
+- 판매자와 구매자로 나누어 회원가입이 가능하며 각 입력창에 메세지 출력 및 아이디 검증버튼, 비밀번호 확인 기능이 있습니다. 
+
+#### 로그인
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/8cee8a41-9e9b-481f-a3ee-ac26634e3806" width="700"/></br>
+- 판매자와 구매자로 나누어 로그인이 가능하며 로그인 실패 및 유형 실패 시 메세지가 출력됩니다. 
+
+#### 로그아웃
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/ee5b374f-c712-4d01-ad6b-478e653cf3a4" width="700" /></br>
+- 판매자는 마이페이지에서 구매자는 영상과 같이 로그아웃이 가능합니다. 
+
+#### 홈 화면
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/fc62cd63-ad78-47d8-953b-d96e9afa7e11" width="700" /></br>
+- 무한 스크롤을 사용해 상품을 보여주며 탑 버튼으로 언제든지 맨 위로 올라갈 수 있습니다. 
+
+#### 상세페이지
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/d326ebf8-33aa-4833-90db-7aa379643c14" width="700" /></br>
+- 상품에 관한 상세 정보 페이지로 장바구니및 바로 구매가 가능하며 수량 선택이 가능합니다.
+
+#### 검색
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/491d9e29-fb33-483d-987c-92af7ff171f6" width="700" /></br>
+- 상품 검색이 가능하며 엔터및 돋보기 아이콘 클릭 시 해당 이름의 아이템이 보여집니다.
+
+### 구매자
+
+#### 장바구니
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/aa220066-ae78-4175-8e95-526d6a8a54c2" width="700" /></br>
+- 장바구니 아이템 전체 및 개별 삭제 또는 주문하기가 가능하며 check-box를 사용해 원하는 상품만 주문하기가 가능합니다. 
+
+#### 주문페이지
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/363345e7-b333-475f-8cc8-9473d3773cc7" width="700" /></br>
+- 다음 주소 API를 사용해 주소 검색이 가능하며 원하는 결제 방식을 선택할 수 있습니다.
+
+#### 마이페이지
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/27b4a952-1fad-4014-b1c3-8819209dad3f" width="700" /></br>
+- 내가 주문한 목록과 해당 아이템을 장바구니에 넣거나 상세보기가 가능하며 로그아웃이 가능합니다.
+
+### 판매자
+#### 판매자 센터
+<img src="https://github.com/React-Study-Gangseo/PreferYoun/assets/38209666/4c3705d1-7394-49d2-9461-b36d3b87f8d0" width="700"/></br>
+- 판매자 로그인 시 이용 가능한 서비스이며, 판매 상품 등록 및 수정, 삭제와 관련된 기능을 제공합니다.
+
+## 폴더 구조
 
 ```
 PreferYoun
@@ -160,8 +216,6 @@ PreferYoun
 │  │  ├─ OrderPage
 │  │  │  ├─ OrderPage.Style.ts
 │  │  │  └─ OrderPage.tsx
-│  │  ├─ ProductDetail
-│  │  │  └─ ProductDetail.tsx
 │  │  ├─ SellerCenter
 │  │  │  ├─ SellerCenterPage.Style.ts
 │  │  │  └─ SellerCenterPage.tsx
