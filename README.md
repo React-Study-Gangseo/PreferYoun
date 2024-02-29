@@ -274,5 +274,4 @@ PreferYoun
 │     └─ type.ts
 ├─ tsconfig.json
 └─ yarn.lock
-
 ```
