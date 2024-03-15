@@ -275,3 +275,6 @@ PreferYoun
 ├─ tsconfig.json
 └─ yarn.lock
 ```
+### 트러블 슈팅
+모달
+...
